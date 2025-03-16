@@ -23,8 +23,8 @@ A fully-featured admin dashboard built with Next.js, Tailwind CSS, and TypeScrip
 1. **Clone the Repository**
 
    ```bash
-   git clone https://git.calypso.uz/calypso1/growz/new_growz_admin.git
-   cd new_growz_admin
+   git clone https://git.calypso.uz/calypso1/grm/new_grm_admin.git
+   cd new_grm_admin
 
    ```
 

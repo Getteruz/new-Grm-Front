@@ -6,8 +6,8 @@ on:
     branches:
       - 'main'
 env:
-  BASE_IMAGE: ghcr.io/Getteruz/new-Grm-Front
-  TAG: ghcr.io/Getteruz/new-Grm-Front:${{ github.sha }}
+  BASE_IMAGE: ghcr.io/getteruz/new-grm-front
+  TAG: ghcr.io/getteruz/new-grm-front:${{ github.sha }}
   CONTAINER_NAME: admin-ui
   REGISTRY: ghcr.io
 jobs:

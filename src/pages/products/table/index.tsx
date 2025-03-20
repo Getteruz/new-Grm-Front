@@ -1,7 +1,5 @@
 import { parseAsInteger, useQueryState } from "nuqs";
 
-import FilterSite from "@/components/filter-site";
-import TopSite from "@/components/top-site";
 import { DataTable } from "@/components/ui/data-table";
 
 import { ProductColumns } from "./columns";
@@ -22,14 +20,11 @@ export default function Page() {
 
   return (
     <>
-      <TopSite />
-      <FilterSite />
       <DataTable
       className="mx-4"
         isLoading={isLoading}
         columns={ProductColumns}
         data={data?.items ?? []}
-        pageCount={data?.meta.totalPages}
       />
     </>
   );

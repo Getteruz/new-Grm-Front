@@ -13,15 +13,17 @@ import {
 interface TableLoadingProps<TData> {
   table: ITable<TData>;
   limit: number;
+  headerPreview?:boolean;
 }
 
 export default function TableLoading<TData>({
   table,
   limit,
+  headerPreview=true,
 }: TableLoadingProps<TData>) {
   return (
-    <Table>
-      <TableHeader>
+    <Table >
+      {headerPreview &&<TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => {
@@ -38,7 +40,7 @@ export default function TableLoading<TData>({
             })}
           </TableRow>
         ))}
-      </TableHeader>
+      </TableHeader>}
       <TableBody>
         {Array.from({ length: limit }).map((_, i) => (
           <TableRow key={i}>

@@ -24,13 +24,8 @@ export type CropData = {
 };
 
 export type CropQuery = {
-  populate: string;
-  sort: string;
-  filters: object;
-  pagination: {
-    pageSize: number;
-    page: number;
-  };
+  limit:number,
+  page:number
 };
 
 export type TCropCategory = {

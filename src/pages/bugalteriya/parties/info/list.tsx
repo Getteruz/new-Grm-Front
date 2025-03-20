@@ -81,7 +81,6 @@ export default function List() {
     state: { pagination },
     onPaginationChange: setPagination,
   });
-  const totalPages = table.getPageCount();
   return (
     <div className="border-[#CBCBC1]  border w-[65%]">
       <div className="bg-[#DBDAD1] border-[#CBCBC1] border-b  flex gap-1 p-[5px] ">
@@ -113,7 +112,6 @@ export default function List() {
         isLoading={false}
         columns={table.getAllColumns()}
         data={data ?? []}
-        pageCount={totalPages}
       />
       <div className="bg-[#DBDAD1] border-[#CBCBC1] border-b  flex gap-1 p-[5px] ">
         <div className="border text-[13px] py-1 px-2 rounded-[2px] leaaing-[15] text-[#78786C] border-[#CBCBC1] bg-[#E0DFD6] flex items-center ">

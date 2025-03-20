@@ -1,29 +1,23 @@
+import { DateRangePicker } from "@/components/forms/date-picker-from-to";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import debounce from "@/utils/debounce";
-import { Plus } from "lucide-react";
+import { FileOutput } from "lucide-react";
 import { useQueryState } from "nuqs";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 
 export default function Filters() {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [_, setSearch] = useQueryState("search");
+  const [fromDate,setFromDate] = useQueryState('fromDate')
+  const [toDate,setToDate] = useQueryState('toDate')
   return (
-    <div className="bg-white py-4 px-2  rounded-t-sm flex  ">
-      <Input
-        onChange={debounce(
-          (e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value),
-          500
-        )}
-        placeholder={t("search")}
-        className="max-w-[250px]"
-      />
-      <Button className="gap-[2px] ml-auto" onClick={() => navigate("new")}>
-        <Plus /> {t("add")}
-      </Button>
+    <div className="bg-sidebar  gap-2 px-[51px] h-[64px] rounded-t-sm flex   ">
+      <p className="text-[20px] my-auto mr-auto font-medium">Crop</p>
+      <DateRangePicker
+      fromDate={fromDate as unknown as Date }
+      toDate={toDate  as unknown as Date }
+      onChangeFrom={(e)=>setFromDate(e as unknown as string )}
+      onChangeTo={(e)=>setToDate(e as unknown as string )}
+      fromPlaceholder="Start date"
+      toPlaceholder="End date"
+    />
+    <Button className="h-full border-x-1 border-y-0 w-[140px] "  variant={"outline"} ><FileOutput/> Экспорт</Button>
     </div>
   );
 }

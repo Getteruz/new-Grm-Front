@@ -1,37 +1,35 @@
-import { parseAsInteger, useQueryState } from "nuqs";
+"use client";
 
 import { DataTable } from "@/components/ui/data-table";
-
 import { paymentColumns } from "./columns";
 import Filters from "./filters";
 import useCrops from "./queries";
+import CardSort from "@/components/card-sort";
 
 export default function Page() {
-  const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
-  const [page] = useQueryState("page", parseAsInteger.withDefault(1));
-  const [search] = useQueryState("search");
-  const { data, isLoading } = useCrops({
-    queries: {
-      pagination: { pageSize: limit, page },
-      populate: "*",
-      sort: "createdAt:desc",
-      filters: {
-        name: {
-          $containsi: search || undefined,
-        },
-      },
-    },
-  });
+  const { 
+    data, 
+    isLoading, 
+    fetchNextPage, 
+    hasNextPage, 
+    isFetchingNextPage 
+  } = useCrops({});
+
+  const flatData = data?.pages?.flatMap(page => page?.items || []) || [];
 
   return (
-    <div className="p-5">
+    <>
       <Filters />
+      <CardSort />
       <DataTable
+        className="p-4"
         isLoading={isLoading}
         columns={paymentColumns}
-        data={data?.items ?? []}
-        pageCount={data?.meta.totalPages}
+        data={flatData}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage ?? false}
+        isFetchingNextPage={isFetchingNextPage}
       />
-    </div>
+    </>
   );
 }

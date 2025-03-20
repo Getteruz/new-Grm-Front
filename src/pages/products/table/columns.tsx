@@ -16,7 +16,6 @@ export const ProductColumns: ColumnDef<ProductsData>[] = [
     header: "code",
     accessorKey: "code",
   },
-
   {
     header: "collection",
     cell: ({ row }) => {

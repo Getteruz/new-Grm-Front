@@ -1,57 +1,11 @@
-import { LibraryBig } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import {
-  BuildingIcons,
-  HomeIcons,
   OpenAIIcons,
   SettingsIcons,
-  WareHouseIcons,
 } from "../../components/icons";
+import { DataMenu } from "./menu-datas";
 
-const menu = [
-  {
-    id: 1,
-    icons: <HomeIcons />,
-    link: "/dashboard",
-  },
-  {
-    id: 2,
-    icons: <BuildingIcons />,
-    link: "/product",
-  },
-  {
-    id: 3,
-    icons: <LibraryBig />,
-    link: "/bugalteriya/data-library",
-  
-   },
-  {
-    id: 4,
-    link: "/parties",
-    icons: <WareHouseIcons />,
-  },
-  // {
-  //   id: 5,
-  //   icons: <TimeSheetIcons />,
-  // },
-  // {
-  //   id: 6,
-  //   icons: <PersonalDetailsIcons />,
-  // },
-  // {
-  //   id: 7,
-  //   icons: <PriceIcons />,
-  // },
-  // {
-  //   id: 8,
-  //   icons: <SaleIcons />,
-  // },
-  // {
-  //   id: 9,
-  //   icons: <QrcodeIcons />,
-  // },
-];
 
 export default function Menu() {
   const navigate = useNavigate();
@@ -62,7 +16,7 @@ export default function Menu() {
           src="/logo1.svg"
           className="border-b inline-block w-full h-[64px]  border-border"
         />
-        {menu?.map((e) => (
+        {DataMenu.admin?.map((e) => (
           <div
             onClick={() => {
               if (e?.link) {
@@ -72,7 +26,7 @@ export default function Menu() {
             className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
             key={e?.id}
           >
-            {e?.icons}
+            {e?.icons()}
           </div>
         ))}
       </div>

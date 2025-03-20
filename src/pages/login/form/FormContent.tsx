@@ -25,6 +25,7 @@ export default function LoginFormContent() {
             Войти
           </button>
         </div>
+        <img src={'/images/login-images.png'}/>
       </div>
     </Container>
   );

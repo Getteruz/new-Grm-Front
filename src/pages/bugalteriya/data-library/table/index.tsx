@@ -32,7 +32,6 @@ export default function Page() {
           isLoading={isLoading}
           columns={Columns}
           data={data?.items ?? []}
-          pageCount={data?.meta.totalPages}
         />
       </div>
     </div>

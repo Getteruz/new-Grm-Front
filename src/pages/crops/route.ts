@@ -1,4 +1,3 @@
-import ActionPage from "./form";
 import Page from "./table";
 
 const Route = [
@@ -9,7 +8,7 @@ const Route = [
   },
   {
     url: "/crops/:id",
-    Element: ActionPage,
+    Element: Page,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   

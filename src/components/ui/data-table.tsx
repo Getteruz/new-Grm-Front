@@ -1,14 +1,13 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  OnChangeFn,
-  PaginationState,
   useReactTable,
+  RowSelectionState
 } from "@tanstack/react-table";
-import { parseAsInteger, useQueryState } from "nuqs";
 
 import {
   Table,
@@ -18,116 +17,189 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Checkbox } from "@/components/ui/checkbox";
 
-import { DataTablePagination } from "./pagination";
 import TableLoading from "./table-loading";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  pageCount?: number;
   isLoading: boolean;
   className?: string;
+  // Add these props for infinite scroll
+  isFetchingNextPage?: boolean;
+  hasNextPage?: boolean;
+  fetchNextPage?: () => void;
+  onSelectionChange?: (selectedRows: TData[]) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  pageCount = 0,
   isLoading,
   className,
+  isFetchingNextPage = false,
+  hasNextPage = false,
+  fetchNextPage,
+  onSelectionChange,
 }: DataTableProps<TData, TValue>) {
-  const [limit, setLimit] = useQueryState(
-    "limit",
-    parseAsInteger.withDefault(10)
-  );
-  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
-  const handlePaginationChange: OnChangeFn<PaginationState> = (
-    newPagination
-  ) => {
-    // @ts-expect-error - TODO: fix this
-    const { pageSize, pageIndex } = newPagination({
-      pageSize: limit,
-      pageIndex: page,
-    });
-    setLimit(pageSize);
-    setPage(pageIndex);
+  const checkboxColumn: ColumnDef<TData, any> = {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
   };
 
+  const allColumns = [checkboxColumn, ...columns];
+
+  useEffect(() => {
+    if (!fetchNextPage) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentLoadMoreRef = loadMoreRef.current;
+    if (currentLoadMoreRef) {
+      observer.observe(currentLoadMoreRef);
+    }
+
+    return () => {
+      if (currentLoadMoreRef) {
+        observer.unobserve(currentLoadMoreRef);
+      }
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  useEffect(() => {
+    if (onSelectionChange) {
+      const selectedRows = Object.keys(rowSelection).map(
+        (index) => data[parseInt(index)]
+      );
+      onSelectionChange(selectedRows);
+    }
+  }, [rowSelection, data, onSelectionChange]);
+  
   const table = useReactTable({
     data,
-    columns,
+    columns: allColumns,
     getCoreRowModel: getCoreRowModel(),
-    manualPagination: true,
-    initialState: {
-      pagination: {
-        pageIndex: page + 1,
-        pageSize: limit,
-      },
+    state: {
+      rowSelection,
     },
-    pageCount: pageCount,
-    rowCount: limit + 1,
-
-    onPaginationChange: handlePaginationChange,
+    enableRowSelection: true,
+    onRowSelectionChange: setRowSelection,
   });
+  useEffect(() => {
+    if (onSelectionChange) {
+      const selectedRows = Object.keys(rowSelection).map(
+        (index) => data[parseInt(index)]
+      );
+      onSelectionChange(selectedRows);
+    }
+  }, [rowSelection, data, onSelectionChange]);
 
   return (
     <div className={className}>
-      {isLoading ? (
-        <TableLoading limit={limit} table={table} />
+      {isLoading && data.length === 0 ? (
+        <TableLoading limit={15} table={table} />
       ) : (
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  className="px-5"
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+        <>
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    className="px-5"
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+          
+          {/* Loader for infinite scroll */}
+          {fetchNextPage && (
+            <div
+              ref={loadMoreRef}
+              className="flex justify-center items-center "
+            >
+              {isFetchingNextPage ? (
+                 <TableLoading  headerPreview={false} limit={2} table={table} />
+              ) : hasNextPage ? (
+                <div className="h-8" />
+              ) : (
+                data.length > 0 && (
+                  <div className="text-sm text-muted-foreground">
+                    No more results
+                  </div>
+                )
+              )}
+            </div>
+          )}
+        </>
       )}
-      <DataTablePagination table={table} />
     </div>
   );
 }

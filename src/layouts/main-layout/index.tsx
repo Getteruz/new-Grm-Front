@@ -21,7 +21,9 @@ export default function MainLayout() {
       <Menu />
       <SidebarInset>
         <Header />
+        <div className="h-[calc(100vh-63px)] overflow-scroll" >
         <Outlet />
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

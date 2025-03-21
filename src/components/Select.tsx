@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "./ui/select";
 
 type ShadcnSelectProps = {
   value?: string;
@@ -46,7 +46,7 @@ function ShadcnSelect(props: ShadcnSelectProps) {
       disabled={disabled || isLoading}
     >
       <SelectTrigger
-        className={`bg-white outline-none h-10 active:border-none ${className}`}
+        className={`outline-none active:border-none ${className}`}
       >
         <SelectValue className={`${classNameValue}`} placeholder={placeholder}>
           <span
@@ -57,7 +57,7 @@ function ShadcnSelect(props: ShadcnSelectProps) {
         </SelectValue>
       </SelectTrigger>
       {options ? (
-        <SelectContent className={`${classNameContainer} bg-white`}>
+        <SelectContent className={`${classNameContainer}`}>
           {options?.map((option) => (
             <SelectItem
               key={option.value}

@@ -9,26 +9,20 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useTranslation } from "react-i18next";
+import { useQueryState } from "nuqs";
 
 interface DateRangePickerProps {
-  onChangeFrom: (date: Date | undefined) => void;
-  onChangeTo: (date: Date | undefined) => void;
-  fromDate: Date | undefined;
-  toDate: Date | undefined;
   fromPlaceholder?: string;
   toPlaceholder?: string;
 }
 
 export function DateRangePicker({
-  onChangeFrom,
-  onChangeTo,
-  fromDate,
-  toDate,
   fromPlaceholder,
   toPlaceholder,
 }: DateRangePickerProps) {
   const { t } = useTranslation();
-
+const [fromDate ,setFromDate] = useQueryState<Date>('fromDate', { parse: (value) => new Date(value) })
+  const [toDate,setToDate] = useQueryState<Date>('toDate', { parse: (value) => new Date(value) })
   return (
     <div className="flex flex-col items-center border-l  sm:flex-row gap-2">
       <div className="flex-1 ">
@@ -43,7 +37,7 @@ export function DateRangePicker({
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
               {fromDate ? (
-                format(fromDate, "PPP")
+                format(fromDate, "P")
               ) : (
                 <span>{fromPlaceholder ? t(fromPlaceholder) : t("From date")}</span>
               )}
@@ -52,8 +46,8 @@ export function DateRangePicker({
           <PopoverContent className="w-auto p-0">
             <Calendar
               mode="single"
-              selected={fromDate}
-              onSelect={onChangeFrom}
+              selected={fromDate || undefined}
+              onSelect={(date)=>date? setFromDate(date):""}
               initialFocus
               disabled={(date) => toDate ? date > toDate : false}
             />
@@ -73,7 +67,7 @@ export function DateRangePicker({
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
               {toDate ? (
-                format(toDate, "PPP")
+                format(toDate, "P")
               ) : (
                 <span>{toPlaceholder ? t(toPlaceholder) : t("To date")}</span>
               )}
@@ -82,8 +76,8 @@ export function DateRangePicker({
           <PopoverContent className="w-auto p-0">
             <Calendar
               mode="single"
-              selected={toDate}
-              onSelect={onChangeTo}
+              selected={toDate ||undefined}
+              onSelect={(date)=>date? setToDate(date):""}
               initialFocus
               disabled={(date) => fromDate ? date < fromDate : false}
             />

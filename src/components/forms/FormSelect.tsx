@@ -14,7 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import ShadcnSelect from "./Select";
+import ShadcnSelect from "../Select";
 
 interface Props<TQuery> {
   name: string;
@@ -71,7 +71,7 @@ export default function FormSelectInput<IData, TQuery>({
             className={cn("flex flex-col items-start w-full", className)}
           >
             {label && (
-              <FormLabel className="mb-1 font-medium text-[#99998C] dark:text-white">
+              <FormLabel className="mb-1 font-medium text-foreground ">
                 {t(label)}
               </FormLabel>
             )}
@@ -84,6 +84,7 @@ export default function FormSelectInput<IData, TQuery>({
                 options={data?.data || []}
                 placeholder={placeholder ? t(placeholder) : ""}
                 onChange={field.onChange}
+                className="border-none"
               />
             </FormControl>
             <FormMessage className="text-sm text-red-500" />

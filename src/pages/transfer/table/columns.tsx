@@ -7,24 +7,12 @@ import TablePopaver from "@/components/table-popaver";
 import { Badge } from "@/components/ui/badge";
 import { apiRoutes } from "@/service/apiRoutes";
 
-import { CropData } from "../type";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import FilterSelect from "@/components/filters-ui/filter-select";
+import { TransferData } from "../type";
 
-export const paymentColumns: ColumnDef<CropData>[] = [
-  {
-    accessorKey: "id",
-    header: () => {
-      return (
-        <FilterSelect
-            placeholder={"colaction"}
-            name="select"
-            className="bg-foreground "
-          />
-      )
-    },
-  },
+export const paymentColumns: ColumnDef<TransferData>[] = [
+
   {
     id: "main_image",
     header: "image",
@@ -95,7 +83,7 @@ export const paymentColumns: ColumnDef<CropData>[] = [
     size: 50,
     cell: ({ row }) => {
       return (
-        <TableAction url={apiRoutes.crops} ShowPreview id={row.original?.id} />
+        <TableAction url={apiRoutes.transfers} ShowPreview id={row.original?.id} />
       );
     },
   },

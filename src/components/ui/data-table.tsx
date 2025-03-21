@@ -26,7 +26,6 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   isLoading: boolean;
   className?: string;
-  // Add these props for infinite scroll
   isFetchingNextPage?: boolean;
   hasNextPage?: boolean;
   fetchNextPage?: () => void;
@@ -132,7 +131,7 @@ export function DataTable<TData, TValue>({
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
+                <TableRow  key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead key={header.id}>

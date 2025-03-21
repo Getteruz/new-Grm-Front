@@ -17,6 +17,13 @@ export const DataMenu = {
         {
           id: 1,
           icons: ()=>HomeIcons(),
+          link: "/transfers",
+          text:"transfers"
+        },
+       
+        {
+          id: 1,
+          icons: ()=>HomeIcons(),
           link: "/crops",
           text:"crops",
           items:[
@@ -36,6 +43,12 @@ export const DataMenu = {
               text:"crops1",
             },
           ]
+        },
+        {
+          id: 1,
+          icons: ()=>HomeIcons(),
+          link: "/broned",
+          text:"broned"
         },
         {
           id: 2,

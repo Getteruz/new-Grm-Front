@@ -22,11 +22,11 @@ export default function Page() {
   });
 
   return (
-    <div className="flex pl-3">
+    <div className="flex w-full">
       {
         id ? <ActionPageQrCode/>:<ActionPage/>
       }
-      <div className="border w-full m-3 border-border rounded-sm gap-2">
+      <div className="w-2/3 ">
         <Filter/>
         <DataTable
           isLoading={isLoading}

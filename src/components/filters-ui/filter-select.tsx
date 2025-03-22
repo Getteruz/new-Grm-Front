@@ -13,7 +13,7 @@ export default function FilterSelect({name,placeholder,className}:iFilterSelect)
   return (
     <div>
           <ShadcnSelect
-                 className={` w-full border-none ${className && className}`}
+                 className={` border-none w-full ${className && className}`}
                 disabled={false}
                 value={value||undefined}
                 isLoading={false}

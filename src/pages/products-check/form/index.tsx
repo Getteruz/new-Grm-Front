@@ -1,29 +1,29 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+
+import { ProductsCheckFormType, ProductsCheckSchema } from "./schema";
+import ProductsCheckFormContent from "./content";
+import { useProductsCheckById, useProductsCheckMutation } from "./actions";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 import { toast } from "sonner";
 
-import { useDataLibrary,useDataLibraryId } from "./actions";
-import { CropFormType, CropSchema } from "./schema";
-import FormContent from "./content";
-
 const ActionPage = () => {
-  const form = useForm<CropFormType>({
-    resolver: zodResolver(CropSchema),
+  const form = useForm<ProductsCheckFormType>({
+    resolver: zodResolver(ProductsCheckSchema),
   });
+  const navigate = useNavigate();
   const { id } = useParams();
-  const { data } = useDataLibraryId({
-    id: id != "new" ? id : undefined,
-  });
-
-  const { mutate } = useDataLibrary({
+  const { data } = useProductsCheckById({
+    id: id != "new" ? id : undefined, });
+  const { mutate } = useProductsCheckMutation({
     onSuccess: () => {
       if (id == "new") {
         toast.success("savedSuccessfully");
       } else {
         toast.success("updatedSuccessfully");
       }
+      navigate("/crops");
     },
   });
 
@@ -31,22 +31,21 @@ const ActionPage = () => {
     if (data) {
       form.reset({
         name: data?.name || "",
-        });
+     
+      });
     }
   }, [data]);
 
   return (
     <FormProvider {...form}>
       <form
-      className="w-1/3 flex"
         onSubmit={form.handleSubmit((data) => {
           mutate({ data: data, id: id !== "new" ? id : undefined });
         })}
       >
-        <FormContent />
+        <ProductsCheckFormContent />
       </form>
     </FormProvider>
-
   );
 };
 

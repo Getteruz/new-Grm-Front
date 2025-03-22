@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 import { useDataLibrary,useDataLibraryId } from "./actions";
-import CropFormContent from "./CropContent";
+import FormContent from "./content";
 import { CropFormType, CropSchema } from "./schema";
 
 const ActionPageQrCode = () => {
@@ -38,12 +38,12 @@ const ActionPageQrCode = () => {
   return (
     <FormProvider {...form}>
       <form
-      className="w-full  max-w-[335px] h-full"
+      className="w-1/3  h-full"
         onSubmit={form.handleSubmit((data) => {
           mutate({ data: data, id: id !== "new" ? id : undefined });
         })}
       >
-        <CropFormContent />
+        <FormContent />
       </form>
     </FormProvider>
 

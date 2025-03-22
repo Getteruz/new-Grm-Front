@@ -3,11 +3,11 @@ import { Input } from '../ui/input'
 import debounce from '@/utils/debounce'
 import { useQueryState } from 'nuqs'
 
-export default function SearchInput() {
+export default function SearchInput({className}:{className?:string}) {
     const [,setSearch] = useQueryState("search")
   return (
-    <div className='flex items-center px-2.5 gap-1'>
-        <Search size={16} />
+    <div className={`${className&& className} flex items-center px-2.5 gap-[15px]`}>
+        <Search size={20} />
         <Input 
            onChange={debounce((e)=>{
             setSearch(e.target.value)

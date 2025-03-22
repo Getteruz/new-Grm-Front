@@ -39,9 +39,9 @@ export default function FormTextInput({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className={cn("flex flex-col items-start w-full", className)}>
+        <FormItem className={cn("flex gap-1 flex-col items-start w-full", className)}>
           {label && (
-            <FormLabel className="font-medium text-[#99998C] dark:text-white">
+            <FormLabel className="font-medium text-primary">
               {t(label)}
             </FormLabel>
           )}

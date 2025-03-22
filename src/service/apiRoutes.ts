@@ -7,5 +7,6 @@ export const apiRoutes = {
   parties: "/product",
   dataLibrary:'/product',
   transfers:"/transfers",
-  broned:"broned"
+  broned:"/broned",
+  productscheck:"/productscheck"
 } as const;

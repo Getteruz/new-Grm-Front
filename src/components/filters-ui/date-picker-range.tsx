@@ -31,11 +31,11 @@ const [fromDate ,setFromDate] = useQueryState<Date>('fromDate', { parse: (value)
             <Button
               variant={"outline"}
               className={cn(
-                "w-full justify-start text-left border-0 font-normal",
+                "w-full justify-start  text-left border-0 font-normal",
                 !fromDate && "text-muted-foreground"
               )}
             >
-              <CalendarIcon className="mr-2 h-4 w-4" />
+              <CalendarIcon className="mr-0 h-3 w-3" />
               {fromDate ? (
                 format(fromDate, "P")
               ) : (
@@ -65,7 +65,7 @@ const [fromDate ,setFromDate] = useQueryState<Date>('fromDate', { parse: (value)
                 !toDate && "text-muted-foreground"
               )}
             >
-              <CalendarIcon className="mr-2 h-4 w-4" />
+              <CalendarIcon className="mr-0 h-3 w-3" />
               {toDate ? (
                 format(toDate, "P")
               ) : (

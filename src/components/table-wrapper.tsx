@@ -4,6 +4,7 @@ import { TSelectOption } from "@/types";
 
 interface  iOpetion extends  TSelectOption {
     count?:number;
+    onClick?:()=>void;
 }
 
 interface ITableWrapper extends PropsWithChildren {
@@ -23,7 +24,7 @@ export default function TableWrapper({className,title,children,options,isloading
                     <Skeleton className="h-10 mb-2 rounded-none w-full" />
                 )):""}
             {options&& options?.map((e:iOpetion)=>(
-                <p key={e?.value} className={"text-foreground flex items-center justify-between cursor-pointer mb-1 text-[14px]  hover:bg-sidebar px-3  py-2.5"}>
+                <p key={e?.value} onClick={e?.onClick && e.onClick} className={"text-foreground flex items-center justify-between cursor-pointer mb-1 text-[14px]  hover:bg-sidebar px-3  py-2.5"}>
                     {e.label}
                        {e?.count && <span className="bg-[#FFA500] p-0.5 text-[10px]">+{e?.count}</span>}
                 </p>

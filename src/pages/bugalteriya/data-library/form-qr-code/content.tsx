@@ -1,7 +1,6 @@
 import FormTextInput from "@/components/forms/FormTextInput";
 import Filters from "./filters";
 import BarcodeQenerat from "@/components/barcode-generat";
-import Teminal from "@/components/teminal";
 
 export default function FormContent() {
   return (

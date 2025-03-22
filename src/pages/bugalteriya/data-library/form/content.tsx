@@ -14,8 +14,14 @@ export default function FormContent() {
             options={[
             {
                 label:"Страна",
-                value:"Страна"
+                value:"Страна",
+                onClick:()=>settype("Страна")
             },
+            {
+              label:"Партии",
+              value:"Партии",
+              onClick:()=>settype("Партии")
+          },
           ]} 
           title='Оснавные'
         />

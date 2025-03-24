@@ -1,0 +1,52 @@
+import { ColumnDef } from "@tanstack/react-table";
+
+import TableAction from "@/components/table-action";
+import { apiRoutes } from "@/service/apiRoutes";
+
+import { FilialsData } from "../type";
+import { LineBottom, LineTop } from "@/components/icons";
+
+export const FilialColumns: ColumnDef<FilialsData>[] = [
+  
+  {
+    id: "name",
+    header: "name",
+    accessorKey: "name",
+  },
+  {
+    id: "address",
+    header: "address",
+    accessorKey: "address",
+  },
+  {
+    id: "phone1",
+    header: "phone1",
+    accessorKey: "phone1",
+  },
+ 
+  {
+    header: "count",
+    cell: ({ row }) => {
+      return <p className={`flex items-center gap-[7px] ${true?  'text-[#89A143]':'text-[#E38157]'}`}>
+         {true?<LineTop/> :<LineBottom/> }  + 0.6%
+      </p>;
+    },
+  },
+
+
+  {
+    id: "actions",
+    enableHiding: true,
+    header: () => <div className="text-right">{"actions"}</div>,
+    size: 50,
+    cell: ({ row }) => {
+      return (
+        <TableAction
+          url={apiRoutes.filial}
+          ShowPreview={false}
+          id={row.original?.id}
+        />
+      );
+    },
+  },
+];

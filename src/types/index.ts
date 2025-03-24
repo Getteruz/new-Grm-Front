@@ -9,6 +9,33 @@ export type TResponse<T> = {
   };
 };
 
+export type IUserData = {
+  id: string;
+  isActive: boolean;
+  avatar: string | null;
+  firstName: string;
+  lastName: string;
+  fatherName: string;
+  login: string;
+  hired: string;
+  from: string;
+  to: string;
+  username: string | null;
+  salary: number | null;
+  email: string | null;
+  phone: string;
+  password: string;
+  isUpdated: boolean;
+  createdAt: string;
+  position: {
+    id: string;
+    title: string;
+    is_active: boolean;
+    role: number;
+  };
+  filial: string | null;
+}
+
 export type TSelectOption = {
   value: string;
   label: string;

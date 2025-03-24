@@ -4,6 +4,22 @@ import {
     WareHouseIcons,
   } from "../../components/icons";
   
+  // {
+  //   OTHER = 0,
+  //   CLIENT = 1,
+  //   SELLER = 2,
+  //   CASHIER = 3,
+  //   F_MANAGER = 4,
+  //   DEALER = 5,
+  //   D_MANAGER = 6,
+  //   W_MANAGER = 7,
+  //   I_MANAGER = 8,
+  //   M_MANAGER = 9,
+  //   ACCOUNTANT = 10,
+  //   HR = 11,
+  //   BOSS = 12
+  // }
+
 export const DataMenu = {
     admin:[
       {
@@ -73,27 +89,21 @@ export const DataMenu = {
           icons: ()=>WareHouseIcons(),
            text:"parties"
         },
-        // {
-        //   id: 5,
-        //   icons: <TimeSheetIcons />,
-        // },
-        // {
-        //   id: 6,
-        //   icons: <PersonalDetailsIcons />,
-        // },
-        // {
-        //   id: 7,
-        //   icons: <PriceIcons />,
-        // },
-        // {
-        //   id: 8,
-        //   icons: <SaleIcons />,
-        // },
-        // {
-        //   id: 9,
-        //   icons: <QrcodeIcons />,
-        // },
+        
       ],
-      user:[]
+      9:[
+        {
+          id: 1,
+          icons: ()=>HomeIcons(),
+         link: "/dashboard",
+        text:"dashboard"
+        },
+        {
+          id: 2,
+          icons: ()=>BuildingIcons(),
+          link: "/filial",
+          text:"filial"
+        },
+      ]
 }
   

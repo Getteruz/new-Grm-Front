@@ -8,5 +8,6 @@ export const apiRoutes = {
   dataLibrary:'/product',
   transfers:"/transfers",
   broned:"/broned",
-  productscheck:"/productscheck"
+  productscheck:"/productscheck",
+  filial:"/filial"
 } as const;

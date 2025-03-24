@@ -5,28 +5,25 @@ import { MyRoutes } from "./router";
 import { getAllData } from "./service/apiHelpers";
 import { apiRoutes } from "./service/apiRoutes";
 import { useAuthStore } from "./store/auth-store";
+import { useEffect } from "react";
+import { useMeStore } from "./store/me-store";
+import { IUserData } from "./types";
 
-export type userData = {
-  id: number;
-  title: string;
-  type: string;
-  description: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  socials: [];
-};
+
 
 function App() {
   const token = useAuthStore((state) => state.token);
   const location = useLocation();
+  const { setUserMe } = useMeStore();
 
-  useQuery({
+  const {data}= useQuery({
     queryKey: ["useMe", token],
-    queryFn: () => getAllData<userData, unknown>(apiRoutes.userMe),
+    queryFn: () => getAllData<IUserData, unknown>(apiRoutes.userMe),
     enabled: location.pathname != "/login" && Boolean(token),
   });
-
+  useEffect(()=>{
+   if(data) setUserMe(data)
+  },[data])
   return <MyRoutes />;
 }
 

@@ -5,19 +5,21 @@ import {
   SettingsIcons,
 } from "../../components/icons";
 import { DataMenu } from "./menu-datas";
+import { useMeStore } from "@/store/me-store";
 
 
 export default function Menu() {
   const role = "admin"
   const navigate = useNavigate();
+  const { meUser } = useMeStore();
   return (
     <div className="w-[104px] h-screen flex justify-between flex-col  border-r bg-sidebar  border-border">
       <div>
         <img
           src="/logo1.svg"
-          className={`border-b inline-block w-full ${!role? ' h-[64px]':'h-[90px]'}  border-border`}
+          className={`border-b inline-block w-full ${role? ' h-[64px]':'h-[90px]'}  border-border`}
         />
-        {DataMenu.admin?.map((e) => (
+        {DataMenu[(meUser?.position?.role || "admin") as keyof typeof DataMenu]?.map((e) => (
           <div
             onClick={() => {
               if (e?.link) {

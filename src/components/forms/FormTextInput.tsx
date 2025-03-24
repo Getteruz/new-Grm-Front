@@ -41,7 +41,7 @@ export default function FormTextInput({
       render={({ field }) => (
         <FormItem className={cn("flex gap-1 flex-col items-start w-full", className)}>
           {label && (
-            <FormLabel className="font-medium text-primary">
+            <FormLabel className="font-medium text-[12px] text-primary">
               {t(label)}
             </FormLabel>
           )}

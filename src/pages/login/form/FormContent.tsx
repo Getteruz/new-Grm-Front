@@ -3,11 +3,11 @@ import Container from "@/components/container";
 import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay"
 import React from "react";
-import { CardContainer } from "@/components/ui/3d-card";
+import { CardContainer, CardItem } from "@/components/ui/3d-card";
 
 export default function LoginFormContent() {
   const plugin = React.useRef(
-    Autoplay({ delay: 1000, stopOnInteraction: false })
+    Autoplay({ delay: 1400, stopOnInteraction: true })
   )
   return (
     <Container className="mt-[33px]">
@@ -40,7 +40,11 @@ export default function LoginFormContent() {
               onMouseLeave={plugin.current.reset}
               >
               <CarouselContent >
-                <CarouselItem> <img src={'/login/1.png'}/></CarouselItem>
+                <CarouselItem> 
+                <CardItem translateZ="40" className="mt-4">
+                  <img src={'/login/1.png'}/>
+                </CardItem>
+                  </CarouselItem>
                 <CarouselItem> <img src={'/login/2.png'}/></CarouselItem>
                 <CarouselItem> <img src={'/login/3.png'}/></CarouselItem>
                 <CarouselItem> <img src={'/login/4.png'}/></CarouselItem>

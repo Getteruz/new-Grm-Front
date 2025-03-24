@@ -775,3 +775,33 @@ export const EditIcons = ({ color }: {color:string}) => {
     </svg>
   );
 };
+  export const LineTop = () => {
+    return (
+      <svg width="28" height="31" viewBox="0 0 28 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 17L5.87868 12.1213C7.05025 10.9497 8.94975 10.9497 10.1213 12.1213L10.8787 12.8787C12.0503 14.0503 13.9497 14.0503 15.1213 12.8787L27 1M27 1H23M27 1V5" stroke="#89A143"/>
+      <path opacity="0.5" d="M5.87868 12.1213L1 17V31H27V5V1L15.1213 12.8787C13.9497 14.0503 12.0503 14.0503 10.8787 12.8787L10.1213 12.1213C8.94975 10.9497 7.05025 10.9497 5.87868 12.1213Z" fill="url(#paint0_linear_1142_22173)"/>
+      <defs>
+      <linearGradient id="paint0_linear_1142_22173" x1="14" y1="1" x2="14" y2="31" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#89A143"/>
+      <stop offset="1" stop-color="#89A143" stop-opacity="0"/>
+      </linearGradient>
+      </defs>
+      </svg>
+        );
+  };
+
+  export const LineBottom = () => {
+    return (
+      <svg width="28" height="31" viewBox="0 0 28 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path opacity="0.5" d="M22.1213 12.1213L27 17V31H1V5V1L12.8787 12.8787C14.0503 14.0503 15.9497 14.0503 17.1213 12.8787L17.8787 12.1213C19.0503 10.9497 20.9497 10.9497 22.1213 12.1213Z" fill="url(#paint0_linear_1142_22334)"/>
+      <path d="M1 1L12.8787 12.8787C14.0503 14.0503 15.9497 14.0503 17.1213 12.8787L17.8787 12.1213C19.0503 10.9497 20.9497 10.9497 22.1213 12.1213L27 17M27 17V13M27 17H23" stroke="#E38157"/>
+      <defs>
+      <linearGradient id="paint0_linear_1142_22334" x1="14" y1="1" x2="14" y2="31" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E38157"/>
+      <stop offset="1" stop-color="#E38157" stop-opacity="0"/>
+      </linearGradient>
+      </defs>
+      </svg>
+      
+        );
+  };

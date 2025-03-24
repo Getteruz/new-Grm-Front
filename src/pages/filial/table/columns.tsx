@@ -3,10 +3,10 @@ import { ColumnDef } from "@tanstack/react-table";
 import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
 
-import { FilialsData } from "../type";
+import { TData } from "../type";
 import { LineBottom, LineTop } from "@/components/icons";
 
-export const FilialColumns: ColumnDef<FilialsData>[] = [
+export const FilialColumns: ColumnDef<TData>[] = [
   
   {
     id: "name",
@@ -26,7 +26,7 @@ export const FilialColumns: ColumnDef<FilialsData>[] = [
  
   {
     header: "count",
-    cell: ({ row }) => {
+    cell: () => {
       return <p className={`flex items-center gap-[7px] ${true?  'text-[#89A143]':'text-[#E38157]'}`}>
          {true?<LineTop/> :<LineBottom/> }  + 0.6%
       </p>;

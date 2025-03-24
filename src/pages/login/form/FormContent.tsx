@@ -1,6 +1,6 @@
 import FormTextInput from "@/components/forms/FormTextInput";
 import Container from "@/components/container";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay"
 import React from "react";
 import { CardContainer } from "@/components/ui/3d-card";

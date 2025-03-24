@@ -32,25 +32,20 @@ export default function LoginFormContent() {
             Войти
           </button>
         </div>
-        <CardContainer className="inter-var">
-
-       <div className="w-full max-[613px]   h-[518px] flex items-center justify-center bg-primary" >
-        
-       <Carousel 
-          plugins={[plugin.current]}
-          className="w-full text-center m-auto"
-          onMouseEnter={plugin.current.stop}
-          onMouseLeave={plugin.current.reset}
-          >
-          <CarouselContent >
-           
-            <CarouselItem> <img src={'/login/1.png'}/></CarouselItem>
-            <CarouselItem> <img src={'/login/2.png'}/></CarouselItem>
-            <CarouselItem> <img src={'/login/3.png'}/></CarouselItem>
-            <CarouselItem> <img src={'/login/4.png'}/></CarouselItem>
-          </CarouselContent>
-        </Carousel>
-       </div>
+        <CardContainer className="inter-var p-0 w-full max-[613px]   h-[518px] flex items-center justify-center bg-primary">
+          <Carousel 
+              plugins={[plugin.current]}
+              className="w-full text-center m-auto"
+              onMouseEnter={plugin.current.stop}
+              onMouseLeave={plugin.current.reset}
+              >
+              <CarouselContent >
+                <CarouselItem> <img src={'/login/1.png'}/></CarouselItem>
+                <CarouselItem> <img src={'/login/2.png'}/></CarouselItem>
+                <CarouselItem> <img src={'/login/3.png'}/></CarouselItem>
+                <CarouselItem> <img src={'/login/4.png'}/></CarouselItem>
+              </CarouselContent>
+            </Carousel>
         </CardContainer>
 
         

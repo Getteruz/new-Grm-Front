@@ -1,9 +1,6 @@
 
-import { Bookmark, User } from "lucide-react";
-import { useQueryState } from "nuqs";
-import { useNavigate } from "react-router-dom";
+import {  User } from "lucide-react";
 
-import { BeigeIcons, BusketIcons } from "../icons";
 import { Button } from "../ui/button";
 
 interface ICarpetCard {
@@ -20,7 +17,7 @@ interface ICarpetCard {
     tags:string[];
 }
 
-export default function CarpetCashierCard({className,model,size,price,discount,count,img,colaction,tags,color}:ICarpetCard) {
+export default function CarpetCashierCard({className,model,size,price,discount,count,img,colaction,tags}:ICarpetCard) {
   return (
     <div className={`w-full flex items-center gap-4 relative p-1 rounded-[3px] bg-sidebar ${className && className}`}>
        <img style={{aspectRatio:"0.72/1"}}  src={img} width={104} height={142} alt="img"/>

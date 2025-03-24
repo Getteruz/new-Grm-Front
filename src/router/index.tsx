@@ -31,6 +31,7 @@ Object.values(dynimicImportRoutes).forEach((el) => {
 
 const nestedRoutes = (routes: IRouter[]) =>
   routes.map(({ Element, url, children, meta }: IRouter) => {
+    
     if (meta?.isAuth) {
       if (children?.length) {
         return (

@@ -6,6 +6,7 @@ import { useAuthStore } from "@/store/auth-store";
 
 import Header from "./header";
 import Menu from "./menu";
+import CashierHeader from "./cashier-header";
 
 export default function MainLayout() {
   const { token } = useAuthStore();
@@ -20,7 +21,8 @@ export default function MainLayout() {
     <SidebarProvider>
       <Menu />
       <SidebarInset>
-        <Header />
+        <CashierHeader/>
+        {/* <Header /> */}
         <div className="h-[calc(100vh-63px)] overflow-scroll" >
         <Outlet />
         </div>

@@ -8,13 +8,14 @@ import { DataMenu } from "./menu-datas";
 
 
 export default function Menu() {
+  const role = "admin"
   const navigate = useNavigate();
   return (
     <div className="w-[104px] h-screen flex justify-between flex-col  border-r bg-sidebar  border-border">
       <div>
         <img
           src="/logo1.svg"
-          className="border-b inline-block w-full h-[64px]  border-border"
+          className={`border-b inline-block w-full ${!role? ' h-[64px]':'h-[90px]'}  border-border`}
         />
         {DataMenu.admin?.map((e) => (
           <div

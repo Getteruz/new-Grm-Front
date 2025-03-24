@@ -6,6 +6,7 @@ import {
   RinigIcons,
 } from "../../components/icons";
 import { DataMenu } from "./menu-datas";
+import { User } from "lucide-react";
 
 export default function Header() {
   const location = useLocation();
@@ -27,6 +28,9 @@ export default function Header() {
       </div>
       <div>
         <DotsIcons />
+      </div>
+      <div>
+        <User/>
       </div>
       <div className="flex items-center gap-[5px]">
         <RinigIcons />

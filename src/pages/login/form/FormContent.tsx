@@ -1,7 +1,14 @@
 import FormTextInput from "@/components/forms/FormTextInput";
 import Container from "@/components/container";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay"
+import React from "react";
+import { CardContainer } from "@/components/ui/3d-card";
 
 export default function LoginFormContent() {
+  const plugin = React.useRef(
+    Autoplay({ delay: 1000, stopOnInteraction: false })
+  )
   return (
     <Container className="mt-[33px]">
       <p className="flex  items-center mb-[104px] gap-4 text-[12px] leading-[14px] text-foreground">
@@ -25,7 +32,28 @@ export default function LoginFormContent() {
             Войти
           </button>
         </div>
-        <img src={'/images/login-images.png'}/>
+        <CardContainer className="inter-var">
+
+       <div className="w-full max-[613px]   h-[518px] flex items-center justify-center bg-primary" >
+        
+       <Carousel 
+          plugins={[plugin.current]}
+          className="w-full text-center m-auto"
+          onMouseEnter={plugin.current.stop}
+          onMouseLeave={plugin.current.reset}
+          >
+          <CarouselContent >
+           
+            <CarouselItem> <img src={'/login/1.png'}/></CarouselItem>
+            <CarouselItem> <img src={'/login/2.png'}/></CarouselItem>
+            <CarouselItem> <img src={'/login/3.png'}/></CarouselItem>
+            <CarouselItem> <img src={'/login/4.png'}/></CarouselItem>
+          </CarouselContent>
+        </Carousel>
+       </div>
+        </CardContainer>
+
+        
       </div>
     </Container>
   );

@@ -1,24 +1,30 @@
 import qs from "qs";
-
 import api from "./fetchInstance";
+import { useAuthStore } from "@/store/auth-store";
+import { toast } from "sonner";
 
-// interface iError {
-//   data: null;
-//   error: {
-//     message: string;
-//     name: string;
-//     status: number;
-//   };
-// }
+interface iError {
+  status: number;
+  response: {
+    data: {
+      message: string;
+    };
+  };
+}
+
 
 export const getAllData = async <T, Q>(url: string, query?: Q): Promise<T> => {
-  const params = query
-    ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
-    : "";
+  try {
+    const params = query
+      ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
+      : "";
 
-  const res = await api.get(`${url}${params}`);
-
-  return res.data;
+    const res = await api.get(`${url}${params}`);
+    return res.data;
+  } catch (error) {
+    handleError(error as iError);
+    throw error;
+  }
 };
 
 export const getByIdData = async <T, Q>(
@@ -26,18 +32,27 @@ export const getByIdData = async <T, Q>(
   id: string,
   query?: Q
 ): Promise<T> => {
-  const params = query
-    ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
-    : "";
+  try {
+    const params = query
+      ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
+      : "";
 
-  const res = await api.get(`${url}/${id}${params}`);
-
-  return res.data;
+    const res = await api.get(`${url}/${id}${params}`);
+    return res.data;
+  } catch (error) {
+    handleError(error as iError);
+    throw error;
+  }
 };
 
 export const AddData = async <D extends object>(url: string, data: D) => {
-  const res = await api.post(url, data);
-  return res.data;
+  try {
+    const res = await api.post(url, data);
+    return res.data;
+  } catch (error) {
+    handleError(error as iError);
+    throw error;
+  }
 };
 
 export const UpdateData = async <D extends object>(
@@ -45,25 +60,39 @@ export const UpdateData = async <D extends object>(
   id: string,
   data: D
 ) => {
-  const res = await api.put(`${url}/${id}`, data);
-  return res.data;
+  try {
+    const res = await api.put(`${url}/${id}`, data);
+    return res.data;
+  } catch (error) {
+    handleError(error as iError);
+    throw error;
+  }
 };
 
 export const DeleteData = async (url: string, id: string) => {
-  const res = await api.delete(`${url}/${id}`);
-  return res.data;
+  try {
+    const res = await api.delete(`${url}/${id}`);
+    return res.data;
+  } catch (error) {
+    handleError(error as iError);
+    throw error;
+  }
 };
 
 export const UploadFile = async (data: FormData, folder: string) => {
-  const res = await api.post(`/upload/custom_upload?folder=${folder}`, data);
-  return res.data;
+  try {
+    const res = await api.post(`/upload/custom_upload?folder=${folder}`, data);
+    return res.data;
+  } catch (error) {
+    handleError(error as iError);
+    throw error;
+  }
 };
 
-// const handleError = (error: iError) => {
-//   const removeToken = useAuthStore.getState().removeToken;
-
-//   if (error.error.status == 401) {
-//     removeToken();
-//   }
-//   toast.error(error.error.message);
-// };
+const handleError = (error: iError) => {
+  const removeToken = useAuthStore.getState().removeToken;
+  if (error.status == 401) {
+    removeToken();
+  }
+  toast.error(error?.response?.data?.message);
+};

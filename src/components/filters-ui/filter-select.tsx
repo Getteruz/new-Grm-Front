@@ -11,16 +11,14 @@ export default function FilterSelect({name,placeholder,className}:iFilterSelect)
     const  [value,setValue] = useQueryState(name)
     const {t} = useTranslation()
   return (
-    <div>
-          <ShadcnSelect
-                 className={` border-none w-full ${className && className}`}
-                disabled={false}
-                value={value||undefined}
-                isLoading={false}
-                options={[{label:"label",value:"value"},{label:"label",value:"value"}]}
-                placeholder={placeholder ? t(placeholder) : "select"}
-                onChange={(e)=>setValue(e||"")}
-              />
-    </div>
+      <ShadcnSelect
+              className={` border-none  ${className && className}`}
+            disabled={false}
+            value={value||undefined}
+            isLoading={false}
+            options={[{label:"label",value:"value"},{label:"label",value:"value"}]}
+            placeholder={placeholder ? t(placeholder) : "select"}
+            onChange={(e)=>setValue(e||"")}
+          />
   )
 }

@@ -1,28 +1,32 @@
-
 import {
     BuildingIcons,
     HomeIcons,
     WareHouseIcons,
   } from "../../components/icons";
   
-
 export const DataMenu = {
     admin:[
+      {
+        id: 1,
+        icons: ()=>HomeIcons(),
+        link: "/dashboard",
+        text:"dashboard"
+      },
         {
           id: 1,
           icons: ()=>HomeIcons(),
-          link: "/dashboard",
-          text:"dashboard"
+          link: "/cashier/home",
+          text:"cashier"
         },
         {
-          id: 1,
+          id: 14,
           icons: ()=>HomeIcons(),
           link: "/transfers",
           text:"transfers"
         },
        
         {
-          id: 1,
+          id: 13,
           icons: ()=>HomeIcons(),
           link: "/crops",
           text:"crops",
@@ -45,7 +49,7 @@ export const DataMenu = {
           ]
         },
         {
-          id: 1,
+          id: 12,
           icons: ()=>HomeIcons(),
           link: "/broned",
           text:"broned"

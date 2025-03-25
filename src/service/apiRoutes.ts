@@ -9,5 +9,6 @@ export const apiRoutes = {
   transfers:"/transfers",
   broned:"/broned",
   productscheck:"/productscheck",
-  filial:"/filial"
+  filial:"/filial",
+  qrBase:"/qr-base"
 } as const;

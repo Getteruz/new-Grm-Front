@@ -8,21 +8,11 @@ import {
 import { AddData, getByIdData, UpdateData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
-import { TActionData, TQuery } from "../type";
+import {  TData, TQuery } from "../type";
 import { CropFormType } from "./schema";
 
-interface IResponse {
-  jwt: string;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-  };
-}
-
-
 interface IData {
-  options?: DefinedInitialDataOptions<TActionData>;
+  options?: DefinedInitialDataOptions<TData>;
   id: string | undefined;
   queries?: TQuery;
 }
@@ -31,24 +21,34 @@ interface IMute {
   id: string | undefined;
 }
 
+
 export const useDataLibrary = ({
   ...options
-}: UseMutationOptions<IResponse, Error, IMute, unknown>) =>
+}: UseMutationOptions<object, Error, IMute, unknown>) =>
   useMutation({
     ...options,
     mutationFn: async ({ data, id }) => {
-     
+      const costomData: object = {
+        ...data,
+        country: data?.country?.value,
+        collection: data?.collection?.value,
+        size: data?.size?.value,
+        shape:data?.shape?.value,
+        style:data?.style?.value,
+        color:data?.color?.value,
+        model:data?.model?.value,
+      };
       if (id)
-        return await UpdateData<CropFormType>(apiRoutes.dataLibrary, id, data);
-      return await AddData<CropFormType>(apiRoutes.dataLibrary, data);
+        return await UpdateData<CropFormType>(apiRoutes.qrBase, id, costomData as CropFormType);
+      return await AddData<CropFormType>(apiRoutes.qrBase, costomData as CropFormType);
     },
   });
 
 export const useDataLibraryId = ({ options, id, queries }: IData) =>
   useQuery({
     ...options,
-    queryKey: [apiRoutes.dataLibrary, id],
+    queryKey: [apiRoutes.qrBase, id],
     enabled: Boolean(id),
     queryFn: () =>
-      getByIdData<TActionData, TQuery>(apiRoutes.crops, id || "", queries),
+      getByIdData<TData, TQuery>(apiRoutes.qrBase, id || "", queries),
   });

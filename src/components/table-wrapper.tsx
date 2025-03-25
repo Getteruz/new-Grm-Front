@@ -29,7 +29,7 @@ export default function TableWrapper({className,isPending,title,isAdd,children,o
         <h4 className="text-[14px] font-semibold text-foreground">{title}</h4>
         {isAdd ?<>
         {
-          isPending ? <Loader className="animation-split" />:<Button type="submit" className="border-none" variant={"outline"}><Plus/></Button>
+          isPending ? <Loader className="animate-spin" />:<Button type="submit" className="border-none" variant={"outline"}><Plus/></Button>
         }</>:""}
       </div>
       {children}

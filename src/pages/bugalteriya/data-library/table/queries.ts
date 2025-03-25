@@ -13,10 +13,10 @@ interface IData {
 const useDataLibrary = ({ options, queries }: IData) =>
   useQuery({
     ...options,
-    queryKey: [apiRoutes.dataLibrary, queries],
+    queryKey: [apiRoutes.qrBase, queries],
     queryFn: () =>
       getAllData<TResponse<TData>,TQuery>(
-        apiRoutes.dataLibrary,
+        apiRoutes.qrBase,
         queries
       ),
   });

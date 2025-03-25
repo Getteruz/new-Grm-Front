@@ -5,7 +5,7 @@ import TableWrapper from "@/components/table-wrapper";
 import {  useQuery } from "@tanstack/react-query";
 import { getAllData } from "@/service/apiHelpers";
 import { TResponse } from "@/types";
-import { TData } from "../type";
+import { TActionData } from "../type";
 import { parseAsString, useQueryState } from "nuqs";
 import FormSelectInput from "@/components/forms/FormSelect";
 
@@ -15,7 +15,7 @@ export default function FormContent({isPending}:{isPending:boolean}) {
   const {data,isLoading} =  useQuery({
     queryKey: [type],
     queryFn: () =>
-      getAllData<TResponse<TData>,object>(`/${type}`),
+      getAllData<TResponse<TActionData>,object>(`/${type}`),
     select:(res)=>({
       items: res?.items.map(item=>({value:item?.id,label:item?.title})),
       meta:res?.meta

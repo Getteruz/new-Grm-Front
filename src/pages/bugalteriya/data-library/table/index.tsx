@@ -21,6 +21,7 @@ export default function Page() {
     },
   });
 
+  console.log(data)
   return (
     <div className="flex w-full">
       {

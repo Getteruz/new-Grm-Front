@@ -43,7 +43,7 @@ export default function FormFileUpload({
       const file = e.target.files[0];
       const formData = new FormData();
       formData.append("file", file);
-      await UploadFile(formData, folder)
+      await UploadFile(`url${folder}`,formData)
         .then((data) => {
           field.onChange({ id: data.media.id, aws_path: data.media.aws_path });
         })

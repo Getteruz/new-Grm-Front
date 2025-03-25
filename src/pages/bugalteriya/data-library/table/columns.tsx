@@ -8,59 +8,53 @@ import { TData } from "../type";
 export const Columns: ColumnDef<TData>[] = [
  
   {
-    id: "code",
     header: "code",
     accessorKey: "code",
   },
 
   {
-    header: "collection",
+    header: "country",
     cell: ({ row }) => {
-      return <p>{row.original.model?.collection?.title}</p>;
+      return <p>{row.original?.country?.title}</p>;
     },
   },
   {
-    header: "model",
+    header: "collection",
     cell: ({ row }) => {
-      return <p>{row.original.model?.title}</p>;
+      return <p>{row.original?.collection?.title}</p>;
     },
   },
   {
     header: "size",
     cell: ({ row }) => {
-      return <p>{row.original.size}</p>;
+      return <p>{row.original?.model?.title}</p>;
     },
   },
   {
-    header: "count",
+    header: "isMetric",
     cell: ({ row }) => {
-      return <p>{row.original.count}шт</p>;
+      return <p>{row.original?.isMetric}</p>;
     },
   },
   {
     header: "shape",
     cell: ({ row }) => {
-      return <p>{row.original.shape}</p>;
+      return <p>{row.original.shape.title}</p>;
+    },
+  },
+  {
+    header: "size",
+    cell: ({ row }) => {
+      return <p>{row.original.size?.x}X{row.original.size?.y}</p>;
     },
   },
   {
     header: "style",
     cell: ({ row }) => {
-      return <p>{row.original.style}</p>;
+      return <p>{row.original.style?.title}</p>;
     },
   },
-  {
-    header: "color",
-    cell: ({ row }) => {
-      return <p>{row.original.color?.title}</p>;
-    },
-  },
-  {
-    header: "price",
-    cell: ({ row }) => {
-      return <p>{row.original.price} $</p>;
-    },
-  },
+ 
   {
     id: "actions",
     enableHiding: true,

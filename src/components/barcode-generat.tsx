@@ -5,11 +5,11 @@ export default function BarcodeQenerat() {
   return (
     <div className="w-full">
         <div className="bg-sidebar border-y border-border  h-[64px] rounded-t-sm flex   ">
-            <Button className="h-full border-r-1 text-primary  justify-center font-[16px] gap-1.5  border-y-0  border-l-0" 
+            <Button className="h-full w-1/2 border-r-1 text-primary  justify-center font-[16px] gap-1.5  border-y-0  border-l-0" 
             variant={"outline"} > 
             Штрих-код
             </Button>
-            <Button className="h-full border-r-1 text-primary justify-center font-[16px] gap-1.5  border-y-0  border-l-0" 
+            <Button className="h-full  w-1/2  border-r-1 text-primary justify-center font-[16px] gap-1.5  border-y-0  border-l-0" 
             variant={"outline"} > 
             QR-код
             </Button>

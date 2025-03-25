@@ -92,9 +92,9 @@ export const DeleteData = async (url: string, id: string) => {
   }
 };
 
-export const UploadFile = async (data: FormData, folder: string) => {
+export const UploadFile = async (url:string,data: FormData) => {
   try {
-    const res = await api.post(`/upload/custom_upload?folder=${folder}`, data);
+    const res = await api.post(url, data);
     return res.data;
   } catch (error) {
     handleError(error as iError);
@@ -102,10 +102,12 @@ export const UploadFile = async (data: FormData, folder: string) => {
   }
 };
 
+
 const handleError = (error: iError) => {
   const removeToken = useAuthStore.getState().removeToken;
   if (error.status == 401) {
     removeToken();
   }
+  console.log(error?.response)
   toast.error(error?.response?.data?.message);
 };

@@ -3,6 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import TableAction from "@/components/table-action";
 
 import { TData } from "../type";
+import { apiRoutes } from "@/service/apiRoutes";
 
 
 export const Columns: ColumnDef<TData>[] = [
@@ -63,8 +64,7 @@ export const Columns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       return (
         <TableAction
-          url={'/bugalteriya/data-library'}
-          ShowDelete={false}
+          url={apiRoutes.qrBase}
           ShowPreview
           id={row.original?.id}
         />

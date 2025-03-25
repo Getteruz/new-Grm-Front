@@ -5,6 +5,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
 import { LineBottom, LineTop } from "@/components/icons";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
 export const FilialColumns: ColumnDef<TData>[] = [
   
@@ -43,7 +44,11 @@ export const FilialColumns: ColumnDef<TData>[] = [
           url={apiRoutes.filial}
           ShowPreview={false}
           id={row.original?.id}
-        />
+        >
+            <DropdownMenuItem >
+              Запросить переучёт
+            </DropdownMenuItem>
+        </TableAction>
       );
     },
   },

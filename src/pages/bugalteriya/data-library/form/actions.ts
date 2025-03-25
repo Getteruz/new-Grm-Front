@@ -5,7 +5,7 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 
-import { AddData, getByIdData, UpdateData } from "@/service/apiHelpers";
+import { AddData, getByIdData, UpdatePatchData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { TActionData, TQuery } from "../type";
@@ -20,13 +20,13 @@ interface IResponse {
   };
 }
 
-
 interface IData {
   options?: DefinedInitialDataOptions<TActionData>;
   id: string | undefined;
   queries?: TQuery;
 }
 interface IMute {
+  url:string;
   data: CropFormType;
   id: string | undefined;
 }
@@ -36,11 +36,10 @@ export const useDataLibrary = ({
 }: UseMutationOptions<IResponse, Error, IMute, unknown>) =>
   useMutation({
     ...options,
-    mutationFn: async ({ data, id }) => {
-     
+    mutationFn: async ({ url,data, id }) => {
       if (id)
-        return await UpdateData<CropFormType>(apiRoutes.dataLibrary, id, data);
-      return await AddData<CropFormType>(apiRoutes.dataLibrary, data);
+        return await UpdatePatchData<CropFormType>(url, id, data);
+      return await AddData<CropFormType>(url, data);
     },
   });
 
@@ -52,3 +51,5 @@ export const useDataLibraryId = ({ options, id, queries }: IData) =>
     queryFn: () =>
       getByIdData<TActionData, TQuery>(apiRoutes.crops, id || "", queries),
   });
+
+

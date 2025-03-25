@@ -11,7 +11,7 @@ interface iTimePicker{
   onChange: (time:string) => void;
   value: string;
 }
-const TimePicker = ({onChange,value='00:00'}:iTimePicker) => {
+const TimePicker = ({onChange,value=''}:iTimePicker) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   // Generate hours and minutes arrays

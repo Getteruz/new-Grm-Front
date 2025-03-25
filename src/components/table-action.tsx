@@ -30,6 +30,7 @@ export default function TableAction({
   ShowPreview,
   ShowUpdate = true,
   ShowDelete = true,
+  children,
   id,
 }: {
   url: string;
@@ -37,6 +38,7 @@ export default function TableAction({
   ShowUpdate?: boolean;
   ShowDelete?: boolean;
   id: string;
+  children?: React.ReactNode;
 }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -115,6 +117,7 @@ export default function TableAction({
           ) : (
             ""
           )}
+          {children}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

@@ -70,10 +70,10 @@ export default function FormComboboxDemoInput<IData, TQuery>({
     select: (res) => ({
       data: res?.items.map((item) => ({
         value: fieldNames?.value
-          ? (item as Record<string, string>)[fieldNames.value]
+          ? (item as Record<string, string>)[fieldNames?.value]
           : String(item),
         label: fieldNames?.label
-          ? (item as Record<string, string>)[fieldNames.label]
+          ? (item as Record<string, string>)[fieldNames?.label]
           : String(item),
       })),
       meta: res.meta,

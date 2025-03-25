@@ -3,8 +3,9 @@ import { z } from "zod";
 import { requiredStringField } from "@/utils/schemaHelper";
 
 export const CropSchema = z.object({
-  name: requiredStringField(),
-  
+  title: requiredStringField(),
+  code:z.string().optional(),
+  collection: z.string().optional(),
 });
 
 export type CropFormType = z.infer<typeof CropSchema>;

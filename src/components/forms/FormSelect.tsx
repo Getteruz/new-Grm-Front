@@ -24,6 +24,7 @@ interface Props<TQuery> {
   className?: string;
   disabled?: boolean;
   queries?: TQuery;
+  classNameChild?:string;
   fieldNames?: {
     value: string;
     label: string;
@@ -39,6 +40,7 @@ export default function FormSelectInput<IData, TQuery>({
   disabled,
   queries,
   fieldNames,
+  classNameChild,
 }: Props<TQuery>) {
   const { control } = useFormContext();
   const { t } = useTranslation();
@@ -84,7 +86,8 @@ export default function FormSelectInput<IData, TQuery>({
                 options={data?.data || []}
                 placeholder={placeholder ? t(placeholder) : ""}
                 onChange={field.onChange}
-                className="border-none"
+                // className="border-none"
+                className={cn("w-full h-[42px]", classNameChild)}
               />
             </FormControl>
             <FormMessage className="text-sm text-red-500" />

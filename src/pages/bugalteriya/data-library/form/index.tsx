@@ -7,6 +7,8 @@ import { toast } from "sonner";
 import { useDataLibrary,useDataLibraryId } from "./actions";
 import { CropFormType, CropSchema } from "./schema";
 import FormContent from "./content";
+import { parseAsString, useQueryState } from "nuqs";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ActionPage = () => {
   const form = useForm<CropFormType>({
@@ -16,10 +18,18 @@ const ActionPage = () => {
   const { data } = useDataLibraryId({
     id: id != "new" ? id : undefined,
   });
+  const [type] = useQueryState("type",parseAsString.withDefault('country'))
+  const [idMadal,setidMadal] = useQueryState("idMadal",parseAsString.withDefault('new'))
+const queryClient = useQueryClient()
 
-  const { mutate } = useDataLibrary({
+  const { mutate ,isPending} = useDataLibrary({
     onSuccess: () => {
-      if (id == "new") {
+      queryClient.invalidateQueries({ queryKey: [type] });
+      form.reset({
+        title:''
+      })
+      setidMadal("new")
+      if (idMadal == "new") {
         toast.success("savedSuccessfully");
       } else {
         toast.success("updatedSuccessfully");
@@ -27,23 +37,29 @@ const ActionPage = () => {
     },
   });
 
+  useEffect(()=>{
+    form.reset({
+      title:''
+    })
+    setidMadal("new")
+  },[type])
+
   useEffect(() => {
     if (data) {
       form.reset({
-        name: data?.name || "",
+        title: data?.title || "",
         });
     }
   }, [data]);
-
   return (
     <FormProvider {...form}>
       <form
       className="w-1/3 flex"
         onSubmit={form.handleSubmit((data) => {
-          mutate({ data: data, id: id !== "new" ? id : undefined });
+          mutate({url:`/${type}`, data: data, id: idMadal !== "new" ? idMadal : undefined });
         })}
       >
-        <FormContent />
+        <FormContent isPending={isPending} />
       </form>
     </FormProvider>
 

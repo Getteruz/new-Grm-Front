@@ -13,6 +13,7 @@ export type TData = {
   count: string;
   shape: string;
   style: string;
+  title: string;
   color: {
     id: string;
     title: string;
@@ -22,7 +23,7 @@ export type TData = {
 };
 
 export type TActionData ={
-  name:string
+  title:string;
 }
 
 export type TQuery = {

@@ -1,6 +1,10 @@
 import  { PropsWithChildren } from "react";
 import { Skeleton } from "./ui/skeleton";
 import { TSelectOption } from "@/types";
+import { Button } from "./ui/button";
+import {  Edit2, Loader, Plus } from "lucide-react";
+import { useFormContext } from "react-hook-form";
+import { parseAsString, useQueryState } from "nuqs";
 
 interface  iOpetion extends  TSelectOption {
     count?:number;
@@ -12,12 +16,23 @@ interface ITableWrapper extends PropsWithChildren {
     className?:string;
     options?:iOpetion[];
     isloading?:boolean;
+    isAdd?:boolean;
+    isPending?:boolean ;
   }
   
-export default function TableWrapper({className,title,children,options,isloading}:ITableWrapper) {
+export default function TableWrapper({className,isPending,title,isAdd,children,options,isloading}:ITableWrapper) {
+  const { setValue} = useFormContext();
+  const [,setidMadal] = useQueryState("idMadal",parseAsString.withDefault('new'))
   return (
     <div className={`${className && className} w-full  `}>
-        <h4 className="text-[14px] border-border border-solid border-b p-[21.22px] bg-sidebar font-semibold text-foreground">{title}</h4>
+      <div className="w-full flex h-[64px] items-center justify-between border-border border-solid border-b p-[21.22px] bg-sidebar">
+        <h4 className="text-[14px] font-semibold text-foreground">{title}</h4>
+        {isAdd ?<>
+        {
+          isPending ? <Loader className="animation-split" />:<Button type="submit" className="border-none" variant={"outline"}><Plus/></Button>
+        }</>:""}
+      </div>
+      {children}
         <div className="p-3">
             {
               isloading ?  Array.from({ length: 4 })?.map(()=>(
@@ -27,9 +42,13 @@ export default function TableWrapper({className,title,children,options,isloading
                 <p key={e?.value} onClick={e?.onClick && e.onClick} className={"text-foreground flex items-center justify-between cursor-pointer mb-1 text-[14px]  hover:bg-sidebar px-3  py-2.5"}>
                     {e.label}
                        {e?.count && <span className="bg-[#FFA500] p-0.5 text-[10px]">+{e?.count}</span>}
+                       {isAdd  && <span onClick={()=>{
+                        setidMadal(e?.value)
+                        setValue("title",e?.label)
+                        }} className=" p-0.5 text-[10px]"><Edit2 size={14}/></span>}
                 </p>
             ))}
-            {children}
+          
         </div>
     </div>
   )

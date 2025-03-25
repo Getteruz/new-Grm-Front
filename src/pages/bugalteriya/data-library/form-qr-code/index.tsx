@@ -30,7 +30,7 @@ const ActionPageQrCode = () => {
   useEffect(() => {
     if (data) {
       form.reset({
-        name: data?.name || "",
+        name: data?.title || "",
         });
     }
   }, [data]);

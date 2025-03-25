@@ -118,6 +118,13 @@ export const DataMenu = {
           link: "/deller",
           text:"deller"
         },
+        {
+          id: 4,
+          icons: ()=>UfoBottom(),
+          link: "/data-library",
+          text:"data-library"
+        },
+        
       ]
 }
   

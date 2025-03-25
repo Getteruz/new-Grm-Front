@@ -2,12 +2,12 @@ import Page from "./table";
 
 const Route = [
   {
-    url: "/bugalteriya/data-library",
+    url: "/data-library",
     Element: Page,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {
-    url: "/bugalteriya/data-library/:id",
+    url: "/data-library/:id",
     Element: Page,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },

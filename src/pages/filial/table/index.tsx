@@ -16,7 +16,7 @@ export default function Page() {
     queries: {
       limit,
       page,
-      search: search || undefined,
+      title: search || undefined,
     },
   });
 

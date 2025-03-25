@@ -1,6 +1,8 @@
 import {
     BuildingIcons,
     HomeIcons,
+    ReportBottom,
+    UfoBottom,
     WareHouseIcons,
   } from "../../components/icons";
   
@@ -100,9 +102,21 @@ export const DataMenu = {
         },
         {
           id: 2,
+          icons: ()=>ReportBottom(),
+          link: "/report",
+          text:"report"
+        },
+        {
+          id: 3,
           icons: ()=>BuildingIcons(),
           link: "/filial",
           text:"filial"
+        },
+        {
+          id: 4,
+          icons: ()=>UfoBottom(),
+          link: "/deller",
+          text:"deller"
         },
       ]
 }

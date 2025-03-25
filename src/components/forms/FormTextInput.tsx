@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input, InputProps } from "../ui/input";
+import { PhoneInput } from "./phone-input";
 
 interface Props extends InputProps {
   name: string;
@@ -46,6 +47,13 @@ export default function FormTextInput({
             </FormLabel>
           )}
           <FormControl className="w-full">
+           { type== "tel"?
+            <PhoneInput
+            placeholder={placeholder ? t(placeholder) : ""}
+            onChange={field.onChange}
+            value={field.value}
+            />
+           :
             <Input
               type={type ?? "text"}
               className={cn("flex flex-col items-start w-full", classNameInput)}
@@ -63,7 +71,7 @@ export default function FormTextInput({
                 }
               }}
               {...props}
-            />
+            />}
           </FormControl>
           <FormMessage className="text-sm text-red-500" />
         </FormItem>

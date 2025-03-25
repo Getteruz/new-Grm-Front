@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { MoreHorizontal, Trash2 } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -95,19 +95,17 @@ export default function TableAction({
                     {t("deleteConfir")}
                   </DialogTitle>
                 </DialogHeader>
-                <div className="text-center">
-                  <Trash2 size={70} className="m-auto" color="red" />
-                </div>
-                <DialogFooter className="sm:justify-start  flex gap-2">
-                  <DialogClose className="w-full " asChild>
-                    <Button type="button" variant="secondary">
+               
+                <DialogFooter className="sm:justify-start  w-full flex gap-2">
+                  <DialogClose  asChild>
+                    <Button type="button" className="w-1/2" variant="secondary">
                       {t("close")}
                     </Button>
                   </DialogClose>
                   <Button
                     variant={"destructive"}
                     onClick={() => mutate()}
-                    className="w-full"
+                    className="w-1/2"
                   >
                     {t("yes")}
                   </Button>

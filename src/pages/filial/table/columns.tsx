@@ -32,8 +32,6 @@ export const FilialColumns: ColumnDef<TData>[] = [
       </p>;
     },
   },
-
-
   {
     id: "actions",
     enableHiding: true,

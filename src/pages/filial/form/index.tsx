@@ -8,6 +8,8 @@ import { FilialFormType, FilialSchema } from "./schema";
 import { useQueryState } from "nuqs";
 import FormContent from "./content";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useQueryClient } from "@tanstack/react-query";
+import { apiRoutes } from "@/service/apiRoutes";
 
 const ActionPage = () => {
   const form = useForm<FilialFormType>({
@@ -20,18 +22,35 @@ const ActionPage = () => {
   const { data } = useFilialById({
     id: id != "new" ? id || undefined : undefined,
   });
+  const queryClient = useQueryClient();
+  const resetFrom =()=>{
+    form.reset({
+      name: "",
+      title: "",
+      telegram: "",
+      address: "",
+      addressLink: "",
+      landmark: "",
+      phone1:  "",
+      startWorkTime:"",
+      endWorkTime:"",
+      type:"filial"
+    });
+  }
   const { mutate } = useFilialMutation({
     onSuccess: () => {
+      resetFrom()
+      setId(null)
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.filial] });
       if (id == "new") {
         toast.success("savedSuccessfully");
       } else {
         toast.success("updatedSuccessfully");
       }
-      setId(null)
+      
+     
     },
   });
-
-  console.log(form.formState.errors)
 
   useEffect(() => {
     if (data) {
@@ -45,18 +64,15 @@ const ActionPage = () => {
         phone1: data?.phone1 || "",
         startWorkTime:data?.startWorkTime||"",
         endWorkTime:data?.endWorkTime||"",
-        type:"filial"
+        type: "filial"
       });
     }
   }, [data]);
-
-
   return (
     <Dialog  open={Boolean(id)} onOpenChange={(isopen:boolean)=>{
       if(!isopen){
-        console.log("hello")
         setId(null)
-        form.reset()
+        resetFrom()
       }
       }}>
         <DialogContent className="sm:max-w-[796px]">
@@ -67,8 +83,6 @@ const ActionPage = () => {
             })}
           >
             <FormContent />
-          
-        
           </form>
         </FormProvider>
         </DialogContent>

@@ -36,13 +36,12 @@ export const useFilialMutation = ({
   useMutation({
     ...options,
     mutationFn: async ({ data, id }) => {
-      const costomData: any = {
-        ...data,
-        // main_image: data?.main_image?.id,
-      };
+      if(id){
+        delete data["type"]
+      }
       if (id)
-        return await UpdatePatchData<FilialFormType>(apiRoutes.filial, id, costomData);
-      return await AddData<FilialFormType>(apiRoutes.filial, costomData);
+        return await UpdatePatchData<FilialFormType>(apiRoutes.filial, id, data);
+      return await AddData<FilialFormType>(apiRoutes.filial, data);
     },
   });
 

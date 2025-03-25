@@ -16,7 +16,7 @@ export type TData = {
 }
 
 export type FilialsQuery = {
-  search?: string;
+  title?: string;
   limit: number;
   page: number;
 };

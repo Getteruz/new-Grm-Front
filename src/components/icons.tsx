@@ -805,3 +805,21 @@ export const EditIcons = ({ color }: {color:string}) => {
       
         );
   };
+  export const ReportBottom = () => {
+    return (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 5H6C5.46957 5 4.96086 5.21071 4.58579 5.58579C4.21071 5.96086 4 6.46957 4 7V19C4 19.5304 4.21071 20.0391 4.58579 20.4142C4.96086 20.7893 5.46957 21 6 21H11.697M8 5C8 6.10457 8.89543 7 10 7H12C13.1046 7 14 6.10457 14 5M8 5C8 3.89543 8.89543 3 10 3H12C13.1046 3 14 3.89543 14 5M18 14V18H22M18 14C15.7909 14 14 15.7909 14 18C14 20.2091 15.7909 22 18 22C20.2091 22 22 20.2091 22 18M18 14C20.2091 14 22 15.7909 22 18M18 11V7C18 6.46957 17.7893 5.96086 17.4142 5.58579C17.0391 5.21071 16.5304 5 16 5H14M8 11H12M8 15H11" stroke="#5D5D53" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      
+      
+        );
+  };
+  export const UfoBottom = () => {
+    return (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.95 9.01C19.97 9.749 22 11.133 22 12.724C22 15.091 17.52 17 12 17C6.48 17 2 15.091 2 12.724C2 11.134 4.04 9.739 7.07 9M15 17L17 20M8.5 17L7 20M12 14H12.01M7 13H7.01M17 13H17.01M7 9C7 10.105 9.239 11 12 11C14.761 11 17 10.105 17 9V8.965C17 6.223 14.761 4 12 4C9.239 4 7 6.223 7 8.965V9Z" stroke="#5D5D53" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      
+      
+        );
+  };

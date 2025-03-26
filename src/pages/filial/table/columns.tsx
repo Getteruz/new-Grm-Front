@@ -6,6 +6,8 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { TData } from "../type";
 import { LineBottom, LineTop } from "@/components/icons";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { UpdatePatchData } from "@/service/apiHelpers";
+import { toast } from "sonner";
 
 export const FilialColumns: ColumnDef<TData>[] = [
   
@@ -42,12 +44,17 @@ export const FilialColumns: ColumnDef<TData>[] = [
       return (
         <TableAction
           url={apiRoutes.filial}
-          ShowPreview={false}
+          ShowPreview={row.original?.need_get_report}
           id={row.original?.id}
         >
-            <DropdownMenuItem >
+           {row.original?.need_get_report ?<></>
+            :  <DropdownMenuItem  onClick={()=>{
+               UpdatePatchData('/filial/maker-report', row.original?.id,{})
+              .then(()=>toast.success('Переучёт sended'))
+              .catch(()=>toast.error("something wend from"))
+            }}>
               Запросить переучёт
-            </DropdownMenuItem>
+            </DropdownMenuItem>}
         </TableAction>
       );
     },

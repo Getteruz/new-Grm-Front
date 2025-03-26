@@ -12,12 +12,14 @@ import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useFormContext } from "react-hook-form";
 
 
 export default function FormContent({isPending}:{isPending:boolean}) {
   const [type,settype] = useQueryState("type",parseAsString.withDefault('country'))
   const {t} = useTranslation()
   const queryClient = useQueryClient()
+  const { setValue} = useFormContext();
   const {data,isLoading} =  useQuery({
     queryKey: [type],
     queryFn: () =>
@@ -107,6 +109,7 @@ const { mutate } = useMutation({
           isloading={isLoading}
           className='border-r border-border'
           title={type || ""}
+          setValue={setValue}
           options={data?.items?.map((e)=>(
             {
               onDelete:()=>mutate(e?.value),

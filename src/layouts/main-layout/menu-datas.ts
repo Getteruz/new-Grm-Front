@@ -88,6 +88,7 @@ export const DataMenu = {
            text:"bugalteriya"
         
          },
+         
         {
           id: 4,
           link: "/parties",
@@ -95,6 +96,41 @@ export const DataMenu = {
            text:"parties"
         },
         
+      ],
+      4:[
+       
+        {
+          id: 1,
+          icons: ()=>HomeIcons(),
+         link: "/monitoring",
+        text:"monitoring"
+        },
+        
+         {
+          id: 2,
+          icons: ()=>BuildingIcons(),
+          link: "/product",
+           text:"product"
+        },
+        {
+          id: 3,
+          icons: ()=>BronedIcons(),
+          link: "/broned",
+          text:"broned"
+        },
+        {
+          id: 14,
+          icons: ()=>HomeIcons(),
+          link: "/transfers",
+          text:"transfers"
+        },
+       
+        {
+          id: 4,
+          icons: ()=>DataLibrary(),
+          link: "/data-library",
+          text:"data-library"
+        },
       ],
       9:[
         {

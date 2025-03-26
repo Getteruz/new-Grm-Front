@@ -33,7 +33,9 @@ export type IUserData = {
     is_active: boolean;
     role: number;
   };
-  filial: string | null;
+  filial: {
+    need_get_report:boolean
+  };
 }
 
 export type TSelectOption = {

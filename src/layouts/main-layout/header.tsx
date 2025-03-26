@@ -8,15 +8,27 @@ import {
 import { DataMenu } from "./menu-datas";
 import { User } from "lucide-react";
 import { useMeStore } from "@/store/me-store";
+import { ReactElement } from 'react';
 
+type Tmenu = {
+  id: number;
+  icons: () => ReactElement;
+  link: string;
+  text: string;
+  items: {
+    id: number;
+    link: string;
+    text: string;
+  }[];
+}
 export default function Header() {
   const location = useLocation();
   const { meUser } = useMeStore();
-  const oneMenu = DataMenu?.[(meUser?.position?.role || "admin") as keyof typeof DataMenu].find(e=>location.pathname.includes(e?.link))
+  const oneMenu = DataMenu?.[meUser?.position?.role as keyof typeof DataMenu]?.find(e=>location.pathname.includes(e?.link))
   return (
     <div className="flex items-center gap-5 w-full h-[64px] px-[51px] py-[23px] bg-sidebar border-b border-border">
       <p className="flex mr-[auto]  items-center gap-4 text-[14px] leading-[16px] text-foreground">
-      { oneMenu?.items?.length ? oneMenu?.items.map(e=>(
+      { (oneMenu as Tmenu)?.items?.length ? (oneMenu as Tmenu)?.items.map(e=>(
         <Link key={e?.id} className={e?.link ==location.pathname ? '':'opacity-60' } to={e?.link}>{e.text}</Link>
       )):
       <Link to={oneMenu?.link || '/'}>{oneMenu?.text}</Link>

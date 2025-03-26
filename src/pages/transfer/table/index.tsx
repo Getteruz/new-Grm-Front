@@ -10,9 +10,6 @@ export default function Page() {
   const { 
     data, 
     isLoading, 
-    fetchNextPage, 
-    hasNextPage, 
-    isFetchingNextPage 
   } = useTransfers({});
 
   const flatData = data?.pages?.flatMap(page => page?.items || []) || [];
@@ -43,9 +40,9 @@ export default function Page() {
           isLoading={isLoading}
           columns={paymentColumns}
           data={flatData}
-          fetchNextPage={fetchNextPage}
-          hasNextPage={hasNextPage ?? false}
-          isFetchingNextPage={isFetchingNextPage}
+          // fetchNextPage={fetchNextPage}
+          // hasNextPage={hasNextPage ?? false}
+          // isFetchingNextPage={isFetchingNextPage}
         />
       </div>
     </div>

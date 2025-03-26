@@ -13,6 +13,7 @@ export type TData = {
   isActive: boolean;
   hickCompleted: boolean;
   type: 'filial';
+  need_get_report:boolean
 }
 
 export type FilialsQuery = {

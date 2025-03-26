@@ -3,7 +3,7 @@ import { Skeleton } from "./ui/skeleton";
 import { TSelectOption } from "@/types";
 import { Button } from "./ui/button";
 import {  Edit2, Loader, Plus, Trash2 } from "lucide-react";
-import { useFormContext } from "react-hook-form";
+import {  UseFormSetValue } from "react-hook-form";
 import { parseAsString, useQueryState } from "nuqs";
 
 interface  iOpetion extends  TSelectOption {
@@ -20,10 +20,11 @@ interface ITableWrapper extends PropsWithChildren {
     isloading?:boolean;
     isAdd?:boolean;
     isPending?:boolean ;
+    setValue?:UseFormSetValue<any>;
   }
   
-export default function TableWrapper({className,isPending,title,isAdd,children,options,isloading}:ITableWrapper) {
-  const { setValue} = useFormContext();
+export default function TableWrapper({className,isPending,title,setValue,isAdd,children,options,isloading}:ITableWrapper) {
+
   const [,setidMadal] = useQueryState("idMadal",parseAsString.withDefault('new'))
   return (
     <div className={`${className && className} w-full  `}>
@@ -52,7 +53,7 @@ export default function TableWrapper({className,isPending,title,isAdd,children,o
                          </span>
                         <span onClick={()=>{
                         setidMadal(e?.value)
-                        setValue("title",e?.label)
+                        if(setValue) setValue("title",e?.label)
                         }} className=" p-0.5 text-[10px]"><Edit2 size={14}/></span>
                        </div>}
                 </p>

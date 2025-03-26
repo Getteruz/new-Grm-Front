@@ -2,15 +2,11 @@ import Page from "./table";
 
 const Route = [
   {
-    url: "/filial",
+    url: "/re-register",
     Element: Page,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
-  {
-    url: "/filial/:id",
-    Element: Page,
-    meta: { isAuth: true, role: new Set(["admin"]) },
-  },
+ 
 ];
 
 export default Route;

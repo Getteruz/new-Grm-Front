@@ -1,35 +1,21 @@
+import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
+import FilterSelect from "@/components/filters-ui/filter-select";
+import { Button } from "@/components/ui/button";
+import {   FileOutput, Plus } from "lucide-react";
 import { useQueryState } from "nuqs";
-import React from "react";
-
-import { File1Icons, FileIcons, PlusIcons, SearchAIIcons } from "@/components/icons";
-import debounce from "@/utils/debounce";
 
 export default function Filters() {
-  const [, setSearch] = useQueryState("search");
   const [, setId] = useQueryState("id");
   return (
-  
-      <div className="pl-[51px] pr-[41px] py-[10px] flex gap-2 items-center border-b border-[#C3C3BB]">
-      <SearchAIIcons />
-      <input
-       onChange={debounce(
-        (e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value),
-        500
-      )}
-        placeholder={ "search"}
-        className="text-[16px] w-full leading-[19px] text-foreground"
-      />
-
-      <div className="border cursor-pointer border-[#C3C3BB] hover:bg-[#D6D6CD] active:bg-transparent p-[14px]">
-        <FileIcons/>
-      </div>
-      <div className="border cursor-pointer border-[#C3C3BB] hover:bg-[#D6D6CD] active:bg-transparent p-[14px]">
-        <File1Icons />
-      </div>
-      <button onClick={() => setId("new")} className="gap-[1.5px] cursor-pointer ml-1 py-[14px] px-[38px] text-[16px] leading-[19px] bg-[#D7FE62] flex items-center justify-center">
-        <PlusIcons />
-        Добавить
-      </button>
-      </div>
+    <div className="bg-sidebar w-full border-border border-b  px-[51px] h-[64px] rounded-t-sm flex   ">
+        <DateRangePicker
+          fromPlaceholder="Start date"
+          toPlaceholder="End date"
+        />
+     <FilterSelect className="w-full max-w-[170px]"   placeholder="Страна" name="news"/>
+     <FilterSelect    className="w-full max-w-[170px]"   placeholder="Поставщик" name="news"/>
+      <Button className="h-full  ml-auto border-y-0 w-[140px] "  variant={"outline"} ><FileOutput/> Экспорт</Button>
+      <Button onClick={() => setId("new")}  className="h-full   border-l-0   border-y-0   "  variant={"outline"} ><Plus size={24}/> Добавить</Button>
+    </div>
   );
 }

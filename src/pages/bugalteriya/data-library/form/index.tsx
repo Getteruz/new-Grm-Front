@@ -21,9 +21,7 @@ const queryClient = useQueryClient()
   const { mutate ,isPending} = useDataLibrary({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [type] });
-      form.reset({
-        title:''
-      })
+      form.setValue('title',"")
       setidMadal("new")
       if (idMadal == "new") {
         toast.success("savedSuccessfully");
@@ -34,12 +32,11 @@ const queryClient = useQueryClient()
   });
 
   useEffect(()=>{
-    form.reset({
-      title:''
-    })
+    form.setValue('title',"")
     setidMadal("new")
   },[type])
 
+  console.log(form)
   return (
     <FormProvider {...form}>
       <form

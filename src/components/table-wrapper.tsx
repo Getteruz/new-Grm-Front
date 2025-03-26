@@ -2,13 +2,15 @@ import  { PropsWithChildren } from "react";
 import { Skeleton } from "./ui/skeleton";
 import { TSelectOption } from "@/types";
 import { Button } from "./ui/button";
-import {  Edit2, Loader, Plus } from "lucide-react";
+import {  Edit2, Loader, Plus, Trash2 } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { parseAsString, useQueryState } from "nuqs";
 
 interface  iOpetion extends  TSelectOption {
     count?:number;
     onClick?:()=>void;
+    isActive?:boolean;
+    onDelete?:()=>void;
 }
 
 interface ITableWrapper extends PropsWithChildren {
@@ -39,13 +41,20 @@ export default function TableWrapper({className,isPending,title,isAdd,children,o
                     <Skeleton className="h-10 mb-2 rounded-none w-full" />
                 )):""}
             {options&& options?.map((e:iOpetion)=>(
-                <p key={e?.value} onClick={e?.onClick && e.onClick} className={"text-foreground flex items-center justify-between cursor-pointer mb-1 text-[14px]  hover:bg-sidebar px-3  py-2.5"}>
+                <p key={e?.value} onClick={e?.onClick && e.onClick} className={`${e?.isActive ?"bg-sidebar":""} group text-foreground flex items-center justify-between cursor-pointer mb-1 text-[14px]  hover:bg-sidebar px-3  py-2.5`}>
                     {e.label}
-                       {e?.count && <span className="bg-[#FFA500] p-0.5 text-[10px]">+{e?.count}</span>}
-                       {isAdd  && <span onClick={()=>{
+                       {e?.count && <span className={`bg-[#FFA500]  p-0.5 text-[10px]`}>+{e?.count}</span>}
+                       {isAdd  && <div className="group-hover:flex items-center gap-1.5  hidden">
+                        <span onClick={e?.onDelete && e.onDelete}
+                         className=" p-0.5 ml-auto text-[10px]"
+                         >
+                          <Trash2 size={14}/>
+                         </span>
+                        <span onClick={()=>{
                         setidMadal(e?.value)
                         setValue("title",e?.label)
-                        }} className=" p-0.5 text-[10px]"><Edit2 size={14}/></span>}
+                        }} className=" p-0.5 text-[10px]"><Edit2 size={14}/></span>
+                       </div>}
                 </p>
             ))}
           

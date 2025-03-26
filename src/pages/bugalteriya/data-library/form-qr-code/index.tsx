@@ -53,12 +53,13 @@ const ActionPageQrCode = () => {
   const { mutate } = useDataLibrary({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [apiRoutes.qrBase] });
-      form.reset({
-
-      })
+     
       setId("new")
       if (id == "new") {
         toast.success("savedSuccessfully");
+        form.reset({
+        
+        })
       } else {
         toast.success("updatedSuccessfully");
       }
@@ -108,7 +109,7 @@ const ActionPageQrCode = () => {
           mutate({ data: data, id: id !== "new" ? id ||undefined: undefined });
         })}
       >
-        <FormContent collectionId={form.getValues("collection.value")} />
+        <FormContent />
       </form>
     </FormProvider>
 

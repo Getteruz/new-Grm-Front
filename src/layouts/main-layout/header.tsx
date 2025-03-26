@@ -7,10 +7,12 @@ import {
 } from "../../components/icons";
 import { DataMenu } from "./menu-datas";
 import { User } from "lucide-react";
+import { useMeStore } from "@/store/me-store";
 
 export default function Header() {
   const location = useLocation();
-  const oneMenu = DataMenu.admin.find(e=>location.pathname.includes(e?.link))
+  const { meUser } = useMeStore();
+  const oneMenu = DataMenu?.[(meUser?.position?.role || "admin") as keyof typeof DataMenu].find(e=>location.pathname.includes(e?.link))
   return (
     <div className="flex items-center gap-5 w-full h-[64px] px-[51px] py-[23px] bg-sidebar border-b border-border">
       <p className="flex mr-[auto]  items-center gap-4 text-[14px] leading-[16px] text-foreground">

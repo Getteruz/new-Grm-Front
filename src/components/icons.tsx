@@ -822,4 +822,34 @@ export const EditIcons = ({ color }: {color:string}) => {
       
       
         );
-  };
+      };
+      export const BronedIcons = () => {
+        return (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 4H15C15.5304 4 16.0391 4.21071 16.4142 4.58579C16.7893 4.96086 17 5.46957 17 6V20L12 17L7 20V6C7 5.46957 7.21071 4.96086 7.58579 4.58579C7.96086 4.21071 8.46957 4 9 4Z" stroke="#5D5D53" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          
+          
+            );
+      };
+
+      export const PartiesIcons = () => {
+        return (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 18V21H20V7L12 3L4 7V10M4 14H13M13 14L10 11M13 14L10 17" stroke="#5D5D53" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          
+            );
+      };   
+ 
+      export const DataLibrary = () => {
+        return (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 5.00053C9 4.44825 8.55228 4.00053 8 4.00053H6C5.44772 4.00053 5 4.44825 5 5.00053V19.0005C5 19.5528 5.44772 20.0005 6 20.0005H8C8.55228 20.0005 9 19.5528 9 19.0005M9 5.00053V19.0005M9 5.00053C9 4.44825 9.44772 4.00053 10 4.00053H12C12.5523 4.00053 13 4.44825 13 5.00053V19.0005C13 19.5528 12.5523 20.0005 12 20.0005H10C9.44772 20.0005 9 19.5528 9 19.0005M5 8.00053H9M9 16.0005H13M14 9.00053L18 8.00053M16 16.0005L19.923 15.0205M13.803 4.56053L15.987 4.03053C16.549 3.89553 17.12 4.22053 17.269 4.76253L20.964 18.1805C21.0292 18.4262 21.0003 18.6873 20.883 18.9128C20.7658 19.1383 20.5686 19.3119 20.33 19.3995L20.197 19.4405L18.013 19.9705C17.451 20.1055 16.88 19.7805 16.731 19.2385L13.036 5.82053C12.9708 5.57488 12.9997 5.31374 13.117 5.08826C13.2342 4.86278 13.4314 4.68921 13.67 4.60153L13.803 4.56053Z" stroke="#5D5D53" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+          
+            );
+      }; 
+    
+
+

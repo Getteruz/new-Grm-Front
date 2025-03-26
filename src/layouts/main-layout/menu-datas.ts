@@ -1,6 +1,9 @@
 import {
+  BronedIcons,
     BuildingIcons,
+    DataLibrary,
     HomeIcons,
+    PartiesIcons,
     ReportBottom,
     UfoBottom,
     WareHouseIcons,
@@ -104,7 +107,24 @@ export const DataMenu = {
           id: 2,
           icons: ()=>ReportBottom(),
           link: "/report",
-          text:"report"
+          text:"report",
+          items:[
+            {
+              id: 22,
+              link: "/report",
+              text:"Кассовый учёт",
+            },
+            {
+              id: 23,
+              link: "/report/item-2",
+              text:"Финансовый учёт",
+            },
+            {
+              id: 24,
+              link: "/report/item-3",
+              text:"Снабжение и документооборот",
+            },
+          ]
         },
         {
           id: 3,
@@ -119,8 +139,27 @@ export const DataMenu = {
           text:"deller"
         },
         {
+          id: 3,
+          icons: ()=>BronedIcons(),
+          link: "/broned",
+          text:"broned"
+        },
+        {
+          id: 3,
+          icons: ()=>PartiesIcons(),
+          link: "/parties",
+          text:"parties"
+        },
+        {
+          id: 2,
+          icons: ()=>BuildingIcons(),
+          link: "/product",
+           text:"product"
+        },
+        
+        {
           id: 4,
-          icons: ()=>UfoBottom(),
+          icons: ()=>DataLibrary(),
           link: "/data-library",
           text:"data-library"
         },

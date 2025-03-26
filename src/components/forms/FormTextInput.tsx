@@ -8,7 +8,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "../ui/form";
 import { Input, InputProps } from "../ui/input";
 import { PhoneInput } from "./phone-input";
@@ -73,7 +72,7 @@ export default function FormTextInput({
               {...props}
             />}
           </FormControl>
-          <FormMessage className="text-sm text-red-500" />
+          {/* <FormMessage className="text-sm text-red-500" /> */}
         </FormItem>
       )}
     />

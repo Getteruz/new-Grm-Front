@@ -6,6 +6,7 @@ import {
 } from "../../components/icons";
 import { DataMenu } from "./menu-datas";
 import { useMeStore } from "@/store/me-store";
+import { ChevronLeft } from "lucide-react";
 
 
 export default function Menu() {
@@ -19,6 +20,12 @@ export default function Menu() {
           src="/logo1.svg"
           className={`border-b inline-block w-full ${role? ' h-[64px]':'h-[90px]'}  border-border`}
         />
+         <div
+            onClick={()=>navigate(-1)}
+            className={` hover:bg-sidebar-accent cursor-pointer border-b border-border text-center flex items-center justify-center p-[20px]`}
+          >
+            {<ChevronLeft/>}
+          </div>
         {DataMenu[(meUser?.position?.role || "admin") as keyof typeof DataMenu]?.map((e) => (
           <div
             onClick={() => {

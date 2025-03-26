@@ -4,7 +4,6 @@ import { requiredStringField } from "@/utils/schemaHelper";
 
 export const CropSchema = z.object({
   title: requiredStringField(),
-  code:z.string().optional(),
   collection: z.string().optional(),
 });
 

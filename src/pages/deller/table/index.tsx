@@ -2,17 +2,16 @@ import { parseAsInteger, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
 
-import ActionPage from "../form";
 import { Columns } from "./columns";
-import Filters from "./filters";
-import useDataFetch from "./queries";
+import Filter from "./filter";
+import useDataLibrary from "./queries";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [search] = useQueryState("search");
-  const { data, isLoading } = useDataFetch({
-   queries: {
+  const { data, isLoading } = useDataLibrary({
+    queries: {
       limit,
       page,
       search: search || undefined,
@@ -21,16 +20,14 @@ export default function Page() {
 
   return (
     <>
-      <Filters />
-      <DataTable
-      className="p-4"
-        isLoading={isLoading}
-        columns={Columns}
-        data={data?.items ?? []}
-      />
-
-
-      <ActionPage/>
-    </>
+    <Filter />
+    <DataTable
+    className="p-4"
+    isLoading={isLoading}
+    columns={Columns}
+    data={data?.items ?? []}
+  />
+  </>
+    
   );
 }

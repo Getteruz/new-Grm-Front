@@ -4,7 +4,7 @@ import BarcodeQenerat from "@/components/barcode-generat";
 import FormComboboxDemoInput from "@/components/forms/FormCombobox";
 import { Button } from "@/components/ui/button";
 
-export default function FormContent({collectionId}:{collectionId:string}) {
+export default function FormContent() {
   return (
     <div className="w-full">
       <Filters/>
@@ -68,10 +68,15 @@ export default function FormContent({collectionId}:{collectionId:string}) {
             label="color"
           />
          
-          <Button type="submit">add</Button>
-
-          {collectionId}
+         
        </div>
+       <div className="bg-sidebar border-y text-primary border-border  h-[44px] rounded-t-sm flex   ">
+            <Button  className="h-full  w-full text-primary justify-center font-[16px] gap-1.5  border-none" 
+            variant={"outline"} > 
+           
+           Добавить
+            </Button>
+        </div>
        <BarcodeQenerat/>
     </div>
   );

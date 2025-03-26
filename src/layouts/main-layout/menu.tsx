@@ -6,13 +6,15 @@ import {
 } from "../../components/icons";
 import { DataMenu } from "./menu-datas";
 import { useMeStore } from "@/store/me-store";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, LogOut } from "lucide-react";
+import { useAuthStore } from "@/store/auth-store";
 
 
 export default function Menu() {
   const role = "admin"
   const navigate = useNavigate();
   const { meUser } = useMeStore();
+  const { removeToken } = useAuthStore();
   return (
     <div className="w-[104px] h-screen flex justify-between flex-col  border-r bg-sidebar  border-border">
       <div>
@@ -41,6 +43,16 @@ export default function Menu() {
         ))}
       </div>
       <div>
+     
+      <div
+      onClick={()=>{
+        removeToken();
+        window.location.replace("/login");
+      }}
+          className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
+        >
+          <LogOut />
+        </div>
         <div
           className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
         >

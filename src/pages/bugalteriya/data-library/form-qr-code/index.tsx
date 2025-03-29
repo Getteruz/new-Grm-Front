@@ -146,7 +146,6 @@ const ActionPageQrCode = () => {
   }, [data]);
  
   useEffect(()=>{
-    console.log(barcode)
     form.setValue("code",barcode || "")
   },[barcode])
 

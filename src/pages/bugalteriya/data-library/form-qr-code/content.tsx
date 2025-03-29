@@ -8,12 +8,13 @@ import { Plus } from "lucide-react";
 import { EditIcons } from "@/components/icons";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { generateRandomNumber } from "@/utils/generate";
 
 export default function FormContent() {
-  const [, setBarcode] = useQueryState("barcode");
+  // const [, setBarcode] = useQueryState("barcode");
   const [id,setId] = useQueryState("id");
   const [editble,setEditble] = useState<boolean>(true);
-  const { watch } = useFormContext();
+  const { watch,setValue } = useFormContext();
   useEffect(()=>{
     if(id === "new"){
       setEditble(true)
@@ -22,6 +23,10 @@ export default function FormContent() {
     }
   },[id])
   const collectionId = watch('collection')
+  const handleRegenrate = () => {
+    const code = generateRandomNumber(1000000000000, 9999999999999)
+    setValue('code',code)
+}
 
   return (
     <div className="w-full">
@@ -111,21 +116,20 @@ export default function FormContent() {
        <div className="bg-sidebar border-y text-primary border-border  h-[44px] rounded-t-sm flex   ">
             <Button  type="button" onClick={()=>{
               setId('new')
-              setBarcode('')
+              handleRegenrate()
             }} className="h-full  w-1/3 text-primary justify-center font-[16px] gap-1.5  border-none" 
             variant={"outline"} > 
             <Plus />
-           Создать новый
+              Создать новый
             </Button>
             <Button  onClick={()=>setEditble(true)}  type="button" className="h-full border-y-0 w-1/3 text-primary justify-center font-[16px] gap-1.5  " 
             variant={"outline"} > 
              <EditIcons color={"#767671"} />
-           Изменить
+             Изменить
             </Button>
             <Button  className="h-full  w-1/3 text-primary justify-center font-[16px] gap-1.5  border-none" 
             variant={"outline"} > 
-           
-           Добавить
+            Добавить
             </Button>
         </div>
        <BarcodeQenerat/>

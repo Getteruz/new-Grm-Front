@@ -6,7 +6,6 @@ import { useQueryState } from "nuqs";
 export default function Filters() {
   const [, setBarcode] = useQueryState("barcode");
   const handleKeyDown = (e:any) => {
-    console.log(e)
     if (e.keyCode === 13) {
       setBarcode(e.target.value?.trim())
     }

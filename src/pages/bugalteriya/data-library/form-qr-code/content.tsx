@@ -11,7 +11,6 @@ import { useFormContext } from "react-hook-form";
 import { generateRandomNumber } from "@/utils/generate";
 
 export default function FormContent() {
-  // const [, setBarcode] = useQueryState("barcode");
   const [id,setId] = useQueryState("id");
   const [editble,setEditble] = useState<boolean>(true);
   const { watch,setValue } = useFormContext();
@@ -29,7 +28,7 @@ export default function FormContent() {
 }
 
   return (
-    <div className="w-full">
+    <div className="w-full border-r border-border">
       <Filters/>
        <div className="grid row-start  px-[40px] py-[20px] gap-2 lg:grid-cols-2">
          <FormTextInput 

@@ -3,8 +3,14 @@ import Filters from "./filters";
 import BarcodeQenerat from "@/components/barcode-generat";
 import FormComboboxDemoInput from "@/components/forms/FormCombobox";
 import { Button } from "@/components/ui/button";
+import { EditIcons } from "@/components/icons";
+import {  useState } from "react";
+import { parseAsBoolean, useQueryState } from "nuqs";
+import { Switch } from "@/components/ui/switch";
 
 export default function FormContent() {
+  const [editble,setEditble] = useState<boolean>(true);
+  const [auto,setAuto] = useQueryState("auto",parseAsBoolean.withDefault(false));
   return (
     <div className="w-full">
       <Filters/>
@@ -13,12 +19,14 @@ export default function FormContent() {
             classNameInput="h-[28px] p-2"
             name="code"
             placeholder="code" 
+            // disabled={true}
             label="code" />
          <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/country"
              classNameChild="h-[28px] p-2"
             name="country"
+            disabled={true}
             placeholder="country"
             label="country"
           />
@@ -26,6 +34,7 @@ export default function FormContent() {
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/collection"
             name="collection"
+            disabled={true}
              classNameChild="h-[28px] p-2"
             placeholder="collection"
             label="collection"
@@ -43,6 +52,7 @@ export default function FormContent() {
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/size"
             name="size"
+            disabled={true}
              classNameChild="h-[28px] p-2"
             placeholder="size"
             label="size"
@@ -51,6 +61,7 @@ export default function FormContent() {
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/shape"
             name="shape"
+            disabled={true}
              classNameChild="h-[28px] p-2"
             placeholder="shape"
             label="shape"
@@ -59,26 +70,45 @@ export default function FormContent() {
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/style"
             name="style"
-             classNameChild="h-[28px] p-2"
+            classNameChild="h-[28px] p-2"
             placeholder="style"
+            disabled={true}
             label="style"
           />
            <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/color"
             name="color"
-             classNameChild="h-[28px] p-2"
+            classNameChild="h-[28px] p-2"
             placeholder="color"
+            disabled={true}
             label="color"
           />
-         
+           <FormTextInput 
+            classNameInput="h-[28px] p-2"
+            name="isMetric"
+            placeholder="isMetric" 
+            disabled={true}
+            label="isMetric" />
+          <FormTextInput 
+          type="number"
+            classNameInput="h-[28px] p-2"
+            name="count"
+            placeholder="count" 
+            disabled={!editble}
+            label="count" />
          
        </div>
-       <div className="bg-sidebar border-y text-primary border-border  h-[44px] rounded-t-sm flex   ">
-            <Button  className="h-full  w-full text-primary justify-center font-[16px] gap-1.5  border-none" 
+       <div className="bg-sidebar border-y text-primary border-border  h-[44px] rounded-t-sm flex  items-center justify-end  ">
+              <Switch onCheckedChange={setAuto} checked={auto} />
+            <Button  onClick={()=>setEditble(true)}  type="button" className="h-full ml-2 border-y-0 w-1/3 text-primary justify-center font-[16px] gap-1.5  " 
             variant={"outline"} > 
-           
-           Добавить
+             <EditIcons color={"#767671"} />
+             Изменить
+            </Button>
+            <Button  className="h-full  w-1/3 text-primary justify-center font-[16px] gap-1.5  border-none" 
+            variant={"outline"} > 
+            Добавить
             </Button>
         </div>
        <BarcodeQenerat/>

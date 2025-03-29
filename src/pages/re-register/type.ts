@@ -7,6 +7,7 @@ export interface TData {
   internetInfo: string | null;
   is_active: boolean;
   date: string;
+  count: number;
   model: {
       id: string;
       title: string;
@@ -45,6 +46,7 @@ export interface TData {
     search: string | undefined;
     limit: number;
     page: number;
-    
+    type:string;
+    filialId:string
   };
   

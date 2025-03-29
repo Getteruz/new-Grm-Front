@@ -22,7 +22,7 @@ export default function BarcodeQenerat() {
       return printRef.current;
     },
     documentTitle: "Barcode Print",
-    removeAfterPrint: true, // Ensures cleanup after printing
+    removeAfterPrint: true, 
   });
  
   return (

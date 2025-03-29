@@ -37,7 +37,7 @@ export const useDataLibrary = ({
         style:data?.style?.value,
         color:data?.color?.value,
         model:data?.model?.value,
-        factory:data?.model?.value
+        factory:data?.factory?.value
       };
       if (id) {
         const dataToUpdate = { ...costomData } as Record<string, any>;

@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { useProductId, useProdcutCheck, useBarCodeById } from "./actions";
+import {  useProdcutCheck, useBarCodeById } from "./actions";
 import FormContent from "./content";
 import { CropFormType, CropSchema } from "./schema";
 import { useQueryClient } from "@tanstack/react-query";

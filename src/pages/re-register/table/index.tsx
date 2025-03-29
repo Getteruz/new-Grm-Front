@@ -7,11 +7,11 @@ import { Columns } from "./columns";
 import Filter from "./filter";
 import useDataLibrary from "./queries";
 import { useMeStore } from "@/store/me-store";
-enum ProductReportEnum {
-  SURPLUS = 'излишки',
-  DEFICIT = 'дефицит',
-  INVENTORY = 'переучет',
-}
+// enum ProductReportEnum {
+//   SURPLUS = 'излишки',
+//   DEFICIT = 'дефицит',
+//   INVENTORY = 'переучет',
+// }
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));

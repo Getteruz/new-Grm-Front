@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { useDataLibrary,useDataLibraryId } from "./actions";
+import { useDataLibrary,useDataLibraryId, useProdcutCheck } from "./actions";
 import FormContent from "./content";
 import { CropFormType, CropSchema } from "./schema";
 import { useQueryClient } from "@tanstack/react-query";
@@ -45,9 +45,13 @@ const ActionPageQrCode = () => {
     }
   });
   const [id,setId] = useQueryState("id");
+  const brcode = form.watch("code"); 
+
   const { data } = useDataLibraryId({
     id: id != "new" ? id|| undefined : undefined,
   });
+
+
   const queryClient = useQueryClient()
 
   const { mutate } = useDataLibrary({
@@ -64,6 +68,9 @@ const ActionPageQrCode = () => {
         toast.success("updatedSuccessfully");
       }
     },
+  });
+  const { mutate:CheckProdcutMutate } = useProdcutCheck({
+   
   });
 
   useEffect(() => {
@@ -101,6 +108,18 @@ const ActionPageQrCode = () => {
         });
     }
   }, [data]);
+
+  const oneProduct = useMemo(()=>{
+    if(brcode){
+
+      CheckProdcutMutate({data:{bar_code:brcode,y:"500"}})
+    }
+
+    return brcode
+  },
+  [brcode])
+
+  console.log(oneProduct,"hello")
   return (
     <FormProvider {...form}>
       <form

@@ -4,6 +4,7 @@ import {
     DataLibrary,
     HomeIcons,
     PartiesIcons,
+    PersonsIcons,
     ReportBottom,
     UfoBottom,
     WareHouseIcons,
@@ -200,6 +201,26 @@ export const DataMenu = {
           text:"data-library"
         },
         
+      ],
+      11:[
+        {
+          id: 1,
+          icons: ()=>HomeIcons(),
+          link: "/dashboard",
+          text:"dashboard"
+        },
+        {
+          id: 2,
+          icons: ()=>HomeIcons(),
+          link: "/monitoring",
+          text:"monitoring"
+          },
+        {
+          id: 4,
+          icons: ()=>PersonsIcons(),
+          link: "/user",
+          text:"user"
+        },
       ]
 }
   

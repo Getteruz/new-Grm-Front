@@ -20,6 +20,7 @@ export const useDataLibrary = ({
   useMutation({
     ...options,
     mutationFn: async ({ url,data, id }) => {
+      
       if (id)
         return await UpdatePatchData<CropFormType>(url, id,  url == "/partiya-number" ? {title: data?.title+ "-partiya"}:data);
       return await AddData<CropFormType>(url, url == "/partiya-number" ? {title: data?.title+ "-partiya"}:data);

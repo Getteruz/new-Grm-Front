@@ -69,10 +69,11 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
         <Button
           variant="outline"
           role="combobox"
-          className={`w-full justify-between rounded-none h-10 bg-input border-border border ${className && className}`} 
+          disabled={disabled}
+          className={`w-full justify-between  rounded-none h-10 bg-input border-border border ${className && className}`} 
           aria-expanded={open}
         >
-          <span className={twMerge(value ? "" : "text-gray-400")}>
+          <span className={twMerge(value ? "" : "text-muted-foreground font-[300px]")}>
             {value
               ? options.find((framework) => framework.value === value)?.label
               : placeholder}
@@ -86,7 +87,6 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
             <Search className="absolute top-2 w-4 opacity-60 left-2 " />
             <Input
               onChangeCapture={onFilter}
-              disabled={disabled}
               placeholder={t("search")}
               className="h-9  rounded-none shadow-none border-t-none border-x-none focus-visible:ring-1 outline-none  pl-7 w-full "
             />

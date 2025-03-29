@@ -8,7 +8,8 @@ import { CardContainer, CardItem } from "@/components/ui/3d-card";
 export default function LoginFormContent() {
   const plugin = React.useRef(
     Autoplay({ delay: 1400, stopOnInteraction: true })
-  )
+  );
+
   return (
     <Container className="mt-[33px]">
       <p className="flex  items-center mb-[104px] gap-4 text-[12px] leading-[14px] text-foreground">
@@ -21,11 +22,10 @@ export default function LoginFormContent() {
             Автоматизация процесса: производство, склад, продажи и контроль
             процессов для роста вашего бизнеса.
           </p>
-
           <FormTextInput
             name="login"
             placeholder="login"
-            // label="userName"
+            //label="userName"
             className="mb-12"
           />
           <button className="py-[12px] px-[25px] cursor-pointer bg-[#282828] text-[15px] leading-[18px] text-white">

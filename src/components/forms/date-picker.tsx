@@ -22,6 +22,7 @@ export function DatePickerDemo({
   value,
   placeholder,
 }: iDatePickerDemo) {
+
   const { t } = useTranslation();
   return (
     <Popover>
@@ -29,7 +30,7 @@ export function DatePickerDemo({
         <Button
           variant={"outline"}
           className={cn(
-            "w-full justify-start text-left bg-white font-normal",
+            "w-full justify-start text-left bg-input h-10.5 font-normal",
             !value && "text-muted-foreground"
           )}
         >

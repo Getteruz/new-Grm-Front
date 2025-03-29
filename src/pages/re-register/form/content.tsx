@@ -9,7 +9,11 @@ export default function FormContent() {
     <div className="w-full">
       <Filters/>
        <div className="grid row-start  px-[40px] py-[20px] gap-2 lg:grid-cols-2">
-         <FormTextInput classNameInput="h-[28px] p-2" name="code" placeholder="code" label="code" />
+         <FormTextInput 
+            classNameInput="h-[28px] p-2"
+            name="code"
+            placeholder="code" 
+            label="code" />
          <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/country"

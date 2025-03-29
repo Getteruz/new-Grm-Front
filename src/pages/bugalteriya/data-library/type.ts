@@ -40,6 +40,10 @@ export interface TData {
         id: string;
         title: string;
     };
+    factory: {
+        id: string;
+        title: string;
+    };
 }
 
 export interface TActionData {

@@ -42,14 +42,55 @@ const ActionPageQrCode = () => {
         value: undefined,
         label: "",
       },
+      factory: {
+        value: undefined,
+        label: "",
+      },
     }
   });
   const [id,setId] = useQueryState("id");
+  const [barcode] = useQueryState("barcode");
   const { data } = useDataLibraryId({
     id: id != "new" ? id|| undefined : undefined,
   });
   const queryClient = useQueryClient()
-
+  const ResetFormFuct =()=>{
+    form.reset({
+      code:'',
+      country: {
+        value: undefined,
+        label: "",
+      },
+      collection: {
+        value: undefined,
+        label: "",
+      },
+      size: {
+        value: undefined,
+        label: "",
+      },
+      shape: {
+        value: undefined,
+        label: "",
+      },
+      style: {
+        value: undefined,
+        label: "",
+      },
+      color: {
+        value: undefined,
+        label: "",
+      },
+      model: {
+        value: undefined,
+        label: "",
+      },
+       factory: {
+        value: undefined,
+        label: "",
+      },
+    });
+  }
   const { mutate } = useDataLibrary({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [apiRoutes.qrBase] });
@@ -57,9 +98,7 @@ const ActionPageQrCode = () => {
       setId("new")
       if (id == "new") {
         toast.success("savedSuccessfully");
-        form.reset({
-        
-        })
+        ResetFormFuct()
       } else {
         toast.success("updatedSuccessfully");
       }
@@ -98,9 +137,25 @@ const ActionPageQrCode = () => {
           value: data?.model?.id,
           label: data?.model?.title,
         },
+        factory: {
+          value: data?.factory?.id,
+          label: data?.factory?.title,
+        },
         });
     }
   }, [data]);
+ 
+  useEffect(()=>{
+    console.log(barcode)
+    form.setValue("code",barcode || "")
+  },[barcode])
+
+    useEffect(()=>{
+      if(id== "new"){
+        ResetFormFuct()
+      }
+    },[id])
+
   return (
     <FormProvider {...form}>
       <form
@@ -109,7 +164,7 @@ const ActionPageQrCode = () => {
           mutate({ data: data, id: id !== "new" ? id ||undefined: undefined });
         })}
       >
-        <FormContent />
+        <FormContent  />
       </form>
     </FormProvider>
 

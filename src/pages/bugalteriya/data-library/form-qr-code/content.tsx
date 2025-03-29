@@ -3,13 +3,37 @@ import Filters from "./filters";
 import BarcodeQenerat from "@/components/barcode-generat";
 import FormComboboxDemoInput from "@/components/forms/FormCombobox";
 import { Button } from "@/components/ui/button";
+import { useQueryState } from "nuqs";
+import { Plus } from "lucide-react";
+import { EditIcons } from "@/components/icons";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
 
 export default function FormContent() {
+  const [, setBarcode] = useQueryState("barcode");
+  const [id,setId] = useQueryState("id");
+  const [editble,setEditble] = useState<boolean>(true);
+  const { watch } = useFormContext();
+  useEffect(()=>{
+    if(id === "new"){
+      setEditble(true)
+    }else{
+      setEditble(false)
+    }
+  },[id])
+  const collectionId = watch('collection')
+
   return (
     <div className="w-full">
       <Filters/>
        <div className="grid row-start  px-[40px] py-[20px] gap-2 lg:grid-cols-2">
-         <FormTextInput classNameInput="h-[28px] p-2" name="code" placeholder="code" label="code" />
+         <FormTextInput 
+          classNameInput="h-[28px] p-2"
+          name="code"
+          placeholder="code"
+          label="code"
+          disabled={!editble}
+            />
          <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/country"
@@ -17,6 +41,7 @@ export default function FormContent() {
             name="country"
             placeholder="country"
             label="country"
+            disabled={!editble}
           />
            <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
@@ -25,12 +50,13 @@ export default function FormContent() {
              classNameChild="h-[28px] p-2"
             placeholder="collection"
             label="collection"
+            disabled={!editble}
           />
             <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
-            fetchUrl={`/model`}
+            fetchUrl={ collectionId?.value ? `/model/by-collection/${collectionId?.value}`:`/model`}
             name="model"
-            disabled={true}
+            disabled={!editble }
             classNameChild="h-[28px] p-2"
             placeholder="model"
             label="model"
@@ -42,6 +68,7 @@ export default function FormContent() {
              classNameChild="h-[28px] p-2"
             placeholder="size"
             label="size"
+            disabled={!editble}
           />
            <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
@@ -50,6 +77,7 @@ export default function FormContent() {
              classNameChild="h-[28px] p-2"
             placeholder="shape"
             label="shape"
+            disabled={!editble}
           />
            <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
@@ -58,6 +86,7 @@ export default function FormContent() {
              classNameChild="h-[28px] p-2"
             placeholder="style"
             label="style"
+            disabled={!editble}
           />
            <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
@@ -66,12 +95,34 @@ export default function FormContent() {
              classNameChild="h-[28px] p-2"
             placeholder="color"
             label="color"
+            disabled={!editble}
           />
          
-         
+         <FormComboboxDemoInput
+            fieldNames={{ value: "id", label: "title" }}
+            fetchUrl="/factory"
+            name="factory"
+             classNameChild="h-[28px] p-2"
+            placeholder="factory"
+            label="factory"
+            disabled={!editble}
+          />
        </div>
        <div className="bg-sidebar border-y text-primary border-border  h-[44px] rounded-t-sm flex   ">
-            <Button  className="h-full  w-full text-primary justify-center font-[16px] gap-1.5  border-none" 
+            <Button  type="button" onClick={()=>{
+              setId('new')
+              setBarcode('')
+            }} className="h-full  w-1/3 text-primary justify-center font-[16px] gap-1.5  border-none" 
+            variant={"outline"} > 
+            <Plus />
+           Создать новый
+            </Button>
+            <Button  onClick={()=>setEditble(true)}  type="button" className="h-full border-y-0 w-1/3 text-primary justify-center font-[16px] gap-1.5  " 
+            variant={"outline"} > 
+             <EditIcons color={"#767671"} />
+           Изменить
+            </Button>
+            <Button  className="h-full  w-1/3 text-primary justify-center font-[16px] gap-1.5  border-none" 
             variant={"outline"} > 
            
            Добавить

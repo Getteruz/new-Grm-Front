@@ -37,10 +37,16 @@ export const useDataLibrary = ({
         style:data?.style?.value,
         color:data?.color?.value,
         model:data?.model?.value,
+        factory:data?.model?.value
       };
-      if (id)
-        return await UpdateData<CropFormType>(apiRoutes.qrBase, id, costomData as CropFormType);
-      return await AddData<CropFormType>(apiRoutes.qrBase, costomData as CropFormType);
+      if (id) {
+        const dataToUpdate = { ...costomData } as Record<string, any>;
+        delete dataToUpdate.code;
+        return await UpdateData<CropFormType>(apiRoutes.qrBase, id, dataToUpdate as CropFormType);
+      } else {
+        return await AddData<CropFormType>(apiRoutes.qrBase, costomData as CropFormType);
+      }
+        
     },
   });
 

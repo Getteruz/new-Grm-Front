@@ -24,6 +24,7 @@ interface Props extends InputProps {
 export default function FormTimePicker({
   name,
   label,
+  placeholder,
   className,
 }: Props) {
   const { control } = useFormContext();
@@ -43,6 +44,7 @@ export default function FormTimePicker({
           <FormControl className="w-full">
             <TimePicker
               onChange={onChange}
+              placeholder={placeholder}
               value={value}
             />
           </FormControl>

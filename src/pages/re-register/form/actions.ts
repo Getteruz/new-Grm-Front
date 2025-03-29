@@ -21,6 +21,12 @@ interface IMute {
   id: string | undefined;
 }
 
+interface IMuteCheck {
+  data: {
+    bar_code:string,
+    y:string
+  }
+}
 
 export const useDataLibrary = ({
   ...options
@@ -44,6 +50,17 @@ export const useDataLibrary = ({
     },
   });
 
+
+export const useProdcutCheck = ({
+  ...options
+}: UseMutationOptions<object, Error, IMuteCheck, unknown>) =>
+  useMutation({
+    ...options,
+    mutationFn: async ({ data }) => {
+      return await AddData(apiRoutes.productscheck, data);
+    },
+  });
+
 export const useDataLibraryId = ({ options, id, queries }: IData) =>
   useQuery({
     ...options,
@@ -52,3 +69,4 @@ export const useDataLibraryId = ({ options, id, queries }: IData) =>
     queryFn: () =>
       getByIdData<TData, TQuery>(apiRoutes.qrBase, id || "", queries),
   });
+

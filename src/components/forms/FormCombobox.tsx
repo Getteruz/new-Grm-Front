@@ -13,7 +13,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  // FormMessage,
 } from "../ui/form";
 import { ComboboxDemo } from "./Combobox";
 
@@ -117,7 +117,7 @@ export default function FormComboboxDemoInput<IData, TQuery>({
                 onChange={field.onChange}
               />
             </FormControl>
-            <FormMessage className="text-sm text-red-500" />
+            {/* <FormMessage className="text-sm text-red-500" /> */}
           </FormItem>
         );
       }}

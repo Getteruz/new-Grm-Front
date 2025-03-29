@@ -16,6 +16,7 @@ interface Props extends InputProps {
   name: string;
   label?: string;
   placeholder?: string;
+  handleKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   type?: string;
   className?: string;
   classNameInput?: string;
@@ -28,6 +29,7 @@ export default function FormTextInput({
   placeholder,
   className,
   classNameInput,
+  handleKeyDown,
   ...props
 }: Props) {
   const { control } = useFormContext();
@@ -55,6 +57,7 @@ export default function FormTextInput({
            :
             <Input
               type={type ?? "text"}
+              onKeyDown={handleKeyDown}
               className={cn("flex flex-col items-start w-full", classNameInput)}
               placeholder={placeholder ? t(placeholder) : ""}
               {...field}

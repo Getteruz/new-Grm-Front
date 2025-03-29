@@ -10,8 +10,9 @@ import { Clock } from 'lucide-react';
 interface iTimePicker{
   onChange: (time:string) => void;
   value: string;
+  placeholder?:string;
 }
-const TimePicker = ({onChange,value=''}:iTimePicker) => {
+const TimePicker = ({onChange,value='',placeholder}:iTimePicker) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   // Generate hours and minutes arrays
@@ -68,7 +69,7 @@ const TimePicker = ({onChange,value=''}:iTimePicker) => {
               type="text"
               value={value}
               onChange={handleManualTimeChange}
-              placeholder="HH:MM"
+              placeholder={placeholder?  placeholder:` HH:MM`}
               className="pl-8"
             />
             <Clock 
@@ -86,7 +87,7 @@ const TimePicker = ({onChange,value=''}:iTimePicker) => {
                   <div 
                     key={hour} 
                     className={`p-2 text-center cursor-pointer hover:bg-gray-100 ${
-                      value.startsWith(hour) ? 'bg-blue-100' : ''
+                      value?.startsWith(hour) ? 'bg-blue-100' : ''
                     }`}
                     onClick={() => {
                       const [, minute] = value.split(':');

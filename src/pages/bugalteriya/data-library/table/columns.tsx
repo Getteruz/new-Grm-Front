@@ -4,6 +4,7 @@ import TableAction from "@/components/table-action";
 
 import { TData } from "../type";
 import { apiRoutes } from "@/service/apiRoutes";
+import BarcodeGenerator from "@/components/react-barcode";
 
 
 export const Columns: ColumnDef<TData>[] = [
@@ -11,7 +12,11 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "code",
     accessorKey: "code",
+    cell: ({ row }) => {
+      return  <BarcodeGenerator className="w-20 h-10" value={row.original?.code||""}/>;
+    },
   },
+ 
 
   {
     header: "country",

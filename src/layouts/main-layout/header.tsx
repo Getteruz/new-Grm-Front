@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   DotsIcons,
   NoteIcons,
@@ -9,6 +9,7 @@ import { DataMenu } from "./menu-datas";
 import { User } from "lucide-react";
 import { useMeStore } from "@/store/me-store";
 import { ReactElement } from 'react';
+import { Button } from "@/components/ui/button";
 
 type Tmenu = {
   id: number;
@@ -24,6 +25,8 @@ type Tmenu = {
 export default function Header() {
   const location = useLocation();
   const { meUser } = useMeStore();
+  const navigate = useNavigate();
+
   const oneMenu = DataMenu?.[meUser?.position?.role as keyof typeof DataMenu]?.find(e=>location.pathname.includes(e?.link))
   return (
     <div className="flex items-center gap-5 w-full h-[64px] px-[51px] py-[23px] bg-sidebar border-b border-border">
@@ -34,6 +37,10 @@ export default function Header() {
       <Link to={oneMenu?.link || '/'}>{oneMenu?.text}</Link>
       }
       </p>  
+      {meUser?.filial?.need_get_report && meUser.position.role == 4
+      ||location.pathname.includes('filial') && location.pathname.includes('info')
+       &&   
+      <Button onClick={()=>navigate('/re-register')}>Переучёт</Button>}
       <div>
         <NoteIcons />
       </div>

@@ -57,7 +57,7 @@ export default function TableAction({
   });
 
   return (
-    <div className="text-end">
+    <div className="text-end" onClick={(e)=>e.stopPropagation()}>
       <DropdownMenu>
         <DropdownMenuTrigger className="text-end" asChild>
           <Button variant="ghost" className="h-8 text-end w-8 p-0">

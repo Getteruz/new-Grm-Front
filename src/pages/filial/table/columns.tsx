@@ -10,7 +10,6 @@ import { UpdatePatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 
 export const FilialColumns: ColumnDef<TData>[] = [
-  
   {
     id: "name",
     header: "name",
@@ -26,7 +25,6 @@ export const FilialColumns: ColumnDef<TData>[] = [
     header: "phone1",
     accessorKey: "phone1",
   },
- 
   {
     header: "count",
     cell: () => {
@@ -47,11 +45,15 @@ export const FilialColumns: ColumnDef<TData>[] = [
           ShowPreview={row.original?.need_get_report}
           id={row.original?.id}
         >
-           {row.original?.need_get_report ?<></>
+           {row.original?.need_get_report ?<>
+            <DropdownMenuItem >
+            Переучёт отправлен
+            </DropdownMenuItem>
+           </>
             :  <DropdownMenuItem  onClick={()=>{
                UpdatePatchData('/filial/maker-report', row.original?.id,{})
-              .then(()=>toast.success('Переучёт sended'))
-              .catch(()=>toast.error("something wend from"))
+              .then(()=>toast.success('Переучёт отправлен'))
+              .catch(()=>toast.error("что-то пошло не так"))
             }}>
               Запросить переучёт
             </DropdownMenuItem>}

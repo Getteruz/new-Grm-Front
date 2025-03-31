@@ -45,13 +45,13 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "shape",
     cell: ({ row }) => {
-      return <p>{row.original.shape.title}</p>;
+      return <p>{row.original?.shape?.title}</p>;
     },
   },
   {
     header: "size",
     cell: ({ row }) => {
-      return <p>{row.original.size.title}</p>;
+      return <p>{row.original?.size?.title}</p>;
     },
   },
   {

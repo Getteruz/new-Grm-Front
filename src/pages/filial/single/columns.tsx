@@ -1,11 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 
-import { TData } from "../type";
+import { ProductData } from "../type";
 import BarcodeGenerator from "@/components/react-barcode";
 
 
-export const Columns: ColumnDef<TData>[] = [
+export const Columns: ColumnDef<ProductData>[] = [
  
   {
     header: "code",

@@ -6,13 +6,13 @@ import { useQueryState } from "nuqs";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function Filters() {
-  const [,setId] = useQueryState("id");
+  const [idLoc,setId] = useQueryState("id");
   const navigate = useNavigate()
   const {id} = useParams()
   return (
     <div className="bg-sidebar border-border border-b   h-[64px] rounded-t-sm flex   ">
       <SearchInput className="ml-2 gap-2 w-full" />
-      {id ?
+      {id || idLoc ?
     <UploadExel/>
       :
       <Button onClick={()=>{

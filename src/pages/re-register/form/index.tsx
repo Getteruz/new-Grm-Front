@@ -53,9 +53,10 @@ const ActionPageQrCode = () => {
 
   const { mutate } = useProdcutCheck({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [apiRoutes.qrBase] });
-      setId("new")
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.productscheck] });
+    
       if (id == "new") {
+        setId("new")
         toast.success("savedSuccessfully");
         form.reset({
         })
@@ -65,7 +66,6 @@ const ActionPageQrCode = () => {
     },
   });
  
-console.log(form.formState.errors)
   useEffect(() => {
     if (qrBaseOne) {
       form.reset({

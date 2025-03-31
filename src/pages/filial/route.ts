@@ -1,3 +1,4 @@
+import SinglePage from "./single";
 import Page from "./table";
 
 const Route = [
@@ -9,6 +10,11 @@ const Route = [
   {
     url: "/filial/:id",
     Element: Page,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/filial/:id/info",
+    Element: SinglePage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
 ];

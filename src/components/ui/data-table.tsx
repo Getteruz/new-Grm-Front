@@ -20,6 +20,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 
 import TableLoading from "./table-loading";
+import { useQueryState } from "nuqs";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -44,6 +45,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [, setId] = useQueryState("id");
 
   const checkboxColumn: ColumnDef<TData, any> = {
     id: "select",
@@ -152,7 +154,8 @@ export function DataTable<TData, TValue>({
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    className="px-5"
+                    className="px-5 cursor-pointer"
+                    onClick={()=>setId((row.original as {id:string})?.id)}
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (

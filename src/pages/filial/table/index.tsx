@@ -25,6 +25,7 @@ export default function Page() {
      <Filters />
     
       <DataTable
+      isRowClickble={true}
         className="m-4"
         isLoading={isLoading}
         columns={FilialColumns}

@@ -38,9 +38,12 @@ export default function Header() {
       }
       </p>  
       {meUser?.filial?.need_get_report && meUser.position.role == 4
-      ||location.pathname.includes('filial') && location.pathname.includes('info')
        &&   
       <Button onClick={()=>navigate('/re-register')}>Переучёт</Button>}
+      {location.pathname.includes('filial') && location.pathname.includes('info') && !location.pathname.includes('get-report')
+       &&   
+      <Button onClick={()=>navigate(location.pathname+'/get-report')}>Переучёт</Button>}
+
       <div>
         <NoteIcons />
       </div>

@@ -1,4 +1,4 @@
-import { parseAsInteger, useQueryState } from "nuqs";
+import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
 
@@ -17,17 +17,16 @@ export default function Page() {
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [search] = useQueryState("search");
   const {meUser} =useMeStore()
+  const [type] = useQueryState('type',parseAsString.withDefault('переучет'))
   const { data, isLoading } = useDataLibrary({
     queries: {
       limit,
       page,
       search: search || undefined,
       filialId:meUser?.filial?.id ||'',
-      type:"излишки",
+      type:type||"переучет",
     },
   });
-
-
 
   return (
     <div className="flex w-full">

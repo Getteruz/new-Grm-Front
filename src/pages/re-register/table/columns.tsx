@@ -1,37 +1,21 @@
 import { ColumnDef } from "@tanstack/react-table";
 
-
 import { TData } from "../type";
-import BarcodeGenerator from "@/components/react-barcode";
-
+import { parseAsString, useQueryState } from "nuqs";
+import { apiRoutes } from "@/service/apiRoutes";
+import TableAction from "@/components/table-action";
 
 export const Columns: ColumnDef<TData>[] = [
- 
-  {
-    header: "code",
-    accessorKey: "code",
-    cell: ({ row }) => {
-      return  <BarcodeGenerator className="w-20 h-10" value={row.original?.code||""}/>;
-    },
-  },
- 
-
-  {
-    header: "country",
-    cell: ({ row }) => {
-      return <p>{row.original?.country?.title}</p>;
-    },
-  },
   {
     header: "collection",
     cell: ({ row }) => {
-      return <p>{row.original?.collection?.title}</p>;
+      return <p>{row.original?.bar_code?.collection?.title}</p>;
     },
   },
   {
     header: "model",
     cell: ({ row }) => {
-      return <p>{row.original?.model?.title}</p>;
+      return <p>{row.original?.bar_code?.model?.title}</p>;
     },
   },
   {
@@ -41,36 +25,81 @@ export const Columns: ColumnDef<TData>[] = [
     },
   },
   {
-    header: "shape",
+    header: "size",
     cell: ({ row }) => {
-      return <p>{row.original?.shape?.title}</p>;
+      return <p>{row.original?.bar_code?.size?.title}</p>;
     },
   },
   {
-    header: "size",
+    header: "count",
     cell: ({ row }) => {
-      return <p>{row.original?.size?.title}</p>;
+      const [type] = useQueryState('type',parseAsString.withDefault('переучет'))
+      return <p>
+        {type === "переучет" && row.original?.count }
+        { type === "дефицит" && row.original?.count - row.original?.check_count}
+        { type === "излишки" && row.original?.check_count - row.original?.count}
+      </p>;
+    },
+  },
+  {
+    header: "Обём",
+    cell: ({ row }) => {
+      return <p>{Number(row.original?.bar_code?.size?.x) * Number(row.original?.bar_code?.size?.y) }м²</p>;
+    },
+  },
+  {
+    header: "color",
+    cell: ({ row }) => {
+      return <p>{row.original?.bar_code?.color?.title}</p>;
     },
   },
   {
     header: "style",
     cell: ({ row }) => {
-      return <p>{row.original.style?.title}</p>;
+      return <p>{row.original?.bar_code?.style?.title}</p>;
     },
   },
- 
-  // {
-  //   id: "actions",
-  //   enableHiding: true,
-  //   header: () => <div className="text-right">{"actions"}</div>,
-  //   size: 50,
-  //   cell: ({ row }) => {
-  //     return (
-  //       <TableAction
-  //         url={apiRoutes.qrBase}
-  //         id={row.original?.id}
-  //       />
-  //     );
-  //   },
-  // },
+  {
+    header: "shape",
+    cell: ({ row }) => {
+      return <p>{row.original?.bar_code?.shape?.title}</p>;
+    },
+  },
+  {
+    header: "county",
+    cell: ({ row }) => {
+      return <p>{row.original?.bar_code?.country?.title}</p>;
+    },
+  },
+  {
+    header: "price",
+    cell: ({ row }) => {
+      return <p>{row.original?.collection_price?.priceMeter}$</p>;
+    },
+  },
+  {
+    header: "Партия",
+    cell: ({ row }) => {
+      return <p>{row.original?.partiya ?row.original?.partiya?.title: row.original?.partiya_title}</p>;
+    },
+  },
+  {
+    id: "actions",
+    enableHiding: true,
+    header: () => <div className="text-right">{"actions"}</div>,
+    size: 50,
+    cell: ({ row }) => {
+      return (
+        <TableAction
+          url={apiRoutes.products}
+          ShowPreview={false}
+          ShowUpdate={false}
+          id={row.original?.id}
+          refetchUrl={apiRoutes.productReport}
+        />
+          
+        
+      );
+    },
+  },
 ];

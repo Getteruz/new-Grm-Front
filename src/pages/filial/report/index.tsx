@@ -3,11 +3,10 @@ import { parseAsInteger, useQueryState } from "nuqs";
 import { DataTable } from "@/components/ui/data-table";
 
 import { Columns } from "./columns";
-import Filter from "./filter";
 import useDataFetch from "./queries";
 import { useParams } from "react-router-dom";
 
-export default function SinglePage() {
+export default function SingleReportPage() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [search] = useQueryState("search");
@@ -22,8 +21,7 @@ export default function SinglePage() {
   });
 
   return (
-    <div className=" w-full">
-        <Filter/>
+    <div className="w-full">
         <DataTable
           isLoading={isLoading}
           columns={Columns}

@@ -49,7 +49,7 @@ export const FilialColumns: ColumnDef<TData>[] = [
         >
            {row.original?.need_get_report ?<></>
             :  <DropdownMenuItem  onClick={()=>{
-               UpdatePatchData('/filial/maker-report', row.original?.id,{})
+               UpdatePatchData(apiRoutes.filialMakeReport, row.original?.id,{})
               .then(()=>toast.success('Переучёт sended'))
               .catch(()=>toast.error("something wend from"))
             }}>

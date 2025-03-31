@@ -3,16 +3,15 @@ import Filters from "./filters";
 import BarcodeQenerat from "@/components/barcode-generat";
 import FormComboboxDemoInput from "@/components/forms/FormCombobox";
 import { Button } from "@/components/ui/button";
-import { EditIcons } from "@/components/icons";
 import {  useState } from "react";
 import { parseAsBoolean, useQueryState } from "nuqs";
 import { Switch } from "@/components/ui/switch";
 
 export default function FormContent() {
-  const [editble,setEditble] = useState<boolean>(true);
+  const [editble,] = useState<boolean>(true);
   const [auto,setAuto] = useQueryState("auto",parseAsBoolean.withDefault(false));
   return (
-    <div className="w-full">
+    <div className="w-full border-border border-r">
       <Filters/>
        <div className="grid row-start  px-[40px] py-[20px] gap-2 lg:grid-cols-2">
          <FormTextInput 
@@ -20,7 +19,8 @@ export default function FormContent() {
             name="code"
             placeholder="code" 
             // disabled={true}
-            label="code" />
+            label="code" 
+            />
          <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/country"
@@ -99,13 +99,13 @@ export default function FormContent() {
             label="count" />
          
        </div>
-       <div className="bg-sidebar border-y text-primary border-border  h-[44px] rounded-t-sm flex  items-center justify-end  ">
+       <div className="bg-sidebar border-y text-primary border-border  h-[44px]  flex  items-center justify-end  ">
               <Switch onCheckedChange={setAuto} checked={auto} />
-            <Button  onClick={()=>setEditble(true)}  type="button" className="h-full ml-2 border-y-0 w-1/3 text-primary justify-center font-[16px] gap-1.5  " 
+            {/* <Button  onClick={()=>setEditble(true)}  type="button" className="h-full ml-2 border-y-0 w-1/3 text-primary justify-center font-[16px] gap-1.5  " 
             variant={"outline"} > 
              <EditIcons color={"#767671"} />
              Изменить
-            </Button>
+            </Button> */}
             <Button  className="h-full  w-1/3 text-primary justify-center font-[16px] gap-1.5  border-none" 
             variant={"outline"} > 
             Добавить

@@ -21,6 +21,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import TableLoading from "./table-loading";
 import { useQueryState } from "nuqs";
+import { useNavigate } from "react-router-dom";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -29,6 +30,7 @@ interface DataTableProps<TData, TValue> {
   className?: string;
   isFetchingNextPage?: boolean;
   hasNextPage?: boolean;
+  isRowClickble?:boolean;
   fetchNextPage?: () => void;
   onSelectionChange?: (selectedRows: TData[]) => void;
 }
@@ -38,6 +40,7 @@ export function DataTable<TData, TValue>({
   data,
   isLoading,
   className,
+  isRowClickble=false,
   isFetchingNextPage = false,
   hasNextPage = false,
   fetchNextPage,
@@ -123,7 +126,7 @@ export function DataTable<TData, TValue>({
       onSelectionChange(selectedRows);
     }
   }, [rowSelection, data, onSelectionChange]);
-
+  const navigate = useNavigate()
   return (
     <div className={className}>
       {isLoading && data.length === 0 ? (
@@ -155,7 +158,13 @@ export function DataTable<TData, TValue>({
                   <TableRow
                     key={row.id}
                     className="px-5 cursor-pointer"
-                    onClick={()=>setId((row.original as {id:string})?.id)}
+                    onClick={()=>{
+                      if(isRowClickble){
+                        navigate((row.original as {id:string})?.id+'/info')
+                      }else{
+                        setId((row.original as {id:string})?.id)
+                      }
+                    }}
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (

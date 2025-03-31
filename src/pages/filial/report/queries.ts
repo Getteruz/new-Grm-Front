@@ -4,18 +4,18 @@ import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
-import { ProductData, ProductQuery } from "../type";
+import { FilialReportData, ProductQuery } from "../type";
 
 interface IData {
-  options?: DefinedInitialDataOptions<TResponse<ProductData>>;
+  options?: DefinedInitialDataOptions<TResponse<FilialReportData>>;
   queries?: ProductQuery;
 }
 const useDataFetch = ({ options, queries }: IData) =>
   useQuery({
     ...options,
-    queryKey: [apiRoutes.products, queries],
+    queryKey: [apiRoutes.filialReport, queries],
     queryFn: () =>
-      getAllData<TResponse<ProductData>, ProductQuery>(apiRoutes.products, queries),
+      getAllData<TResponse<FilialReportData>, ProductQuery>(apiRoutes.filialReport, queries),
   });
 
 export default useDataFetch;

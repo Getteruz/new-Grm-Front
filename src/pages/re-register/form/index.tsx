@@ -45,7 +45,9 @@ const ActionPageQrCode = () => {
     }
   });
   const [id,setId] = useQueryState("id");
-  const brcode = form.watch("code"); 
+  
+const brcode = form.watch("code")
+
   const { data:qrBaseOne } = useBarCodeById({
     id: brcode|| undefined,
   });
@@ -53,18 +55,51 @@ const ActionPageQrCode = () => {
 
   const { mutate } = useProdcutCheck({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [apiRoutes.productscheck] });
-    
+      form.reset({
+        code:  "",
+        isMetric:'',
+        count: 1,
+        country: {
+          value: '',
+          label: '',
+        },
+        collection: {
+          value: "",
+          label: "",
+        },
+        size: {
+          value: "",
+          label: "",
+        },
+        shape: {
+          value: "",
+          label:"",
+        },
+        style: {
+          value: "",
+          label: "",
+        },
+        color: {
+          value:"",
+          label:"",
+        },
+        model: {
+          value: "",
+          label:"",
+        },
+        });
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.productReport] });
       if (id == "new") {
         setId("new")
         toast.success("savedSuccessfully");
-        form.reset({
-        })
+       
       } else {
         toast.success("updatedSuccessfully");
       }
     },
   });
+
+
  
   useEffect(() => {
     if (qrBaseOne) {
@@ -107,15 +142,14 @@ const ActionPageQrCode = () => {
   return (
     <FormProvider {...form}>
       <form
-      className="w-1/3  h-full"
+        className="w-1/3 h-full"
         onSubmit={form.handleSubmit((data) => {
-          
           mutate({ data: {bar_code:qrBaseOne?.id || '', y:data?.count} });
         })}
       >
         <FormContent />
       </form>
-    </FormProvider>
+    </FormProvider> 
 
   );
 };

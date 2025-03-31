@@ -1,76 +1,73 @@
 import { ColumnDef } from "@tanstack/react-table";
-
-
 import { ProductData } from "../type";
-import BarcodeGenerator from "@/components/react-barcode";
 
 
 export const Columns: ColumnDef<ProductData>[] = [
- 
-  {
-    header: "code",
-    accessorKey: "code",
-    cell: ({ row }) => {
-      return  <BarcodeGenerator className="w-20 h-10" value={row.original?.code||""}/>;
-    },
-  },
- 
 
-  {
-    header: "country",
-    cell: ({ row }) => {
-      return <p>{row.original?.country?.title}</p>;
-    },
-  },
   {
     header: "collection",
     cell: ({ row }) => {
-      return <p>{row.original?.collection?.title}</p>;
+      return <p>{row.original?.bar_code?.collection?.title}</p>;
     },
   },
+ 
   {
     header: "model",
     cell: ({ row }) => {
-      return <p>{row.original?.model?.title}</p>;
-    },
-  },
-  {
-    header: "type-corpet",
-    cell: ({ row }) => {
-      return <p>{ row.original?.isMetric ? "Метражный":"Штучный"}</p>;
-    },
-  },
-  {
-    header: "shape",
-    cell: ({ row }) => {
-      return <p>{row.original?.shape?.title}</p>;
+      return <p>{row.original?.bar_code?.model?.title}</p>;
     },
   },
   {
     header: "size",
     cell: ({ row }) => {
-      return <p>{row.original?.size?.title}</p>;
+      return <p>{row.original?.bar_code?.size?.title}</p>;
+    },
+  },
+  {
+    header: "count",
+    cell: ({ row }) => {
+      return <p>
+        { row.original?.count }
+      </p>;
+    },
+  },
+  {
+    header: "Обём",
+    cell: ({ row }) => {
+      return <p>{Number(row.original?.bar_code?.size?.x) * Number(row.original?.bar_code?.size?.y) }м²</p>;
+    },
+  },
+  {
+    header: "color",
+    cell: ({ row }) => {
+      return <p>{row.original?.bar_code?.color?.title}</p>;
     },
   },
   {
     header: "style",
     cell: ({ row }) => {
-      return <p>{row.original.style?.title}</p>;
+      return <p>{row.original?.bar_code?.style?.title}</p>;
+    },
+  },
+  {
+    header: "shape",
+    cell: ({ row }) => {
+      return <p>{row.original?.bar_code?.shape?.title}</p>;
+    },
+  },
+  {
+    header: "county",
+    cell: ({ row }) => {
+      return <p>{row.original?.bar_code?.country?.title}</p>;
     },
   },
  
-  // {
-  //   id: "actions",
-  //   enableHiding: true,
-  //   header: () => <div className="text-right">{"actions"}</div>,
-  //   size: 50,
-  //   cell: ({ row }) => {
-  //     return (
-  //       <TableAction
-  //         url={apiRoutes.qrBase}
-  //         id={row.original?.id}
-  //       />
-  //     );
-  //   },
-  // },
+  {
+    header: "Партия",
+    cell: ({ row }) => {
+      return <p>{row.original?.partiya?.title}</p>;
+    },
+  },
+ 
+  
 ];

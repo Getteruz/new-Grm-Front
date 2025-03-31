@@ -12,5 +12,7 @@ export const apiRoutes = {
   transfers:"/transfers",
   broned:"/broned",
   filial:"/filial",
+  filialMakeReport:'/filial/maker-report',
+  filialReport:"/filial-report",
   qrBase:"/qr-base"
 } as const;

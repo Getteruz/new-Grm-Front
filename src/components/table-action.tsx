@@ -30,6 +30,7 @@ export default function TableAction({
   ShowPreview,
   ShowUpdate = true,
   ShowDelete = true,
+  refetchUrl,
   children,
   id,
 }: {
@@ -38,6 +39,7 @@ export default function TableAction({
   ShowUpdate?: boolean;
   ShowDelete?: boolean;
   id: string;
+  refetchUrl?:string;
   children?: React.ReactNode;
 }) {
   const { t } = useTranslation();
@@ -51,7 +53,7 @@ export default function TableAction({
     },
     onSuccess: () => {
       toast.success(t("deleteToast"));
-      queryClient.invalidateQueries({ queryKey: [url] });
+      queryClient.invalidateQueries({ queryKey: [refetchUrl||url] });
       setOpen(false);
     },
   });

@@ -107,10 +107,10 @@ filial:{
 }
 }
   export type TQuery = {
-    search: string | undefined;
-    limit: number;
-    page: number;
-    type:string;
-    filialId:string
+    search?: string | undefined;
+    limit?:number,
+    page?:number
+    type?:string;
+    filialId?:string
   };
   

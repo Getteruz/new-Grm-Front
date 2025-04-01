@@ -13,21 +13,17 @@ import { useMeStore } from "@/store/me-store";
 //   INVENTORY = 'переучет',
 // }
 export default function Page() {
-  const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
-  const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [search] = useQueryState("search");
   const {meUser} =useMeStore()
   const [type] = useQueryState('type',parseAsString.withDefault('переучет'))
-  const { data, isLoading } = useDataLibrary({
+  const { data, isLoading,fetchNextPage,hasNextPage,isFetchingNextPage } = useDataLibrary({
     queries: {
-      limit,
-      page,
       search: search || undefined,
       filialId:meUser?.filial?.id ||'',
       type:type||"переучет",
     },
   });
-
+  const flatData = data?.pages?.flatMap(page => page?.items || []) || [];
   return (
     <div className="flex w-full">
       <ActionPageQrCode/>
@@ -36,7 +32,10 @@ export default function Page() {
         <DataTable
           isLoading={isLoading}
           columns={Columns}
-          data={data?.items ?? []}
+          data={flatData ?? []}
+           fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage ?? false}
+          isFetchingNextPage={isFetchingNextPage}
         />
       </div>
     </div>

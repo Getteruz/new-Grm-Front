@@ -66,7 +66,7 @@ export const Columns: ColumnDef<TData>[] = [
     },
   },
   {
-    header: "county",
+    header: "country",
     cell: ({ row }) => {
       return <p>{row.original?.bar_code?.country?.title}</p>;
     },

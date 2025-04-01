@@ -10,7 +10,6 @@ export default function BarcodeQenerat() {
   const WatchValue = watch()
   const printRef = useRef<HTMLDivElement>(null);
 
- 
   const handlePrint = useReactToPrint({
     contentRef: printRef,
      // @ts-ignore 

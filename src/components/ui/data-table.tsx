@@ -22,6 +22,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import TableLoading from "./table-loading";
 import { useQueryState } from "nuqs";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -49,6 +50,7 @@ export function DataTable<TData, TValue>({
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const [, setId] = useQueryState("id");
+  const { t } = useTranslation();
 
   const checkboxColumn: ColumnDef<TData, any> = {
     id: "select",
@@ -140,12 +142,22 @@ export function DataTable<TData, TValue>({
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
+                          {header.isPlaceholder
+                        ? null
+                        : typeof flexRender(
                               header.column.columnDef.header,
                               header.getContext()
-                            )}
+                            ) == "string"
+                          ? t(
+                              String(
+                                flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )
+                              )
+                            )
+                          : null}
+                            
                       </TableHead>
                     );
                   })}
@@ -203,7 +215,6 @@ export function DataTable<TData, TValue>({
               ) : (
                 data.length > 0 && (
                   <div className="text-sm text-muted-foreground">
-                    No more results
                   </div>
                 )
               )}

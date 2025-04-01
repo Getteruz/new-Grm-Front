@@ -45,6 +45,7 @@ const ActionPageQrCode = () => {
     }
   });
   const [id,setId] = useQueryState("id");
+  const [auto] = useQueryState("auto");
   
 const brcode = form.watch("code")
 
@@ -58,7 +59,7 @@ const brcode = form.watch("code")
       form.reset({
         code:  "",
         isMetric:'',
-        count: 1,
+        count: undefined,
         country: {
           value: '',
           label: '',
@@ -91,16 +92,13 @@ const brcode = form.watch("code")
       queryClient.invalidateQueries({ queryKey: [apiRoutes.productReport] });
       if (id == "new") {
         setId("new")
-        toast.success("savedSuccessfully");
+        toast.success("Продукт добавлено успешно");
        
       } else {
-        toast.success("updatedSuccessfully");
+        toast.success("Продукт добавлено успешно");
       }
     },
   });
-
-
- 
   useEffect(() => {
     if (qrBaseOne) {
       form.reset({
@@ -136,6 +134,10 @@ const brcode = form.watch("code")
           label: qrBaseOne?.model?.title,
         },
         });
+        if(auto){
+          mutate({ data: {bar_code:qrBaseOne?.id || '', y:qrBaseOne?.count || 1} });
+        }
+        
     }
   }, [qrBaseOne]);
 
@@ -143,6 +145,9 @@ const brcode = form.watch("code")
     <FormProvider {...form}>
       <form
         className="w-1/3 h-full"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") e.preventDefault();
+        }}
         onSubmit={form.handleSubmit((data) => {
           mutate({ data: {bar_code:qrBaseOne?.id || '', y:data?.count} });
         })}

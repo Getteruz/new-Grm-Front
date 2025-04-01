@@ -1,6 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import {
+  HomeIcons,
   OpenAIIcons,
   SettingsIcons,
 } from "../../components/icons";
@@ -15,6 +16,7 @@ export default function Menu() {
   const navigate = useNavigate();
   const { meUser } = useMeStore();
   const { removeToken } = useAuthStore();
+  const pathName = useLocation()
   return (
     <div className="w-[104px] h-screen flex justify-between flex-col  border-r bg-sidebar  border-border">
       <div>
@@ -22,12 +24,23 @@ export default function Menu() {
           src="/logo1.svg"
           className={`border-b inline-block w-full ${role? ' h-[64px]':'h-[90px]'}  border-border`}
         />
+        {pathName.pathname== '/dashboard' ?
+        <>
          <div
+            onClick={() => {
+                navigate('/dashboard');
+            }}
+            className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
+          >
+            <HomeIcons/>
+          </div>
+        </>: <div
             onClick={()=>navigate(-1)}
             className={` hover:bg-sidebar-accent cursor-pointer border-b border-border text-center flex items-center justify-center p-[20px]`}
           >
             {<ChevronLeft/>}
           </div>
+          }
         {DataMenu[(meUser?.position?.role || "admin") as keyof typeof DataMenu]?.map((e) => (
           <div
             onClick={() => {

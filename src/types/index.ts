@@ -1,11 +1,14 @@
 export type TResponse<T> = {
   items: T[];
   meta: {
+    page:number;
     totalItems: number;
     itemCount: number;
     itemsPerPage: number;
     totalPages: number;
     currentPage: number;
+    limit:number;
+    total:number;
   };
 };
 

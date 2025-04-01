@@ -13,7 +13,7 @@ const LoginForm = () => {
   });
 
   const { setToken } = useAuthStore();
-  const { mutate } = useAuthMutation({
+  const { mutate,isPending } = useAuthMutation({
     onSuccess: (res) => {
       setToken(res?.accessToken);
       window.location.replace("/dashboard");
@@ -23,7 +23,7 @@ const LoginForm = () => {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit((data) => mutate(data))}>
-        <LoginFormContent />
+        <LoginFormContent isPending={isPending} />
       </form>
     </FormProvider>
   );

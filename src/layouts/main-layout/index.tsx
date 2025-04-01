@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/store/auth-store";
@@ -10,10 +10,14 @@ import Header from "./header";
 
 export default function MainLayout() {
   const { token } = useAuthStore();
+  const pathname = useLocation();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!token) {
       window.location.replace("/login");
+    }else if (pathname.pathname == '/'){
+      navigate('/dashboard')
     }
   }, [token]);
   

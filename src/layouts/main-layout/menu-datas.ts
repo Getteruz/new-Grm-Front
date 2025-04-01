@@ -28,12 +28,7 @@ import {
 
 export const DataMenu = {
     admin:[
-      {
-        id: 1,
-        icons: ()=>HomeIcons(),
-        link: "/dashboard",
-        text:"dashboard"
-      },
+     
         {
           id: 1,
           icons: ()=>HomeIcons(),
@@ -99,14 +94,6 @@ export const DataMenu = {
         
       ],
       4:[
-       
-        {
-          id: 1,
-          icons: ()=>HomeIcons(),
-         link: "/monitoring",
-        text:"monitoring"
-        },
-        
          {
           id: 2,
           icons: ()=>BuildingIcons(),
@@ -134,12 +121,7 @@ export const DataMenu = {
         },
       ],
       9:[
-        {
-          id: 1,
-          icons: ()=>HomeIcons(),
-         link: "/dashboard",
-        text:"dashboard"
-        },
+        
         {
           id: 2,
           icons: ()=>ReportBottom(),
@@ -203,12 +185,7 @@ export const DataMenu = {
         
       ],
       11:[
-        {
-          id: 1,
-          icons: ()=>HomeIcons(),
-          link: "/dashboard",
-          text:"dashboard"
-        },
+      
         {
           id: 2,
           icons: ()=>HomeIcons(),

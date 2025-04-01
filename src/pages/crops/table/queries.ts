@@ -12,10 +12,10 @@ interface ICrops {
 const useCrops = ({ options, queries }: ICrops) =>
   useInfiniteQuery({
     ...options,
-    queryKey: [apiRoutes.products, queries],
+    queryKey: [apiRoutes.productReport, queries],
     queryFn: ({ pageParam = 1 }) =>
-      getAllData<TResponse<CropData>, CropQuery>(apiRoutes.products,
-         { ...queries, page: pageParam as number, limit: 10 }
+      getAllData<TResponse<CropData>, CropQuery>(apiRoutes.productReport,
+         { ...queries, page: pageParam as number, limit: 10}
         ),
     getNextPageParam: (lastPage) => lastPage?.meta?.currentPage + 1 || null,
     initialPageParam: 1 

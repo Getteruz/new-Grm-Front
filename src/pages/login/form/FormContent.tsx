@@ -4,8 +4,10 @@ import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel
 import Autoplay from "embla-carousel-autoplay"
 import React from "react";
 import { CardContainer, CardItem } from "@/components/ui/3d-card";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
-export default function LoginFormContent() {
+export default function LoginFormContent({isPending}:{isPending:boolean}) {
   const plugin = React.useRef(
     Autoplay({ delay: 1400, stopOnInteraction: true })
   );
@@ -28,9 +30,10 @@ export default function LoginFormContent() {
             //label="userName"
             className="mb-12"
           />
-          <button className="py-[12px] px-[25px] cursor-pointer bg-[#282828] text-[15px] leading-[18px] text-white">
+          <Button className="py-[12px] px-[25px] cursor-pointer bg-[#282828] text-[15px] leading-[18px] text-white">
+            {isPending && <Loader2 className="animate-spin" />}
             Войти
-          </button>
+          </Button>
         </div>
         <CardContainer className="inter-var p-0 w-full max-[613px]   h-[518px] flex items-center justify-center bg-primary">
           <Carousel 

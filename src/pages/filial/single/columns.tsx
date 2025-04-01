@@ -56,7 +56,7 @@ export const Columns: ColumnDef<ProductData>[] = [
     },
   },
   {
-    header: "county",
+    header: "country",
     cell: ({ row }) => {
       return <p>{row.original?.bar_code?.country?.title}</p>;
     },

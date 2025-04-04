@@ -1,4 +1,4 @@
-import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
+import {  parseAsString, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
 

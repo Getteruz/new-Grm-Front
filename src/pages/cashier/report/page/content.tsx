@@ -1,4 +1,3 @@
-import CarpetCashierCard from "@/components/cards/carpet-cashier-card";
 import Filters from "./filter";
 import Pricecheck from "./price-check";
 import CardSort from "@/components/card-sort";

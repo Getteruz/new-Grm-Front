@@ -3,16 +3,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import {
   HomeIcons,
   OpenAIIcons,
-  SettingsIcons,
 } from "../../components/icons";
 import { DataMenu } from "./menu-datas";
 import { useMeStore } from "@/store/me-store";
-import { ChevronLeft, LogOut } from "lucide-react";
+import { ChevronLeft, LogOut, Settings } from "lucide-react";
 import { useAuthStore } from "@/store/auth-store";
 
 
 export default function Menu() {
-  const role = "admin"
   const navigate = useNavigate();
   const { meUser } = useMeStore();
   const { removeToken } = useAuthStore();
@@ -22,25 +20,28 @@ export default function Menu() {
       <div>
         <img
           src="/logo1.svg"
-          className={`border-b inline-block w-full ${role? ' h-[64px]':'h-[90px]'}  border-border`}
+          className={`border-b inline-block w-full ${meUser?.position.role ==3? 'h-[90px]':'h-[64px]'}  border-border`}
         />
-        {pathName.pathname== '/dashboard' ?
-        <>
-         <div
-            onClick={() => {
-                navigate('/dashboard');
-            }}
-            className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
-          >
-            <HomeIcons/>
-          </div>
-        </>: <div
+        {
+          meUser?.position?.role !== 3 ?
+          pathName.pathname== '/dashboard' ?
+            <div
+              onClick={() => {
+                  navigate('/dashboard');
+              }}
+              className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
+            >
+              <HomeIcons/>
+            </div>
+          :
+           <div
             onClick={()=>navigate(-1)}
             className={` hover:bg-sidebar-accent cursor-pointer border-b border-border text-center flex items-center justify-center p-[20px]`}
-          >
+            >
             {<ChevronLeft/>}
-          </div>
-          }
+            </div>
+          : ""
+           }
         {DataMenu[(meUser?.position?.role || "admin") as keyof typeof DataMenu]?.map((e) => (
           <div
             onClick={() => {
@@ -48,7 +49,7 @@ export default function Menu() {
                 navigate(e?.link);
               }
             }}
-            className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
+            className={`${pathName.pathname.includes(e?.link) ? "bg-sidebar-accent":""} hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
             key={e?.id}
           >
             {e?.icons()}
@@ -64,12 +65,13 @@ export default function Menu() {
       }}
           className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
         >
+
           <LogOut />
         </div>
         <div
           className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
         >
-          <SettingsIcons />
+          <Settings />
         </div>
         <div
           className={`bg-[#272727] border-transparent cursor-pointer text-center flex items-center justify-center p-[20px]`}

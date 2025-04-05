@@ -1,7 +1,8 @@
 
-import {  User } from "lucide-react";
+import {   MoreVertical, User } from "lucide-react";
 
 import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
 
 interface ICarpetCard {
     id:string;
@@ -19,7 +20,8 @@ interface ICarpetCard {
 
 export default function CarpetCashierCard({className,model,size,price,discount,count,img,colaction,tags}:ICarpetCard) {
   return (
-    <div className={`w-full flex items-center gap-4 relative p-1 rounded-[3px] bg-sidebar ${className && className}`}>
+    <label className={`w-full flex items-center gap-4 relative p-1 rounded-[3px] bg-sidebar ${className && className}`}>
+        <Checkbox  className="absolute bg-background top-2 left-2 " />
        <img style={{aspectRatio:"0.72/1"}}  src={img} width={104} height={142} alt="img"/>
        <div className="w-full px-[12px]">
             <div className="flex items-center gap-3">
@@ -55,10 +57,18 @@ export default function CarpetCashierCard({className,model,size,price,discount,c
                 <div className="flex gap-1 items-center">
                      <User/>
                      <Button className="rounded-[70px] p-[14px] h-10 text-[#89A143] border-[#89A143]" variant={'outline'}>Подтверждено</Button>
+
+                     <Button className="w-10 h-10 rounded-full text-primary bg-white">
+                        <MoreVertical className="h-4 w-4" />
+                    </Button>
                 </div>
             </div>
+            <div className="flex items-center justify-end gap-2 text-[10px] text-primary">
+                <p>Продажа</p>
+                <p>10:37</p>
+            </div>
        </div>
-    </div>
+    </label>
 
   )
 }

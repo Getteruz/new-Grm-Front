@@ -4,8 +4,7 @@ import BarcodeQenerat from "@/components/barcode-generat";
 import FormComboboxDemoInput from "@/components/forms/FormCombobox";
 import { Button } from "@/components/ui/button";
 import { useQueryState } from "nuqs";
-import { Plus } from "lucide-react";
-import { EditIcons } from "@/components/icons";
+import { Plus, SquarePen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { generateRandomNumber } from "@/utils/generate";
@@ -123,7 +122,7 @@ export default function FormContent() {
             </Button>
             <Button  onClick={()=>setEditble(true)}  type="button" className="h-full border-y-0 w-1/3 text-primary justify-center font-[16px] gap-1.5  " 
             variant={"outline"} > 
-             <EditIcons color={"#767671"} />
+             <SquarePen className="text-primary" />
              Изменить
             </Button>
             <Button  className="h-full  w-1/3 text-primary justify-center font-[16px] gap-1.5  border-none" 

@@ -6,12 +6,15 @@ import { useAuthStore } from "@/store/auth-store";
 
 import Menu from "./menu";
 import Header from "./header";
+import { useMeStore } from "@/store/me-store";
+import CashierHeader from "./cashier-header";
 // import CashierHeader from "./cashier-header";
 
 export default function MainLayout() {
   const { token } = useAuthStore();
   const pathname = useLocation();
   const navigate = useNavigate()
+const  {meUser} = useMeStore()
 
   useEffect(() => {
     if (!token) {
@@ -25,8 +28,10 @@ export default function MainLayout() {
     <SidebarProvider>
       <Menu />
       <SidebarInset>
-        {/* <CashierHeader/> */}
-        <Header />
+        {
+          meUser?.position?.role === 3?<CashierHeader/>: <Header />
+        }
+       
         <div className="h-[calc(100vh-63px)] overflow-scroll" >
         <Outlet />
         </div>

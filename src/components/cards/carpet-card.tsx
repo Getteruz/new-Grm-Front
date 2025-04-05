@@ -1,9 +1,8 @@
 
-import { Bookmark } from "lucide-react";
+import { Bookmark, RectangleVertical, ShoppingCart } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useNavigate } from "react-router-dom";
 
-import { BeigeIcons, BusketIcons } from "../icons";
 
 interface ICarpetCard {
     id:string;
@@ -36,7 +35,7 @@ export default function CarpetCard({className,id,isBron,discount,model,carpetTyp
             <img className="w-full" style={{aspectRatio:"0.67/1"}}  src={img }/>
             <p className="text-primary absolute left-3 bottom-1">{color}</p>
         </div>
-       <p className="flex gap-2 items-center px-1.5"> <BeigeIcons/>{price}$</p>
+       <p className="flex gap-2 items-center px-1.5"> <RectangleVertical className="text-primary w-4"/>{price}$</p>
             {
                 discount ? <div>
                  <div className="w-[46px] cursor-pointer absolute right-0 bottom-[46px] bg-[#FF5E45] text-sidebar h-[46px] flex items-center justify-center">
@@ -56,7 +55,7 @@ export default function CarpetCard({className,id,isBron,discount,model,carpetTyp
         e.stopPropagation()
         setCarpetType(carpetType||null)
         }}  className="w-[46px] cursor-pointer absolute right-0 bottom-0 bg-primary text-background h-[46px] flex items-center justify-center">
-        <BusketIcons/>
+        <ShoppingCart/>
        </div>}
     </div>
 

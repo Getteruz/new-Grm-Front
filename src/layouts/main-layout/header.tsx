@@ -1,12 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  DotsIcons,
-  NoteIcons,
-  RingIcons,
-  RinigIcons,
-} from "../../components/icons";
+
 import { DataMenu } from "./menu-datas";
-import { User } from "lucide-react";
+import { BellRing, Grip, StickyNote, User } from "lucide-react";
 import { useMeStore } from "@/store/me-store";
 import { ReactElement } from 'react';
 import { Button } from "@/components/ui/button";
@@ -44,20 +39,12 @@ export default function Header() {
        &&   
       <Button onClick={()=>navigate(location.pathname+'/get-report')}>Переучёт</Button>}
 
-      <div>
-        <NoteIcons />
-      </div>
-      <div>
-        <RingIcons />
-      </div>
-      <div>
-        <DotsIcons />
-      </div>
-      <div>
-        <User/>
-      </div>
+      <StickyNote className="text-primary w-5 h-5" />
+      <BellRing className="text-primary w-5 h-5" />
+      <Grip className="text-primary w-5 h-5" />
+      <User />
       <div className="flex items-center gap-[5px]">
-        <RinigIcons />
+        {/* <RinigIcons /> */}
         <p className="text-[25px] leading-[30px] text-foreground relative">
           13
           <span className="text-[8px] leading-[12px] text-foreground absolute -top-[2px] -right-[2px]">

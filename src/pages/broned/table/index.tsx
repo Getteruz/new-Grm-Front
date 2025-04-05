@@ -1,8 +1,7 @@
 import CarpetCard from "@/components/cards/carpet-card";
 import Filters from "./filters";
-export default function Page() {
- 
 
+export default function Page() {
 
   return (
     <>

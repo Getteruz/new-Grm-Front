@@ -1,7 +1,9 @@
 import {
+  BasketIcons,
   BronedIcons,
     BuildingIcons,
     DataLibrary,
+    DeviceDesktopIcons,
     HomeIcons,
     PartiesIcons,
     PersonsIcons,
@@ -28,7 +30,6 @@ import {
 
 export const DataMenu = {
     admin:[
-     
         {
           id: 1,
           icons: ()=>HomeIcons(),
@@ -92,6 +93,26 @@ export const DataMenu = {
            text:"parties"
         },
         
+      ],
+      3:[
+        {
+          id: 1,
+          icons: ()=>DeviceDesktopIcons(),
+          link: "/cashier/home",
+           text:"cashier/home"
+        },
+        {
+          id: 2,
+          icons: ()=>ReportBottom(),
+          link: "cashier/report",
+           text:"Отчёт кассира"
+        },
+      {
+        id: 3,
+        icons: ()=>BasketIcons(),
+        link: "/new",
+         text:""
+      },
       ],
       4:[
          {

@@ -6,10 +6,14 @@ import { Button } from "@/components/ui/button";
 import {  useState } from "react";
 import { parseAsBoolean, useQueryState } from "nuqs";
 import { Switch } from "@/components/ui/switch";
+import { useFormContext } from "react-hook-form";
 
 export default function FormContent() {
   const [editble,] = useState<boolean>(true);
   const [auto,setAuto] = useQueryState("auto",parseAsBoolean.withDefault(false));
+  const { watch } = useFormContext();
+const isMetric = watch("isMetric")
+
   return (
     <div className="w-full border-border border-r">
       <Filters/>
@@ -48,16 +52,14 @@ export default function FormContent() {
             placeholder="model"
             label="model"
           />
-           <FormComboboxDemoInput
-            fieldNames={{ value: "id", label: "title" }}
-            fetchUrl="/size"
-            name="size"
+           <FormTextInput 
+            classNameInput="h-[28px] p-2"
+            name="isMetric"
+            placeholder="isMetric" 
             disabled={true}
-             classNameChild="h-[28px] p-2"
-            placeholder="size"
-            label="size"
-          />
-           <FormComboboxDemoInput
+            label="isMetric" 
+            />
+             <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/shape"
             name="shape"
@@ -68,13 +70,21 @@ export default function FormContent() {
           />
            <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
-            fetchUrl="/style"
-            name="style"
-            classNameChild="h-[28px] p-2"
-            placeholder="style"
+            fetchUrl="/size"
+            name="size"
             disabled={true}
-            label="style"
+             classNameChild="h-[28px] p-2"
+            placeholder="size"
+            label="size"
           />
+           <FormTextInput 
+            type="number"
+            classNameInput="h-[28px] p-2"
+            name="count"
+            placeholder={isMetric =="Метражный"?"Длина":"count"} 
+            disabled={!editble}
+            label={isMetric =="Метражный"?"Длина":"count"} 
+            />
            <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/color"
@@ -84,19 +94,16 @@ export default function FormContent() {
             disabled={true}
             label="color"
           />
-           <FormTextInput 
-            classNameInput="h-[28px] p-2"
-            name="isMetric"
-            placeholder="isMetric" 
+           <FormComboboxDemoInput
+            fieldNames={{ value: "id", label: "title" }}
+            fetchUrl="/style"
+            name="style"
+            classNameChild="h-[28px] p-2"
+            placeholder="style"
             disabled={true}
-            label="isMetric" />
-          <FormTextInput 
-          type="number"
-            classNameInput="h-[28px] p-2"
-            name="count"
-            placeholder="count" 
-            disabled={!editble}
-            label="count" />
+            label="style"
+          />
+          
          
        </div>
        <div className="bg-sidebar border-y text-primary border-border  h-[44px]  flex  items-center justify-end  ">

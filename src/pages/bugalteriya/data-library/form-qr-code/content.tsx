@@ -48,6 +48,15 @@ export default function FormContent() {
             label="country"
             disabled={!editble}
           />
+            <FormComboboxDemoInput
+            fieldNames={{ value: "id", label: "title" }}
+            fetchUrl="/factory"
+            name="factory"
+            classNameChild="h-[28px] p-2"
+            placeholder="factory"
+            label="factory"
+            disabled={!editble}
+          />
            <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/collection"
@@ -66,6 +75,24 @@ export default function FormContent() {
             placeholder="model"
             label="model"
           />
+            <FormComboboxDemoInput
+            fieldNames={{ value: "id", label: "title" }}
+            option={[{value:'true', label: "Метражный"},{value:'false',label:"Штучный"}]}
+            name="isMetric"
+            classNameChild="h-[28px] p-2"
+            placeholder="isMetric"
+            label="isMetric"
+            disabled={!editble}
+          />
+            <FormComboboxDemoInput
+            fieldNames={{ value: "id", label: "title" }}
+            fetchUrl="/shape"
+            name="shape"
+            classNameChild="h-[28px] p-2"
+            placeholder="shape"
+            label="shape"
+            disabled={!editble}
+          />
           <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/size"
@@ -75,33 +102,8 @@ export default function FormContent() {
             label="size"
             disabled={!editble}
           />
-           <FormComboboxDemoInput
-            fieldNames={{ value: "id", label: "title" }}
-            option={[{value:'true', label: "Метражный"},{value:'false',label:"Штучный"}]}
-            name="isMetric"
-            classNameChild="h-[28px] p-2"
-            placeholder="isMetric"
-            label="isMetric"
-            disabled={!editble}
-          />
-           <FormComboboxDemoInput
-            fieldNames={{ value: "id", label: "title" }}
-            fetchUrl="/shape"
-            name="shape"
-            classNameChild="h-[28px] p-2"
-            placeholder="shape"
-            label="shape"
-            disabled={!editble}
-          />
-           <FormComboboxDemoInput
-            fieldNames={{ value: "id", label: "title" }}
-            fetchUrl="/style"
-            name="style"
-            classNameChild="h-[28px] p-2"
-            placeholder="style"
-            label="style"
-            disabled={!editble}
-          />
+         
+         
            <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/color"
@@ -111,16 +113,18 @@ export default function FormContent() {
             label="color"
             disabled={!editble}
           />
-         
-         <FormComboboxDemoInput
+
+          <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
-            fetchUrl="/factory"
-            name="factory"
+            fetchUrl="/style"
+            name="style"
             classNameChild="h-[28px] p-2"
-            placeholder="factory"
-            label="factory"
+            placeholder="style"
+            label="style"
             disabled={!editble}
           />
+         
+       
        </div>
        <div className="bg-sidebar border-y text-primary border-border  h-[44px] rounded-t-sm flex   ">
             <Button  type="button" onClick={()=>{

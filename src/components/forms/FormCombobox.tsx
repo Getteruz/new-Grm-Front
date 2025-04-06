@@ -96,7 +96,7 @@ export default function FormComboboxDemoInput<IData, TQuery>({
             className={cn("flex flex-col items-start w-full", className)}
           >
             {label && (
-              <FormLabel className=" font-medium text-[#99998C] dark:text-white">
+              <FormLabel className=" font-medium text-primary text-[12px] dark:text-white">
                 {t(label)}
               </FormLabel>
             )}

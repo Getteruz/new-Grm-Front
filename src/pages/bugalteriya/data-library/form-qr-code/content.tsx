@@ -21,7 +21,6 @@ export default function FormContent() {
     }
   },[id])
   const collectionId = watch('collection')
-  // const isMetric = watch('isMetric')
 
   const handleRegenrate = () => {
     const code = generateRandomNumber(1000000000000, 9999999999999)
@@ -103,7 +102,6 @@ export default function FormContent() {
             disabled={!editble}
           />
          
-         
            <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/color"
@@ -122,8 +120,7 @@ export default function FormContent() {
             placeholder="style"
             label="style"
             disabled={!editble}
-          />
-         
+          />   
        
        </div>
        <div className="bg-sidebar border-y text-primary border-border  h-[44px] rounded-t-sm flex   ">

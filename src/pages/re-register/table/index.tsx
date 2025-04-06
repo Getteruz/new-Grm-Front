@@ -28,7 +28,7 @@ export default function Page() {
     queries: {
       search: search || undefined,
       filialId:meUser?.filial?.id ||'',
-      type:type||"переучет",
+      type:type == "all"? undefined :type||"переучет",
     },
   });
 

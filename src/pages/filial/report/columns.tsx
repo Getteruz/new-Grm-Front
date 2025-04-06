@@ -5,7 +5,7 @@ import TableAction from "@/components/table-action";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { UpdatePatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -40,11 +40,12 @@ export const Columns: ColumnDef<FilialReportData>[] = [
     cell: ({ row }) => {
       if(row.original.status == "Accepted"){
         const navigate = useNavigate()
+        const {id} = useParams()
         return <p 
           onClick={()=>{
-                 UpdatePatchData('product/close-report', row.original?.id,{})
+                 UpdatePatchData('product/close-report', id || "" ,{})
                 .then(()=>{
-                  navigate(`/filial/${row.original?.id}/info`)
+                  navigate(`/filial/${id}/info`)
                   toast.success('Переучёт Принять')
                 })
                 .catch(()=>toast.error("что-то пошло не так"))
@@ -61,6 +62,7 @@ export const Columns: ColumnDef<FilialReportData>[] = [
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
     cell: ({ row }) => {
+      
       if(row.original.status == "Accepted"){
         const queryClient = useQueryClient()
         return (

@@ -25,7 +25,7 @@ export default function SingleReportPage() {
         <DataTable
           isLoading={isLoading}
           columns={Columns}
-          data={data?.item || []}
+          data={data?.items || []}
         />
     </div>
   );

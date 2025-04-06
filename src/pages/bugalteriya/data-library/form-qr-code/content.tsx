@@ -21,10 +21,12 @@ export default function FormContent() {
     }
   },[id])
   const collectionId = watch('collection')
+  // const isMetric = watch('isMetric')
+
   const handleRegenrate = () => {
     const code = generateRandomNumber(1000000000000, 9999999999999)
     setValue('code',code)
-}
+  }
 
   return (
     <div className="w-full border-r border-border">
@@ -50,21 +52,21 @@ export default function FormContent() {
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/collection"
             name="collection"
-             classNameChild="h-[28px] p-2"
+            classNameChild="h-[28px] p-2"
             placeholder="collection"
             label="collection"
             disabled={!editble}
           />
-            <FormComboboxDemoInput
+          <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
-            fetchUrl={ collectionId?.value ? `/model/by-collection/${collectionId?.value}`:`/model`}
+            fetchUrl={collectionId?.value ? `/model/by-collection/${collectionId?.value}`:`/model`}
             name="model"
             disabled={!editble }
             classNameChild="h-[28px] p-2"
             placeholder="model"
             label="model"
           />
-           <FormComboboxDemoInput
+          <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/size"
             name="size"
@@ -75,9 +77,18 @@ export default function FormContent() {
           />
            <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
+            option={[{value:'true', label: "Метражный"},{value:'false',label:"Штучный"}]}
+            name="isMetric"
+            classNameChild="h-[28px] p-2"
+            placeholder="isMetric"
+            label="isMetric"
+            disabled={!editble}
+          />
+           <FormComboboxDemoInput
+            fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/shape"
             name="shape"
-             classNameChild="h-[28px] p-2"
+            classNameChild="h-[28px] p-2"
             placeholder="shape"
             label="shape"
             disabled={!editble}
@@ -86,7 +97,7 @@ export default function FormContent() {
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/style"
             name="style"
-             classNameChild="h-[28px] p-2"
+            classNameChild="h-[28px] p-2"
             placeholder="style"
             label="style"
             disabled={!editble}
@@ -95,7 +106,7 @@ export default function FormContent() {
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/color"
             name="color"
-             classNameChild="h-[28px] p-2"
+            classNameChild="h-[28px] p-2"
             placeholder="color"
             label="color"
             disabled={!editble}
@@ -105,7 +116,7 @@ export default function FormContent() {
             fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/factory"
             name="factory"
-             classNameChild="h-[28px] p-2"
+            classNameChild="h-[28px] p-2"
             placeholder="factory"
             label="factory"
             disabled={!editble}

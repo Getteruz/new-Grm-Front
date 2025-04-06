@@ -133,6 +133,10 @@ const ActionPageQrCode = () => {
           value: data?.color?.id,
           label: data?.color?.title,
         },
+          isMetric:{
+          value: data?.isMetric ? "true": "false" ,
+          label:data?.isMetric? "Метражный":"Штучный"
+          },
         model: {
           value: data?.model?.id,
           label: data?.model?.title,

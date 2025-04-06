@@ -60,11 +60,7 @@ export default function FormComboboxDemoInput<IData, TQuery>({
     enabled: open && Boolean(fetchUrl),
     queryFn: () =>
       getAllData<TResponse<IData>, TQuery>(fetchUrl || "", {
-        filters: {
-          name: {
-            $containsi: search || undefined,
-          },
-        },
+        search:search || undefined ,
         ...queries,
       } as TQuery),
     select: (res) => ({

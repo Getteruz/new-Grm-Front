@@ -10,6 +10,7 @@ export default function Filters() {
       setBarcode(e.target.value?.trim())
     }
 }
+
   return (
     <div className="bg-sidebar border-b border-border w-full h-[64px] rounded-t-sm flex   ">
       <Button 

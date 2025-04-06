@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useFormContext } from "react-hook-form";
+import { Input } from "@/components/ui/input";
 
 
 export default function FormContent({isPending}:{isPending:boolean}) {
@@ -43,8 +44,7 @@ const { mutate } = useMutation({
     toast.success(t("deleteToast"));
     queryClient.invalidateQueries({ queryKey: [type] });
   },
-});
-
+}); 
 
   return (
     < >
@@ -134,15 +134,23 @@ const { mutate } = useMutation({
               />
             }
          <div className="w-[95%] relative">
-          <FormTextInput 
+            {type=== "size"?
+             <div className="flex mb-3 m-1">
+              <Input  value={title?.split('x')[0]} onChange={(e)=>setValue("title", `${e?.target?.value}x${title?.split('x')[1]|| ''}`)} placeholder="x"  className="w-full bg-transparent border text-center  border-border" />
+              <Input disabled value={'X'} placeholder="x"  className="w-[66px] text-center  bg-transparent border-y border-border" />
+              <Input  value={title?.split('x')[1]} onChange={(e)=>setValue("title", `${title?.split('x')[0]|| ''}x${e?.target?.value }`)}  placeholder="y"  className="w-full bg-transparent border text-center  border-border" />
+            </div>
+             :
+            <FormTextInput 
               classNameInput="mb-3 m-1 w-full bg-transparent border border-border" 
               name="title"
               type={"string"}
               placeholder="title" 
-              />
-              <Button disabled={!Boolean(title)} className={`${title ? 'bg-[#89A143] tecx-white hover:bg-[#89A143]':'bg-sidebar'} w-[30px] absolute top-2.5 right-0.5 flex items-center justify-center cursor-pointer h-[30px] rounded-[2px]   text-border`}>
+              />}
+            {  type=== "size" ? "":<Button disabled={!Boolean(title)} className={`${title ? 'bg-[#89A143] tecx-white hover:bg-[#89A143]':'bg-sidebar'} w-[30px] absolute top-2.5 right-0.5 flex items-center justify-center cursor-pointer h-[30px] rounded-[2px]   text-border`}>
                 <Check/>
               </Button>
+              }
          </div>
         </TableWrapper>
 

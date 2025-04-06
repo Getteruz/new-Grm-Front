@@ -16,7 +16,6 @@ export const Columns: ColumnDef<TData>[] = [
       return  <BarcodeGenerator className="w-20 h-10" value={row.original?.code||""}/>;
     },
   },
- 
 
   {
     header: "country",
@@ -39,7 +38,7 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "type-corpet",
     cell: ({ row }) => {
-      return <p>{ row.original?.isMetric ? "Метражный":"Штучный"}</p>;
+      return <p>{ row.original?.isMetric ? "Метражный" : "Штучный" }</p>;
     },
   },
   {

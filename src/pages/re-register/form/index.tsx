@@ -93,6 +93,10 @@ const brcode = form.watch("code")
           label:"",
         },
         });
+        const codeInput = document.querySelector('input[name="code"]');
+          if (codeInput) {
+            (codeInput as HTMLInputElement).select();
+          }
       queryClient.invalidateQueries({ queryKey: [apiRoutes.productReport] });
       if (id == "new") {
         setId("new")

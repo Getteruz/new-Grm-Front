@@ -94,7 +94,10 @@ const ActionPageQrCode = () => {
   const { mutate } = useDataLibrary({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [apiRoutes.qrBase] });
-     
+      const codeInput = document.querySelector('input[name="code"]');
+          if (codeInput) {
+            (codeInput as HTMLInputElement).select();
+          }
       setId("new")
       if (id == "new") {
         toast.success("savedSuccessfully");

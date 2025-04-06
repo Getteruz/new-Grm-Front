@@ -93,7 +93,7 @@ export default function FormComboboxDemoInput<IData, TQuery>({
       render={({ field }) => {
         return (
           <FormItem
-            className={cn("flex flex-col items-start w-full", className)}
+            className={cn("flex flex-col gap-1 items-start w-full", className)}
           >
             {label && (
               <FormLabel className=" font-medium text-primary text-[12px] dark:text-white">

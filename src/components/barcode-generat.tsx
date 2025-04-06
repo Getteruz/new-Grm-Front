@@ -25,8 +25,8 @@ export default function BarcodeQenerat() {
   });
  
   return (
-    <div className="w-full">
-        <div className="bg-sidebar border-y border-border  h-[64px] rounded-t-sm flex   ">
+    <div className="w-full h-full">
+        <div className="bg-sidebar border-y border-border  h-[64px]   flex   ">
             <Button type="button" className="h-full w-1/2 border-r-1 text-primary  justify-center font-[16px] gap-1.5  border-y-0  border-l-0" 
             variant={"outline"} > 
             Штрих-код
@@ -36,7 +36,7 @@ export default function BarcodeQenerat() {
             QR-код
             </Button>
         </div>
-        <div  ref={printRef} className="p-[30px]">
+        <div  ref={printRef} className="p-[30px] h-full">
           <div  className="bg-white rounded-1 px-11 py-[24px] text-center">
             <h4 className="font-bold text-[24px] ">{WatchValue?.collection?.label}</h4>
             <div className="flex items-center justify-center gap-[15px]">
@@ -47,7 +47,7 @@ export default function BarcodeQenerat() {
           <BarcodeGenerator value={WatchValue?.code||""}/>
           </div>
         </div>
-        <div className="bg-sidebar border-y text-primary border-border  h-[44px] rounded-t-sm flex   ">
+        <div className="bg-sidebar border-y text-primary border-border  h-[44px] flex   ">
             <Button type="button" className="h-full border-r-1 w-1/3 justify-center font-[16px] gap-1  border-y-0  border-l-0" 
             variant={"outline"} > 
             <Share2 size={16}/>

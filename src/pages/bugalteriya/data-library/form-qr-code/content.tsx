@@ -67,9 +67,9 @@ export default function FormContent() {
           />
           <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
-            fetchUrl={collectionId?.value ? `/model/by-collection/${collectionId?.value}`:`/model`}
+            fetchUrl={`/model/by-collection/${collectionId?.value}`}
             name="model"
-            disabled={!editble }
+            disabled={!editble || !collectionId?.value }
             classNameChild="h-[28px] p-2"
             placeholder="model"
             label="model"
@@ -123,7 +123,7 @@ export default function FormContent() {
           />   
        
        </div>
-       <div className="bg-sidebar border-y text-primary border-border  h-[44px] rounded-t-sm flex   ">
+       <div className="bg-sidebar border-y text-primary border-border  h-[44px]   flex   ">
             <Button  type="button" onClick={()=>{
               setId('new')
               handleRegenrate()

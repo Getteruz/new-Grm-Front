@@ -10,7 +10,7 @@ export default function Filters() {
   const navigate = useNavigate()
   const {id} = useParams()
   return (
-    <div className="bg-sidebar border-border border-b   h-[64px] rounded-t-sm flex   ">
+    <div className="bg-sidebar border-border border-b   h-[64px]   flex   ">
       <SearchInput className="ml-2 gap-2 w-full" />
       {id || idLoc ?
     <UploadExel/>

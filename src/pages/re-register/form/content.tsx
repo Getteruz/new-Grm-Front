@@ -15,7 +15,7 @@ export default function FormContent() {
 const isMetric = watch("isMetric")
 
   return (
-    <div className="w-full border-border border-r">
+    <div className="w-full h-full  border-border border-r">
       <Filters/>
        <div className="grid row-start  px-[40px] py-[20px] gap-2 lg:grid-cols-2">
          <FormTextInput 
@@ -30,9 +30,18 @@ const isMetric = watch("isMetric")
             fetchUrl="/country"
              classNameChild="h-[28px] p-2"
             name="country"
-            disabled={true}
             placeholder="country"
             label="country"
+            disabled={true}
+          />
+            <FormComboboxDemoInput
+            fieldNames={{ value: "id", label: "title" }}
+            fetchUrl="/factory"
+            name="factory"
+            classNameChild="h-[28px] p-2"
+            placeholder="factory"
+            label="factory"
+            disabled={true}
           />
            <FormComboboxDemoInput
             fieldNames={{ value: "id", label: "title" }}
@@ -107,8 +116,8 @@ const isMetric = watch("isMetric")
          
        </div>
        <div className="bg-sidebar border-y text-primary border-border  h-[44px]  flex  items-center justify-end  ">
-              <Switch onCheckedChange={setAuto} checked={auto} />
-            <Button  className="h-full  w-1/3 text-primary justify-center font-[16px] gap-1.5  border-none" 
+            <Switch onCheckedChange={setAuto} checked={auto} />
+            <Button  className="h-full w-1/3 text-primary justify-center font-[16px] gap-1.5  border-none" 
             variant={"outline"} > 
             Добавить
             </Button>

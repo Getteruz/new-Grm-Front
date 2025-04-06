@@ -12,7 +12,7 @@ export default function Filters() {
 }
 
   return (
-    <div className="bg-sidebar border-b border-border w-full h-[64px] rounded-t-sm flex   ">
+    <div className="bg-sidebar border-b border-border w-full h-[64px]  flex   ">
       <Button 
         onClick={() => {
           const codeInput = document.querySelector('input[name="code"]');

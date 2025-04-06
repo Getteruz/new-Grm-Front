@@ -7,7 +7,7 @@ import { useQueryState } from "nuqs";
 export default function Filters() {
   const [, setId] = useQueryState("id");
   return (
-    <div className="bg-sidebar w-full border-border border-b  px-[51px] h-[64px] rounded-t-sm flex   ">
+    <div className="bg-sidebar w-full border-border border-b  px-[51px] h-[64px]   flex   ">
         <DateRangePicker
           fromPlaceholder="Start date"
           toPlaceholder="End date"

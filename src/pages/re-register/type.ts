@@ -41,6 +41,10 @@ export interface TData {
       id: string;
       title: string;
   };
+  factory: {
+    id: string;
+    title: string;
+};
   bar_code:{
     isMetric: boolean;
     id: string;

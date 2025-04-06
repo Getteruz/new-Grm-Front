@@ -7,7 +7,7 @@ import { useQueryState } from "nuqs";
 export default function Filters() {
   const [, setId] = useQueryState("id");
   return (
-    <div className="bg-sidebar border-border border-b  px-[51px] h-[64px] rounded-t-sm flex   ">
+    <div className="bg-sidebar border-border border-b  px-[51px] h-[64px]   flex   ">
       <SearchInput className="mr-auto w-full" />
       <Statistics/>
       <Button className="h-full  border-y-0 w-[64px]"  variant={"outline"} ><Trash2/></Button>

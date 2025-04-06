@@ -5,7 +5,7 @@ import { FileOutput } from "lucide-react";
 export default function Filters() {
 
   return (
-    <div className="bg-sidebar  gap-2 px-[51px] h-[64px] rounded-t-sm flex   ">
+    <div className="bg-sidebar  gap-2 px-[51px] h-[64px]   flex   ">
       <p className="text-[20px] my-auto mr-auto font-medium">Crop</p>
       <DateRangePicker
       fromPlaceholder="Start date"

@@ -11,7 +11,7 @@ export default function Filters() {
   const {meUser} = useMeStore()
   const navigate = useNavigate();
   return (
-    <div className="bg-sidebar border-border border-b  px-[51px] h-[64px] rounded-t-sm flex   ">
+    <div className="bg-sidebar border-border border-b  px-[51px] h-[64px]   flex   ">
       <SearchInput/>
       <FilterSelect  options={[
         {label:"Личные",value:"излишки"},
@@ -29,7 +29,7 @@ export default function Filters() {
       </Button>
       <Button onClick={()=>{
         if(meUser?.filial?.id){
-          UpdatePatchData('/filial/close-report', meUser?.filial?.id,{})
+          UpdatePatchData('/product/close-report', meUser?.filial?.id,{})
          .then(()=>{
           toast.success('Переучёт отправлен')
           navigate('/monitoring')

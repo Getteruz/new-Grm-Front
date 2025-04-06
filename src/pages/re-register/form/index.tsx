@@ -8,13 +8,17 @@ import FormContent from "./content";
 import { CropFormType, CropSchema } from "./schema";
 import { useQueryClient } from "@tanstack/react-query";
 import { apiRoutes } from "@/service/apiRoutes";
-import { useQueryState } from "nuqs";
+import { parseAsBoolean, useQueryState } from "nuqs";
 
 const ActionPageQrCode = () => {
   const form = useForm<CropFormType>({
     resolver: zodResolver(CropSchema),
     defaultValues:{
       country: {
+        value: undefined,
+        label: "",
+      },
+      factory: {
         value: undefined,
         label: "",
       },
@@ -45,7 +49,7 @@ const ActionPageQrCode = () => {
     }
   });
   const [id,setId] = useQueryState("id");
-  const [auto] = useQueryState("auto");
+  const [auto,setAuto] = useQueryState("auto",parseAsBoolean);
   
 const brcode = form.watch("code")
 
@@ -101,6 +105,9 @@ const brcode = form.watch("code")
   });
   useEffect(() => {
     if (qrBaseOne) {
+      if(qrBaseOne?.isMetric){
+        setAuto(false)
+      }
       form.reset({
         code: qrBaseOne?.code || "",
         isMetric:qrBaseOne?.isMetric ? "Метражный":"Штучный",
@@ -133,8 +140,12 @@ const brcode = form.watch("code")
           value: qrBaseOne?.model?.id,
           label: qrBaseOne?.model?.title,
         },
+        factory: {
+          value: qrBaseOne?.factory?.id,
+          label: qrBaseOne?.factory?.title,
+        },
         });
-        if(auto){
+        if(auto && !qrBaseOne?.isMetric){
           mutate({ data: {bar_code:qrBaseOne?.id || '', y:qrBaseOne?.count || 1} });
         }
         

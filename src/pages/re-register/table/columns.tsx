@@ -21,9 +21,10 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "type-corpet",
     cell: ({ row }) => {
-      return <p>{ row.original?.isMetric ? "Метражный":"Штучный"}</p>;
+      return <p>{ row.original?.bar_code?.isMetric ? "Метражный":"Штучный"}</p>;
     },
   },
+  
   {
     header: "size",
     cell: ({ row }) => {
@@ -38,6 +39,7 @@ export const Columns: ColumnDef<TData>[] = [
         {type === "переучет" && row.original?.count }
         { type === "дефицит" && row.original?.count - row.original?.check_count}
         { type === "излишки" && row.original?.check_count - row.original?.count}
+        {row.original?.bar_code?.isMetric ? "м":"x"}
       </p>;
     },
   },
@@ -45,6 +47,12 @@ export const Columns: ColumnDef<TData>[] = [
     header: "Обём",
     cell: ({ row }) => {
       return <p>{Number(row.original?.bar_code?.size?.x) * Number(row.original?.bar_code?.size?.y) }м²</p>;
+    },
+  },
+  {
+    header: "shape",
+    cell: ({ row }) => {
+      return <p>{row.original?.bar_code?.shape?.title}</p>;
     },
   },
   {
@@ -60,27 +68,27 @@ export const Columns: ColumnDef<TData>[] = [
     },
   },
   {
-    header: "shape",
-    cell: ({ row }) => {
-      return <p>{row.original?.bar_code?.shape?.title}</p>;
-    },
-  },
-  {
     header: "country",
     cell: ({ row }) => {
       return <p>{row.original?.bar_code?.country?.title}</p>;
+    },
+  },
+  // {
+  //   header: "factory",
+  //   cell: ({ row }) => {
+  //     return <p>{row.original?.factory?.title }</p>;
+  //   },
+  // },
+  {
+    header: "Партия",
+    cell: ({ row }) => {
+      return <p>{row.original?.partiya ?row.original?.partiya?.title: row.original?.partiya_title}</p>;
     },
   },
   {
     header: "price",
     cell: ({ row }) => {
       return <p>{row.original?.collection_price?.priceMeter}$</p>;
-    },
-  },
-  {
-    header: "Партия",
-    cell: ({ row }) => {
-      return <p>{row.original?.partiya ?row.original?.partiya?.title: row.original?.partiya_title}</p>;
     },
   },
   {
@@ -97,8 +105,6 @@ export const Columns: ColumnDef<TData>[] = [
           id={row.original?.id}
           refetchUrl={apiRoutes.productReport}
         />
-          
-        
       );
     },
   },

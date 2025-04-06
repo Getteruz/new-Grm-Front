@@ -24,7 +24,7 @@ export default function Filters() {
       </Button>
       <Button onClick={()=>{
         if(meUser?.filial?.id){
-          UpdatePatchData('/filial/end-report', meUser?.filial?.id,{})
+          UpdatePatchData('/filial/close-report', meUser?.filial?.id,{})
          .then(()=>{
           toast.success('Переучёт отправлен')
           navigate('/monitoring')

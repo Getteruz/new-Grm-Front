@@ -5,5 +5,5 @@ import { useAuthStore } from "@/store/auth-store";
 export default function PublicLayout() {
   const { token } = useAuthStore();
 
-  return token ? <Navigate to="/dashboard" replace /> : <Outlet />;
+  return token ? <Navigate to="/" replace /> : <Outlet />;
 }

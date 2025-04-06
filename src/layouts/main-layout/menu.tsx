@@ -12,7 +12,7 @@ import { useAuthStore } from "@/store/auth-store";
 
 export default function Menu() {
   const navigate = useNavigate();
-  const { meUser } = useMeStore();
+  const { meUser,removeUserMe } = useMeStore();
   const { removeToken } = useAuthStore();
   const pathName = useLocation()
   return (
@@ -61,6 +61,7 @@ export default function Menu() {
       <div
       onClick={()=>{
         removeToken();
+        removeUserMe()
         window.location.replace("/login");
       }}
           className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}

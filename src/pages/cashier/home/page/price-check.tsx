@@ -1,3 +1,4 @@
+import CheckList from "@/components/check";
 import { Button } from "@/components/ui/button";
 
 export default function Pricecheck() {
@@ -14,7 +15,9 @@ export default function Pricecheck() {
             <div className="bg-background flex items-center text-primary justify-between p-5 mb-2">
                 <p className="text-[14px] font-semibold ">Промокод:</p>
                 <p className="text-[28px] font-semibold">~</p>
-            </div>  
+            </div> 
+
+            <CheckList title="Sanat Hali"/> 
         </div>
         <div className="w-full">
             <Button className="w-full py-10.5 p-10 bg-primary mt-auto text-background text-[22px] font-semibold " >Подтвердить продажу</Button>

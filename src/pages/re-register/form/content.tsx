@@ -101,7 +101,6 @@ export default function FormContent() {
        </div>
        <div className="bg-sidebar border-y text-primary border-border  h-[44px]  flex  items-center justify-end  ">
               <Switch onCheckedChange={setAuto} checked={auto} />
-           
             <Button  className="h-full  w-1/3 text-primary justify-center font-[16px] gap-1.5  border-none" 
             variant={"outline"} > 
             Добавить

@@ -8,7 +8,10 @@ export default function Content() {
       <div className="w-full">
         <Filters/>
         <div className="my-[13px] mx-[30px]">
-        <CarpetCashierCard 
+     {
+        Array.from({length: 10}).map((_, index) => {
+          return   <CarpetCashierCard 
+          key={index}
           tags={['tags','news',"hello","what"]} 
           discount={"5"} 
           id='1' 
@@ -20,6 +23,8 @@ export default function Content() {
           colaction="Sanat Montreal" 
           color="Beige"
           />
+        })
+     }
         </div>
       </div>
       <Pricecheck/>

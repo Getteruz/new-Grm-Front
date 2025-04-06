@@ -20,11 +20,11 @@ interface ICarpetCard {
 
 export default function CarpetCashierCard({className,model,size,price,discount,count,img,colaction,tags}:ICarpetCard) {
   return (
-    <label className={`w-full flex items-center gap-4 relative p-1 rounded-[3px] bg-sidebar ${className && className}`}>
+    <label className={`w-full flex  gap-4 relative p-1 rounded-[3px] bg-sidebar ${className && className}`}>
         <Checkbox  className="absolute bg-background top-2 left-2 " />
-       <img style={{aspectRatio:"0.72/1"}}  src={img} width={104} height={142} alt="img"/>
+       <img className="object-cover" style={{aspectRatio:"0.72/1"}}  src={img} width={104} height={142} alt="img"/>
        <div className="w-full px-[12px]">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center flex-wrap gap-3">
                 <p className="text-[18px] font-semibold text-primary">{colaction}</p>
                 <p className="text-[18px] font-semibold text-primary">{model}</p>
                 <p className="text-[18px] font-semibold text-primary">{size}</p>
@@ -33,7 +33,7 @@ export default function CarpetCashierCard({className,model,size,price,discount,c
                 <p className="text-[18px] font-semibold text-[#E38157]">{discount}</p>
                 <p className="text-[18px] font-semibold text-primary">{price}</p>
             </div>
-            <div className="mt-3 flex items-start justify-between gap-7 mb-7">
+            <div className="mt-3 flex  items-start justify-between gap-7 mb-7">
                 <div className="flex w-full gap-[1px] flex-wrap">
                     {
                         tags?.map((e)=>(

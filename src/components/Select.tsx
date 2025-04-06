@@ -11,7 +11,7 @@ type ShadcnSelectProps = {
   value?: string;
   onChange: (e: string | undefined) => void;
   isMulti?: boolean;
-  defaultValue?: TSelectOption;
+  defaultValue?: string;
   className?: string;
   classNameValue?: string;
   classNameValueSpan?: string;
@@ -57,7 +57,7 @@ function ShadcnSelect(props: ShadcnSelectProps) {
         </SelectValue>
       </SelectTrigger>
       {options ? (
-        <SelectContent className={`${classNameContainer}`}>
+        <SelectContent className={`${classNameContainer} `}>
           {options?.map((option) => (
             <SelectItem
               key={option.value}

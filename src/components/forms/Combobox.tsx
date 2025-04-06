@@ -108,9 +108,9 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
               <>
                 <CommandEmpty>{t("noRamework")}</CommandEmpty>
                 <CommandGroup>
-                  {options?.map((framework) => (
+                  {options?.map((framework,index) => (
                     <CommandItem
-                      key={framework.value}
+                      key={index}
                       value={framework.value}
                       onSelect={() => {
                         onChange(framework);

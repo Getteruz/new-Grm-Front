@@ -16,7 +16,7 @@ const useDataFetch = ({ options, queries }: ITransfers) =>
     queryKey: [apiRoutes.productReport, queries],
     queryFn: ({ pageParam = 10}) =>
       getAllData<TResponse<TData>, TQuery>(apiRoutes.productReport,
-         { ...queries, page: pageParam as number, limit: 1 }
+         { ...queries, page: pageParam as number, limit: 10 }
         ),
     getNextPageParam: (lastPage) => {
       if(lastPage.meta.page <=  (Math.ceil(lastPage?.meta?.total / lastPage?.meta.limit) )){

@@ -20,9 +20,13 @@ const  {meUser} = useMeStore()
     if (!token) {
       window.location.replace("/login");
     }else if (pathname.pathname == '/'){
-      navigate('/dashboard')
+      if(meUser?.position?.role === 3){
+        navigate('/cashier/home')
+      }else{
+        navigate('/dashboard')
+      }
     }
-  }, [token]);
+  }, [token,meUser]);
   
   return (
     <SidebarProvider>

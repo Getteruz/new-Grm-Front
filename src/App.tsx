@@ -14,16 +14,18 @@ import { IUserData } from "./types";
 function App() {
   const token = useAuthStore((state) => state.token);
   const location = useLocation();
-  const { setUserMe } = useMeStore();
+  const {meUser, setUserMe } = useMeStore();
 
   const {data}= useQuery({
-    queryKey: ["useMe", token],
+    queryKey: ["useMe", token,meUser],
     queryFn: () => getAllData<IUserData, unknown>(apiRoutes.userMe),
-    enabled: location.pathname != "/login" && Boolean(token),
+    enabled: location.pathname != "/login" && Boolean(token) && Boolean(meUser),
   });
+
   useEffect(()=>{
    if(data) setUserMe(data)
   },[data])
+
   return <MyRoutes />;
 }
 

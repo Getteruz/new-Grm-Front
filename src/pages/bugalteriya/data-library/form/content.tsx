@@ -20,10 +20,13 @@ export default function FormContent({isPending}:{isPending:boolean}) {
   const {t} = useTranslation()
   const queryClient = useQueryClient()
   const { setValue} = useFormContext();
+  const {  watch } = useFormContext();
+  const collectionId = watch()?.collection
+  const title = watch()?.title
   const {data,isLoading} =  useQuery({
-    queryKey: [type],
+    queryKey: [type,collectionId],
     queryFn: () =>
-      getAllData<TResponse<TActionData>,object>(`/${type}`,{
+      getAllData<TResponse<TActionData>,object>(`/${collectionId? `model/by-collection/${collectionId}`:type}`,{
         
       }),
     select:(res)=>({
@@ -41,6 +44,7 @@ const { mutate } = useMutation({
     queryClient.invalidateQueries({ queryKey: [type] });
   },
 });
+
 
   return (
     < >
@@ -136,7 +140,7 @@ const { mutate } = useMutation({
               type={"string"}
               placeholder="title" 
               />
-              <Button className={`w-[30px] hover:bg-sidebar absolute top-2.5 right-0.5 flex items-center justify-center cursor-pointer h-[30px] rounded-[2px] bg-sidebar  text-border`}>
+              <Button disabled={!Boolean(title)} className={`${title ? 'bg-[#89A143] tecx-white hover:bg-[#89A143]':'bg-sidebar'} w-[30px] absolute top-2.5 right-0.5 flex items-center justify-center cursor-pointer h-[30px] rounded-[2px]   text-border`}>
                 <Check/>
               </Button>
          </div>

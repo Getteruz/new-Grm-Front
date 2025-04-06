@@ -4,7 +4,7 @@ import { BellRing, DollarSign, StickyNote, User } from "lucide-react";
 
 export default function CashierHeader() {
   return (
-    <header className="h-[90px] bg-sidebar border-b border-border flex items-center ">
+    <header className="h-[90px] bg-sidebar border-b border-border flex ">
           <div className="flex p-[15px] mr-auto items-center">
             <DollarSign className="text-primary" size={54}/>
             <div>
@@ -12,9 +12,8 @@ export default function CashierHeader() {
                 <p className="text-[25px] font-bold text-primary">890.00</p>
             </div>
           </div>
-
           <AddingParishOrFlow/>
-      
+
        <div className="flex items-center w-full max-w-[312px] gap-5 px-10">
           <div className="flex text-primary items-center gap-[5px]">
             {/* <RinigIcons/> */}

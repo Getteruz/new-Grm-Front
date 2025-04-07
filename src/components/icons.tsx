@@ -92,7 +92,7 @@ export const OpenAIIcons = () => {
   );
 };
 
-export const BrCodeIcons = ({color}) => {
+export const BrCodeIcons = ({color}:{color?:string}) => {
   return (
     <svg
       width="15"

@@ -25,7 +25,7 @@ export default function Filters() {
             (codeInput as HTMLInputElement).select();
           }
         }}
-      type="button"  className={`${active? "bg-primary text-white":''} h-full w-1/2  border-r-1  justify-center font-[16px] gap-1  border-y-0  border-l-0`} 
+      type="button"  className={`${active? "bg-primary hover:bg-primary text-white hover:text-white":''} h-full w-1/2  border-r-1  justify-center font-[16px] gap-1  border-y-0  border-l-0`} 
        variant={"outline"} > 
        <BrCodeIcons  color={active? "white":''}/> 
       Баркод

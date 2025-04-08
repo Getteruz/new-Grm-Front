@@ -1,6 +1,6 @@
 interface ICheckList{
     title:string;   
-
+}
 export default function CheckList({title}:ICheckList) {
   return (
     <div className='w-full bg-background p-5 mb-[25px]'>

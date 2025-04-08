@@ -36,6 +36,7 @@ export default function FormContent({isPending}:{isPending:boolean}) {
     })
   }
 );
+
 const { mutate } = useMutation({
   mutationFn: async (id:string) => {
     return await DeleteData(`/${type}`, id);
@@ -153,7 +154,6 @@ const { mutate } = useMutation({
               }
          </div>
         </TableWrapper>
-
     </>
   );
 }

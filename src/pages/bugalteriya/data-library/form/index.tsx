@@ -35,7 +35,7 @@ const queryClient = useQueryClient()
     form.setValue('title',"")
     setidMadal("new")
   },[type])
-  console.log(form)
+
   return (
     <FormProvider {...form}>
       <form

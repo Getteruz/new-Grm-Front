@@ -9,7 +9,7 @@ export const CropSchema = z.object({
     style: z.object({value: z.string(),label: z.string()}),
     color: z.object({value: z.string(),label: z.string()}),
     model: z.object({value: z.string(),label: z.string()}),
-    factory:z.object({value: z.string(),label: z.string()}),
+    factory:z.object({value: z.string().optional(),label: z.string().optional(),}).optional(),
     isMetric:z.object({value: z.string(),label: z.string()})
 });
 

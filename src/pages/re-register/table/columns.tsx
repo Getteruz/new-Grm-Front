@@ -36,10 +36,13 @@ export const Columns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       const [type] = useQueryState('type',parseAsString.withDefault('переучет'))
       return <p>
-        {type === "переучет" && row.original?.count }
-        { type === "дефицит" && row.original?.count - row.original?.check_count}
+        {row.original?.bar_code?.isMetric ? row.original?.check_count -row.original?.y : <>
+          {type === "переучет"  && row.original?.count }
+        { type === "дефицит" &&  row.original?.count - row.original?.check_count}
         { type === "излишки" && row.original?.check_count - row.original?.count}
-        {row.original?.bar_code?.isMetric ? "м":"x"}
+        </> }
+     
+        {row.original?.bar_code?.isMetric ? "sm":"x"}
       </p>;
     },
   },

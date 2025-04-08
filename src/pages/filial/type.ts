@@ -13,7 +13,8 @@ export type TData = {
   isActive: boolean;
   hickCompleted: boolean;
   type: 'filial';
-  need_get_report:boolean
+  need_get_report:boolean;
+  partiya_title:string;
 }
 export enum FilialReportStatusEnum {
   OPEN = "Open",
@@ -88,7 +89,8 @@ export interface ProductData {
     partiya:{
       title:string;
       id:string
-    }
+    },
+    partiya_title:string;
 }
   export type ProductQuery = {
     search: string | undefined;

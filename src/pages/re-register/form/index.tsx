@@ -115,7 +115,7 @@ const brcode = form.watch("code")
       form.reset({
         code: qrBaseOne?.code || "",
         isMetric:qrBaseOne?.isMetric ? "Метражный":"Штучный",
-        count:  qrBaseOne?.count || 1,
+        count:  qrBaseOne?.count || qrBaseOne?.isMetric ? undefined : 1,
         country: {
           value: qrBaseOne?.country?.id,
           label: qrBaseOne?.country?.title,

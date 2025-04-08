@@ -8,6 +8,7 @@ export interface TData {
   is_active: boolean;
   date: string;
   count: number;
+  y:number;
   model: {
       id: string;
       title: string;

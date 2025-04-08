@@ -27,7 +27,7 @@ export default function FormContent({isPending}:{isPending:boolean}) {
   const {data,isLoading} =  useQuery({
     queryKey: [type,collectionId],
     queryFn: () =>
-      getAllData<TResponse<TActionData>,object>(`/${collectionId? `model/by-collection/${collectionId}`:type}`,{
+      getAllData<TResponse<TActionData>,object>(`/${collectionId && type == 'model'? `model/by-collection/${collectionId}`:type}`,{
         
       }),
     select:(res)=>({

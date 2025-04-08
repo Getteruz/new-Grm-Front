@@ -19,9 +19,9 @@ const useDataFetch = ({ options, queries }: ITransfers) =>
          { ...queries, page: pageParam as number, limit: 10 }
         ),
     getNextPageParam: (lastPage) => {
-      if(lastPage.meta.page <=  (Math.ceil(lastPage?.meta?.total / lastPage?.meta.limit) )){
-          return lastPage?.meta?.page + 1 
-      }else{
+      if(lastPage.meta.currentPage <=  lastPage.meta.totalPages){
+        return lastPage?.meta?.currentPage + 1 
+    } else{
         return null
       }
     },

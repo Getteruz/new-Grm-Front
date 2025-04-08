@@ -49,7 +49,7 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "Обём",
     cell: ({ row }) => {
-      return <p>{Number(row.original?.bar_code?.size?.x) * Number(row.original?.bar_code?.size?.y) }м²</p>;
+      return <p>{Number(row.original?.bar_code?.size?.x) * Number(row.original?.bar_code?.isMetric   ?  row.original?.check_count:row.original?.bar_code?.size?.y) }м²</p>;
     },
   },
   {

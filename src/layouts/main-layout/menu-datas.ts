@@ -7,6 +7,7 @@ import {
     HomeIcons,
     PartiesIcons,
     PersonsIcons,
+    PriceIcons,
     ReportBottom,
     UfoBottom,
     WareHouseIcons,
@@ -142,7 +143,6 @@ export const DataMenu = {
         },
       ],
       9:[
-        
         {
           id: 2,
           icons: ()=>ReportBottom(),
@@ -177,6 +177,12 @@ export const DataMenu = {
           icons: ()=>UfoBottom(),
           link: "/deller",
           text:"deller"
+        },
+        {
+          id: 4,
+          icons: ()=>PriceIcons(),
+          link: "/price",
+          text:"price"
         },
         {
           id: 3,

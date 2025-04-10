@@ -50,7 +50,6 @@ export const ProductColumns: ColumnDef<ProductsData>[] = [
       return  <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">Скидка</p>;
     },
   },
-
   {
     header: "Зав-цена за м²",
     cell: ({ row }) => {

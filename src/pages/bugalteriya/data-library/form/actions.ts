@@ -20,9 +20,12 @@ export const useDataLibrary = ({
   useMutation({
     ...options,
     mutationFn: async ({ url,data, id }) => {
-      
+      const costomData: object = {
+        ...data,
+        collection:data?.collection?.value,
+      };
       if (id)
-        return await UpdatePatchData<CropFormType>(url, id,  url == "/partiya-number" ? {title: data?.title+ "-partiya"}:data);
-      return await AddData<CropFormType>(url, url == "/partiya-number" ? {title: data?.title+ "-partiya"}:data);
+        return await UpdatePatchData<CropFormType>(url, id,  url == "/partiya-number" ? {title: data?.title+ "-partiya"}:costomData as CropFormType);
+      return await AddData<CropFormType>(url, url == "/partiya-number" ? {title: data?.title+ "-partiya"}:costomData as CropFormType);
     },
   });

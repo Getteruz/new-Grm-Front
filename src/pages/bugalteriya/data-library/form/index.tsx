@@ -12,6 +12,14 @@ import { useQueryClient } from "@tanstack/react-query";
 const ActionPage = () => {
   const form = useForm<CropFormType>({
     resolver: zodResolver(CropSchema),
+    defaultValues:{
+      title:"",
+     
+      collection: {
+        value: undefined,
+        label: "",
+      },
+    },
   });
  
   const [type] = useQueryState("type",parseAsString.withDefault('country'))
@@ -22,6 +30,10 @@ const queryClient = useQueryClient()
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [type] });
       form.setValue('title',"")
+      form.setValue('collection',{
+        value: undefined,
+        label: "",
+      })
       setidMadal("new")
       if (idMadal == "new") {
         toast.success("savedSuccessfully");
@@ -33,6 +45,10 @@ const queryClient = useQueryClient()
 
   useEffect(()=>{
     form.setValue('title',"")
+    form.setValue('collection',{
+      value: undefined,
+      label: "",
+    })
     setidMadal("new")
   },[type])
 

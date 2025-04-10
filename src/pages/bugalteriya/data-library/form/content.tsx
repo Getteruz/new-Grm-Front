@@ -14,6 +14,7 @@ import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useFormContext } from "react-hook-form";
 import { Input } from "@/components/ui/input";
+import FormComboboxDemoInput from "@/components/forms/FormCombobox";
 
 
 export default function FormContent({isPending}:{isPending:boolean}) {
@@ -22,7 +23,7 @@ export default function FormContent({isPending}:{isPending:boolean}) {
   const queryClient = useQueryClient()
   const { setValue} = useFormContext();
   const {  watch } = useFormContext();
-  const collectionId = watch()?.collection
+  const collectionId = watch()?.collection.value
   const title = watch()?.title
   const {data,isLoading} =  useQuery({
     queryKey: [type,collectionId],
@@ -125,7 +126,7 @@ const { mutate } = useMutation({
         >
           {
               type === "model" && 
-              <FormSelectInput
+              <FormComboboxDemoInput
                 classNameChild="mb-3 m-1 w-[95%] rounded-none bg-transparent border border-border" 
                 className="w-full"
                 fetchUrl="/collection"

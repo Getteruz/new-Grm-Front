@@ -7,7 +7,6 @@ import { DeleteData, getAllData } from "@/service/apiHelpers";
 import { TResponse } from "@/types";
 import { TActionData } from "../type";
 import { parseAsString, useQueryState } from "nuqs";
-import FormSelectInput from "@/components/forms/FormSelect";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { Check } from "lucide-react";

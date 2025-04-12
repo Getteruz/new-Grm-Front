@@ -39,7 +39,7 @@ export default function FormContent() {
           disabled={!editble}
             />
          <FormComboboxDemoInput
-            fieldNames={{ value: "id", label: "name" }}
+            fieldNames={{ value: "id", label: "title" }}
             fetchUrl="/country"
              classNameChild="h-[28px] p-2"
             name="country"

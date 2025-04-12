@@ -27,12 +27,13 @@ export default function Page() {
       {
         id ? <ActionPageQrCode/>:<ActionPage/>
       }
-      <div className="w-2/3 ">
+      <div className="w-2/3">
         <Filter/>
         <DataTable
           isLoading={isLoading}
           columns={Columns}
           data={flatData}
+          className={'max-h-screen overflow-y-scroll'}
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage ?? false}
           isFetchingNextPage={isFetchingNextPage}

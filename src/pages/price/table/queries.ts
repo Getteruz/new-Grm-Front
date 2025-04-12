@@ -12,7 +12,7 @@ interface IProduct {
 const useProduct = ({ options, queries }: IProduct) =>
   useQuery({
     ...options,
-    queryKey: [apiRoutes.products, queries],
+    queryKey: [apiRoutes.collection, queries],
     queryFn: () =>
       getAllData<TResponse<ProductsData>, ProductsQuery>(
         apiRoutes.products,

@@ -3,6 +3,7 @@ export const apiRoutes = {
   user:'/user',
   crops: "/crops",
   products: "/product",
+  collection: '/collection',
   productscheck:"/product/check-product",
   productReport:"/product/report-product",
   login: "/auth/login",

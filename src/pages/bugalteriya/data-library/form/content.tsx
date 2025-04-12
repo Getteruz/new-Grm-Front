@@ -50,7 +50,7 @@ const { mutate } = useMutation({
   return (
     < >
         <TableWrapper 
-        className='border-r h-[calc(100vh-64px)] border-border'
+        className='border-r  border-border'
             options={[
             {
                 label:"Страна",
@@ -109,10 +109,10 @@ const { mutate } = useMutation({
           ]} 
           title='Оснавные'
         />
-        <TableWrapper 
+        <TableWrapper
           isAdd={true}
           isloading={isLoading}
-          className='border-r border-border'
+          className='border-r max-h-screen overflow-y-scroll  border-border'
           title={type || ""}
           setValue={setValue}
           options={data?.items?.map((e)=>(
@@ -134,7 +134,7 @@ const { mutate } = useMutation({
                 placeholder="collection"
               />
             }
-         <div className="w-[95%] relative">
+         <div className="w-[95%]">
             {type=== "size"?
              <div className="flex mb-3 m-1">
               <Input  value={title?.split('x')[0]} onChange={(e)=>setValue("title", `${e?.target?.value}x${title?.split('x')[1]|| ''}`)} placeholder="x"  className="w-full bg-transparent border text-center  border-border" />

@@ -12,10 +12,10 @@ export default function FormContent() {
   const [editble,] = useState<boolean>(true);
   const [auto,setAuto] = useQueryState("auto",parseAsBoolean.withDefault(false));
   const { watch } = useFormContext();
-const isMetric = watch("isMetric")
+  const isMetric = watch("isMetric")
 
   return (
-    <div className="w-full h-full  border-border border-r">
+    <div className="w-full h-full  border-border border-r max-h-screen overflow-y-scroll">
       <Filters/>
        <div className="grid row-start  px-[40px] py-[20px] gap-2 lg:grid-cols-2">
          <FormTextInput 

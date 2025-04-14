@@ -1,15 +1,31 @@
 import AddingParishOrFlow from "@/components/adding-parish-flow";
+import { getByIdData } from "@/service/apiHelpers";
+import { apiRoutes } from "@/service/apiRoutes";
+import { useMeStore } from "@/store/me-store";
+import { IOpenKassa } from "@/types/api-type";
+import { useQuery } from "@tanstack/react-query";
 
 import { BellRing, DollarSign, StickyNote, User } from "lucide-react";
 
 export default function CashierHeader() {
+  const {meUser} = useMeStore()
+  const {data} = useQuery({
+    queryKey: [apiRoutes.filial,],
+    queryFn: () =>
+      getByIdData<IOpenKassa, void>(
+        '/kassa/open-kassa',
+        meUser?.filial?.id || ""
+      ),
+      enabled: !!meUser?.filial?.id,
+  });
+
   return (
     <header className="h-[90px] bg-sidebar border-b border-border flex ">
           <div className="flex p-[15px] mr-auto items-center">
             <DollarSign className="text-primary" size={54}/>
             <div>
                 <p className="text-[12px] ext-primary ">Касса за сегодня:</p>
-                <p className="text-[25px] font-bold text-primary">890.00</p>
+                <p className="text-[25px] font-bold text-primary">{data?.totalSum}</p>
             </div>
           </div>
           <AddingParishOrFlow/>

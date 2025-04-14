@@ -15,6 +15,6 @@
     ],
     "theme_color": "black",
     "background_color": "black",
-    "start_url": "http://seller.gilam-market.uz",
+    "start_url": "https://admin.gilam-market.uz/",
     "display": "standalone"
 }

@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 
 interface ICarpetCard {
-    id:string;
+    id:number;
     className?:string;
     model:string;
     size:string;

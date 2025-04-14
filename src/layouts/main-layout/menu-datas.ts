@@ -1,5 +1,6 @@
 import {
   BasketIcons,
+  BrCodeIcons,
   BronedIcons,
     BuildingIcons,
     DataLibrary,
@@ -8,6 +9,7 @@ import {
     PartiesIcons,
     PersonsIcons,
     PriceIcons,
+    RefleshIcons,
     ReportBottom,
     UfoBottom,
     WareHouseIcons,
@@ -98,13 +100,13 @@ export const DataMenu = {
       3:[
         {
           id: 1,
-          icons: ()=>DeviceDesktopIcons(),
+          icons: ()=>DeviceDesktopIcons({width:28,height:28}),
           link: "/cashier/home",
            text:"cashier/home"
         },
         {
           id: 2,
-          icons: ()=>ReportBottom(),
+          icons: ()=>ReportBottom({width:28,height:28}),
           link: "cashier/report",
            text:"Отчёт кассира"
         },
@@ -113,6 +115,30 @@ export const DataMenu = {
         icons: ()=>BasketIcons(),
         link: "/new",
          text:""
+      },
+      {
+        id: 4,
+        icons: ()=>RefleshIcons(),
+        link: "/new",
+         text:""
+      },
+      {
+        id: 9,
+        icons: ()=>BrCodeIcons({width:28,height:28}),
+        link: "/new",
+         text:""
+      },
+      {
+        id: 5,
+        icons: ()=>DataLibrary({width:28,height:28}),
+        link: "/data-library",
+        text:"data-library"
+      },
+      {
+        id: 2,
+        icons: ()=>PriceIcons({width:28,height:28}),
+        link: "/price",
+        text:"price"
       },
       ],
       4:[
@@ -137,7 +163,7 @@ export const DataMenu = {
        
         {
           id: 4,
-          icons: ()=>DataLibrary(),
+          icons: ()=>DataLibrary({}),
           link: "/data-library",
           text:"data-library"
         },
@@ -145,7 +171,7 @@ export const DataMenu = {
       9:[
         {
           id: 2,
-          icons: ()=>ReportBottom(),
+          icons: ()=>ReportBottom({}),
           link: "/report",
           text:"report",
           items:[
@@ -180,7 +206,7 @@ export const DataMenu = {
         },
         {
           id: 4,
-          icons: ()=>PriceIcons(),
+          icons: ()=>PriceIcons({}),
           link: "/price",
           text:"price"
         },
@@ -205,7 +231,7 @@ export const DataMenu = {
         
         {
           id: 4,
-          icons: ()=>DataLibrary(),
+          icons: ()=>DataLibrary({}),
           link: "/data-library",
           text:"data-library"
         },

@@ -6,7 +6,7 @@ import {
 } from "../../components/icons";
 import { DataMenu } from "./menu-datas";
 import { useMeStore } from "@/store/me-store";
-import { ChevronLeft, LogOut, Settings } from "lucide-react";
+import { ChevronLeft, CloudSunRain, LogOut, Settings } from "lucide-react";
 import { useAuthStore } from "@/store/auth-store";
 
 
@@ -69,7 +69,13 @@ export default function Menu() {
 
           <LogOut />
         </div>
-        <div
+       {meUser?.position?.role == 3?<>
+       <div
+          className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
+        >
+          <CloudSunRain className="w-[32px] h-[32px]" />
+        </div>
+       </> :<><div
           className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
         >
           <Settings />
@@ -79,6 +85,8 @@ export default function Menu() {
         >
           <OpenAIIcons />
         </div>
+        </> 
+        }
       </div>
     </div>
   );

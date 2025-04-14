@@ -13,6 +13,7 @@ export default function Content() {
         Ids.map((item, index) => {
           return   <CarpetCashierCard 
           key={index}
+          className="mb-1"
           tags={['tags','news',"hello","what"]} 
           discount={"5"} 
           id={item } 

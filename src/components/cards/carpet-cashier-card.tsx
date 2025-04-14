@@ -21,7 +21,7 @@ interface ICarpetCard {
 export default function CarpetCashierCard({className,model,size,price,discount,count,img,colaction,tags}:ICarpetCard) {
   return (
     <label className={`w-full flex  gap-4 relative p-1 rounded-[3px] bg-sidebar ${className && className}`}>
-        <Checkbox  className="absolute bg-background top-2 left-2 " />
+        <Checkbox   className="absolute data-[state=checked]:bg-[#89A143] data-[state=checked]:border-[#89A143] w-[20px] h-[20px] rounded-full bg-background top-2 left-2 " />
        <img className="object-cover" style={{aspectRatio:"0.72/1"}}  src={img} width={104} height={142} alt="img"/>
        <div className="w-full px-[12px]">
             <div className="flex items-center flex-wrap gap-3">

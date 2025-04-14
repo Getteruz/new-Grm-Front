@@ -9,6 +9,7 @@ export default function Content() {
       <div className="w-full">
         <Filters/>
         <div className="my-[13px] h-[calc(100vh-160px)]  overflow-y-scroll mx-[40px]">
+          <p className="pb-3 font-medium text-[15px]">12-Mart</p>
      {
         Ids.map((item, index) => {
           return   <CarpetCashierCard 

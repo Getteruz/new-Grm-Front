@@ -35,7 +35,6 @@ const  {meUser} = useMeStore()
         {
           meUser?.position?.role === 3?<CashierHeader/>: <Header />
         }
-       
         <div className="h-[calc(100vh-63px)] overflow-scroll" >
         <Outlet />
         </div>

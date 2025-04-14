@@ -1,12 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
+  Filemeneger,
   HomeIcons,
   OpenAIIcons,
 } from "../../components/icons";
 import { DataMenu } from "./menu-datas";
 import { useMeStore } from "@/store/me-store";
-import { ChevronLeft, CloudSunRain, LogOut, Settings } from "lucide-react";
+import { ChevronLeft, LogOut, Settings } from "lucide-react";
 import { useAuthStore } from "@/store/auth-store";
 
 
@@ -73,7 +74,7 @@ export default function Menu() {
        <div
           className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]  `}
         >
-          <CloudSunRain className="w-[32px] h-[32px]" />
+          <Filemeneger  />
         </div>
        </> :<><div
           className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}

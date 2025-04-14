@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 export default function Pricecheck() {
   return (
     <div className="w-full bg-card max-w-[312px] flex flex-col justify-between  h-[calc(100vh-90px)] pt-[23px] ">
-        <div className="w-full px-5">
+        <div className="w-full  h-[calc(100vh-260px)]  overflow-y-scroll px-5">
             <p className="text-primary text-[14px] font-medium">Итого:</p>
             <p className="text-primary font-bold text-[28px] mt-0.5 mb-[27px]">342.90 $</p>
             <div className="bg-background flex items-center  text-primary justify-between p-5 mb-[1px]">

@@ -35,16 +35,16 @@ export default function CashierHeader() {
             {/* <RinigIcons/> */}
             <p className="text-[25px] leading-[30px] text-primary relative">
               13
-              <span className="text-[8px] leading-[12px] text-foreground absolute -top-[2px] -right-[2px]">
+              <span className="text-[8px] leading-[12px] text-foreground absolute -top-[4px] -right-[5px]">
                 ° C
               </span>
             </p>
           </div>
           <div>
-          <StickyNote className="text-primary w-4 h-4" />
+          <StickyNote className="text-primary w-6 h-6" />
           </div>
           <div>
-          <BellRing className="text-primary w-4 h-4" />
+          <BellRing className="text-primary w-6 h-6" />
           </div>
           <div>
             <User/>

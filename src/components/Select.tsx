@@ -62,7 +62,7 @@ function ShadcnSelect(props: ShadcnSelectProps) {
             <SelectItem
               key={option.value}
               value={option.value}
-              className={`${classNameItem}`}
+              className={`${classNameItem} `}
             >
               {option.label}
             </SelectItem>

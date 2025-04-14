@@ -8,8 +8,10 @@ export default function Filters() {
         <FilterSelect 
             options={[{label:"label",value:"value"},{label:"Все",value:"all"}]}
             className='max-w-[426px] bg-primary text-[#E6E6D9]  w-full'
+            classNameValue='bg-red-200'
             placeholder='Все операции' 
             classNameContainer="bg-primary text-[#E6E6D9]"
+            classNameItem="bg-[#5D5D53CC] hover:bg-[#5D5D53CC]"
             defaultValue='all'
             name='name'
         />

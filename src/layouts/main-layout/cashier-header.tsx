@@ -1,11 +1,13 @@
 import AddingParishOrFlow from "@/components/adding-parish-flow";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { getByIdData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useMeStore } from "@/store/me-store";
 import { IOpenKassa } from "@/types/api-type";
+import { AvatarFallback } from "@radix-ui/react-avatar";
 import { useQuery } from "@tanstack/react-query";
 
-import { BellRing, DollarSign, StickyNote, User } from "lucide-react";
+import { BellRing, DollarSign, StickyNote } from "lucide-react";
 
 export default function CashierHeader() {
   const {meUser} = useMeStore()
@@ -47,7 +49,9 @@ export default function CashierHeader() {
           <BellRing className="text-primary w-6 h-6" />
           </div>
           <div>
-            <User/>
+          <Avatar className="w-[50px] h-[50px]">
+            <AvatarFallback className="bg-primary text-white w-[50px] flex items-center justify-center h-[50px]">{meUser?.firstName?.[0]} { meUser?.lastName?.[0]}</AvatarFallback>
+          </Avatar>
           </div>
        </div>
     </header>

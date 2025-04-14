@@ -34,7 +34,7 @@ export default function CarpetCashierCard({className,model,size,price,discount,c
                 <p className="text-[18px] font-semibold text-[#5D5D53]">{price}</p>
             </div>
             <div className="mt-[14px] flex  items-start justify-between gap-7 mb-7">
-                <div className="flex w-full gap-[1px] flex-wrap">
+                <div className="flex w-full gap-[4px] flex-wrap">
                     {
                         tags?.map((e)=>(
                             <p key={e} className={'inline-block text-[##F0F0E5] text-[12px] font-light border-border border rounded-[70px] px-2.5 py-1'}>{e}</p>

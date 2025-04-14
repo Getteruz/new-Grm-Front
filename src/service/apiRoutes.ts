@@ -15,5 +15,6 @@ export const apiRoutes = {
   filial:"/filial",
   filialMakeReport:'/filial/maker-report',
   filialReport:"/filial-report",
-  qrBase:"/qr-base"
+  qrBase:"/qr-base",
+  kassaOpen:`/kassa/open-kassa`
 } as const;

@@ -1,6 +1,6 @@
 const manifest = {
-    name: "Кacca App",
-    short_name: "Кacca App",
+    name: "Кacca",
+    short_name: "Кacca",
     icons: [
         {
             src: "/favicon/android-chrome-192x192.png",

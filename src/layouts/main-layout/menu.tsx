@@ -16,7 +16,7 @@ export default function Menu() {
   const { removeToken } = useAuthStore();
   const pathName = useLocation()
   return (
-    <div className="w-[104px] h-screen flex justify-between flex-col  border-r bg-sidebar  border-border">
+    <div className={`${meUser?.position?.role == 3 ?" w-[90px] ":' w-[104px] '} h-screen flex justify-between flex-col  border-r bg-sidebar  border-border`}>
       <div>
         <img
           src="/logo1.svg"
@@ -71,7 +71,7 @@ export default function Menu() {
         </div>
        {meUser?.position?.role == 3?<>
        <div
-          className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
+          className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]  `}
         >
           <CloudSunRain className="w-[32px] h-[32px]" />
         </div>

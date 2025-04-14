@@ -24,10 +24,10 @@ export default function AddingParishOrFlow() {
   return (
         <Dialog>
           <DialogTrigger>
-          <Button onClick={()=>setType('parish')} className="py-8 h-full ml-auto  px-10 bg-[#89A143] text-white">
+          <Button onClick={()=>setType('parish')} className="py-8 h-full ml-auto  px-13 bg-[#89A143] text-white">
             Приход
             </Button>
-            <Button onClick={()=>setType('flow')} className="py-8 h-full px-10 bg-[#E38157] text-white">
+            <Button onClick={()=>setType('flow')} className="py-8 h-full  px-13 bg-[#E38157] text-white">
             Расход
             </Button>
           </DialogTrigger>

@@ -8,7 +8,7 @@ export default function Content() {
     <div className="flex ">
       <div className="w-full">
         <Filters/>
-        <div className="my-[13px] h-[calc(100vh-160px)]  overflow-y-scroll mx-[30px]">
+        <div className="my-[13px] h-[calc(100vh-160px)]  overflow-y-scroll mx-[40px]">
      {
         Ids.map((item, index) => {
           return   <CarpetCashierCard 

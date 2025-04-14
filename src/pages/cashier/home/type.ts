@@ -1,4 +1,4 @@
-export type ProductsData = {
+export type IData = {
   id:string;
   code: string;
   model: {
@@ -21,8 +21,8 @@ export type ProductsData = {
   price: string;
 };
 
-export type ProductsQuery = {
-  search: string | undefined;
+export type IQuery = {
+  isActive?: string | undefined;
   limit: number;
   page: number;
 };

@@ -4,10 +4,9 @@ import Pricecheck from "./price-check";
 import { IData } from "../type";
 
 const Ids = [ 1,2,3,4,5,6,7,8,9,10]
-export default function Content({orderList}:{orderList:IData[]}) {
+export default function Content({}:{orderList:IData[]}) {
   return (
     <div className="flex ">
-      {orderList[0]?.code}
       <div className="w-full">
         <Filters/>
         <div className="my-[13px] h-[calc(100vh-160px)]  overflow-y-scroll mx-[40px]">

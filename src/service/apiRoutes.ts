@@ -17,5 +17,6 @@ export const apiRoutes = {
   filialReport:"/filial-report",
   qrBase:"/qr-base",
   order:'/order',
-  kassaOpen:`/kassa/open-kassa`
+  kassaOpen:`/kassa/open-kassa`,
+ orderByKassa:'/order/order-by-kassa'
 } as const;

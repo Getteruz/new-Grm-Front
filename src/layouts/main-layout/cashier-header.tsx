@@ -12,7 +12,7 @@ import { BellRing, DollarSign, StickyNote } from "lucide-react";
 export default function CashierHeader() {
   const {meUser} = useMeStore()
   const {data} = useQuery({
-    queryKey: [apiRoutes.filial,],
+    queryKey: [apiRoutes.filial],
     queryFn: () =>
       getByIdData<IOpenKassa, void>(
         '/kassa/open-kassa',

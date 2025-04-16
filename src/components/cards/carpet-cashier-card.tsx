@@ -1,24 +1,58 @@
 
-import {   MoreVertical, User } from "lucide-react";
+import {   FileOutput, MoreVertical, OctagonX, User } from "lucide-react";
 
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
+import { IData } from "@/pages/cashier/home/type";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { useMeStore } from "@/store/me-store";
+import { UpdatePatchData } from "@/service/apiHelpers";
+import { apiRoutes } from "@/service/apiRoutes";
+import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 interface ICarpetCard {
-    id:number;
+    id:string;
     className?:string;
     model:string;
     size:string;
     count:string;
     img:string;
     price:string;
+    priceMitr:string;
     color:string;
     colaction:string;
     discount:string;
     tags:string[];
+    status?:string;
+    seller:IData["seller"];
 }
 
-export default function CarpetCashierCard({className,model,size,price,discount,count,img,colaction,tags}:ICarpetCard) {
+export default function CarpetCashierCard({className,id,status,seller,priceMitr,model,size,price,discount,count,img,colaction,tags}:ICarpetCard) {
+    const {meUser} = useMeStore()
+    const queryClient = useQueryClient();
+
+    const AccepedFunt = ()=>{
+        UpdatePatchData(apiRoutes.order+ "/isActive", id ,{})
+        .then(()=>{
+            toast.success('Подтверждено успешно')
+            queryClient.invalidateQueries({ queryKey: [apiRoutes.orderByKassa] });
+        })
+        .catch(()=>toast.error("что-то пошло не так"))
+    }
+    const RejectFunt = (type:string)=>{
+        UpdatePatchData(apiRoutes.order+ `/${type}`, id ,{})
+        .then(()=>{
+            if(type== "reject"){
+                toast.error('Успешно отменено')
+            }else{
+                toast.success('Успешно возвращено') 
+            }
+            queryClient.invalidateQueries({ queryKey: [apiRoutes.orderByKassa] });
+        })
+        .catch(()=>toast.error("что-то пошло не так"))
+    }
   return (
     <label className={`w-full flex  gap-4 relative p-1 rounded-[3px] bg-sidebar ${className && className}`}>
         <Checkbox   className="absolute data-[state=checked]:bg-[#89A143] data-[state=checked]:border-[#89A143] w-[20px] h-[20px] rounded-full bg-background top-2 left-2 " />
@@ -28,7 +62,7 @@ export default function CarpetCashierCard({className,model,size,price,discount,c
                 <p className="text-[18px] font-semibold text-[#5D5D53]">{colaction}</p>
                 <p className="text-[18px] font-semibold text-[#5D5D53]">{model}</p>
                 <p className="text-[18px] font-semibold text-[#5D5D53]">{size}</p>
-                <p className="text-[18px] font-semibold text-[#5D5D53]">{price}</p>
+                <p className="text-[18px] font-semibold text-[#5D5D53]">{priceMitr}</p>
                 <p className="text-[18px] font-semibold text-[#5D5D53]">{count}</p>
                 <p className="text-[18px] font-semibold text-[#E38157]">{discount}</p>
                 <p className="text-[18px] font-semibold text-[#5D5D53]">{price}</p>
@@ -43,12 +77,48 @@ export default function CarpetCashierCard({className,model,size,price,discount,c
                     }
                 </div>
                 <div className="flex gap-1 items-center">
-                     <User/>
-                     <Button className="rounded-[70px] p-[14px] h-10 text-[#89A143] border-[#89A143]" variant={'outline'}>Подтверждено</Button>
+                   {
+                seller &&
+                    <Avatar className="w-[50px] h-[50px]">
+                    <AvatarFallback className="bg-primary text-white w-[50px] flex items-center justify-center h-[50px]">{seller?.firstName?.[0]} {seller?.lastName?.[0]}</AvatarFallback>
+                </Avatar>
+                   }
+                        {
+               status != "progress" &&  meUser &&
+                    <Avatar className="w-[50px] h-[50px]">
+                     <AvatarFallback className="bg-primary text-white w-[50px] flex items-center justify-center h-[50px]">{meUser?.firstName?.[0]} {meUser?.lastName?.[0]}</AvatarFallback>
+                    </Avatar>
+                   }
+                   { status == "progress"?
+                    <Button   onClick={()=>AccepedFunt()} className="rounded-[70px] p-[14px] h-10 text-white bg-[#89A143]">Подтвердить</Button>:
+                        <Button 
+                         className="rounded-[70px] p-[14px] h-10 text-[#89A143] border-[#89A143]"
+                          variant={'outline'}
+                          >{status}
+                        </Button>
+                   }
 
-                     <Button className="w-10 h-10 rounded-full text-[#5D5D53] bg-white">
-                        <MoreVertical className="h-4 w-4" />
-                    </Button>
+                    
+                    <DropdownMenu >
+                        <DropdownMenuTrigger className="text-end" asChild>
+                        <Button className="w-10 h-10 rounded-full text-[#5D5D53] bg-white">
+                            <MoreVertical className="h-4 w-4" />
+                        </Button>
+                        </DropdownMenuTrigger>
+
+                        <DropdownMenuContent className="w-[206px]" align="end">
+                        <DropdownMenuItem className="text-center flex items-center justify-center pt-[14px] pb-[8px]">
+                        { status === "progress"? <div onClick={()=>RejectFunt('reject')} className="w-full text-center">
+                            <OctagonX size={28} width={28} height={28} className="w-[28px] m-auto h-[28px] text-[#EC6C49]"/>
+                            <p className="text-[#EC6C49] text-[13px]">Отменить</p>
+                         </div>:<div  onClick={()=>RejectFunt('return')}  className="w-full text-center">
+                            <FileOutput size={28} width={28} height={28} className="w-[28px] m-auto h-[28px] text-[#EC6C49]"/>
+                            <p className="text-[#EC6C49] text-[13px]">Возрат</p>
+                         </div>}
+                        </DropdownMenuItem>                        
+                        
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             </div>
             <div className="flex items-center justify-end gap-2 text-[10px] text-[#5D5D53]">

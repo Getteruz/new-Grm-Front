@@ -1,5 +1,5 @@
 
-import {   FileOutput, MoreVertical, OctagonX, User } from "lucide-react";
+import {   FileOutput, MoreVertical, OctagonX } from "lucide-react";
 
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";

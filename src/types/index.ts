@@ -38,7 +38,9 @@ export type IUserData = {
   };
   filial: {
     id:string;
-    need_get_report:boolean
+    name:string;
+    need_get_report:boolean;
+    address:string;
   };
 }
 

@@ -1,5 +1,6 @@
-import { requiredStringField } from "@/utils/schemaHelper";
 import { z } from "zod";
+
+import { requiredStringField } from "@/utils/schemaHelper";
 
 export const LoginSchema = z.object({
   login: requiredStringField(),

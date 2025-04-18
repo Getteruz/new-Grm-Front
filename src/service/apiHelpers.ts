@@ -12,7 +12,6 @@ interface iError {
   };
 }
 
-
 export const getAllData = async <T, Q>(url: string, query?: Q): Promise<T> => {
   try {
     const params = query
@@ -92,7 +91,7 @@ export const DeleteData = async (url: string, id: string) => {
   }
 };
 
-export const UploadFile = async (url:string,data: FormData) => {
+export const UploadFile = async (url: string, data: FormData) => {
   try {
     const res = await api.post(url, data);
     return res.data;
@@ -102,12 +101,11 @@ export const UploadFile = async (url:string,data: FormData) => {
   }
 };
 
-
 const handleError = (error: iError) => {
   const removeToken = useAuthStore.getState().removeToken;
   if (error.status == 401) {
     removeToken();
   }
-  console.log(error?.response)
+  console.log(error?.response);
   toast.error(error?.response?.data?.message);
 };

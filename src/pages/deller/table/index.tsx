@@ -4,28 +4,32 @@ import { DataTable } from "@/components/ui/data-table";
 
 import { Columns } from "./columns";
 import Filter from "./filter";
-import useDataLibrary from "./queries";
+import useDataFetch from "./queries";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
 
-  const { data, isLoading } = useDataLibrary({
-    queries: {
-      limit,
-      page,
-      type: "dealer" || undefined,
-    },
-  });
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useDataFetch({
+      queries: {
+        limit,
+        page,
+        type: "dealer",
+      },
+    });
+  const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
     <>
       <Filter />
       <DataTable
-        className="p-4"
         isLoading={isLoading}
         columns={Columns}
-        data={data?.items ?? []}
+        data={flatData ?? []}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage ?? false}
+        isFetchingNextPage={isFetchingNextPage}
       />
     </>
   );

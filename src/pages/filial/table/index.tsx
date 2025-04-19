@@ -2,34 +2,36 @@ import { parseAsInteger, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
 
-import { FilialColumns } from "./columns";
-import useFilial from "./queries";
-import Filters from "./filters";
 import ActionPage from "../form";
+import { FilialColumns } from "./columns";
+import Filters from "./filters";
+import useDataFetch from "./queries";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
 
-  const [search] = useQueryState("search");
-  const { data, isLoading } = useFilial({
-    queries: {
-      limit,
-      page,
-      type: "filial" || undefined,
-    },
-  });
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useDataFetch({
+      queries: {
+        limit,
+        page,
+        type: "filial",
+      },
+    });
+  const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
     <>
       <Filters />
 
       <DataTable
-        isRowClickble={true}
-        className="m-4"
         isLoading={isLoading}
         columns={FilialColumns}
-        data={data?.items ?? []}
+        data={flatData ?? []}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage ?? false}
+        isFetchingNextPage={isFetchingNextPage}
       />
       <ActionPage />
     </>

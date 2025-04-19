@@ -54,7 +54,8 @@ export interface TActionData {
 }
 
 export interface TQuery {
-  search: string | undefined;
+  search?: string;
   limit: number;
   page: number;
+  type?: string;
 }

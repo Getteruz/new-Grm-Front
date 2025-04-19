@@ -5,11 +5,11 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 import { TData, TQuery } from "../type";
 
-interface IUser {
+interface IData {
   options?: DefinedInitialDataOptions<TResponse<TData>>;
   queries?: TQuery;
 }
-const useUser = ({ options, queries }: IUser) =>
+const useData = ({ options, queries }: IData) =>
   useQuery({
     ...options,
     queryKey: [apiRoutes.user, queries],
@@ -20,4 +20,4 @@ const useUser = ({ options, queries }: IUser) =>
       ),
   });
 
-export default useUser;
+export default useData;

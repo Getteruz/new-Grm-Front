@@ -80,14 +80,14 @@ export default function CarpetCashierCard({className,onCheckedChange,id,status,s
                 <div className="flex gap-1 items-center">
                    {
                 seller &&
-                    <Avatar className="w-[50px] h-[50px]">
-                    <AvatarFallback className="bg-primary text-white w-[50px] flex items-center justify-center h-[50px]">{seller?.firstName?.[0]} {seller?.lastName?.[0]}</AvatarFallback>
+                    <Avatar className="w-[40px] h-[40px]">
+                    <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">{seller?.firstName?.[0]} {seller?.lastName?.[0]}</AvatarFallback>
                 </Avatar>
                    }
                         {
                status != "progress" &&  meUser &&
-                    <Avatar className="w-[50px] h-[50px]">
-                     <AvatarFallback className="bg-primary text-white w-[50px] flex items-center justify-center h-[50px]">{meUser?.firstName?.[0]} {meUser?.lastName?.[0]}</AvatarFallback>
+                    <Avatar className="w-[40px] h-[40px]">
+                     <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">{meUser?.firstName?.[0]} {meUser?.lastName?.[0]}</AvatarFallback>
                     </Avatar>
                    }
                    { status == "progress"?

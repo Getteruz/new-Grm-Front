@@ -75,7 +75,7 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
         >
           <span className={twMerge(value ? "" : "text-muted-foreground font-[300px]")}>
             {value
-              ? options.find((framework) => framework.value === value)?.label
+              ? options.find((framework) => framework?.value === value)?.label
               : placeholder}
           </span>
           <ChevronsUpDown className="opacity-50" />
@@ -111,17 +111,17 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
                   {options?.map((framework,index) => (
                     <CommandItem
                       key={index}
-                      value={framework.value}
+                      value={framework?.value}
                       onSelect={() => {
                         onChange(framework);
                         setOpen(false);
                       }}
                     >
-                      <span>{framework.label}</span>
+                      <span>{framework?.label}</span>
                       <Check
                         className={cn(
                           "ml-auto",
-                          value === framework.value
+                          value === framework?.value
                             ? "opacity-100"
                             : "opacity-0"
                         )}

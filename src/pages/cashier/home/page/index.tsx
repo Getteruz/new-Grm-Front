@@ -19,12 +19,12 @@ export default function Page() {
       ),
       enabled: !!meUser?.filial?.id,
   });
-const { data } = useOrder({
-  id: kassa?.id ? kassa?.id : undefined,
-  queries: {
-    status: sort === "all" ? undefined : sort || undefined,
-  }
-})
+  const { data } = useOrder({
+    id: kassa?.id ? kassa?.id : undefined,
+    queries: {
+      status: sort === "all" ? undefined : sort || undefined,
+    }
+  })
 
   const flatData = data?.pages?.flatMap(page => page?.items || []) || [];
 

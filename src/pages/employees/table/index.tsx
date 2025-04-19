@@ -3,7 +3,7 @@ import { parseAsInteger, useQueryState } from "nuqs";
 import { DataTable } from "@/components/ui/data-table";
 
 import { FilialColumns } from "./columns";
-import useFilial from "./queries";
+import useData from "./queries";
 import Filters from "./filters";
 import ActionPage from "../form";
 
@@ -12,7 +12,7 @@ export default function Page() {
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
 
   const [search] = useQueryState("search");
-  const { data, isLoading } = useFilial({
+  const { data, isLoading } = useData({
     queries: {
       limit,
       page,

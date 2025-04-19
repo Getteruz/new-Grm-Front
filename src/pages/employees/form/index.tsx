@@ -14,16 +14,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 const ActionPage = () => {
   const form = useForm<UserFormType>({
     resolver: zodResolver(UserSchema),
-    defaultValues: {
-      filial: {
-        value: undefined,
-        label: "",
-    },
-    position: {
-      value: undefined,
-      label: "",
-  },
-    }
+  
   });
   const [id,setId] = useQueryState("id");
   const { data } = useUserById({
@@ -31,13 +22,31 @@ const ActionPage = () => {
   });
   const queryClient = useQueryClient();
   const resetFrom =()=>{
-    form.reset({ });
+    form.reset({
+      filial:{
+        value: undefined,
+        label: undefined
+      },
+      firstName: undefined,
+      lastName: undefined,
+      fatherName: undefined,
+      hired:undefined,
+      position:{
+        value: undefined,
+        label: undefined
+      },
+      from: undefined,
+      to: undefined,
+      phone: undefined,
+      login: undefined,
+      salary: undefined,
+    });
   }
   const { mutate } = useUserMutation({
     onSuccess: () => {
       resetFrom()
       setId(null)
-      queryClient.invalidateQueries({ queryKey: [apiRoutes.filial] });
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.user] });
       if (id == "new") {
         toast.success("savedSuccessfully");
       } else {
@@ -48,19 +57,32 @@ const ActionPage = () => {
 
   useEffect(() => {
     if (data) {
-      // form.reset({
-      //   ...Object.keys(UserSchema.shape).reduce((acc, key) => ({
-      //     ...acc,
-      //     [key]: data?.[key as keyof typeof data] || ""
-      //   }), {})
-      // });
+      form.reset({
+        filial:{
+          value: data?.filial?.id,
+          label: data?.filial?.title
+        },
+        firstName: data?.firstName,
+        lastName: data?.lastName,
+        fatherName: data?.fatherName,
+        hired: new Date(data?.hired || ""),
+        position:{
+          value: data?.position?.id,
+          label: data?.position?.title
+        },
+        from: data?.from?.slice(0,5),
+        to: data?.to?.slice(0,5),
+        phone: data?.phone,
+        login: data?.login,
+        salary: data?.salary,
+      });
     }
   }, [data]);
   return (
     <Dialog  open={Boolean(id)} onOpenChange={(isopen:boolean)=>{
-      if(!isopen){
+      resetFrom()
+    if(!isopen){
         setId(null)
-        resetFrom()
       }
       }}>
         <DialogContent className="sm:max-w-[796px]">

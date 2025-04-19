@@ -82,8 +82,8 @@ export default function FormComboboxDemoInput<IData, TQuery>({
     const value = watch(name);
 
     if (!data?.data) return [value];
-    const containsValue = data.data.some((item) => item.value === value.value);
-    return containsValue ? data.data : [value, ...data.data];
+    const containsValue = data?.data.some((item) => item?.value === value?.value);
+    return containsValue ? data?.data : [value, ...data?.data];
   }, [data, fieldNames, watch(name), option]);
 
   return (
@@ -106,7 +106,7 @@ export default function FormComboboxDemoInput<IData, TQuery>({
                 onOpenChange={() => setOpen(true)}
                 onFilter={debounce((e) => setSearch(e.target.value), 500)}
                 disabled={disabled}
-                value={field.value?.value ||""}
+                value={field?.value?.value ||""}
                 isLoading={isLoading}
                 options={memoizedData}
                 placeholder={placeholder ? t(placeholder) : ""}

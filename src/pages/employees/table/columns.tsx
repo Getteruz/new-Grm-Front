@@ -4,36 +4,64 @@ import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
-import { LineBottom, LineTop } from "@/components/icons";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { UpdatePatchData } from "@/service/apiHelpers";
-import { toast } from "sonner";
+import { format } from "date-fns";
 
 export const FilialColumns: ColumnDef<TData>[] = [
   
   {
-    id: "name",
-    header: "name",
-    accessorKey: "name",
-  },
-  {
-    id: "address",
-    header: "address",
-    accessorKey: "address",
-  },
-  {
-    id: "phone1",
-    header: "phone1",
-    accessorKey: "phone1",
-  },
- 
-  {
-    header: "count",
-    cell: () => {
-      return <p className={`flex items-center gap-[7px] ${true?  'text-[#89A143]':'text-[#E38157]'}`}>
-         {true?<LineTop/> :<LineBottom/> }  + 0.6%
+    header: "Фамилия имя",
+    cell: ({row}) => {
+      return <p >
+        {row.original?.firstName} {row.original?.lastName}
       </p>;
     },
+  },
+  
+  {
+    header: "Флиал",
+    cell: ({row}) => {
+      return <p >
+        {row.original?.filial?.title} 
+      </p>;
+    },
+  },
+  {
+    header: "Должность",
+    cell: ({row}) => {
+      return <p className="border-border border px-4 py-2 rounded-[60px] inline-block">
+        {row.original?.position?.title} 
+      </p>;
+    },
+  },
+  {
+    header: "Рабочая время",
+    cell: ({row}) => {
+      return <div className="flex items-center gap-1">
+          <p className="text-[#E38157]">{row?.original?.from} </p>
+          <p>до</p>
+          <p  className="text-[#89A143]">{row?.original?.to} </p>
+      </div>
+    },
+  },
+  {
+    header: "Дата риёма",
+    cell: ({row}) => {
+      return format(row.original?.hired,"dd.MM.yyyy")
+    },
+  },
+  {
+    header: "Зарплата",
+    cell: ({row}) => {
+      return <p>{row?.original?.salary} сум </p>
+    },
+  },
+  {
+    header: "id для входа",
+    accessorKey:"login"
+  },
+  {
+    header: "Телефон",
+    accessorKey:"phone"
   },
   {
     id: "actions",
@@ -44,18 +72,10 @@ export const FilialColumns: ColumnDef<TData>[] = [
       return (
         <TableAction
           url={apiRoutes.filial}
-          ShowPreview={row.original?.need_get_report}
           id={row.original?.id}
-        >
-           {row.original?.need_get_report ?<></>
-            :  <DropdownMenuItem  onClick={()=>{
-               UpdatePatchData(apiRoutes.filialMakeReport, row.original?.id,{})
-              .then(()=>toast.success('Переучёт sended'))
-              .catch(()=>toast.error("something wend from"))
-            }}>
-              Запросить переучёт
-            </DropdownMenuItem>}
-        </TableAction>
+        />
+      
+      
       );
     },
   },

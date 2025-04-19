@@ -26,10 +26,11 @@ interface ICarpetCard {
     discount:string;
     tags:string[];
     status?:string;
+    onCheckedChange:(e: boolean)=>void;
     seller:IData["seller"];
 }
 
-export default function CarpetCashierCard({className,id,status,seller,priceMitr,model,size,price,discount,count,img,colaction,tags}:ICarpetCard) {
+export default function CarpetCashierCard({className,onCheckedChange,id,status,seller,priceMitr,model,size,price,discount,count,img,colaction,tags}:ICarpetCard) {
     const {meUser} = useMeStore()
     const queryClient = useQueryClient();
 
@@ -55,7 +56,7 @@ export default function CarpetCashierCard({className,id,status,seller,priceMitr,
     }
   return (
     <label className={`w-full flex  gap-4 relative p-1 rounded-[3px] bg-sidebar ${className && className}`}>
-        <Checkbox   className="absolute data-[state=checked]:bg-[#89A143] data-[state=checked]:border-[#89A143] w-[20px] h-[20px] rounded-full bg-background top-2 left-2 " />
+        <Checkbox  onCheckedChange={onCheckedChange}className="absolute data-[state=checked]:bg-[#89A143] data-[state=checked]:border-[#89A143] w-[20px] h-[20px] rounded-full bg-background top-2 left-2 " />
        <img className="object-cover" style={{aspectRatio:"0.72/1"}}  src={img} width={102.5} height={140} alt="img"/>
        <div className="w-full pt-[20px] px-[12px]">
             <div className="flex items-center flex-wrap gap-3">
@@ -79,27 +80,27 @@ export default function CarpetCashierCard({className,id,status,seller,priceMitr,
                 <div className="flex gap-1 items-center">
                    {
                 seller &&
-                    <Avatar className="w-[50px] h-[50px]">
-                    <AvatarFallback className="bg-primary text-white w-[50px] flex items-center justify-center h-[50px]">{seller?.firstName?.[0]} {seller?.lastName?.[0]}</AvatarFallback>
+                    <Avatar className="w-[40px] h-[40px]">
+                    <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">{seller?.firstName?.[0]} {seller?.lastName?.[0]}</AvatarFallback>
                 </Avatar>
                    }
                         {
                status != "progress" &&  meUser &&
-                    <Avatar className="w-[50px] h-[50px]">
-                     <AvatarFallback className="bg-primary text-white w-[50px] flex items-center justify-center h-[50px]">{meUser?.firstName?.[0]} {meUser?.lastName?.[0]}</AvatarFallback>
+                    <Avatar className="w-[40px] h-[40px]">
+                     <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">{meUser?.firstName?.[0]} {meUser?.lastName?.[0]}</AvatarFallback>
                     </Avatar>
                    }
                    { status == "progress"?
                     <Button   onClick={()=>AccepedFunt()} className="rounded-[70px] p-[14px] h-10 text-white bg-[#89A143]">Подтвердить</Button>:
                         <Button 
-                         className="rounded-[70px] p-[14px] h-10 text-[#89A143] border-[#89A143]"
+                         className={`${status == "rejected"?"text-[#E38157] border-[#E38157]": status == "accepted"?"text-[#89A143] border-[#89A143]":"text-primary border-primary"} rounded-[70px] p-[14px] h-10 `}
                           variant={'outline'}
                           >{status}
                         </Button>
                    }
 
                     
-                    <DropdownMenu >
+                  {status == "rejected" ||status == "canceled"? ""  :  <DropdownMenu >
                         <DropdownMenuTrigger className="text-end" asChild>
                         <Button className="w-10 h-10 rounded-full text-[#5D5D53] bg-white">
                             <MoreVertical className="h-4 w-4" />
@@ -118,7 +119,7 @@ export default function CarpetCashierCard({className,id,status,seller,priceMitr,
                         </DropdownMenuItem>                        
                         
                         </DropdownMenuContent>
-                    </DropdownMenu>
+                    </DropdownMenu>}
                 </div>
             </div>
             <div className="flex items-center justify-end gap-2 text-[10px] text-[#5D5D53]">

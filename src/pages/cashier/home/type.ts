@@ -1,6 +1,6 @@
 export interface IData {
   id: string;
-  status: 'progress';
+  status: string;
   price: number;
   x: number;
   kv: number;
@@ -8,7 +8,7 @@ export interface IData {
   additionalProfitSum: number;
   netProfitSum: number;
   discountPercentage: string;
-  tip: 'order';
+  tip: string;
   plasticSum: number;
   seller: {
     id: string;
@@ -28,6 +28,17 @@ export interface IData {
     password: string;
     isUpdated: boolean;
     createdAt: string;
+  };
+  bar_code: {
+    isMetric: boolean;
+    id: string;
+    code: string;
+    imgUrl: string | null;
+    otherImgs: string | null;
+    internetInfo: string | null;
+    is_active: boolean;
+    is_accepted: boolean;
+    date: string;
   };
   product: {
     isInternetShop: boolean;
@@ -50,7 +61,9 @@ export interface IData {
     is_deleted: boolean;
     partiya_title: string;
     book_count: number;
-    collection_price: number | null;
+    collection_price:{
+      priceMeter:number;
+    };
     bar_code: {
       isMetric: boolean;
       id: string;
@@ -73,10 +86,6 @@ export interface IData {
         id: string;
         title: string;
       };
-      country: {
-        id: string;
-        title: string;
-      };
       size: {
         id: string;
         title: string;
@@ -90,6 +99,10 @@ export interface IData {
         meter: string;
       };
       style: {
+        id: string;
+        title: string;
+      };
+      country: {
         id: string;
         title: string;
       };
@@ -109,7 +122,7 @@ export interface IData {
       isActive: boolean;
       hickCompleted: boolean;
       need_get_report: boolean;
-      type: 'filial';
+      type: string;
     };
   };
   kassa: {
@@ -127,12 +140,13 @@ export interface IData {
     expenditureBoss: number;
     expenditureShop: number;
     internetShopSum: number;
-    status: 'open';
+    status: string;
   };
 }
 
 export type IQuery = {
   isActive?: string | undefined;
-  limit: number;
-  page: number;
+  status?: string;
+  limit?: number;
+  page?: number;
 };

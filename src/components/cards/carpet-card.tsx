@@ -1,4 +1,3 @@
-import { minio_img_url } from "@/constants";
 import {
   Bookmark,
   Circle,
@@ -6,7 +5,8 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { useQueryState } from "nuqs";
-import { useNavigate } from "react-router-dom";
+
+import { minio_img_url } from "@/constants";
 
 interface ICarpetCard {
   id: string;
@@ -14,18 +14,20 @@ interface ICarpetCard {
   model: string;
   size: string;
   count: string;
-  img: string;
+  img: object;
   price: string;
   color: string;
   colaction: string;
   discount?: string;
   carpetType: string;
   isBron?: boolean;
+  user: object;
+  shape: string;
 }
 
 export default function CarpetCard({
   className,
-  id,
+  // id,
   user,
   isBron,
   discount,
@@ -40,7 +42,7 @@ export default function CarpetCard({
   shape,
 }: ICarpetCard) {
   const [, setCarpetType] = useQueryState("carpetType");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   return (
     <div
       className={`w-full relative bg-sidebar border-border border ${className && className}`}

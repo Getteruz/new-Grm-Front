@@ -17,7 +17,6 @@ export default function Page() {
       search: search || undefined,
     },
   });
-  console.log(data);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { ChevronLeft, LogOut, Settings } from "lucide-react";
+import { ChevronLeft, LogOut } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useAuthStore } from "@/store/auth-store";

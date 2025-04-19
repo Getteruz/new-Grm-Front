@@ -14,14 +14,22 @@ interface ICarpetCard {
   model: string;
   size: string;
   count: string;
-  img: object;
+  img: {
+    path: string;
+  };
   price: string;
   color: string;
   colaction: string;
   discount?: string;
   carpetType: string;
   isBron?: boolean;
-  user: object;
+  user: {
+    firstName: string;
+    lastName: string;
+    avatar: {
+      path: string;
+    };
+  };
   shape: string;
 }
 

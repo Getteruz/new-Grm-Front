@@ -10,7 +10,7 @@ export default function Page() {
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
 
   const [search] = useQueryState("search");
-  const { data, isLoading } = useBroned({
+  const { data } = useBroned({
     queries: {
       limit,
       page,
@@ -34,7 +34,7 @@ export default function Page() {
             img={item.product.bar_code?.imgUrl}
             model={item?.product?.bar_code?.model?.title}
             size={`${item?.product?.bar_code.size.x * 100}X${item?.product?.y * 100}`}
-            count={item?.product?.book_count || 0}
+            count={item?.product?.book_count || "0"}
             price={item?.product?.price}
             colaction={item?.product?.bar_code?.collection?.title}
             color={item?.product?.bar_code?.color?.title}

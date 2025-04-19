@@ -1,5 +1,5 @@
 export type BronedData = {
-  id:string;
+  id: string;
   code: string;
   model: {
     id: string;
@@ -7,6 +7,41 @@ export type BronedData = {
     collection: {
       id: string;
       title: string;
+    };
+  };
+  user: {
+    firstName: string;
+    lastName: string;
+    avatar: {
+      path: string;
+    };
+  };
+  product: {
+    x: number;
+    y: number;
+    book_count: string;
+
+    price: string;
+    bar_code: {
+      shape: {
+        title: string;
+      };
+      imgUrl: {
+        path: string;
+      };
+      model: {
+        title: string;
+      };
+      collection: {
+        title: string;
+      };
+      color: {
+        title: string;
+      };
+      size: {
+        x: number;
+        y: number;
+      };
     };
   };
   size: string;

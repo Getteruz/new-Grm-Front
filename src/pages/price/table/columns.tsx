@@ -1,9 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { RotateCcw } from "lucide-react";
-import { parseAsInteger, useQueryState } from "nuqs";
 
 import { Input } from "@/components/ui/input";
-import { apiRoutes } from "@/service/apiRoutes";
 
 import { ProductsData } from "../type";
 
@@ -108,12 +105,5 @@ export const Columns: ColumnDef<ProductsData>[] = [
     enableHiding: true,
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
-    cell: ({ row }) => {
-      // return (
-      //   (comingPrice || priceMeter) && (
-      //     <RotateCcw onClick={() => console.log(row)} />
-      //   )
-      // );
-    },
   },
 ];

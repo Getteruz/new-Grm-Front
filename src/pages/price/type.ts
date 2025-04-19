@@ -1,5 +1,6 @@
 export interface ProductsData {
   isInternetShop: boolean;
+  title: string;
   id: string;
   code: string | null;
   count: number;

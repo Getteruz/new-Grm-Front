@@ -1,18 +1,18 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { toast } from "sonner";
 
+import { LineBottom, LineTop } from "@/components/icons";
 import TableAction from "@/components/table-action";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { UpdatePatchData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
-import { LineBottom, LineTop } from "@/components/icons";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { UpdatePatchData } from "@/service/apiHelpers";
-import { toast } from "sonner";
 
 export const FilialColumns: ColumnDef<TData>[] = [
   {
     header: "№",
-    cell: ({ row, i, k }) => {
+    cell: ({ row }) => {
       return <p>{row?.index + 1}</p>;
     },
   },

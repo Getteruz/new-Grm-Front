@@ -95,6 +95,12 @@ export type ProductQuery = {
   filialId?: string;
 };
 
+export type FilialsQuery = {
+  title?: string;
+  limit: number;
+  page: number;
+  type: string;
+};
 export interface TQuery {
   search?: string;
   limit: number;

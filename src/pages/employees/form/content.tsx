@@ -51,8 +51,6 @@ export default function FormContent() {
         />
       <FormTextInput label="login"  name="login" placeholder="login"  />
 
-
-
       </div>
         <DialogFooter className="justify-start mt-2 flex">
           <Button type="submit">Save</Button>

@@ -1,9 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { parseAsString, useQueryState } from "nuqs";
+
+import TableAction from "@/components/table-action";
+import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
-import { parseAsString, useQueryState } from "nuqs";
-import { apiRoutes } from "@/service/apiRoutes";
-import TableAction from "@/components/table-action";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -21,10 +22,12 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "type-corpet",
     cell: ({ row }) => {
-      return <p>{ row.original?.bar_code?.isMetric ? "Метражный":"Штучный"}</p>;
+      return (
+        <p>{row.original?.bar_code?.isMetric ? "Метражный" : "Штучный"}</p>
+      );
     },
   },
-  
+
   {
     header: "size",
     cell: ({ row }) => {
@@ -34,16 +37,27 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "count",
     cell: ({ row }) => {
-      const [type] = useQueryState('type',parseAsString.withDefault('переучет'))
-      return <p>
-        {row.original?.bar_code?.isMetric ? row.original?.check_count -row.original?.y : <>
-          {type === "переучет"  && row.original?.count }
-        { type === "дефицит" &&  row.original?.count - row.original?.check_count}
-        { type === "излишки" && row.original?.check_count - row.original?.count}
-        </> }
-     
-        {row.original?.bar_code?.isMetric ? "sm":"x"}
-      </p>;
+      const [type] = useQueryState(
+        "type",
+        parseAsString.withDefault("переучет")
+      );
+      return (
+        <p>
+          {row.original?.bar_code?.isMetric ? (
+            row.original?.check_count - row.original?.y
+          ) : (
+            <>
+              {type === "переучет" && row.original?.count}
+              {type === "дефицит" &&
+                row.original?.count - row.original?.check_count}
+              {type === "излишки" &&
+                row.original?.check_count - row.original?.count}
+            </>
+          )}
+
+          {row.original?.bar_code?.isMetric ? "sm" : "x"}
+        </p>
+      );
     },
   },
   {
@@ -51,11 +65,35 @@ export const Columns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       return (
         <>
-          {row.original?.bar_code?.isMetric && <p>{((Number(row.original?.bar_code?.size?.x) * Number(row.original?.bar_code?.isMetric   ?  row.original?.check_count:row.original?.bar_code?.size?.y))/100 ).toFixed(2)}м²</p>}
-          {!row.original?.bar_code?.isMetric && <p>{Math.ceil((Number(row.original?.bar_code?.size?.x) * Number(row.original?.bar_code?.isMetric   ?  row.original?.check_count:row.original?.bar_code?.size?.y))) }м²</p>}
-
+          {row.original?.bar_code?.isMetric && (
+            <p>
+              {(
+                (Number(row.original?.bar_code?.size?.x) *
+                  Number(
+                    row.original?.bar_code?.isMetric
+                      ? row.original?.check_count
+                      : row.original?.bar_code?.size?.y
+                  )) /
+                100
+              ).toFixed(2)}
+              м²
+            </p>
+          )}
+          {!row.original?.bar_code?.isMetric && (
+            <p>
+              {Math.ceil(
+                Number(row.original?.bar_code?.size?.x) *
+                  Number(
+                    row.original?.bar_code?.isMetric
+                      ? row.original?.check_count
+                      : row.original?.bar_code?.size?.y
+                  )
+              )}
+              м²
+            </p>
+          )}
         </>
-      )
+      );
     },
   },
   {
@@ -91,7 +129,13 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "Партия",
     cell: ({ row }) => {
-      return <p>{row.original?.partiya ?row.original?.partiya?.title: row.original?.partiya_title}</p>;
+      return (
+        <p>
+          {row.original?.partiya
+            ? row.original?.partiya?.title
+            : row.original?.partiya_title}
+        </p>
+      );
     },
   },
   {

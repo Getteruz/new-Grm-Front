@@ -1,43 +1,38 @@
+import { ColumnDef } from "@tanstack/react-table";
+
 import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
 
-export const Columns = [
+import { TData } from "../type";
+
+export const Columns: ColumnDef<TData>[] = [
   {
     header: "№",
-    cell: ({ row, i, k }) => {
+    cell: ({ row }) => {
       return <p>{row?.index + 1}</p>;
     },
   },
   {
     header: "Название",
-    cell: ({ row }) => {
-      return <p>{row?.original?.name}</p>;
-    },
+    accessorKey: "name",
+    id: "name",
   },
   {
     header: "Адресс",
-    cell: ({ row }) => {
-      return <p>{row?.original?.address}</p>;
-    },
+    accessorKey: "address",
+    id: "address",
   },
 
   {
     header: "Телефон",
-    cell: ({ row }) => {
-      return <p>{row?.original?.phone1}</p>;
-    },
+    accessorKey: "phone1",
+    id: "phone1",
   },
   {
     header: "Задолжность",
-    cell: ({ row }) => {
-      return <p>?</p>;
-    },
   },
   {
     header: "Дано",
-    cell: ({ row }) => {
-      return <p>?</p>;
-    },
   },
   {
     header: "Статус",

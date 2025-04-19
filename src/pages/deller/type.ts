@@ -7,6 +7,7 @@ export interface TData {
   internetInfo: string | null;
   is_active: boolean;
   date: string;
+  isActive: boolean;
   model: {
     id: string;
     title: string;

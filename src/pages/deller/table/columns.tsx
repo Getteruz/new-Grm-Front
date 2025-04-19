@@ -1,73 +1,57 @@
-import { ColumnDef } from "@tanstack/react-table";
-
 import TableAction from "@/components/table-action";
-
-import { TData } from "../type";
 import { apiRoutes } from "@/service/apiRoutes";
 
+export const Columns = [
+  {
+    header: "№",
+    cell: ({ row, i, k }) => {
+      return <p>{row?.index + 1}</p>;
+    },
+  },
+  {
+    header: "Название",
+    cell: ({ row }) => {
+      return <p>{row?.original?.name}</p>;
+    },
+  },
+  {
+    header: "Адресс",
+    cell: ({ row }) => {
+      return <p>{row?.original?.address}</p>;
+    },
+  },
 
-export const Columns: ColumnDef<TData>[] = [
- 
   {
-    header: "code",
-    accessorKey: "code",
-  },
-
-  {
-    header: "country",
+    header: "Телефон",
     cell: ({ row }) => {
-      return <p>{row.original?.country?.title}</p>;
+      return <p>{row?.original?.phone1}</p>;
     },
   },
   {
-    header: "collection",
+    header: "Задолжность",
     cell: ({ row }) => {
-      return <p>{row.original?.collection?.title}</p>;
+      return <p>?</p>;
     },
   },
   {
-    header: "model",
+    header: "Дано",
     cell: ({ row }) => {
-      return <p>{row.original?.model?.title}</p>;
+      return <p>?</p>;
     },
   },
   {
-    header: "type-corpet",
+    header: "Статус",
     cell: ({ row }) => {
-      return <p>{ row.original?.isMetric ? "Метражный":"Штучный"}</p>;
+      return <p>{row?.original?.isActive ? "Активный" : "Не активен"}</p>;
     },
   },
-  {
-    header: "shape",
-    cell: ({ row }) => {
-      return <p>{row.original.shape.title}</p>;
-    },
-  },
-  {
-    header: "size",
-    cell: ({ row }) => {
-      return <p>{row.original.size.title}</p>;
-    },
-  },
-  {
-    header: "style",
-    cell: ({ row }) => {
-      return <p>{row.original.style?.title}</p>;
-    },
-  },
- 
   {
     id: "actions",
     enableHiding: true,
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
     cell: ({ row }) => {
-      return (
-        <TableAction
-          url={apiRoutes.qrBase}
-          id={row.original?.id}
-        />
-      );
+      return <TableAction url={apiRoutes.filial} id={row.original?.id} />;
     },
   },
 ];

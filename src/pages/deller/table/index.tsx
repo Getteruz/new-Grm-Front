@@ -9,25 +9,24 @@ import useDataLibrary from "./queries";
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
-  const [search] = useQueryState("search");
+
   const { data, isLoading } = useDataLibrary({
     queries: {
       limit,
       page,
-      search: search || undefined,
+      type: "dealer" || undefined,
     },
   });
 
   return (
     <>
-    <Filter />
-    <DataTable
-    className="p-4"
-    isLoading={isLoading}
-    columns={Columns}
-    data={data?.items ?? []}
-  />
-  </>
-    
+      <Filter />
+      <DataTable
+        className="p-4"
+        isLoading={isLoading}
+        columns={Columns}
+        data={data?.items ?? []}
+      />
+    </>
   );
 }

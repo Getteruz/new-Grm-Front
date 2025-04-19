@@ -170,6 +170,14 @@ export const DataMenu = {
       text: "data-library",
     },
   ],
+  6: [
+    {
+      id: 4,
+      icons: () => UfoBottom(),
+      link: "/deller",
+      text: "Дилеры",
+    },
+  ],
   9: [
     {
       id: 2,
@@ -259,6 +267,20 @@ export const DataMenu = {
       icons: () => DataLibrary({}),
       link: "/data-library",
       text: "Справочника",
+    },
+  ],
+  10: [
+    {
+      id: 4,
+      icons: () => UfoBottom(),
+      link: "/deller",
+      text: "Дилеры",
+    },
+    {
+      id: 4,
+      icons: () => PriceIcons({}),
+      link: "/price",
+      text: "Цени и скидки",
     },
   ],
   11: [

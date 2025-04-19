@@ -14,10 +14,7 @@ const useBroned = ({ options, queries }: IBroned) =>
     ...options,
     queryKey: [apiRoutes.broned, queries],
     queryFn: () =>
-      getAllData<TResponse<BronedData>, BronedQuery>(
-        apiRoutes.broned,
-        queries
-      ),
+      getAllData<TResponse<BronedData>, BronedQuery>(apiRoutes.broned, queries),
   });
 
 export default useBroned;

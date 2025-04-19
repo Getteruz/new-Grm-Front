@@ -1,65 +1,106 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { RotateCcw } from "lucide-react";
+import { parseAsInteger, useQueryState } from "nuqs";
 
-import TableAction from "@/components/table-action";
+import { Input } from "@/components/ui/input";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { ProductsData } from "../type";
-import { Input } from "@/components/ui/input";
 
-export const ProductColumns: ColumnDef<ProductsData>[] = [
-
+export const Columns: ColumnDef<ProductsData>[] = [
   {
     header: "collection",
     cell: ({ row }) => {
-      return <p>{row.original?.bar_code?.collection?.title}</p>;
+      return <p>{row.original?.title}</p>;
     },
   },
-  {
-    header: "price",
-    cell: ({ row }) => {
-      return <p>{row.original?.price}$</p>;
-    },
-  },
+
   {
     header: "Обём",
     cell: ({ row }) => {
-      return <p>{Number(row.original?.bar_code?.size?.x) * Number(row.original?.bar_code?.isMetric   ?  row.original?.check_count:row.original?.bar_code?.size?.y) }м²</p>;
+      return (
+        <p>
+          {Number(row.original?.bar_code?.size?.x) *
+            Number(
+              row.original?.bar_code?.isMetric
+                ? row.original?.check_count
+                : row.original?.bar_code?.size?.y
+            )}
+          м²
+        </p>
+      );
     },
   },
   {
     header: "Акция",
     cell: () => {
-      return <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">Акция</p>;
+      return (
+        <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
+          Акция
+        </p>
+      );
     },
   },
   {
     header: "Бонусы",
     cell: () => {
-      return <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">Бонусы</p>;
+      return (
+        <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
+          Бонусы
+        </p>
+      );
     },
   },
   {
     header: "Промокоды",
     cell: () => {
-      return  <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">Промокоды</p>;
+      return (
+        <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
+          Промокоды
+        </p>
+      );
     },
   },
   {
     header: "Скидка",
     cell: () => {
-      return  <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">Скидка</p>;
+      return (
+        <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
+          Скидка
+        </p>
+      );
     },
   },
   {
     header: "Зав-цена за м²",
     cell: ({ row }) => {
-      return <Input  className="bg-transparent max-w-[90px] border-border border rounded-[5px]" defaultValue={row?.original?.comingPrice}  placeholder="$"/>;
+      return (
+        <Input
+          className="bg-transparent max-w-[90px] border-border border rounded-[5px]"
+          defaultValue={row?.original?.comingPrice}
+          placeholder="$"
+          type="number"
+          // onChange={(e) => setComingPrice(e.target.value)}
+        />
+      );
     },
   },
   {
     header: "Цена за м²",
     cell: ({ row }) => {
-      return <Input className="bg-transparent  max-w-[90px]  border-border border rounded-[5px]" defaultValue={row?.original?.priceMeter}  placeholder="$"/>;
+      // const [priceMeter, setPriceMeter] = useQueryState(
+      //   "priceMeter",
+      //   parseAsInteger
+      // );
+      return (
+        <Input
+          className="bg-transparent  max-w-[90px]  border-border border rounded-[5px]"
+          defaultValue={row?.original?.priceMeter}
+          placeholder="$"
+          type="number"
+          // onChange={(e) => setPriceMeter(e.target.value)}
+        />
+      );
     },
   },
   {
@@ -68,15 +109,11 @@ export const ProductColumns: ColumnDef<ProductsData>[] = [
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
     cell: ({ row }) => {
-      return (
-        <TableAction
-          url={apiRoutes.products}
-          ShowUpdate={false}
-          ShowDelete={false}
-          ShowPreview
-          id={row.original?.id}
-        />
-      );
+      // return (
+      //   (comingPrice || priceMeter) && (
+      //     <RotateCcw onClick={() => console.log(row)} />
+      //   )
+      // );
     },
   },
 ];

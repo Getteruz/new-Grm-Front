@@ -11,26 +11,36 @@ import { toast } from "sonner";
 
 export const FilialColumns: ColumnDef<TData>[] = [
   {
+    header: "№",
+    cell: ({ row, i, k }) => {
+      return <p>{row?.index + 1}</p>;
+    },
+  },
+  {
     id: "name",
-    header: "name",
+    header: "Название",
     accessorKey: "name",
   },
   {
     id: "address",
-    header: "address",
+    header: "Адресс",
     accessorKey: "address",
   },
   {
     id: "phone1",
-    header: "phone1",
+    header: "Телефон",
     accessorKey: "phone1",
   },
   {
     header: "count",
     cell: () => {
-      return <p className={`flex items-center gap-[7px] ${true?  'text-[#89A143]':'text-[#E38157]'}`}>
-         {true?<LineTop/> :<LineBottom/> }  + 0.6%
-      </p>;
+      return (
+        <p
+          className={`flex items-center gap-[7px] ${true ? "text-[#89A143]" : "text-[#E38157]"}`}
+        >
+          {true ? <LineTop /> : <LineBottom />} + 0.6%
+        </p>
+      );
     },
   },
   {
@@ -45,18 +55,25 @@ export const FilialColumns: ColumnDef<TData>[] = [
           ShowPreview={row.original?.need_get_report}
           id={row.original?.id}
         >
-           {row.original?.need_get_report ?<>
-            <DropdownMenuItem >
-            Переучёт отправлен
-            </DropdownMenuItem>
-           </>
-            :  <DropdownMenuItem  onClick={()=>{
-               UpdatePatchData(apiRoutes.filialMakeReport, row.original?.id ,{})
-              .then(()=>toast.success('Переучёт отправлен'))
-              .catch(()=>toast.error("что-то пошло не так"))
-            }}>
+          {row.original?.need_get_report ? (
+            <>
+              <DropdownMenuItem>Переучёт отправлен</DropdownMenuItem>
+            </>
+          ) : (
+            <DropdownMenuItem
+              onClick={() => {
+                UpdatePatchData(
+                  apiRoutes.filialMakeReport,
+                  row.original?.id,
+                  {}
+                )
+                  .then(() => toast.success("Переучёт отправлен"))
+                  .catch(() => toast.error("что-то пошло не так"));
+              }}
+            >
               Запросить переучёт
-            </DropdownMenuItem>}
+            </DropdownMenuItem>
+          )}
         </TableAction>
       );
     },

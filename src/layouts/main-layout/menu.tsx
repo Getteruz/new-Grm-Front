@@ -15,7 +15,7 @@ export default function Menu() {
 
   return (
     <div
-      className={`${meUser?.position?.role == 3 ? " w-[90px] " : " w-[104px] "} h-screen flex justify-between flex-col  border-r bg-sidebar  border-border`}
+      className={`${meUser?.position?.role == 3 ? " w-[90px] " : " w-[104px] "} h-screen flex relative pb-[110px] justify-between flex-col  border-r bg-sidebar  border-border`}
     >
       <img
         src="/logo1.svg"
@@ -58,39 +58,35 @@ export default function Menu() {
             {e?.icons()}
           </div>
         ))}
-
-        <div
-          onClick={() => {
-            removeToken();
-            removeUserMe();
-            window.location.replace("/login");
-          }}
-          className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
-        >
-          <LogOut />
+        <div className="absolute bottom-0 w-full z-10">
+          <div
+            onClick={() => {
+              removeToken();
+              removeUserMe();
+              window.location.replace("/login");
+            }}
+            className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
+          >
+            <LogOut />
+          </div>
+          {meUser?.position?.role == 3 ? (
+            <>
+              <div
+                className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]  `}
+              >
+                <Filemeneger />
+              </div>
+            </>
+          ) : (
+            <>
+              <div
+                className={`bg-[#272727] border-transparent cursor-pointer text-center flex items-center justify-center p-[20px]`}
+              >
+                <OpenAIIcons />
+              </div>
+            </>
+          )}
         </div>
-        {meUser?.position?.role == 3 ? (
-          <>
-            <div
-              className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]  `}
-            >
-              <Filemeneger />
-            </div>
-          </>
-        ) : (
-          <>
-            <div
-              className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
-            >
-              <Settings />
-            </div>
-            <div
-              className={`bg-[#272727] border-transparent cursor-pointer text-center flex items-center justify-center p-[20px]`}
-            >
-              <OpenAIIcons />
-            </div>
-          </>
-        )}
       </div>
     </div>
   );

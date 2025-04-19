@@ -16,22 +16,22 @@ export default function Page() {
     queries: {
       limit,
       page,
-      title: search || undefined,
+      type: "filial" || undefined,
     },
   });
 
   return (
     <>
-     <Filters />
-    
+      <Filters />
+
       <DataTable
-      isRowClickble={true}
+        isRowClickble={true}
         className="m-4"
         isLoading={isLoading}
         columns={FilialColumns}
         data={data?.items ?? []}
       />
-            <ActionPage/>
+      <ActionPage />
     </>
   );
 }

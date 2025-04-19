@@ -1,12 +1,12 @@
-import {    parseAsString, useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
+import { useMeStore } from "@/store/me-store";
 
 import ActionPageQrCode from "../form";
 import { Columns } from "./columns";
 import Filter from "./filter";
 import useDataLibrary from "./queries";
-import { useMeStore } from "@/store/me-store";
 // import { z } from "zod";
 // enum ProductReportEnum {
 //   SURPLUS = 'излишки',
@@ -20,35 +20,36 @@ import { useMeStore } from "@/store/me-store";
 
 export default function Page() {
   const [search] = useQueryState("search");
-  const {meUser} =useMeStore()
-  const [type] = useQueryState('type',parseAsString.withDefault('переучет'))
+  const { meUser } = useMeStore();
+  const [type] = useQueryState("type", parseAsString.withDefault("переучет"));
   // const [, setIds] = useQueryState('ids',parseAsJson(schema.parse))
-  
-  const { data, isLoading,fetchNextPage,hasNextPage,isFetchingNextPage } = useDataLibrary({
-    queries: {
-      search: search || undefined,
-      filialId:meUser?.filial?.id ||'',
-      type:type == "all"? undefined :type||"переучет",
-    },
-  });
 
-  const flatData = data?.pages?.flatMap(page => page?.items || []) || [];
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useDataLibrary({
+      queries: {
+        search: search || undefined,
+        filialId: meUser?.filial?.id || "",
+        type: type == "all" ? undefined : type || "переучет",
+      },
+    });
+
+  const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
   return (
     <div className="flex w-full">
-      <ActionPageQrCode/>
+      <ActionPageQrCode />
       <div className="w-2/3">
-        <Filter/>
+        <Filter />
         <DataTable
-        // onSelectionChange={(e) => {
-        //   if(e?.length){
-        //    setIds({id:e?.map(items=>items?.id)}); 
-        //   }
-        // }}
+          // onSelectionChange={(e) => {
+          //   if(e?.length){
+          //    setIds({id:e?.map(items=>items?.id)});
+          //   }
+          // }}
           isLoading={isLoading}
           columns={Columns}
-          className={'max-h-screen overflow-y-scroll'}
+          className={"max-h-screen overflow-y-scroll"}
           data={flatData ?? []}
-           fetchNextPage={fetchNextPage}
+          fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage ?? false}
           isFetchingNextPage={isFetchingNextPage}
         />

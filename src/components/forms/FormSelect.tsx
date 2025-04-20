@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { getAllData } from "@/service/apiHelpers";
 import { TResponse } from "@/types";
 
+import ShadcnSelect from "../Select";
 import {
   FormControl,
   FormField,
@@ -14,7 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import ShadcnSelect from "../Select";
 
 interface Props<TQuery> {
   name: string;
@@ -24,7 +24,7 @@ interface Props<TQuery> {
   className?: string;
   disabled?: boolean;
   queries?: TQuery;
-  classNameChild?:string;
+  classNameChild?: string;
   fieldNames?: {
     value: string;
     label: string;

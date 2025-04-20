@@ -45,8 +45,8 @@ export type IUserData = {
 };
 
 export type TSelectOption = {
-  id: string;
-  title: string;
-  value: string;
-  label: string;
+  id?: string;
+  title?: string;
+  value?: string;
+  label?: string;
 };

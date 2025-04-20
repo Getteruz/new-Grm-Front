@@ -11,26 +11,30 @@ export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [search] = useQueryState("search");
-  const { data, isLoading } = useDataFetch({
-   queries: {
-      limit,
-      page,
-      search: search || undefined,
-    },
-  });
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useDataFetch({
+      queries: {
+        limit,
+        page,
+        search: search || undefined,
+      },
+    });
+  const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
     <>
       <Filters />
       <DataTable
-      className="p-4"
         isLoading={isLoading}
         columns={Columns}
-        data={data?.items ?? []}
+        className={"p-4"}
+        data={flatData ?? []}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage ?? false}
+        isFetchingNextPage={isFetchingNextPage}
       />
 
-
-      <ActionPage/>
+      <ActionPage />
     </>
   );
 }

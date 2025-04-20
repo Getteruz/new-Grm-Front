@@ -21,7 +21,7 @@ export default function Page() {
   return (
     <>
       <Filters />
-      <div className="px-2.5  mt-4 gap-2 grid row-start grid-cols-6  pb-[17px]">
+      <div className="px-2.5  mt-4 gap-2 grid row-start grid-cols-8  pb-[17px]">
         {data?.items.map((item) => (
           <CarpetCard
             key={item.id}

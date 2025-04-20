@@ -7,19 +7,19 @@ import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
-import { ProductsData, ProductsQuery } from "../type";
+import { TData, TQuery } from "../type";
 
 interface ITransfers {
-  options?: DefinedInitialDataInfiniteOptions<TResponse<ProductsData>>;
-  queries?: ProductsQuery;
+  options?: DefinedInitialDataInfiniteOptions<TResponse<TData>>;
+  queries?: TQuery;
 }
 
 const useDataFetch = ({ options, queries }: ITransfers) =>
   useInfiniteQuery({
     ...options,
-    queryKey: [apiRoutes.products, queries],
+    queryKey: [apiRoutes.filial, queries],
     queryFn: ({ pageParam = 10 }) =>
-      getAllData<TResponse<ProductsData>, ProductsQuery>(apiRoutes.products, {
+      getAllData<TResponse<TData>, TQuery>(apiRoutes.filial, {
         ...queries,
         page: pageParam as number,
         limit: 10,

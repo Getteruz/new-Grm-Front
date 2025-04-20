@@ -8,60 +8,88 @@ import { ProductsData } from "../type";
 export const ProductColumns: ColumnDef<ProductsData>[] = [
   {
     accessorKey: "id",
-    header: "#N",
+    header: "№",
     size: 50,
+    cell: ({ row }) => {
+      return <p>{row.index + 1}</p>;
+    },
   },
   {
-    id: "code",
-    header: "code",
-    accessorKey: "code",
+    header: "Баркод",
+    id: "bar_code.code",
+    accessorKey: "bar_code.code",
   },
   {
     header: "collection",
-    cell: ({ row }) => {
-      return <p>{row.original.model?.collection?.title}</p>;
-    },
+    id: "bar_code.collection.title",
+    accessorKey: "bar_code.collection.title",
   },
   {
     header: "model",
-    cell: ({ row }) => {
-      return <p>{row.original.model?.title}</p>;
-    },
+    id: "bar_code.model.title",
+    accessorKey: "bar_code.model.title",
   },
   {
     header: "size",
     cell: ({ row }) => {
-      return <p>{row.original.size}</p>;
+      return (
+        <p>{`${row.original?.bar_code.size.x * 100}X${row.original?.y * 100}`}</p>
+      );
     },
+  },
+  {
+    header: "Обьём",
+    id: "bar_code.shape.title",
+    accessorKey: "bar_code.shape.title",
+    cell: ({ row }) => {
+      return (
+        <p>
+          {`${(row.original?.bar_code.size.x * row.original?.y).toFixed(1)}`} м²
+        </p>
+      );
+    },
+  },
+
+  {
+    header: "shape",
+    id: "bar_code.shape.title",
+    accessorKey: "bar_code.shape.title",
+  },
+  {
+    header: "style",
+    id: "bar_code.style.title",
+    accessorKey: "bar_code.style.title",
+  },
+  {
+    header: "color",
+    id: "bar_code.color.title",
+    accessorKey: "bar_code.color.title",
+  },
+  {
+    header: "country",
+    id: "bar_code.country.title",
+    accessorKey: "bar_code.country.title",
+  },
+  {
+    header: "factory",
+    id: "bar_code.factory.title",
+    accessorKey: "bar_code.factory.title",
+  },
+  {
+    header: "Партия",
+    id: "bar_code.partiya_no.title",
+    accessorKey: "bar_code.partiya_no.title",
   },
   {
     header: "count",
     cell: ({ row }) => {
-      return <p>{row.original.count}шт</p>;
+      return <p>{row.original.count} x</p>;
     },
   },
   {
-    header: "shape",
+    header: "Кас-цена",
     cell: ({ row }) => {
-      return <p>{row.original.shape}</p>;
-    },
-  },
-  {
-    header: "style",
-    cell: ({ row }) => {
-      return <p>{row.original.style}</p>;
-    },
-  },
-  {
-    header: "color",
-    cell: ({ row }) => {
-      return <p>{row.original.color?.title}</p>;
-    },
-  },
-  {
-    header: "price",
-    cell: ({ row }) => {
-      return <p>{row.original.price} $</p>;
+      return <p>{row.original.priceMeter} $</p>;
     },
   },
   {

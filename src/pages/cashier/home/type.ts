@@ -1,6 +1,7 @@
 export interface IData {
   id: string;
   status: string;
+  title: string;
   price: number;
   x: number;
   kv: number;
@@ -9,6 +10,7 @@ export interface IData {
   netProfitSum: number;
   discountPercentage: string;
   tip: string;
+  type: string;
   plasticSum: number;
   seller: {
     id: string;
@@ -61,8 +63,8 @@ export interface IData {
     is_deleted: boolean;
     partiya_title: string;
     book_count: number;
-    collection_price:{
-      priceMeter:number;
+    collection_price: {
+      priceMeter: number;
     };
     bar_code: {
       isMetric: boolean;

@@ -1,14 +1,14 @@
 export type TResponse<T> = {
   items: T[];
   meta: {
-    page:number;
+    page: number;
     totalItems: number;
     itemCount: number;
     itemsPerPage: number;
     totalPages: number;
     currentPage: number;
-    limit:number;
-    total:number;
+    limit: number;
+    total: number;
   };
 };
 
@@ -37,14 +37,14 @@ export type IUserData = {
     role: number;
   };
   filial: {
-    id:string;
-    name:string;
-    need_get_report:boolean;
-    address:string;
+    id: string;
+    name: string;
+    need_get_report: boolean;
+    address: string;
   };
-}
+};
 
 export type TSelectOption = {
-  value: string;
-  label: string;
+  id: string;
+  title: string;
 };

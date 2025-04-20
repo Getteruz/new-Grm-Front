@@ -1,7 +1,9 @@
 export type TData = {
-  id:string;
+  id: string;
   biology_name: string;
   name: string;
+  volume: string;
+  expense: string;
   chats: [];
   createdAt: string;
   createdBy: string;
@@ -24,11 +26,10 @@ export type TData = {
 };
 
 export type TQuery = {
-  search: string | undefined;
+  search?: string | undefined;
   limit: number;
   page: number;
 };
-
 
 export type TCropCategory = {
   id: number;

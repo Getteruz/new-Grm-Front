@@ -158,11 +158,16 @@ export const DataMenu = {
     },
     {
       id: 14,
-      icons: () => HomeIcons(),
+      icons: () => TransferIcons(),
       link: "/transfers",
       text: "transfers",
     },
-
+    {
+      id: 2,
+      icons: () => ProductIcons(),
+      link: "/product",
+      text: "Продукты в продаже",
+    },
     {
       id: 4,
       icons: () => DataLibrary({}),

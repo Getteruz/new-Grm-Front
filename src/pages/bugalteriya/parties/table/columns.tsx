@@ -1,44 +1,73 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 import TableAction from "@/components/table-action";
-import TablePopaver from "@/components/table-popaver";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
 
 export const Columns: ColumnDef<TData>[] = [
   {
+    id: "id",
     accessorKey: "id",
-    header: "#ID",
-    size: 50,
-  },
-  
-  {
-    accessorKey: "name",
-    header: "name",
-  },
-  {
-    accessorKey: "biology_name",
-    header: "biologyName",
-  },
-  {
-    accessorKey: "planting_time_end",
-    header: "plantingTimeEnd",
-  },
-  {
-    accessorKey: "planting_time_start",
-    header: "plantingTimeStart",
-  },
-  
-  {
-    id: "description",
-    header: "description",
-    size: 50,
+    header: "№",
     cell: ({ row }) => {
-      return (
-        <TablePopaver text={"description"} disc={row.original.description} />
-      );
+      return <>{row.index + 1}</>;
     },
+  },
+  {
+    id: "factory.title",
+    accessorKey: "factory.title",
+    header: "Поставщик",
+  },
+
+  {
+    accessorKey: "partiya_no.title",
+    id: "partiya_no.title",
+    header: "Партия",
+  },
+  {
+    id: "country",
+    accessorKey: "country.title",
+    header: "Страна",
+  },
+  {
+    accessorKey: "volume",
+    id: "volume",
+    header: "Обьём",
+    cell: ({ row }) => {
+      return <>{row.original.volume}м²</>;
+    },
+  },
+  {
+    accessorKey: "Стоимость",
+    header: "Стоимость",
+    cell: () => {
+      return 0;
+    },
+  },
+
+  {
+    id: "expense",
+    accessorKey: "expense",
+    header: "Расход",
+    cell: ({ row }) => {
+      return <>{row.original.expense}$</>;
+    },
+  },
+  {
+    id: "warehouse.name",
+    accessorKey: "warehouse.name",
+    header: "Склад",
+  },
+  {
+    id: "date",
+    accessorKey: "date",
+    header: "Дата создание",
+  },
+  {
+    id: "partiya_status.title",
+    accessorKey: "partiya_status.title",
+    header: "Статус пратии",
   },
   {
     id: "actions",
@@ -47,7 +76,11 @@ export const Columns: ColumnDef<TData>[] = [
     size: 50,
     cell: ({ row }) => {
       return (
-        <TableAction url={apiRoutes.parties} ShowPreview id={row.original?.id} />
+        <TableAction
+          url={apiRoutes.parties}
+          ShowPreview
+          id={row.original?.id}
+        />
       );
     },
   },

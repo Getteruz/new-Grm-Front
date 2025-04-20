@@ -64,16 +64,20 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
   }, [open]);
 
   return (
-    <Popover  open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger className={`w-full ${className && className}`} asChild>
         <Button
           variant="outline"
           role="combobox"
           disabled={disabled}
-          className={`w-full justify-between  rounded-none h-10 bg-input border-border border ${className && className}`} 
+          className={`w-full justify-between  rounded-none h-10 bg-input border-border border ${className && className}`}
           aria-expanded={open}
         >
-          <span className={twMerge(value ? "" : "text-muted-foreground font-[300px]")}>
+          <span
+            className={twMerge(
+              value ? "" : "text-muted-foreground font-[300px]"
+            )}
+          >
             {value
               ? options.find((framework) => framework?.value === value)?.label
               : placeholder}
@@ -108,26 +112,28 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
               <>
                 <CommandEmpty>{t("noRamework")}</CommandEmpty>
                 <CommandGroup>
-                  {options?.map((framework,index) => (
-                    <CommandItem
-                      key={index}
-                      value={framework?.value}
-                      onSelect={() => {
-                        onChange(framework);
-                        setOpen(false);
-                      }}
-                    >
-                      <span>{framework?.label}</span>
-                      <Check
-                        className={cn(
-                          "ml-auto",
-                          value === framework?.value
-                            ? "opacity-100"
-                            : "opacity-0"
-                        )}
-                      />
-                    </CommandItem>
-                  ))}
+                  {options
+                    ?.filter((item) => item)
+                    .map((framework, index) => (
+                      <CommandItem
+                        key={index}
+                        value={framework?.value}
+                        onSelect={() => {
+                          onChange(framework);
+                          setOpen(false);
+                        }}
+                      >
+                        <span>{framework?.label}</span>
+                        <Check
+                          className={cn(
+                            "ml-auto",
+                            value === framework?.value
+                              ? "opacity-100"
+                              : "opacity-0"
+                          )}
+                        />
+                      </CommandItem>
+                    ))}
                 </CommandGroup>
               </>
             )}

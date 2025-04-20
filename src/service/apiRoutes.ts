@@ -9,7 +9,7 @@ export const apiRoutes = {
   productReport: "/product/report-product",
   login: "/auth/login",
   userMe: "/user/info/me",
-  parties: "/product",
+  parties: "/partiya",
   dataLibrary: "/product",
   transfers: "/transfers",
   broned: "/booking",

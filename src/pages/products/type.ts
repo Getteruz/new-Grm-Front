@@ -1,5 +1,5 @@
 export type ProductsData = {
-  id:string;
+  id: string;
   code: string;
   model: {
     id: string;
@@ -9,6 +9,9 @@ export type ProductsData = {
       title: string;
     };
   };
+  bar_code: { size: { x: number } };
+  y: number;
+  priceMeter: number;
   size: string;
   count: string;
   shape: string;
@@ -22,7 +25,8 @@ export type ProductsData = {
 };
 
 export type ProductsQuery = {
-  search: string | undefined;
+  search?: string | undefined;
+  filialId?: string | undefined;
   limit: number;
   page: number;
 };

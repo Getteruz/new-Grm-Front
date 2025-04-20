@@ -33,7 +33,7 @@ export const ProductColumns: ColumnDef<ProductsData>[] = [
     header: "size",
     cell: ({ row }) => {
       return (
-        <p>{`${row.original?.bar_code.size.x * 100}X${row.original?.y * 100}`}</p>
+        <p>{`${row.original?.bar_code.size.x * 100}X${(row.original?.y * 100).toFixed()}`}</p>
       );
     },
   },

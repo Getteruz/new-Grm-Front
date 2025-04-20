@@ -1,80 +1,77 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { useTranslation } from "react-i18next";
 
 import TableAction from "@/components/table-action";
-import TableImage from "@/components/table-image";
-import TablePopaver from "@/components/table-popaver";
-import { Badge } from "@/components/ui/badge";
 import { apiRoutes } from "@/service/apiRoutes";
 
-import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
 import { TransferData } from "../type";
 
 export const paymentColumns: ColumnDef<TransferData>[] = [
-
   {
-    id: "main_image",
-    header: "image",
-    cell: ({ row }) => {
-      return (
-        <>
-          <TableImage url={row.original?.main_image?.aws_path || null} />
-        </>
-      );
-    },
-    size: 100,
-  },
-  {
-    accessorKey: "name",
-    header: "name",
-  },
-  
-  {
-    accessorKey: "size",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Size
-          <ArrowUpDown />
-        </Button>
-      )
-    },
-  },
-  {
-    accessorKey: "planting_time_start",
-    header: "plantingTimeStart",
-  },
-  {
-    accessorKey: "is_common",
-    header: "isCommon",
-    cell: ({ row }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { t } = useTranslation();
-      return (
-        <>
-          <Badge
-            variant={row.original?.is_common ? "default" : "destructive"}
-            className="px-2 py-1"
-          >
-            {row.original?.is_common ? t("common") : t("unCommon")}
-          </Badge>
-        </>
-      );
-    },
-  },
-  {
-    id: "description",
-    header: "description",
+    accessorKey: "id",
+    header: "№",
     size: 50,
     cell: ({ row }) => {
-      return (
-        <TablePopaver text={"description"} disc={row.original.description} />
-      );
+      return <p>{row.index + 1}</p>;
     },
+  },
+
+  {
+    header: "collection",
+    id: "bar_code.collection.title",
+    accessorKey: "bar_code.collection.title",
+  },
+  {
+    header: "model",
+    id: "bar_code.model.title",
+    accessorKey: "bar_code.model.title",
+  },
+  {
+    header: "size",
+    // cell: ({ row }) => {
+    //   return (
+    //     <p>{`${row.original?.bar_code.size.x * 100}X${(row.original?.y * 100).toFixed()}`}</p>
+    //   );
+    // },
+  },
+  {
+    header: "Обьём",
+    id: "bar_code.shape.title",
+    accessorKey: "bar_code.shape.title",
+    // cell: ({ row }) => {
+    //   return (
+    //     <p>
+    //       {`${(row.original?.bar_code.size.x * row.original?.y).toFixed(1)}`} м²
+    //     </p>
+    //   );
+    // },
+  },
+
+  {
+    header: "shape",
+    id: "bar_code.shape.title",
+    accessorKey: "bar_code.shape.title",
+  },
+  {
+    header: "style",
+    id: "bar_code.style.title",
+    accessorKey: "bar_code.style.title",
+  },
+  {
+    header: "color",
+    id: "bar_code.color.title",
+    accessorKey: "bar_code.color.title",
+  },
+  {
+    header: "country",
+    id: "bar_code.country.title",
+    accessorKey: "bar_code.country.title",
+  },
+
+  {
+    header: "count",
+    // cell: ({ row }) => {
+    //   return <p>{row.original.count} x</p>;
+    // },
   },
   {
     id: "actions",
@@ -83,7 +80,11 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
     size: 50,
     cell: ({ row }) => {
       return (
-        <TableAction url={apiRoutes.transfers} ShowPreview id={row.original?.id} />
+        <TableAction
+          url={apiRoutes.transfers}
+          ShowPreview
+          id={row.original?.id}
+        />
       );
     },
   },

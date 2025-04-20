@@ -6,6 +6,7 @@ import {
   ClientsIcon,
   DataLibrary,
   DeviceDesktopIcons,
+  HikVision,
   HomeIcons,
   PartiesIcons,
   PersonsIcons,
@@ -47,7 +48,7 @@ export const DataMenu = {
       id: 14,
       icons: () => HomeIcons(),
       link: "/transfers",
-      text: "transfers",
+      text: "Трансферы",
     },
 
     {
@@ -146,15 +147,105 @@ export const DataMenu = {
   4: [
     {
       id: 2,
-      icons: () => BuildingIcons(),
+      icons: () => ReportBottom({}),
+      link: "/report",
+      text: "report",
+      items: [
+        {
+          id: 22,
+          link: "/report",
+          text: "Кассовый учёт",
+        },
+        {
+          id: 23,
+          link: "/report-item-2",
+          text: "Финансовый учёт",
+        },
+        {
+          id: 24,
+          link: "/report-item-3",
+          text: "Снабжение и документооборот",
+        },
+      ],
+    },
+    {
+      id: 14,
+      icons: () => TransferIcons(),
+      link: "/transfers",
+      text: "Трансферы",
+    },
+    {
+      id: 2,
+      icons: () => ProductIcons(),
       link: "/product",
-      text: "product",
+      text: "Продукты",
     },
     {
       id: 3,
       icons: () => BronedIcons(),
       link: "/broned",
       text: "broned",
+    },
+    {
+      id: 3,
+      icons: () => HikVision(),
+      link: "/hik-vision",
+      text: "Hik Vision",
+    },
+    {
+      id: 4,
+      icons: () => PersonsIcons(),
+      link: "/user",
+      text: "user",
+    },
+    {
+      id: 4,
+      icons: () => PriceIcons({}),
+      link: "/price",
+      text: "Цени и скидки",
+    },
+    {
+      id: 3,
+      icons: () => ProductsCheck(),
+      link: "/product-check",
+      text: "Проверка продукта",
+    },
+    {
+      id: 3,
+      icons: () => ClientsIcon(),
+      link: "/client",
+      text: "Клиенты",
+    },
+    {
+      id: 4,
+      icons: () => DataLibrary({}),
+      link: "/data-library",
+      text: "data-library",
+    },
+  ],
+  5: [
+    {
+      id: 2,
+      icons: () => ReportBottom({}),
+      link: "/report",
+      text: "report",
+      items: [
+        {
+          id: 22,
+          link: "/report",
+          text: "Кассовый учёт",
+        },
+        {
+          id: 23,
+          link: "/report-item-2",
+          text: "Финансовый учёт",
+        },
+        {
+          id: 24,
+          link: "/report-item-3",
+          text: "Снабжение и документооборот",
+        },
+      ],
     },
     {
       id: 14,
@@ -166,8 +257,39 @@ export const DataMenu = {
       id: 2,
       icons: () => ProductIcons(),
       link: "/product",
-      text: "Продукты в продаже",
+      text: "Продукты",
     },
+    {
+      id: 3,
+      icons: () => BronedIcons(),
+      link: "/broned",
+      text: "broned",
+    },
+    {
+      id: 3,
+      icons: () => HikVision(),
+      link: "/hik-vision",
+      text: "Hik Vision",
+    },
+    {
+      id: 4,
+      icons: () => PersonsIcons(),
+      link: "/user",
+      text: "user",
+    },
+    {
+      id: 4,
+      icons: () => PriceIcons({}),
+      link: "/price",
+      text: "Цени и скидки",
+    },
+    {
+      id: 3,
+      icons: () => ProductsCheck(),
+      link: "/product-check",
+      text: "Проверка продукта",
+    },
+
     {
       id: 4,
       icons: () => DataLibrary({}),
@@ -179,8 +301,88 @@ export const DataMenu = {
     {
       id: 4,
       icons: () => UfoBottom(),
-      link: "/deller",
+      link: "/dealer",
       text: "Дилеры",
+    },
+  ],
+  7: [
+    {
+      id: 2,
+      icons: () => ReportBottom({}),
+      link: "/report",
+      text: "report",
+      items: [
+        {
+          id: 22,
+          link: "/report",
+          text: "Кассовый учёт",
+        },
+        {
+          id: 23,
+          link: "/report-item-2",
+          text: "Финансовый учёт",
+        },
+        {
+          id: 24,
+          link: "/report-item-3",
+          text: "Снабжение и документооборот",
+        },
+      ],
+    },
+    {
+      id: 3,
+      icons: () => PartiesIcons(),
+      link: "/parties",
+      text: "Партии",
+    },
+    {
+      id: 14,
+      icons: () => TransferIcons(),
+      link: "/transfers",
+      text: "transfers",
+    },
+    {
+      id: 2,
+      icons: () => ProductIcons(),
+      link: "/product",
+      text: "Продукты ",
+    },
+    {
+      id: 3,
+      icons: () => BronedIcons(),
+      link: "/broned",
+      text: "broned",
+    },
+    {
+      id: 3,
+      icons: () => HikVision(),
+      link: "/hik-vision",
+      text: "Hik Vision",
+    },
+    {
+      id: 4,
+      icons: () => PersonsIcons(),
+      link: "/user",
+      text: "user",
+    },
+    {
+      id: 4,
+      icons: () => PriceIcons({}),
+      link: "/price",
+      text: "Цени и скидки",
+    },
+    {
+      id: 3,
+      icons: () => ProductsCheck(),
+      link: "/product-check",
+      text: "Проверка продукта",
+    },
+
+    {
+      id: 4,
+      icons: () => DataLibrary({}),
+      link: "/data-library",
+      text: "data-library",
     },
   ],
   9: [
@@ -216,7 +418,7 @@ export const DataMenu = {
     {
       id: 4,
       icons: () => UfoBottom(),
-      link: "/deller",
+      link: "/dealer",
       text: "Дилеры",
     },
     {
@@ -278,7 +480,7 @@ export const DataMenu = {
     {
       id: 4,
       icons: () => UfoBottom(),
-      link: "/deller",
+      link: "/dealer",
       text: "Дилеры",
     },
     {

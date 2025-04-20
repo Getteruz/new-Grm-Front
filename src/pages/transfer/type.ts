@@ -24,8 +24,12 @@ export type TransferData = {
 };
 
 export type TransferQuery = {
-  limit:number,
-  page:number
+  limit: number;
+  page: number;
+  to?: string;
+  from?: string;
+  filial?: string;
+  type?: string;
 };
 
 export type TTransferCategory = {

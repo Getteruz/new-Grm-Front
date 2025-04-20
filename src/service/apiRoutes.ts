@@ -11,7 +11,7 @@ export const apiRoutes = {
   userMe: "/user/info/me",
   parties: "/partiya",
   dataLibrary: "/product",
-  transfers: "/transfers",
+  transfers: "/transfer",
   broned: "/booking",
   filial: "/filial",
   filialMakeReport: "/filial/maker-report",

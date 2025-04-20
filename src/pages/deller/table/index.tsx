@@ -5,6 +5,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { Columns } from "./columns";
 import Filter from "./filter";
 import useDataFetch from "./queries";
+import ActionPage from "@/pages/filial/form";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -24,6 +25,7 @@ export default function Page() {
     <>
       <Filter />
       <DataTable
+        isRowClickble
         isLoading={isLoading}
         columns={Columns}
         data={flatData ?? []}
@@ -31,6 +33,7 @@ export default function Page() {
         hasNextPage={hasNextPage ?? false}
         isFetchingNextPage={isFetchingNextPage}
       />
+      <ActionPage />
     </>
   );
 }

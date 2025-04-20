@@ -26,6 +26,7 @@ export default function Page() {
       <Filters />
 
       <DataTable
+        isRowClickble
         isLoading={isLoading}
         columns={FilialColumns}
         data={flatData ?? []}

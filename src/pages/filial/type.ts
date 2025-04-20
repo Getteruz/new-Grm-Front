@@ -106,4 +106,5 @@ export interface TQuery {
   limit: number;
   page: number;
   type?: string;
+  filialId?: string;
 }

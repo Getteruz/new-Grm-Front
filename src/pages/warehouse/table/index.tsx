@@ -1,6 +1,7 @@
 import { parseAsInteger, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
+import ActionPage from "@/pages/filial/form";
 
 import { Columns } from "./columns";
 import Filter from "./filter";
@@ -24,14 +25,15 @@ export default function Page() {
     <>
       <Filter />
       <DataTable
+        isRowClickble
         isLoading={isLoading}
         columns={Columns}
-        className="p-4"
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}
         isFetchingNextPage={isFetchingNextPage}
       />
+      <ActionPage />
     </>
   );
 }

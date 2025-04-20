@@ -39,7 +39,7 @@ export default function TableAction({
   ShowUpdate?: boolean;
   ShowDelete?: boolean;
   id: string;
-  refetchUrl?:string;
+  refetchUrl?: string;
   children?: React.ReactNode;
 }) {
   const { t } = useTranslation();
@@ -53,13 +53,13 @@ export default function TableAction({
     },
     onSuccess: () => {
       toast.success(t("deleteToast"));
-      queryClient.invalidateQueries({ queryKey: [refetchUrl||url] });
+      queryClient.invalidateQueries({ queryKey: [refetchUrl || url] });
       setOpen(false);
     },
   });
 
   return (
-    <div className="text-end" onClick={(e)=>e.stopPropagation()}>
+    <div className="text-end" onClick={(e) => e.stopPropagation()}>
       <DropdownMenu>
         <DropdownMenuTrigger className="text-end" asChild>
           <Button variant="ghost" className="h-8 text-end w-8 p-0">
@@ -99,9 +99,9 @@ export default function TableAction({
                     {t("deleteConfir")}
                   </DialogTitle>
                 </DialogHeader>
-               
+
                 <DialogFooter className="sm:justify-start  w-full flex gap-2">
-                  <DialogClose  asChild>
+                  <DialogClose asChild>
                     <Button type="button" className="w-1/2" variant="secondary">
                       {t("close")}
                     </Button>

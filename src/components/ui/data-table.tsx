@@ -1,14 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  RowSelectionState,
   useReactTable,
-  RowSelectionState
 } from "@tanstack/react-table";
+import { useQueryState } from "nuqs";
+import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
   TableBody,
@@ -17,12 +21,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
 
 import TableLoading from "./table-loading";
-import { useQueryState } from "nuqs";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -31,7 +31,7 @@ interface DataTableProps<TData, TValue> {
   className?: string;
   isFetchingNextPage?: boolean;
   hasNextPage?: boolean;
-  isRowClickble?:boolean;
+  isRowClickble?: boolean;
   fetchNextPage?: () => void;
   onSelectionChange?: (selectedRows: TData[]) => void;
 }
@@ -41,7 +41,7 @@ export function DataTable<TData, TValue>({
   data,
   isLoading,
   className,
-  isRowClickble=false,
+  isRowClickble = false,
   isFetchingNextPage = false,
   hasNextPage = false,
   fetchNextPage,
@@ -52,6 +52,7 @@ export function DataTable<TData, TValue>({
   const [, setId] = useQueryState("id");
   const { t } = useTranslation();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const checkboxColumn: ColumnDef<TData, any> = {
     id: "select",
     header: ({ table }) => (
@@ -79,7 +80,7 @@ export function DataTable<TData, TValue>({
 
   useEffect(() => {
     if (!fetchNextPage) return;
-    
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
@@ -109,7 +110,7 @@ export function DataTable<TData, TValue>({
       onSelectionChange(selectedRows);
     }
   }, [rowSelection, data, onSelectionChange]);
-  
+
   const table = useReactTable({
     data,
     columns: allColumns,
@@ -128,7 +129,7 @@ export function DataTable<TData, TValue>({
       onSelectionChange(selectedRows);
     }
   }, [rowSelection, data, onSelectionChange]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <div className={className}>
       {isLoading && data.length === 0 ? (
@@ -138,26 +139,25 @@ export function DataTable<TData, TValue>({
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow  key={headerGroup.id}>
+                <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead key={header.id}>
-                          {header.isPlaceholder
-                        ? null
-                        : typeof flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            ) == "string"
-                          ? t(
-                              String(
-                                flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
+                        {header.isPlaceholder
+                          ? null
+                          : typeof flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              ) == "string"
+                            ? t(
+                                String(
+                                  flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                  )
                                 )
                               )
-                            )
-                          : null}
-                            
+                            : null}
                       </TableHead>
                     );
                   })}
@@ -170,11 +170,13 @@ export function DataTable<TData, TValue>({
                   <TableRow
                     key={row.id}
                     className="px-5 cursor-pointer"
-                    onClick={()=>{
-                      if(isRowClickble){
-                        navigate((row.original as {id:string})?.id+'/info')
-                      }else{
-                        setId((row.original as {id:string})?.id)
+                    onClick={() => {
+                      if (isRowClickble) {
+                        navigate(
+                          (row.original as { id: string })?.id + "/info"
+                        );
+                      } else {
+                        setId((row.original as { id: string })?.id);
                       }
                     }}
                     data-state={row.getIsSelected() && "selected"}
@@ -201,7 +203,7 @@ export function DataTable<TData, TValue>({
               )}
             </TableBody>
           </Table>
-          
+
           {/* Loader for infinite scroll */}
           {fetchNextPage && (
             <div
@@ -209,13 +211,12 @@ export function DataTable<TData, TValue>({
               className="flex justify-center items-center "
             >
               {isFetchingNextPage ? (
-                 <TableLoading  headerPreview={false} limit={2} table={table} />
+                <TableLoading headerPreview={false} limit={2} table={table} />
               ) : hasNextPage ? (
                 <div className="h-8" />
               ) : (
                 data.length > 0 && (
-                  <div className="text-sm text-muted-foreground">
-                  </div>
+                  <div className="text-sm text-muted-foreground"></div>
                 )
               )}
             </div>

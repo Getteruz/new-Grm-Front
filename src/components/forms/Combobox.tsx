@@ -112,28 +112,26 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
               <>
                 <CommandEmpty>{t("noRamework")}</CommandEmpty>
                 <CommandGroup>
-                  {options
-                    ?.filter((item) => item)
-                    .map((framework, index) => (
-                      <CommandItem
-                        key={index}
-                        value={framework?.value}
-                        onSelect={() => {
-                          onChange(framework);
-                          setOpen(false);
-                        }}
-                      >
-                        <span>{framework?.label}</span>
-                        <Check
-                          className={cn(
-                            "ml-auto",
-                            value === framework?.value
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                      </CommandItem>
-                    ))}
+                  {options?.map((framework, index) => (
+                    <CommandItem
+                      key={index}
+                      value={framework?.value}
+                      onSelect={() => {
+                        onChange(framework);
+                        setOpen(false);
+                      }}
+                    >
+                      <span>{framework?.label}</span>
+                      <Check
+                        className={cn(
+                          "ml-auto",
+                          value === framework?.value
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
                 </CommandGroup>
               </>
             )}

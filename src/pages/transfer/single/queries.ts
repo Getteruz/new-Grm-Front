@@ -7,11 +7,11 @@ import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
-import { ProductData, TQuery } from "../type";
+import { TransferData, TransferQuery } from "../type";
 
 interface ITransfers {
-  options?: DefinedInitialDataInfiniteOptions<TResponse<ProductData>>;
-  queries?: TQuery;
+  options?: DefinedInitialDataInfiniteOptions<TResponse<TransferData>>;
+  queries?: TransferQuery;
 }
 
 const useDataFetch = ({ options, queries }: ITransfers) =>
@@ -19,7 +19,7 @@ const useDataFetch = ({ options, queries }: ITransfers) =>
     ...options,
     queryKey: [apiRoutes.products, queries],
     queryFn: ({ pageParam = 10 }) =>
-      getAllData<TResponse<ProductData>, TQuery>(apiRoutes.products, {
+      getAllData<TResponse<TransferData>, TransferQuery>(apiRoutes.products, {
         ...queries,
         page: pageParam as number,
         limit: 10,

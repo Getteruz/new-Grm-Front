@@ -45,9 +45,7 @@ function ShadcnSelect(props: ShadcnSelectProps) {
       onOpenChange={onOpenChange}
       disabled={disabled || isLoading}
     >
-      <SelectTrigger
-        className={`outline-none active:border-none ${className}`}
-      >
+      <SelectTrigger className={`outline-none active:border-none ${className}`}>
         <SelectValue className={`${classNameValue}`} placeholder={placeholder}>
           <span
             className={`flex items-center justify-start gap-2 ${classNameValueSpan}`}
@@ -61,7 +59,7 @@ function ShadcnSelect(props: ShadcnSelectProps) {
           {options?.map((option) => (
             <SelectItem
               key={option.value}
-              value={option.value}
+              value={String(option.value)}
               className={`${classNameItem} `}
             >
               {option.label}

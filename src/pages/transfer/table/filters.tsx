@@ -36,7 +36,7 @@ export default function Filters() {
           fromPlaceholder="от: 12.02.2025"
           toPlaceholder="до: 12.02.2025"
         />
-        {type !== "Out" && (
+        {meUser?.position.role !== 9 && type !== "Out" && (
           <Button
             className="h-full border-l-1 justify-center gap-1 w-[68px] border-y-0  border-r-0"
             size={"icon"}
@@ -46,30 +46,33 @@ export default function Filters() {
             <Plus size={40} />
           </Button>
         )}
-        <Button
-          className="h-full border-l-1 justify-center gap-1 w-[68px] border-y-0  border-r-0"
-          size={"icon"}
-          variant={"outline"}
-        >
-          <SquareCheckBig /> 0
-        </Button>
+        {meUser?.position.role !== 9 && (
+          <Button
+            className="h-full border-l-1 justify-center gap-1 w-[68px] border-y-0  border-r-0"
+            size={"icon"}
+            variant={"outline"}
+          >
+            <SquareCheckBig /> 0
+          </Button>
+        )}
       </div>
-      {type !== "Out" ? (
-        <Button
-          className="h-full border-x-1 border-y-0 w-[140px] "
-          variant={"outline"}
-          // onClick={() => navigate("create")}
-        >
-          Принять
-        </Button>
-      ) : (
-        <Button
-          onClick={() => navigate(link)}
-          className="h-full border-x-1 border-y-0  "
-        >
-          Добавить трансфер
-        </Button>
-      )}
+      {meUser?.position.role !== 9 &&
+        (type !== "Out" ? (
+          <Button
+            className="h-full border-x-1 border-y-0 w-[140px] "
+            variant={"outline"}
+            // onClick={() => navigate("create")}
+          >
+            Принять
+          </Button>
+        ) : (
+          <Button
+            onClick={() => navigate(link)}
+            className="h-full border-x-1 border-y-0  "
+          >
+            Добавить трансфер
+          </Button>
+        ))}
     </div>
   );
 }

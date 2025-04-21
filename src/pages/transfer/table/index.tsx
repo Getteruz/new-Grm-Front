@@ -55,10 +55,11 @@ export default function Page() {
           <div className="p-3 px-0 mx-5 border-b border-border pb-5">
             {flatDataFilial
               ?.filter((i) => i.type === "filial")
+              ?.filter((i) => i.id !== meUser?.filial?.id)
               .map((e) => (
                 <button
                   key={e?.id}
-                  // disabled={filialTo === e.id}
+                  disabled={filialTo === e.id}
                   onClick={() => setFilial(e?.id)}
                   className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                 >
@@ -72,7 +73,7 @@ export default function Page() {
               .map((e) => (
                 <button
                   key={e?.id}
-                  // disabled={filialTo === e.id}
+                  disabled={filialTo === e.id}
                   onClick={() => setFilial(e?.id)}
                   className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                 >
@@ -86,7 +87,7 @@ export default function Page() {
               .map((e) => (
                 <button
                   key={e?.id}
-                  // disabled={filialTo === e.id}
+                  disabled={filialTo === e.id}
                   onClick={() => setFilial(e?.id)}
                   className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                 >
@@ -100,7 +101,7 @@ export default function Page() {
               .map((e) => (
                 <button
                   key={e?.id}
-                  // disabled={filialTo === e.id}
+                  disabled={filialTo === e.id}
                   onClick={() => setFilial(e?.id)}
                   className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                 >

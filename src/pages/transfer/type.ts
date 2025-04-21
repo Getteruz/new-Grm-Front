@@ -12,6 +12,15 @@ export type TransferData = {
   harvest_duration: number;
   id: string;
   is_common: boolean;
+  product: {
+    bar_code: {
+      size: {
+        x: number;
+      };
+    };
+    y: number;
+  };
+  count: string;
   main_image: {
     aws_path: string;
   };

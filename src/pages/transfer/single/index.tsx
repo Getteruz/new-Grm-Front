@@ -102,7 +102,7 @@ export default function SinglePage() {
                 min={0}
                 max={row.original?.count}
                 value={row.original?.count}
-                className="w-10 h-4 border rounded p-2.5 outline-none"
+                className="w-16 h-4 border rounded p-2.5 outline-none"
                 onChange={(e) => {
                   const value = Number(e.target.value);
                   setTransferData((prevData) => {
@@ -162,7 +162,11 @@ export default function SinglePage() {
 
   return (
     <div className=" w-full h-full">
-      <Filter setTransferData={setTransferData} selectedData={filteredData} />
+      <Filter
+        setTransferData={setTransferData}
+        selectedData={filteredData}
+        transferData={transferData}
+      />
       <div className="grid grid-cols-2 h-[calc(100%-100px)]">
         <DataTable
           isLoading={isLoading}

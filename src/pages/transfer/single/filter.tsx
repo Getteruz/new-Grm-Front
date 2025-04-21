@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import SearchInput from "@/components/filters-ui/search-input";
 import { BrCodeIcons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -15,16 +17,23 @@ import api from "@/service/fetchInstance";
 interface FiltersProps {
   setTransferData: React.Dispatch<React.SetStateAction<ProductData[]>>;
   selectedData: ProductData[]; // yoki TransferItem[] bo‘lishi mumkin, aniqlashtirsang yaxshi bo'ladi
+  transferData: ProductData[]; // yoki TransferItem[] bo‘lishi mumkin, aniqlashtirsang yaxshi bo'ladi
 }
-const Filter: React.FC<FiltersProps> = ({ setTransferData, selectedData }) => {
+const Filter: React.FC<FiltersProps> = ({
+  setTransferData,
+  selectedData,
+  transferData,
+}) => {
+  const navigate = useNavigate();
   const sendTransfer = async () => {
-    const body = selectedData.map((i) => ({
+    const body = transferData.map((i) => ({
       to: i.to,
       from: i.from,
       count: i.count,
       product: i.id,
     }));
     await api.post(apiRoutes.transfers, body);
+    navigate("/transfers");
   };
   return (
     <div className="bg-sidebar grid grid-cols-2  border-border border-b     ">

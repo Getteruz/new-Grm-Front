@@ -7,7 +7,7 @@ import {
   RowSelectionState,
   useReactTable,
 } from "@tanstack/react-table";
-import { useQueryState } from "nuqs";
+// import { useQueryState } from "nuqs";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -49,7 +49,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [, setId] = useQueryState("id");
+  // const [, setId] = useQueryState("id");
   const { t } = useTranslation();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -176,7 +176,7 @@ export function DataTable<TData, TValue>({
                           (row.original as { id: string })?.id + "/info"
                         );
                       } else {
-                        setId((row.original as { id: string })?.id);
+                        // setId((row.original as { id: string })?.id);
                       }
                     }}
                     data-state={row.getIsSelected() && "selected"}

@@ -20,6 +20,12 @@ export default function Page() {
       flatDataFilial?.filter((i) => i.type === "filial")?.[0]?.id || ""
     )
   );
+  const [filialTo, setFilialTo] = useQueryState(
+    "filialTo",
+    parseAsString.withDefault(
+      flatDataFilial?.filter((i) => i.type === "filial")?.[1]?.id || ""
+    )
+  );
   const [type, setType] = useQueryState(
     "type",
     parseAsString.withDefault("In")
@@ -29,8 +35,9 @@ export default function Page() {
       limit: 10,
       page: 1,
       type: type || undefined,
-      from: meUser?.filial.id || "",
-      to: filial,
+      from:
+        meUser?.position.role === 9 ? filial || "" : meUser?.filial.id || "",
+      to: meUser?.position.role === 9 ? filialTo : filial,
     },
   });
 
@@ -42,88 +49,158 @@ export default function Page() {
         <div className={`w-full h-full border-r border-border `}>
           <div className="w-full flex h-[64px] items-center justify-between border-border border-solid border-b p-[21.22px] bg-sidebar">
             <h4 className="text-[14px] font-semibold text-foreground">
-              Флиалы
+              {meUser?.position.role === 9 ? "Из филиал" : "Филиалы"}
             </h4>
           </div>
           <div className="p-3 px-0 mx-5 border-b border-border pb-5">
             {flatDataFilial
               ?.filter((i) => i.type === "filial")
               .map((e) => (
-                <p
+                <button
                   key={e?.id}
+                  // disabled={filialTo === e.id}
                   onClick={() => setFilial(e?.id)}
-                  className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between cursor-pointer mb-1 text-[14px]  hover:bg-sidebar px-3  py-2.5`}
+                  className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                 >
                   {e.name}
-                </p>
+                </button>
               ))}
           </div>
           <div className="p-3 px-0 mx-5 border-b border-border">
             {flatDataFilial
               ?.filter((i) => i.type === "market")
               .map((e) => (
-                <p
+                <button
                   key={e?.id}
+                  // disabled={filialTo === e.id}
                   onClick={() => setFilial(e?.id)}
-                  className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between cursor-pointer mb-1 text-[14px]  hover:bg-sidebar px-3  py-2.5`}
+                  className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                 >
                   {e.name}
-                </p>
+                </button>
               ))}
           </div>
           <div className="p-3 px-0 mx-5 border-b border-border">
             {flatDataFilial
               ?.filter((i) => i.type === "dealer")
               .map((e) => (
-                <p
+                <button
                   key={e?.id}
+                  // disabled={filialTo === e.id}
                   onClick={() => setFilial(e?.id)}
-                  className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between cursor-pointer mb-1 text-[14px]  hover:bg-sidebar px-3  py-2.5`}
+                  className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                 >
                   {e.name}
-                </p>
+                </button>
               ))}
           </div>
           <div className="p-3 px-0 mx-5 ">
             {flatDataFilial
               ?.filter((i) => i.type === "warehouse")
               .map((e) => (
-                <p
+                <button
                   key={e?.id}
+                  // disabled={filialTo === e.id}
                   onClick={() => setFilial(e?.id)}
-                  className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between cursor-pointer mb-1 text-[14px]  hover:bg-sidebar px-3  py-2.5`}
+                  className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                 >
                   {e.name}
-                </p>
+                </button>
               ))}
           </div>
         </div>
-        <div className={`w-full h-full border-r border-border `}>
-          <div className="w-full flex h-[64px] items-center justify-between border-border border-solid border-b p-[21.22px] bg-sidebar">
-            <h4 className="text-[14px] font-semibold text-foreground">
-              Статус транзакции
-            </h4>
+        {meUser?.position.role === 9 ? (
+          <div className={`w-full h-full border-r border-border `}>
+            <div className="w-full flex h-[64px] items-center justify-between border-border border-solid border-b p-[21.22px] bg-sidebar">
+              <h4 className="text-[14px] font-semibold text-foreground">
+                В филиал
+              </h4>
+            </div>
+            <div className="p-3 px-0 mx-5 border-b border-border pb-5">
+              {flatDataFilial
+                ?.filter((i) => i.type === "filial")
+                .map((e) => (
+                  <button
+                    key={e?.id}
+                    disabled={filial === e.id}
+                    onClick={() => setFilialTo(e?.id)}
+                    className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
+                  >
+                    {e.name}
+                  </button>
+                ))}
+            </div>
+            <div className="p-3 px-0 mx-5 border-b border-border">
+              {flatDataFilial
+                ?.filter((i) => i.type === "market")
+                .map((e) => (
+                  <button
+                    key={e?.id}
+                    disabled={filial === e.id}
+                    onClick={() => setFilialTo(e?.id)}
+                    className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
+                  >
+                    {e.name}
+                  </button>
+                ))}
+            </div>
+            <div className="p-3 px-0 mx-5 border-b border-border">
+              {flatDataFilial
+                ?.filter((i) => i.type === "dealer")
+                .map((e) => (
+                  <button
+                    key={e?.id}
+                    disabled={filial === e.id}
+                    onClick={() => setFilialTo(e?.id)}
+                    className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
+                  >
+                    {e.name}
+                  </button>
+                ))}
+            </div>
+            <div className="p-3 px-0 mx-5 ">
+              {flatDataFilial
+                ?.filter((i) => i.type === "warehouse")
+                .map((e) => (
+                  <button
+                    key={e?.id}
+                    disabled={filial === e.id}
+                    onClick={() => setFilialTo(e?.id)}
+                    className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
+                  >
+                    {e.name}
+                  </button>
+                ))}
+            </div>
           </div>
-          <div className="p-3 px-0 mx-5">
-            {[
-              { id: "In", name: "Входящие" },
-              { id: "Out", name: "Отправленные" },
-            ].map((e) => (
-              <p
-                key={e?.id}
-                onClick={() => setType(e?.id)}
-                className={`${type === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between cursor-pointer mb-1 text-[14px]  hover:bg-sidebar px-3  py-2.5`}
-              >
-                {e.name}
-              </p>
-            ))}
+        ) : (
+          <div className={`w-full h-full border-r border-border `}>
+            <div className="w-full flex h-[64px] items-center justify-between border-border border-solid border-b p-[21.22px] bg-sidebar">
+              <h4 className="text-[14px] font-semibold text-foreground">
+                Статус транзакции
+              </h4>
+            </div>
+            <div className="p-3 px-0 mx-5">
+              {[
+                { id: "In", name: "Входящие" },
+                { id: "Out", name: "Отправленные" },
+              ].map((e) => (
+                <button
+                  key={e?.id}
+                  disabled={filial === e.id}
+                  onClick={() => setType(e?.id)}
+                  className={`${type === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
+                >
+                  {e.name}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div className="col-span-8">
         <Filters />
         <DataTable
-          className="p-4"
           isLoading={isLoading}
           columns={paymentColumns}
           data={flatData}

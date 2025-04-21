@@ -35,6 +35,9 @@ export interface FilialReportData {
 
 export interface ProductData {
   id: string;
+  to?: string;
+  from?: string;
+
   internetInfo: string | null;
   is_active: boolean;
   date: string;

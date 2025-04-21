@@ -12,6 +12,7 @@ import {
   DialogFooter,
   DialogHeader,
 } from "@/components/ui/dialog";
+import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 
 export default function FormContent() {
@@ -63,7 +64,7 @@ export default function FormContent() {
       date: date,
       volume,
     };
-    await api.post("/partiya", data);
+    await api.post(apiRoutes.parties, data);
   };
 
   return (

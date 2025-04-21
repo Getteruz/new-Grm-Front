@@ -1,16 +1,29 @@
 import { Plus, SquareCheckBig } from "lucide-react";
 import { useQueryState } from "nuqs";
+import { useNavigate } from "react-router-dom";
 
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 import SearchInput from "@/components/filters-ui/search-input";
 import { BrCodeIcons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { useMeStore } from "@/store/me-store";
 
 export default function Filters() {
   const [type] = useQueryState("type");
+  const navigate = useNavigate();
+  const { meUser } = useMeStore();
+
+  const [filial] = useQueryState("filial");
+  const [filialTo] = useQueryState("filialTo");
+
+  const linkFrom =
+    meUser?.position.role === 9 ? filial || "" : meUser?.filial.id || "";
+  const linkTo = meUser?.position.role === 9 ? filialTo : filial;
+  const link = "/transfers/" + linkFrom + "/to/" + linkTo;
+
   return (
-    <div className="h-[64px] flex justify-between w-full bg-sidebar pr-10">
-      <div className=" border-b border-border     flex   ">
+    <div className="h-[64px] flex justify-between border-b border-border w-full bg-sidebar pr-10">
+      <div className="      flex   ">
         <Button
           className="h-full border-r-1  justify-center font-[16px] gap-1  border-y-0  border-l-0"
           variant={"outline"}
@@ -28,8 +41,9 @@ export default function Filters() {
             className="h-full border-l-1 justify-center gap-1 w-[68px] border-y-0  border-r-0"
             size={"icon"}
             variant={"outline"}
+            onClick={() => navigate(link)}
           >
-            <Plus />
+            <Plus size={40} />
           </Button>
         )}
         <Button
@@ -44,11 +58,15 @@ export default function Filters() {
         <Button
           className="h-full border-x-1 border-y-0 w-[140px] "
           variant={"outline"}
+          // onClick={() => navigate("create")}
         >
           Принять
         </Button>
       ) : (
-        <Button className="h-full border-x-1 border-y-0  ">
+        <Button
+          onClick={() => navigate(link)}
+          className="h-full border-x-1 border-y-0  "
+        >
           Добавить трансфер
         </Button>
       )}

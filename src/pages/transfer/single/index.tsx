@@ -34,7 +34,7 @@ export default function SinglePage() {
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
   const filteredData = flatData
     .filter((item) => seleted?.includes(item.id))
-    .map((i) => ({ ...i, from: id, to: uuid, product: i.id, count: 1 }));
+    .map((i) => ({ ...i, from: id, to: uuid, product: i.id, quantity: 1 }));
 
   const TransferColumns: ColumnDef<ProductData>[] = [
     {
@@ -100,15 +100,15 @@ export default function SinglePage() {
               <input
                 type="number"
                 min={0}
-                max={row.original?.count}
-                value={row.original?.count}
+                max={row.original?.y}
+                value={row.original?.quantity}
                 className="w-16 h-4 border rounded p-2.5 outline-none"
                 onChange={(e) => {
                   const value = Number(e.target.value);
                   setTransferData((prevData) => {
                     return prevData.map((item) => {
                       if (item.id === row.original.id) {
-                        return { ...item, count: value };
+                        return { ...item, quantity: value };
                       } else return item;
                     });
                   });
@@ -117,12 +117,15 @@ export default function SinglePage() {
             ) : (
               <div className="flex items-center">
                 <button
-                  disabled={row.original.count === 1}
+                  disabled={row.original.quantity === 1}
                   onClick={() => {
                     setTransferData((prevData) => {
                       return prevData.map((item) => {
                         if (item.id === row.original.id) {
-                          return { ...item, count: row.original.count - 1 };
+                          return {
+                            ...item,
+                            quantity: row.original.quantity - 1,
+                          };
                         } else return item;
                       });
                     });
@@ -132,19 +135,22 @@ export default function SinglePage() {
                 </button>
 
                 <p className="  rounded font-medium w-8 h-[22px] flex justify-center items-center text-center border border-[#21212180] ">
-                  {row.original?.count}
+                  {row.original?.quantity}
                 </p>
                 <button
                   disabled={
                     row.original.count <=
                     (transferData?.find((i) => i?.id === row.original.id)
-                      ?.count ?? 0)
+                      ?.quantity ?? 0)
                   }
                   onClick={() => {
                     setTransferData((prevData) => {
                       return prevData.map((item) => {
                         if (item.id === row.original.id) {
-                          return { ...item, count: row.original.count + 1 };
+                          return {
+                            ...item,
+                            quantity: row.original.quantity + 1,
+                          };
                         } else return item;
                       });
                     });

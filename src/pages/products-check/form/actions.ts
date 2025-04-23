@@ -1,51 +1,30 @@
-import { ProductsCheckFormType } from "./schema";
-import {
-  DefinedInitialDataOptions,
-  useMutation,
-  UseMutationOptions,
-  useQuery,
-} from "@tanstack/react-query";
-import { AddData, getByIdData, UpdateData } from "@/service/apiHelpers";
-import { apiRoutes } from "@/service/apiRoutes";
-import { ProductsChecksData, ProductsChecksQuery } from "../type";
+import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";
 
-interface AuthResponse {
-  jwt: string;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-  };
-}
+import { TData } from "@/pages/bugalteriya/data-library/type";
+import { getByIdData } from "@/service/apiHelpers";
+import { apiRoutes } from "@/service/apiRoutes";
+
+import { ProductsChecksQuery } from "../type";
 
 interface IProductsChecks {
-  options?: DefinedInitialDataOptions<ProductsChecksData>;
+  options?: DefinedInitialDataOptions<TData>;
   id: string | undefined;
   queries?: ProductsChecksQuery;
 }
-interface IProductsChecksMute {
-  data: ProductsCheckFormType;
-  id: string | undefined;
-}
 
-export const useProductsCheckMutation = ({
-  ...options
-}: UseMutationOptions<AuthResponse, Error, IProductsChecksMute, unknown>) =>
-  useMutation({
-    ...options,
-    mutationFn: async ({ data, id }) => {
-     
-      if (id)
-        return await UpdateData<ProductsCheckFormType>(apiRoutes.productscheck, id, data);
-      return await AddData<ProductsCheckFormType>(apiRoutes.productscheck, data);
-    },
-  });
-
-export const useProductsCheckById = ({ options, id, queries }: IProductsChecks) =>
+export const useProductsCheckById = ({
+  options,
+  id,
+  queries,
+}: IProductsChecks) =>
   useQuery({
     ...options,
-    queryKey: [apiRoutes.productscheck, id],
+    queryKey: [apiRoutes.qrBaseCode, id],
     enabled: Boolean(id),
     queryFn: () =>
-      getByIdData<ProductsChecksData, ProductsChecksQuery>(apiRoutes.productscheck, id || "", queries),
+      getByIdData<TData, ProductsChecksQuery>(
+        apiRoutes.qrBaseCode,
+        id || "",
+        queries
+      ),
   });

@@ -1,49 +1,48 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryState } from "nuqs";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { ProductsCheckFormType, ProductsCheckSchema } from "./schema";
+import { useProductsCheckById } from "./actions";
 import ProductsCheckFormContent from "./content";
-import { useProductsCheckById, useProductsCheckMutation } from "./actions";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { toast } from "sonner";
+import { ProductsCheckFormType, ProductsCheckSchema } from "./schema";
 
 const ActionPage = () => {
   const form = useForm<ProductsCheckFormType>({
     resolver: zodResolver(ProductsCheckSchema),
-    
   });
-  const navigate = useNavigate();
-  const { id } = useParams();
+  const [id] = useQueryState("id");
+  const [barcode] = useQueryState("barcode");
+
   const { data } = useProductsCheckById({
-    id: id != "new" ? id : undefined, });
-  const { mutate } = useProductsCheckMutation({
-    onSuccess: () => {
-      if (id == "new") {
-        toast.success("savedSuccessfully");
-      } else {
-        toast.success("updatedSuccessfully");
-      }
-      navigate("/crops");
-    },
+    id: id || undefined,
   });
 
   useEffect(() => {
     if (data) {
       form.reset({
-        name: data?.name || "",
-     
+        code: data?.code || "",
+
+        name: data.id,
+        country: data?.country?.title,
+        collection: data?.collection?.title,
+        size: data?.size?.title,
+        shape: data?.shape?.title,
+        style: data?.style?.title,
+        color: data?.color?.title,
+        model: data?.model?.title,
+        factory: data?.factory?.title,
       });
     }
   }, [data]);
 
+  useEffect(() => {
+    form.setValue("code", barcode || "");
+  }, [barcode]);
+
   return (
     <FormProvider {...form}>
-      <form
-        onSubmit={form.handleSubmit((data) => {
-          mutate({ data: data, id: id !== "new" ? id : undefined });
-        })}
-      >
+      <form>
         <ProductsCheckFormContent />
       </form>
     </FormProvider>

@@ -28,14 +28,14 @@ export default function Menu() {
               onClick={() => {
                 navigate("/dashboard");
               }}
-              className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
+              className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[12px]`}
             >
               <HomeIcons />
             </div>
           ) : (
             <div
               onClick={() => navigate(-1)}
-              className={` hover:bg-sidebar-accent cursor-pointer border-b border-border text-center flex items-center justify-center p-[20px]`}
+              className={` hover:bg-sidebar-accent cursor-pointer border-b border-border text-center flex items-center justify-center p-[12px]`}
             >
               {<ChevronLeft />}
             </div>
@@ -52,7 +52,7 @@ export default function Menu() {
                 navigate(e?.link);
               }
             }}
-            className={`${pathName.pathname.includes(e?.link) ? "bg-sidebar-accent" : ""} hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
+            className={`${pathName.pathname === e?.link ? "bg-sidebar-accent" : ""} hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[12px]`}
             key={e?.id}
           >
             {e?.icons()}
@@ -65,9 +65,9 @@ export default function Menu() {
               removeUserMe();
               window.location.replace("/login");
             }}
-            className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[20px]`}
+            className={` hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[10px]`}
           >
-            <LogOut />
+            <LogOut width={20} />
           </div>
           {meUser?.position?.role == 3 ? (
             <>

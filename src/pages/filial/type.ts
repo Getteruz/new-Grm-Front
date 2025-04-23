@@ -37,7 +37,7 @@ export interface ProductData {
   id: string;
   to?: string;
   from?: string;
-
+  quantity: number;
   internetInfo: string | null;
   is_active: boolean;
   date: string;
@@ -89,6 +89,8 @@ export interface ProductData {
     title: string;
     id: string;
   };
+  x: number;
+  y: number;
   partiya_title: string;
 }
 export type ProductQuery = {

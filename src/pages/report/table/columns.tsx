@@ -1,73 +1,89 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 
 import TableAction from "@/components/table-action";
-
-import { TData } from "../type";
 import { apiRoutes } from "@/service/apiRoutes";
 
+import { TData } from "../type";
 
 export const Columns: ColumnDef<TData>[] = [
- 
   {
-    header: "code",
-    accessorKey: "code",
-  },
+    header: "Дата",
+    accessorKey: "date",
 
-  {
-    header: "country",
     cell: ({ row }) => {
-      return <p>{row.original?.country?.title}</p>;
+      return <p>{format(row.original.date, "d-MMMM")} </p>;
+    },
+  },
+  {
+    header: "Наличие",
+    accessorKey: "price",
+
+    cell: ({ row }) => {
+      return <p className="text-[#89A143]">{row.original.price} $</p>;
+    },
+  },
+  {
+    header: "Онлайн",
+    accessorKey: "price",
+
+    cell: ({ row }) => {
+      return <p className="text-[#58A0C6]">{row.original.price} $</p>;
+    },
+  },
+  {
+    header: "Тип",
+    cell: ({ row }) => {
+      return (
+        <div className="flex">
+          <p
+            className={`${row.original.type === "Приход" ? "border-[#89A143] text-[#89A143]" : "border-[#E38157] text-[#E38157]"} rounded-4xl px-[14px]  w-[100px] text-center py-3 border `}
+          >
+            {row.original.tip === "order" ? "Продажа" : row.original.tip}
+          </p>
+        </div>
+      );
     },
   },
   {
     header: "collection",
-    cell: ({ row }) => {
-      return <p>{row.original?.collection?.title}</p>;
-    },
+    accessorKey: "collection.title",
   },
   {
     header: "model",
-    cell: ({ row }) => {
-      return <p>{row.original?.model?.title}</p>;
-    },
-  },
-  {
-    header: "type-corpet",
-    cell: ({ row }) => {
-      return <p>{ row.original?.isMetric ? "Метражный":"Штучный"}</p>;
-    },
-  },
-  {
-    header: "shape",
-    cell: ({ row }) => {
-      return <p>{row.original.shape.title}</p>;
-    },
+    accessorKey: "model.title",
   },
   {
     header: "size",
-    cell: ({ row }) => {
-      return <p>{row.original.size.title}</p>;
-    },
+    accessorKey: "size.title",
   },
   {
-    header: "style",
+    header: "Филиал",
+    accessorKey: "filial.title",
+  },
+  {
+    header: "Продавец",
+    accessorKey: "filial.title",
+  },
+  {
+    header: "Кассир",
+    accessorKey: "filial.title",
+  },
+  {
+    header: "Время",
+    accessorKey: "date",
+
     cell: ({ row }) => {
-      return <p>{row.original.style?.title}</p>;
+      return <p>{format(row.original.date, "HH:mm")} </p>;
     },
   },
- 
   {
     id: "actions",
     enableHiding: true,
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
     cell: ({ row }) => {
-      return (
-        <TableAction
-          url={apiRoutes.qrBase}
-          id={row.original?.id}
-        />
-      );
+      return <TableAction url={apiRoutes.qrBase} id={row.original?.id} />;
     },
   },
 ];

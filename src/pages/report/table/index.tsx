@@ -1,11 +1,11 @@
 import { parseAsInteger, useQueryState } from "nuqs";
 
+import CardSort from "@/components/card-sort";
 import { DataTable } from "@/components/ui/data-table";
 
 import { Columns } from "./columns";
 import Filter from "./filter";
 import useDataLibrary from "./queries";
-import CardSort from "@/components/card-sort";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -21,15 +21,14 @@ export default function Page() {
 
   return (
     <>
-    <Filter />
-    <CardSort />
-    <DataTable
-    className="px-4"
-          isLoading={isLoading}
-          columns={Columns}
-          data={data?.items ?? []}
-        />
-  </>
-    
+      <Filter />
+      <CardSort />
+      <DataTable
+        className="px-4"
+        isLoading={isLoading}
+        columns={Columns}
+        data={data?.items ?? []}
+      />
+    </>
   );
 }

@@ -4,21 +4,26 @@ import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
-import {TData,TQuery } from "../type";
+import { TData, TQuery } from "../type";
 
 interface IData {
   options?: DefinedInitialDataOptions<TResponse<TData>>;
-  queries?:TQuery;
+  queries?: TQuery;
 }
 const useDataLibrary = ({ options, queries }: IData) =>
   useQuery({
     ...options,
-    queryKey: [apiRoutes.qrBase, queries],
+    queryKey: [apiRoutes.cashflow, queries],
     queryFn: () =>
-      getAllData<TResponse<TData>,TQuery>(
-        apiRoutes.qrBase,
-        queries
-      ),
+      getAllData<TResponse<TData>, TQuery>(apiRoutes.cashflow, queries),
+  });
+
+export const useDataCashflowTypes = ({ options, queries }: IData) =>
+  useQuery({
+    ...options,
+    queryKey: [apiRoutes.cashflowTypes, queries],
+    queryFn: () =>
+      getAllData<TResponse<TData>, TQuery>(apiRoutes.cashflowTypes, queries),
   });
 
 export default useDataLibrary;

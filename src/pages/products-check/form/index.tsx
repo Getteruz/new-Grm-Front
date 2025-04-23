@@ -1,16 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryState } from "nuqs";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { useProductsCheckById } from "./actions";
 import ProductsCheckFormContent from "./content";
-import { ProductsCheckFormType, ProductsCheckSchema } from "./schema";
 
 const ActionPage = () => {
-  const form = useForm<ProductsCheckFormType>({
-    resolver: zodResolver(ProductsCheckSchema),
-  });
+  const form = useForm();
   const [id] = useQueryState("id");
   const [barcode] = useQueryState("barcode");
 
@@ -21,9 +17,9 @@ const ActionPage = () => {
   useEffect(() => {
     if (data) {
       form.reset({
+        name: data.id || "",
         code: data?.code || "",
 
-        name: data.id,
         country: data?.country?.title,
         collection: data?.collection?.title,
         size: data?.size?.title,

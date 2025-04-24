@@ -8,17 +8,22 @@ import {
   DeviceDesktopIcons,
   HikVision,
   HomeIcons,
+  NotPublishedIcons,
+  OrderIcons,
   PartiesIcons,
   PersonsIcons,
   PriceIcons,
+  ProductCharacteristics,
   ProductIcons,
   ProductsCheck,
+  ProductsOnSaleIcon,
+  QRCodeIcon,
   RefleshIcons,
   ReportBottom,
+  SettingsIcon,
   TransferIcons,
   UfoBottom,
-  WareHouseIcons,
-} from "../../components/icons";
+  WareHouseIcons} from "../../components/icons";
 
 // {
 //   OTHER = 0,
@@ -407,6 +412,86 @@ export const DataMenu = {
       icons: () => DataLibrary({}),
       link: "/data-library",
       text: "data-library",
+    },
+  ],
+  8: [
+    {
+      id: 1,
+      icons: () => ProductsOnSaleIcon(),
+      link: "/product",
+      text: "Продукты в продаже",
+    },
+    {
+      id: 2,
+      icons: () => OrderIcons(),
+      link: "/order",
+      text: "Заказы",
+    },
+    {
+      id: 3,
+      icons: () => NotPublishedIcons(),
+      link: "/not-published-products",
+      text: "Не опубликованные",
+    },
+    {
+      id: 4,
+      icons: () => ReportBottom({}),
+      link: "/report",
+      text: "Отчеты",
+      items: [
+        {
+          id: 22,
+          link: "/report",
+          text: "Кассовый учёт",
+        },
+        {
+          id: 23,
+          link: "/report-item-2",
+          text: "Финансовый учёт",
+        },
+        {
+          id: 24,
+          link: "/report-item-3",
+          text: "Снабжение и документооборот",
+        },
+      ],
+    },
+    {
+      id: 5,
+      icons: () => ClientsIcon(),
+      link: "/user",
+      text: "Клиенты",
+    },
+    {
+      id: 6,
+      icons: () => PriceIcons({}),
+      link: "/price",
+      text: "Цени и скидки",
+    },
+    {
+      id: 7,
+      icons: () => ProductCharacteristics(),
+      link: "/product-characteristics",
+      text: "Характеристика продуктов",
+    },
+
+    {
+      id: 8,
+      icons: () => QRCodeIcon(),
+      link: "/qr-code",
+      text: "QR-логотип",
+    },
+    {
+      id: 9,
+      icons: () => TransferIcons(),
+      link: "/transfers",
+      text: "Трансферы",
+    },
+    {
+      id: 9,
+      icons: () => SettingsIcon(),
+      link: "/settings",
+      text: "Настройка",
     },
   ],
   9: [

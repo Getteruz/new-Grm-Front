@@ -3,7 +3,7 @@ import Items from "./items";
 
 const Route = [
   {
-    url: "/orders",
+    url: "/order",
     Element: Items,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },

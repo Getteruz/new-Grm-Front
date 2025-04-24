@@ -83,7 +83,7 @@ export const DataMenu = {
     {
       id: 2,
       icons: () => BuildingIcons(),
-      link: "/product",
+      link: "/products",
       text: "product",
     },
     {
@@ -177,7 +177,7 @@ export const DataMenu = {
     {
       id: 2,
       icons: () => ProductIcons(),
-      link: "/product",
+      link: "/products",
       text: "Продукты",
     },
     {
@@ -256,7 +256,7 @@ export const DataMenu = {
     {
       id: 2,
       icons: () => ProductIcons(),
-      link: "/product",
+      link: "/products",
       text: "Продукты",
     },
     {
@@ -304,6 +304,30 @@ export const DataMenu = {
       link: "/dealer",
       text: "Дилеры",
     },
+    {
+      id: 2,
+      icons: () => ReportBottom({}),
+      link: "/report",
+      text: "report",
+      items: [
+        {
+          id: 22,
+          link: "/report",
+          text: "Отчёт",
+        },
+        {
+          id: 23,
+          link: "/report-monthly",
+          text: "Ежемесячный отчет",
+        },
+      ],
+    },
+    {
+      id: 14,
+      icons: () => TransferIcons(),
+      link: "/transfers",
+      text: "Трансферы",
+    },
   ],
   7: [
     {
@@ -339,12 +363,12 @@ export const DataMenu = {
       id: 14,
       icons: () => TransferIcons(),
       link: "/transfers",
-      text: "transfers",
+      text: "Трансферы",
     },
     {
       id: 2,
       icons: () => ProductIcons(),
-      link: "/product",
+      link: "/products",
       text: "Продукты ",
     },
     {
@@ -399,7 +423,7 @@ export const DataMenu = {
         },
         {
           id: 23,
-          link: "/report/item-2",
+          link: "/report-finance",
           text: "Финансовый учёт",
         },
         {
@@ -442,7 +466,7 @@ export const DataMenu = {
     {
       id: 2,
       icons: () => ProductIcons(),
-      link: "/product",
+      link: "/products",
       text: "Продукты в продаже",
     },
     {

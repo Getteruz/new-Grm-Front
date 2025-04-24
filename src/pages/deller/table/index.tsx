@@ -1,11 +1,11 @@
 import { parseAsInteger, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
+import ActionPage from "@/pages/filial/form";
 
 import { Columns } from "./columns";
 import Filter from "./filter";
 import useDataFetch from "./queries";
-import ActionPage from "@/pages/filial/form";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));

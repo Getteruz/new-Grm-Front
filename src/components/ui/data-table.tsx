@@ -142,7 +142,10 @@ export function DataTable<TData, TValue>({
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id}>
+                      <TableHead
+                        key={header.id}
+                        className="!flex !justify-center  "
+                      >
                         {header.isPlaceholder
                           ? null
                           : typeof flexRender(
@@ -169,7 +172,7 @@ export function DataTable<TData, TValue>({
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    className="px-5 cursor-pointer"
+                    className="px-5 cursor-pointer "
                     onClick={() => {
                       if (isRowClickble) {
                         navigate(

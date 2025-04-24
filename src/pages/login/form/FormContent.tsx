@@ -1,13 +1,21 @@
 import FormTextInput from "@/components/forms/FormTextInput";
 import Container from "@/components/container";
-import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import React from "react";
 import { CardContainer, CardItem } from "@/components/ui/3d-card";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
-export default function LoginFormContent({isPending}:{isPending:boolean}) {
+export default function LoginFormContent({
+  isPending,
+}: {
+  isPending: boolean;
+}) {
   const plugin = React.useRef(
     Autoplay({ delay: 1400, stopOnInteraction: true })
   );
@@ -26,7 +34,7 @@ export default function LoginFormContent({isPending}:{isPending:boolean}) {
           </p>
           <FormTextInput
             name="login"
-            placeholder="login"
+            placeholder="# Введите всой ID"
             //label="userName"
             className="mb-12"
           />
@@ -36,26 +44,33 @@ export default function LoginFormContent({isPending}:{isPending:boolean}) {
           </Button>
         </div>
         <CardContainer className="inter-var p-0 w-full max-[613px]   h-[518px] flex items-center justify-center bg-primary">
-          <Carousel 
-              plugins={[plugin.current]}
-              className="w-full text-center m-auto"
-              onMouseEnter={plugin.current.stop}
-              onMouseLeave={plugin.current.reset}
-              >
-              <CarouselContent >
-                <CarouselItem> 
+          <Carousel
+            plugins={[plugin.current]}
+            className="w-full text-center m-auto"
+            onMouseEnter={plugin.current.stop}
+            onMouseLeave={plugin.current.reset}
+          >
+            <CarouselContent>
+              <CarouselItem>
                 <CardItem translateZ="40" className="mt-4">
-                  <img src={'/login/1.png'}/>
+                  <img src={"/login/1.png"} />
                 </CardItem>
-                  </CarouselItem>
-                <CarouselItem> <img src={'/login/2.png'}/></CarouselItem>
-                <CarouselItem> <img src={'/login/3.png'}/></CarouselItem>
-                <CarouselItem> <img src={'/login/4.png'}/></CarouselItem>
-              </CarouselContent>
-            </Carousel>
+              </CarouselItem>
+              <CarouselItem>
+                {" "}
+                <img src={"/login/2.png"} />
+              </CarouselItem>
+              <CarouselItem>
+                {" "}
+                <img src={"/login/3.png"} />
+              </CarouselItem>
+              <CarouselItem>
+                {" "}
+                <img src={"/login/4.png"} />
+              </CarouselItem>
+            </CarouselContent>
+          </Carousel>
         </CardContainer>
-
-        
       </div>
     </Container>
   );

@@ -1,10 +1,12 @@
 export const apiRoutes = {
   aboutUs: "/aboutus",
   user: "/user",
+  userLoginGenerate: "/user/generate/login-user",
   crops: "/crops",
   products: "/product",
   collection: "/collection",
   collectionPrice: "/collection-prices",
+  collectionMultiple: "/collection/multiple",
   productscheck: "/product/check-product",
   productReport: "/product/report-product",
   login: "/auth/login",
@@ -19,8 +21,9 @@ export const apiRoutes = {
   qrBase: "/qr-base",
   cashflow: "/cashflow",
   cashflowTypes: "/cashflow-types",
+  openKassa: "/kassa/open-kassa",
   qrBaseCode: "/qr-base/find-by",
   order: "/order",
-  kassaOpen: `/kassa/open-kassa`,
   orderByKassa: "/order/order-by-kassa",
+  notes: "/notes",
 } as const;

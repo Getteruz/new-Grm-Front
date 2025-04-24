@@ -4,8 +4,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/auth-store";
 import { useMeStore } from "@/store/me-store";
 
-import { Filemeneger, HomeIcons, OpenAIIcons } from "../../components/icons";
+import { Filemeneger, HomeIcons } from "../../components/icons";
 import { DataMenu } from "./menu-datas";
+import OpenAI from "./openAI/list";
 
 export default function Menu() {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ export default function Menu() {
                 navigate(e?.link);
               }
             }}
-            className={`${pathName.pathname === e?.link ? "bg-sidebar-accent" : ""} hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[12px]`}
+            className={`${pathName.pathname.includes(e?.link) ? "bg-sidebar-accent" : ""} hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[12px]`}
             key={e?.id}
           >
             {e?.icons()}
@@ -79,11 +80,7 @@ export default function Menu() {
             </>
           ) : (
             <>
-              <div
-                className={`bg-[#272727] border-transparent cursor-pointer text-center flex items-center justify-center p-[20px]`}
-              >
-                <OpenAIIcons />
-              </div>
+              <OpenAI />
             </>
           )}
         </div>

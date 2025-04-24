@@ -1,6 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { toast } from "sonner";
 
 import { Input } from "@/components/ui/input";
+import { apiRoutes } from "@/service/apiRoutes";
+import api from "@/service/fetchInstance";
+import debounce from "@/utils/debounce";
 
 import { ProductsData } from "../type";
 
@@ -71,13 +75,31 @@ export const Columns: ColumnDef<ProductsData>[] = [
   {
     header: "Зав-цена за м²",
     cell: ({ row }) => {
+      const updatePrice = async (e: string, id: string) => {
+        const body = [
+          {
+            id: id,
+            // priceMeter: "120.50",
+            comingPrice: e,
+            // secondPrice: "110.00",
+          },
+        ];
+
+        await api
+          .put(apiRoutes.collectionMultiple, body)
+          .then(() => toast.success("Amal"))
+          .catch(() => toast.error("Xatolik boldi"));
+      };
       return (
         <Input
           className="bg-transparent max-w-[90px] border-border border rounded-[5px]"
           defaultValue={row?.original?.comingPrice}
           placeholder="$"
           type="number"
-          // onChange={(e) => setComingPrice(e.target.value)}
+          onChange={debounce(
+            (e) => updatePrice(e.target.value, row.original.id),
+            1000
+          )}
         />
       );
     },
@@ -85,17 +107,13 @@ export const Columns: ColumnDef<ProductsData>[] = [
   {
     header: "Цена за м²",
     cell: ({ row }) => {
-      // const [priceMeter, setPriceMeter] = useQueryState(
-      //   "priceMeter",
-      //   parseAsInteger
-      // );
       return (
         <Input
           className="bg-transparent  max-w-[90px]  border-border border rounded-[5px]"
           defaultValue={row?.original?.priceMeter}
           placeholder="$"
           type="number"
-          // onChange={(e) => setPriceMeter(e.target.value)}
+          // onChange={() => toast.success("e.target.value")}
         />
       );
     },

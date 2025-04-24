@@ -2,6 +2,7 @@ export interface TData {
   isMetric: boolean;
   id: string;
   code: string;
+  comment: string;
   imgUrl: string | null;
   otherImgs: string[] | null;
   internetInfo: string | null;
@@ -61,4 +62,5 @@ export interface TQuery {
   search: string | undefined;
   limit: number;
   page: number;
+  id?: string;
 }

@@ -2,8 +2,8 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
-import { BronedData } from "../type";
 
+import { BronedData } from "../type";
 
 export const BronedColumns: ColumnDef<BronedData>[] = [
   {

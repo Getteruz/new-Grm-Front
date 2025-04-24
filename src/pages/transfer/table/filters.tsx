@@ -17,20 +17,22 @@ export default function Filters() {
   const [filialTo] = useQueryState("filialTo");
 
   const linkFrom =
-    meUser?.position.role === 9 ? filial || "" : meUser?.filial.id || "";
+    meUser?.position.role === 9 ? filial || "" : meUser?.filial?.id || "";
   const linkTo = meUser?.position.role === 9 ? filialTo : filial;
   const link = "/transfers/" + linkFrom + "/to/" + linkTo;
 
   return (
     <div className="h-[64px] flex justify-between border-b border-border w-full bg-sidebar pr-10">
       <div className="      flex   ">
-        <Button
-          className="h-full border-r-1  justify-center font-[16px] gap-1  border-y-0  border-l-0"
-          variant={"outline"}
-        >
-          <BrCodeIcons />
-          Баркод
-        </Button>
+        {meUser?.position.role !== 6 && (
+          <Button
+            className="h-full border-r-1  justify-center font-[16px] gap-1  border-y-0  border-l-0"
+            variant={"outline"}
+          >
+            <BrCodeIcons />
+            Баркод
+          </Button>
+        )}
         <SearchInput />
         <DateRangePicker
           fromPlaceholder="от: 12.02.2025"

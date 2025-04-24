@@ -3,12 +3,12 @@ import Page from "./table";
 
 const Route = [
   {
-    url: "/product",
+    url: "/products",
     Element: Page,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {
-    url: "/product/:id/info",
+    url: "/products/:id/info",
     Element: SinglePage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },

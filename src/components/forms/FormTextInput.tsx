@@ -3,12 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { cn } from "@/lib/utils";
 
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "../ui/form";
+import { FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input, InputProps } from "../ui/input";
 import { PhoneInput } from "./phone-input";
 
@@ -41,40 +36,47 @@ export default function FormTextInput({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className={cn("flex gap-1 flex-col items-start w-full", className)}>
+        <FormItem
+          className={cn("flex gap-1 flex-col items-start w-full", className)}
+        >
           {label && (
-            <FormLabel className="font-medium text-[12px] text-primary">
+            <FormLabel className="font-normal text-[12px] text-[#99998C]">
               {t(label)}
             </FormLabel>
           )}
           <FormControl className="w-full">
-           { type== "tel"?
-            <PhoneInput
-            placeholder={placeholder ? t(placeholder) : ""}
-            onChange={field.onChange}
-            value={field.value}
-            />
-           :
-            <Input
-              type={type ?? "text"}
-              onKeyDown={handleKeyDown}
-              className={cn("flex flex-col items-start w-full", classNameInput)}
-              placeholder={placeholder ? t(placeholder) : ""}
-              {...field}
-              onChange={(e) => {
-                if (type === "number") {
-                  if (isNaN(e.target.valueAsNumber)) {
-                    field.onChange(null);
+            {type == "tel" ? (
+              <PhoneInput
+                placeholder={placeholder ? t(placeholder) : ""}
+                onChange={field.onChange}
+                value={field.value}
+              />
+            ) : (
+              <Input
+                type={type ?? "text"}
+                onKeyDown={handleKeyDown}
+                className={cn(
+                  "flex flex-col items-start w-full",
+                  classNameInput
+                )}
+                placeholder={placeholder ? t(placeholder) : ""}
+                {...field}
+                onChange={(e) => {
+                  if (type === "number") {
+                    if (isNaN(e.target.valueAsNumber)) {
+                      field.onChange(null);
+                    } else {
+                      field.onChange(e.target.valueAsNumber);
+                    }
                   } else {
-                    field.onChange(e.target.valueAsNumber);
+                    field.onChange(e.target.value);
                   }
-                } else {
-                  field.onChange(e.target.value);
-                }
-              }}
-              {...props}
-            />}
+                }}
+                {...props}
+              />
+            )}
           </FormControl>
+
           {/* <FormMessage className="text-sm text-red-500" /> */}
         </FormItem>
       )}

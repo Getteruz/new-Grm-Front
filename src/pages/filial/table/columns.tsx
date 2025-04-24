@@ -17,9 +17,9 @@ export const FilialColumns: ColumnDef<TData>[] = [
     },
   },
   {
-    id: "name",
+    id: "title",
     header: "Название",
-    accessorKey: "name",
+    accessorKey: "title",
   },
   {
     id: "address",

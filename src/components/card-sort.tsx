@@ -2,19 +2,16 @@ import { BadgeCheck, ChevronDown, DollarSign, Plus } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import { useState } from "react";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import useDataFetch from "@/pages/filial/table/queries";
-import { useDataCashflowTypes } from "@/pages/report/table/queries";
+import {
+  useDataCashflowTypes,
+  useOpenKassa,
+} from "@/pages/report/table/queries";
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
 
+import ShadcnSelect from "./Select";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Input } from "./ui/input";
@@ -28,7 +25,9 @@ export default function CardSort() {
   const [cashflow_type, setCashflow_type] = useState<string>("");
   const [comment, setComment] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
+  const [filial, setFilial] = useState<string>("");
   const { data } = useDataFetch({});
+  const { data: kassaId } = useOpenKassa({ id: filial });
   const { data: types } = useDataCashflowTypes({});
 
   const columns = [
@@ -88,7 +87,7 @@ export default function CardSort() {
       comment,
       price,
       casher: meUser?.id,
-      kassa: meUser?.position.id,
+      kassa: kassaId?.id || meUser?.position.id,
     };
     await api.post(apiRoutes.cashflow, body);
   };
@@ -120,7 +119,7 @@ export default function CardSort() {
                   <p className="text-[12px]  mb-0.5  flex items  ">
                     {e.title} <ChevronDown size={18} className="ml-3" />
                   </p>
-                  {e.button && (
+                  {meUser?.position.role !== 6 && e.button && (
                     <DialogTrigger onClick={(e) => e.stopPropagation()}>
                       {e.button}
                     </DialogTrigger>
@@ -151,27 +150,23 @@ export default function CardSort() {
               ))}
             </div>
             <div className=" w-full">
-              <Select
-                defaultValue={"product"}
-                // value={`${table.getState().pagination.pageSize}`}
-                // onValueChange={(value) => {
-                //   table.setPageSize(Number(value));
-                //   setPage(1);
-                // }}
-              >
-                <SelectTrigger className="w-full text-[#5D5D53] border-none h-[90px] !bg-input  placeholder:text-[22px] !text-[22px] font-semibold rounded-[7px] px-[17px] py-[26px]">
-                  <SelectValue placeholder="Организации" />
-                </SelectTrigger>
-                <SelectContent side="top">
-                  {data?.pages[0].items.map((pageSize) => (
-                    <SelectItem key={pageSize.id} value={`${pageSize.id}`}>
-                      {pageSize.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <ShadcnSelect
+                value={filial}
+                options={
+                  data?.pages[0].items.map((i) => ({
+                    value: i.id,
+                    label: i.title,
+                  })) || []
+                }
+                placeholder={"Организации"}
+                onChange={(value) => {
+                  setFilial(value || "");
+                }}
+                className="w-full text-[#5D5D53] border-none h-[90px] !bg-input   !text-[22px] font-semibold rounded-[7px] px-[17px] py-[26px]"
+              />
+
               <Input
-                value={price}
+                // value={price}
                 onChange={(e) => setPrice(Number(e.target.value))}
                 type="number"
                 placeholder="0.00"

@@ -86,9 +86,7 @@ export default function TableAction({
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger onClick={() => setOpen(true)} className="w-full">
                 <p
-                  className={
-                    "px-[6px] text-start text-sm rounded-md hover:bg-muted py-[4px]"
-                  }
+                  className={"px-[6px] text-start text-sm rounded-md  py-[4px]"}
                 >
                   {t("delete")}
                 </p>

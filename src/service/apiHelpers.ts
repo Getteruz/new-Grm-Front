@@ -1,7 +1,9 @@
 import qs from "qs";
-import api from "./fetchInstance";
-import { useAuthStore } from "@/store/auth-store";
 import { toast } from "sonner";
+
+import { useAuthStore } from "@/store/auth-store";
+
+import api from "./fetchInstance";
 
 interface iError {
   status: number;
@@ -106,6 +108,5 @@ const handleError = (error: iError) => {
   if (error.status == 401) {
     removeToken();
   }
-  console.log(error?.response);
   toast.error(error?.response?.data?.message);
 };

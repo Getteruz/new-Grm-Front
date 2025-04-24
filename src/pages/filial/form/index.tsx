@@ -70,6 +70,7 @@ const ActionPage = () => {
       });
     }
   }, [data]);
+
   return (
     <Dialog
       open={Boolean(id)}
@@ -80,7 +81,7 @@ const ActionPage = () => {
         }
       }}
     >
-      <DialogContent className="sm:max-w-[796px]">
+      <DialogContent className="sm:max-w-[796px] bg-[#F0F0E5]">
         <FormProvider {...form}>
           <form
             onSubmit={form.handleSubmit((data) => {

@@ -14,6 +14,7 @@ export default function Page() {
   const { data: filialData } = useDataFetch({});
   const flatDataFilial =
     filialData?.pages?.flatMap((page) => page?.items) || [];
+  // .filter((i) => i.id !== meUser?.filial?.id) || [];
   const [filial, setFilial] = useQueryState(
     "filial",
     parseAsString.withDefault(
@@ -36,7 +37,7 @@ export default function Page() {
       page: 1,
       type: type || undefined,
       from:
-        meUser?.position.role === 9 ? filial || "" : meUser?.filial.id || "",
+        meUser?.position.role === 9 ? filial || "" : meUser?.filial?.id || "",
       to: meUser?.position.role === 9 ? filialTo : filial,
     },
   });
@@ -52,36 +53,42 @@ export default function Page() {
               {meUser?.position.role === 9 ? "Из филиал" : "Филиалы"}
             </h4>
           </div>
-          <div className="p-3 px-0 mx-5 border-b border-border pb-5">
-            {flatDataFilial
-              ?.filter((i) => i.type === "filial")
-              ?.filter((i) => i.id !== meUser?.filial?.id)
-              .map((e) => (
-                <button
-                  key={e?.id}
-                  disabled={filialTo === e.id}
-                  onClick={() => setFilial(e?.id)}
-                  className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
-                >
-                  {e.name}
-                </button>
-              ))}
-          </div>
-          <div className="p-3 px-0 mx-5 border-b border-border">
-            {flatDataFilial
-              ?.filter((i) => i.type === "market")
-              .map((e) => (
-                <button
-                  key={e?.id}
-                  disabled={filialTo === e.id}
-                  onClick={() => setFilial(e?.id)}
-                  className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
-                >
-                  {e.name}
-                </button>
-              ))}
-          </div>
-          <div className="p-3 px-0 mx-5 border-b border-border">
+          {meUser?.position.role !== 6 && (
+            <div className="p-3 px-0 mx-5 border-b border-border pb-5">
+              {flatDataFilial
+                ?.filter((i) => i.type === "filial")
+                ?.filter((i) => i.id !== meUser?.filial?.id)
+                .map((e) => (
+                  <button
+                    key={e?.id}
+                    disabled={filialTo === e.id}
+                    onClick={() => setFilial(e?.id)}
+                    className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
+                  >
+                    {e.name}
+                  </button>
+                ))}
+            </div>
+          )}
+          {meUser?.position.role !== 6 && (
+            <div className="p-3 px-0 mx-5 border-b border-border">
+              {flatDataFilial
+                ?.filter((i) => i.type === "market")
+                .map((e) => (
+                  <button
+                    key={e?.id}
+                    disabled={filialTo === e.id}
+                    onClick={() => setFilial(e?.id)}
+                    className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
+                  >
+                    {e.name}
+                  </button>
+                ))}
+            </div>
+          )}
+          <div
+            className={`p-3 px-0 mx-5 ${meUser?.position.role !== 6 && "border-b border-border"} `}
+          >
             {flatDataFilial
               ?.filter((i) => i.type === "dealer")
               .map((e) => (
@@ -95,20 +102,22 @@ export default function Page() {
                 </button>
               ))}
           </div>
-          <div className="p-3 px-0 mx-5 ">
-            {flatDataFilial
-              ?.filter((i) => i.type === "warehouse")
-              .map((e) => (
-                <button
-                  key={e?.id}
-                  disabled={filialTo === e.id}
-                  onClick={() => setFilial(e?.id)}
-                  className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
-                >
-                  {e.name}
-                </button>
-              ))}
-          </div>
+          {meUser?.position.role !== 6 && (
+            <div className="p-3 px-0 mx-5 ">
+              {flatDataFilial
+                ?.filter((i) => i.type === "warehouse")
+                .map((e) => (
+                  <button
+                    key={e?.id}
+                    disabled={filialTo === e.id}
+                    onClick={() => setFilial(e?.id)}
+                    className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
+                  >
+                    {e.name}
+                  </button>
+                ))}
+            </div>
+          )}
         </div>
         {meUser?.position.role === 9 ? (
           <div className={`w-full h-full border-r border-border `}>
@@ -185,6 +194,7 @@ export default function Page() {
               {[
                 { id: "In", name: "Входящие" },
                 { id: "Out", name: "Отправленные" },
+                { id: "New", name: "Новые" },
               ].map((e) => (
                 <button
                   key={e?.id}

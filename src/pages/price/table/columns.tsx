@@ -1,14 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { toast } from "sonner";
 
+import TableAction from "@/components/table-action";
 import { Input } from "@/components/ui/input";
-import { apiRoutes } from "@/service/apiRoutes";
-import api from "@/service/fetchInstance";
-import debounce from "@/utils/debounce";
 
 import { ProductsData } from "../type";
 
-export const Columns: ColumnDef<ProductsData>[] = [
+export const IManagerColumns: ColumnDef<ProductsData>[] = [
   {
     header: "collection",
     cell: ({ row }) => {
@@ -33,11 +30,21 @@ export const Columns: ColumnDef<ProductsData>[] = [
     },
   },
   {
+    header: "Количество",
+    cell: () => {
+      return (
+        <p className="p-2.5 text-primary font-medium text-[14px]">
+          120 шт
+        </p>
+      );
+    },
+  },
+  {
     header: "Акция",
     cell: () => {
       return (
-        <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
-          Акция
+        <p className="p-2.5 text-primary font-medium text-[14px]">
+          1+0.7
         </p>
       );
     },
@@ -46,8 +53,8 @@ export const Columns: ColumnDef<ProductsData>[] = [
     header: "Бонусы",
     cell: () => {
       return (
-        <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
-          Бонусы
+        <p className="p-2.5 text-primary font-medium text-[14px]">
+          100 м² (1 млн)
         </p>
       );
     },
@@ -56,8 +63,8 @@ export const Columns: ColumnDef<ProductsData>[] = [
     header: "Промокоды",
     cell: () => {
       return (
-        <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
-          Промокоды
+        <p className="p-2.5 text-primary font-medium text-[14px]">
+          i9823hf
         </p>
       );
     },
@@ -66,41 +73,19 @@ export const Columns: ColumnDef<ProductsData>[] = [
     header: "Скидка",
     cell: () => {
       return (
-        <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
-          Скидка
+        <p className="p-2.5 text-[#E38157] font-medium text-[14px]">
+          -10%
         </p>
       );
     },
   },
   {
-    header: "Зав-цена за м²",
-    cell: ({ row }) => {
-      const updatePrice = async (e: string, id: string) => {
-        const body = [
-          {
-            id: id,
-            // priceMeter: "120.50",
-            comingPrice: e,
-            // secondPrice: "110.00",
-          },
-        ];
-
-        await api
-          .put(apiRoutes.collectionMultiple, body)
-          .then(() => toast.success("Amal"))
-          .catch(() => toast.error("Xatolik boldi"));
-      };
+    header: "Кас-цена",
+    cell: () => {
       return (
-        <Input
-          className="bg-transparent max-w-[90px] border-border border rounded-[5px]"
-          defaultValue={row?.original?.comingPrice}
-          placeholder="$"
-          type="number"
-          onChange={debounce(
-            (e) => updatePrice(e.target.value, row.original.id),
-            1000
-          )}
-        />
+        <p className="p-2.5 text-primary font-medium text-[14px]">
+          35$
+        </p>
       );
     },
   },
@@ -119,15 +104,25 @@ export const Columns: ColumnDef<ProductsData>[] = [
     },
   },
   {
-    id: "actions",
-    enableHiding: true,
-    header: () => <div className="text-right">{"actions"}</div>,
-    size: 50,
-  },
+      id: "actions",
+      enableHiding: true,
+      header: () => <div className="text-right">{"actions"}</div>,
+      size: 50,
+      cell: ({ row }) => {
+        return (
+          <TableAction
+            url={""}
+            ShowUpdate={false}
+            ShowDelete={false}
+            ShowPreview
+            id={row.original?.id}
+          />
+        );
+      },
+    },
 ];
 
-
-export const IManagerColumns: ColumnDef<ProductsData>[] = [
+export const Columns: ColumnDef<ProductsData>[] = [
   {
     header: "Коллекция",
     cell: ({ row }) => {

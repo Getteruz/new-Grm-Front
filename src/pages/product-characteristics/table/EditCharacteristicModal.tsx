@@ -1,4 +1,4 @@
-import { Calendar,X } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -8,13 +8,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 
 import { ProductCharacteristic } from "../type";
 import { useUpdateCharacteristic } from "./queries";
-import { Input } from "@/components/ui/input";
-import { Select, SelectItem } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 
 interface EditCharacteristicModalProps {
   isOpen: boolean;
@@ -28,7 +27,7 @@ export default function EditCharacteristicModal({
   characteristic,
 }: EditCharacteristicModalProps) {
   const { mutate: updateCharacteristic } = useUpdateCharacteristic();
-  
+
   // Form state
   const [formData, setFormData] = useState({
     bonusName: "",
@@ -64,30 +63,30 @@ export default function EditCharacteristicModal({
   }, [characteristic]);
 
   const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleSubmit = () => {
     if (!characteristic) return;
-    
+
     // Convert form data to API format
     const updatedData = {
       collection: formData.bonusName,
       characteristics1: formData.characteristics,
       characteristics2: formData.paymentDeliveryInfo,
-      installmentParams: formData.periodValue 
-        ? `${formData.periodValue} ${formData.periodUnit === 'шт' ? 'месяц' : formData.periodUnit}`
-        : "6 месяц"
+      installmentParams: formData.periodValue
+        ? `${formData.periodValue} ${formData.periodUnit === "шт" ? "месяц" : formData.periodUnit}`
+        : "6 месяц",
     };
-    
+
     updateCharacteristic({
       id: characteristic.id,
-      data: updatedData
+      data: updatedData,
     });
-    
+
     onClose();
   };
 
@@ -103,12 +102,12 @@ export default function EditCharacteristicModal({
             </DialogTitle>
           </div>
         </DialogHeader>
-        
+
         <div className="p-6">
           {/* Characteristics Section */}
           <div className="mb-8">
             <h3 className="text-base font-medium mb-4">Характеристика</h3>
-            
+
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
                 <label className="text-sm text-gray-500 block mb-1">
@@ -118,7 +117,9 @@ export default function EditCharacteristicModal({
                   type="text"
                   className="w-full border"
                   value={formData.bonusName}
-                  onChange={(e) => handleInputChange("bonusName", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("bonusName", e.target.value)
+                  }
                 />
               </div>
               <div>
@@ -126,16 +127,23 @@ export default function EditCharacteristicModal({
                   Период
                 </label>
                 <div className="relative">
-                
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                    <svg className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                    <svg
+                      className="h-4 w-4 text-gray-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="text-sm text-gray-500 block mb-1">
@@ -144,7 +152,9 @@ export default function EditCharacteristicModal({
                 <Textarea
                   className="w-full border rounded-md p-2 bg-[#E6E6D9] h-24"
                   value={formData.characteristics}
-                  onChange={(e) => handleInputChange("characteristics", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("characteristics", e.target.value)
+                  }
                 />
               </div>
               <div>
@@ -154,16 +164,18 @@ export default function EditCharacteristicModal({
                 <Textarea
                   className="w-full border rounded-md p-2 bg-[#E6E6D9] h-24"
                   value={formData.characteristics}
-                  onChange={(e) => handleInputChange("characteristics", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("characteristics", e.target.value)
+                  }
                 />
               </div>
             </div>
           </div>
-          
+
           {/* Installment Parameters Section */}
           <div>
             <h3 className="text-base font-medium mb-4">Параметры рассрочки</h3>
-            
+
             <div className="grid grid-cols-3 gap-4 mb-4">
               <div>
                 <label className="text-sm text-gray-500 block mb-1">
@@ -173,7 +185,9 @@ export default function EditCharacteristicModal({
                   <select
                     className="w-full p-2 pr-8 appearance-none bg-[#E6E6D9]"
                     value={formData.initialPayment}
-                    onChange={(e) => handleInputChange("initialPayment", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("initialPayment", e.target.value)
+                    }
                   >
                     <option value="Без оплаты">Без оплаты</option>
                     <option value="10%">10%</option>
@@ -181,13 +195,21 @@ export default function EditCharacteristicModal({
                     <option value="30%">30%</option>
                   </select>
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                    <svg className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                    <svg
+                      className="h-4 w-4 text-gray-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </div>
                 </div>
               </div>
-              
+
               <div>
                 <label className="text-sm text-gray-500 block mb-1">
                   Период
@@ -198,27 +220,39 @@ export default function EditCharacteristicModal({
                     className="flex-1 bg-[#E6E6D9] p-2"
                     placeholder="Введите число"
                     value={formData.periodValue}
-                    onChange={(e) => handleInputChange("periodValue", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("periodValue", e.target.value)
+                    }
                   />
                   <div className="relative">
                     <select
                       className="border border-l-0 rounded-r-md p-2 pr-8 appearance-none bg-white"
                       value={formData.periodUnit}
-                      onChange={(e) => handleInputChange("periodUnit", e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("periodUnit", e.target.value)
+                      }
                     >
                       <option value="шт">шт</option>
                       <option value="мес">мес</option>
                       <option value="год">год</option>
                     </select>
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                      <svg className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                      <svg
+                        className="h-4 w-4 text-gray-400"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </div>
                   </div>
                 </div>
               </div>
-              
+
               <div>
                 <label className="text-sm text-gray-500 block mb-1">
                   Условия
@@ -229,27 +263,39 @@ export default function EditCharacteristicModal({
                     className="flex-1 border rounded-l-md p-2"
                     placeholder="Число бонуса"
                     value={formData.bonusValue}
-                    onChange={(e) => handleInputChange("bonusValue", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("bonusValue", e.target.value)
+                    }
                   />
                   <div className="relative">
                     <select
                       className="border border-l-0 rounded-r-md p-2 pr-8 appearance-none bg-[#E6E6D9]"
                       value={formData.bonusUnit}
-                      onChange={(e) => handleInputChange("bonusUnit", e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("bonusUnit", e.target.value)
+                      }
                     >
                       <option value="%">%</option>
                       <option value="₽">₽</option>
                     </select>
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                      <svg className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                      <svg
+                        className="h-4 w-4 text-gray-400"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="text-sm text-gray-500 block mb-1">
@@ -260,14 +306,16 @@ export default function EditCharacteristicModal({
                     type="text"
                     className="w-full border rounded-md p-2 pl-9"
                     value={formData.endDate}
-                    onChange={(e) => handleInputChange("endDate", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("endDate", e.target.value)
+                    }
                   />
                   <div className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
                     <Calendar className="h-5 w-5 text-gray-400" />
                   </div>
                 </div>
               </div>
-              
+
               <div>
                 <label className="text-sm text-gray-500 block mb-1">
                   Статус рассрочки
@@ -275,7 +323,9 @@ export default function EditCharacteristicModal({
                 <div className="flex items-center pt-2">
                   <Switch
                     checked={formData.isActive}
-                    onCheckedChange={(checked) => handleInputChange("isActive", checked)}
+                    onCheckedChange={(checked) =>
+                      handleInputChange("isActive", checked)
+                    }
                   />
                   <span className="ml-2 text-sm">
                     {formData.isActive ? "Включён" : "Отключён"}
@@ -285,7 +335,7 @@ export default function EditCharacteristicModal({
             </div>
           </div>
         </div>
-        
+
         {/* Footer with buttons */}
         <div className="flex border-t">
           <button

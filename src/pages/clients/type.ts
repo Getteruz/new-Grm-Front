@@ -21,3 +21,10 @@ export type ClientsQuery = {
   limit: number;
   page: number;
 };
+export interface ProductCharacteristic {
+  id: string; // yoki number
+  collection: string;
+  characteristics1: string;
+  characteristics2: string;
+  // boshqa maydonlar bo'lishi mumkin
+}

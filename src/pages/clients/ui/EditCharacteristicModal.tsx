@@ -13,7 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 
 import { ProductCharacteristic } from "../type";
-import { useUpdateCharacteristic } from "./queries";
+// import { useUpdateCharacteristic } from "./queries";
 
 interface EditCharacteristicModalProps {
   isOpen: boolean;
@@ -26,7 +26,7 @@ export default function EditCharacteristicModal({
   onClose,
   characteristic,
 }: EditCharacteristicModalProps) {
-  const { mutate: updateCharacteristic } = useUpdateCharacteristic();
+  // const { mutate: updateCharacteristic } = useUpdateCharacteristic();
 
   // Form state
   const [formData, setFormData] = useState({
@@ -73,19 +73,19 @@ export default function EditCharacteristicModal({
     if (!characteristic) return;
 
     // Convert form data to API format
-    const updatedData = {
-      collection: formData.bonusName,
-      characteristics1: formData.characteristics,
-      characteristics2: formData.paymentDeliveryInfo,
-      installmentParams: formData.periodValue
-        ? `${formData.periodValue} ${formData.periodUnit === "шт" ? "месяц" : formData.periodUnit}`
-        : "6 месяц",
-    };
+    // const updatedData = {
+    //   collection: formData.bonusName,
+    //   characteristics1: formData.characteristics,
+    //   characteristics2: formData.paymentDeliveryInfo,
+    //   installmentParams: formData.periodValue
+    //     ? `${formData.periodValue} ${formData.periodUnit === "шт" ? "месяц" : formData.periodUnit}`
+    //     : "6 месяц",
+    // };
 
-    updateCharacteristic({
-      id: characteristic.id,
-      data: updatedData,
-    });
+    // updateCharacteristic({
+    //   id: characteristic.id,
+    //   data: updatedData,
+    // });
 
     onClose();
   };

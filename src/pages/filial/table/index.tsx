@@ -35,6 +35,7 @@ export default function Page() {
         isFetchingNextPage={isFetchingNextPage}
       />
       <ActionPage />
+      <ActionPage />
     </>
   );
 }

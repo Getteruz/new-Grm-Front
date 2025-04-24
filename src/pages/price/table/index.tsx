@@ -11,7 +11,7 @@ export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [search] = useQueryState("search");
-  const me = useMeStore()
+  const me = useMeStore();
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
@@ -33,7 +33,7 @@ export default function Page() {
         //   }
         // }}
         isLoading={isLoading}
-        columns={me.meUser?.position.role === 8 ? IManagerColumns :Columns}
+        columns={me.meUser?.position.role === 8 ? IManagerColumns : Columns}
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}

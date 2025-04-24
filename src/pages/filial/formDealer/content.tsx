@@ -1,9 +1,8 @@
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Copy } from "lucide-react";
-import { useState } from "react";
+import { useFormContext } from "react-hook-form";
 
 import FormTextInput from "@/components/forms/FormTextInput";
-import FormTimePicker from "@/components/forms/FormTimePicker";
 import { Button } from "@/components/ui/button";
 import { DialogFooter, DialogHeader } from "@/components/ui/dialog";
 import { apiRoutes } from "@/service/apiRoutes";
@@ -12,9 +11,11 @@ import { useMeStore } from "@/store/me-store";
 
 export default function FormContent() {
   const { meUser } = useMeStore();
-  const [login, setLoginId] = useState("#id");
+  const { setValue } = useFormContext();
   const generateLoginId = () => {
-    api.get(apiRoutes.userLoginGenerate).then((res) => setLoginId(res.data));
+    api
+      .get(apiRoutes.userLoginGenerate)
+      .then((res) => setValue("login", String(res.data)));
   };
 
   return (
@@ -66,76 +67,23 @@ export default function FormContent() {
           name="fatherName"
           placeholder="Отчество"
         />
-        {meUser?.position.role !== 6 && (
-          <FormTextInput
-            label="Второе название"
-            className="w-full"
-            name="name"
-            placeholder="Второе название"
-          />
-        )}
-        {meUser?.position.role !== 6 && (
-          <FormTextInput
-            label="Геолокацию"
-            className="w-full"
-            name="addressLink"
-            placeholder="Геолокацию"
-          />
-        )}
+
         <FormTextInput
           label="Адресс"
           className={` ${meUser?.position.role !== 6 ? "w-full" : "col-span-2"}`}
           name="address"
           placeholder="Адресс"
         />
-        {meUser?.position.role !== 6 && (
-          <FormTextInput
-            label="Ориентир"
-            className="w-full"
-            name="landmark"
-            placeholder="Ориентир"
-          />
-        )}
-        {meUser?.position.role !== 6 && (
-          <FormTextInput
-            label="Телеграм"
-            className="w-full"
-            name="telegram"
-            placeholder="Телеграм"
-          />
-        )}
-        {meUser?.position.role !== 6 && (
-          <>
-            <FormTimePicker
-              label="Время работы, От"
-              className="w-full"
-              name="startWorkTime"
-              placeholder="От"
-            />
-            <FormTimePicker
-              label="До"
-              className="w-full"
-              name="endWorkTime"
-              placeholder="До"
-            />
-          </>
-        )}
+
         <p className="col-span-3 mt-8 text-[#5D5D53] font-medium text-[14px] text-left">
           Доступ в систему
         </p>
-        {/* <FormTextInput
-          readOnly
-          label="Должность"
-          className="w-full"
-          name="position"
-          placeholder="Менеджер"
-        /> */}
+
         <div className="relative col-span-2">
           <FormTextInput
             label="Генерация id для входа"
             className="w-full"
             name="login"
-            value={login}
             placeholder="# id"
           />
           <div className="absolute right-1 bottom-0.5 flex gap-2 items-center">

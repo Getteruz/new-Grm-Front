@@ -30,24 +30,6 @@ interface IFilialsMute {
   id: string | undefined;
 }
 
-export const useFilialMutation = ({
-  ...options
-}: UseMutationOptions<AuthResponse, Error, IFilialsMute, unknown>) =>
-  useMutation({
-    ...options,
-    mutationFn: async ({ data, id }) => {
-      if (id) {
-        delete data["type"];
-      }
-      if (id)
-        return await UpdatePatchData<FilialFormType>(
-          apiRoutes.filial,
-          id,
-          data
-        );
-      return await AddData<FilialFormType>(apiRoutes.filial, data);
-    },
-  });
 export const useDealerMutation = ({
   ...options
 }: UseMutationOptions<AuthResponse, Error, IFilialsMute, unknown>) =>

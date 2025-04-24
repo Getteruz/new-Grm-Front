@@ -1,7 +1,7 @@
 import { parseAsInteger, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
-import ActionPage from "@/pages/filial/form";
+import ActionPageDealer from "@/pages/filial/formDealer";
 
 import { Columns } from "./columns";
 import Filter from "./filter";
@@ -33,7 +33,7 @@ export default function Page() {
         hasNextPage={hasNextPage ?? false}
         isFetchingNextPage={isFetchingNextPage}
       />
-      <ActionPage />
+      <ActionPageDealer />
     </>
   );
 }

@@ -15,6 +15,10 @@ export type TData = {
   type: "filial";
   need_get_report: boolean;
   partiya_title: string;
+  firstName: string;
+  lastName: string;
+  fatherName: string;
+  login: string;
 };
 export enum FilialReportStatusEnum {
   OPEN = "Open",

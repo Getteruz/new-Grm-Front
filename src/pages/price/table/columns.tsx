@@ -1,7 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { toast } from "sonner";
 
 import TableAction from "@/components/table-action";
 import { Input } from "@/components/ui/input";
+import { apiRoutes } from "@/service/apiRoutes";
+import api from "@/service/fetchInstance";
+import debounce from "@/utils/debounce";
 
 import { ProductsData } from "../type";
 
@@ -33,9 +37,7 @@ export const IManagerColumns: ColumnDef<ProductsData>[] = [
     header: "Количество",
     cell: () => {
       return (
-        <p className="p-2.5 text-primary font-medium text-[14px]">
-          120 шт
-        </p>
+        <p className="p-2.5 text-primary font-medium text-[14px]">120 шт</p>
       );
     },
   },
@@ -43,9 +45,7 @@ export const IManagerColumns: ColumnDef<ProductsData>[] = [
     header: "Акция",
     cell: () => {
       return (
-        <p className="p-2.5 text-primary font-medium text-[14px]">
-          1+0.7
-        </p>
+        <p className="p-2.5 text-primary font-medium text-[14px]">1+0.7</p>
       );
     },
   },
@@ -63,9 +63,7 @@ export const IManagerColumns: ColumnDef<ProductsData>[] = [
     header: "Промокоды",
     cell: () => {
       return (
-        <p className="p-2.5 text-primary font-medium text-[14px]">
-          i9823hf
-        </p>
+        <p className="p-2.5 text-primary font-medium text-[14px]">i9823hf</p>
       );
     },
   },
@@ -73,20 +71,14 @@ export const IManagerColumns: ColumnDef<ProductsData>[] = [
     header: "Скидка",
     cell: () => {
       return (
-        <p className="p-2.5 text-[#E38157] font-medium text-[14px]">
-          -10%
-        </p>
+        <p className="p-2.5 text-[#E38157] font-medium text-[14px]">-10%</p>
       );
     },
   },
   {
     header: "Кас-цена",
     cell: () => {
-      return (
-        <p className="p-2.5 text-primary font-medium text-[14px]">
-          35$
-        </p>
-      );
+      return <p className="p-2.5 text-primary font-medium text-[14px]">35$</p>;
     },
   },
   {
@@ -104,22 +96,22 @@ export const IManagerColumns: ColumnDef<ProductsData>[] = [
     },
   },
   {
-      id: "actions",
-      enableHiding: true,
-      header: () => <div className="text-right">{"actions"}</div>,
-      size: 50,
-      cell: ({ row }) => {
-        return (
-          <TableAction
-            url={""}
-            ShowUpdate={false}
-            ShowDelete={false}
-            ShowPreview
-            id={row.original?.id}
-          />
-        );
-      },
+    id: "actions",
+    enableHiding: true,
+    header: () => <div className="text-right">{"actions"}</div>,
+    size: 50,
+    cell: ({ row }) => {
+      return (
+        <TableAction
+          url={""}
+          ShowUpdate={false}
+          ShowDelete={false}
+          ShowPreview
+          id={row.original?.id}
+        />
+      );
     },
+  },
 ];
 
 export const Columns: ColumnDef<ProductsData>[] = [
@@ -189,13 +181,30 @@ export const Columns: ColumnDef<ProductsData>[] = [
   {
     header: "Зав-цена за м²",
     cell: ({ row }) => {
+      const changePrices = (val: number, id: string) => {
+        const body = [
+          {
+            comingPrice: val,
+            collectionId: id,
+          },
+        ];
+        toast.warning("Действие отправлено");
+        api
+          .post(apiRoutes.collectionMultiple, body)
+          .then(() => toast.success("Действие завершено."))
+          .catch(() => toast.error("Действие не удалось"));
+      };
+
       return (
         <Input
           className="bg-transparent max-w-[90px] border-border border rounded-[5px]"
-          defaultValue={row?.original?.comingPrice}
+          defaultValue={row?.original?.collection_prices?.[0]?.comingPrice}
           placeholder="$"
           type="number"
-          // onChange={(e) => setComingPrice(e.target.value)}
+          onChange={debounce((e) => {
+            const val = Number(e.target.value); // konvert qilish muhim
+            changePrices(val, row.original.id);
+          }, 800)}
         />
       );
     },
@@ -203,17 +212,28 @@ export const Columns: ColumnDef<ProductsData>[] = [
   {
     header: "Цена за м²",
     cell: ({ row }) => {
-      // const [priceMeter, setPriceMeter] = useQueryState(
-      //   "priceMeter",
-      //   parseAsInteger
-      // );
+      const changePrices = (val: { val: number }, id: string) => {
+        const body = [
+          {
+            priceMeter: val,
+            collectionId: id,
+          },
+        ];
+        toast.warning("Действие отправлено");
+        api
+          .post(apiRoutes.collectionMultiple, body)
+          .then(() => toast.success("Действие завершено."))
+          .catch(() => toast.error("Действие не удалось"));
+      };
       return (
         <Input
           className="bg-transparent  max-w-[90px]  border-border border rounded-[5px]"
-          defaultValue={row?.original?.priceMeter}
+          defaultValue={row?.original?.collection_prices?.[0]?.priceMeter}
           placeholder="$"
           type="number"
-          // onChange={(e) => setPriceMeter(e.target.value)}
+          onChange={debounce((e) => {
+            changePrices(e.target.value, row.original.id);
+          }, 800)}
         />
       );
     },

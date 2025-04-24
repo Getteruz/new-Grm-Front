@@ -10,6 +10,14 @@ export interface ProductsData {
   price: number;
   secondPrice: number;
   priceMeter: number;
+  collection_prices: [
+    {
+      comingPrice: number;
+      secondPrice: number;
+      priceMeter: number;
+      collectionId: string;
+    },
+  ];
   comingPrice: number;
   draft_priceMeter: number;
   draft_comingPrice: number;

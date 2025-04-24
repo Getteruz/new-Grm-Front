@@ -19,7 +19,7 @@ export default function NotePage() {
 
   const flatData = (data?.pages?.[0].items || []) as unknown as TData[];
   return (
-    <div className="relative">
+    <div className="relative z-20">
       <div
         onClick={() => setActive(!active)}
         className={`${active ? "text-white bg-primary" : "text-primary bg-transparent "} p-1 rounded cursor-pointer`}

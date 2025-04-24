@@ -1,4 +1,5 @@
 export type ProductCharacteristic = {
+    title: ReactI18NextChildren | Iterable<ReactI18NextChildren>;
     id: string;
     collection: string;
     characteristics1: string;

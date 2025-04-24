@@ -3,11 +3,11 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/store/auth-store";
-
-import Menu from "./menu";
-import Header from "./header";
 import { useMeStore } from "@/store/me-store";
+
 import CashierHeader from "./cashier-header";
+import Header from "./header";
+import Menu from "./menu";
 // import CashierHeader from "./cashier-header";
 
 export default function MainLayout() {

@@ -4,6 +4,7 @@ export const apiRoutes = {
   userLoginGenerate: "/user/generate/login-user",
   crops: "/crops",
   products: "/product",
+  productsIManager:"/product/internet-shop",
   collection: "/collection",
   collectionPrice: "/collection-prices",
   collectionMultiple: "/collection/multiple",

@@ -17,10 +17,10 @@ import {
   const useNotPublishedDataFetch = ({ options, queries }: INotPublishedTransfers) =>
     useInfiniteQuery({
       ...options,
-      queryKey: [apiRoutes.products, { ...queries, isInternetShop: false }],
+      queryKey: [apiRoutes.productsIManager, { ...queries, isInternetShop: false }],
       queryFn: ({ pageParam = 10 }) =>
         getAllData<TResponse<ProductsData>, ProductsQuery & { isInternetShop?: boolean }>(
-          apiRoutes.products, 
+          apiRoutes.productsIManager, 
           {
             ...queries,
             page: pageParam as number,

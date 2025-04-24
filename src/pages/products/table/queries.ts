@@ -12,14 +12,14 @@ import { ProductsData, ProductsQuery } from "../type";
 interface ITransfers {
   options?: DefinedInitialDataInfiniteOptions<TResponse<ProductsData>>;
   queries?: ProductsQuery;
+  role?:number;
 }
-
-const useDataFetch = ({ options, queries }: ITransfers) =>
+const useDataFetch = ({ options, queries, role }: ITransfers) =>
   useInfiniteQuery({
     ...options,
-    queryKey: [apiRoutes.products, queries],
+    queryKey: [role == 8 ? apiRoutes.productsIManager:apiRoutes.products, queries],
     queryFn: ({ pageParam = 10 }) =>
-      getAllData<TResponse<ProductsData>, ProductsQuery>(apiRoutes.products, {
+      getAllData<TResponse<ProductsData>, ProductsQuery>(role == 8 ? apiRoutes.productsIManager : apiRoutes.products, {
         ...queries,
         page: pageParam as number,
         limit: 10,

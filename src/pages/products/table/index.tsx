@@ -32,7 +32,8 @@ export default function Page() {
             ? meUser?.filial?.id
             : undefined,
       },
-    });
+      role:meUser?.position.role
+    },);
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 

@@ -459,7 +459,7 @@ export const DataMenu = {
     {
       id: 5,
       icons: () => ClientsIcon(),
-      link: "/user",
+      link: "/clients",
       text: "Клиенты",
     },
     {
@@ -488,7 +488,7 @@ export const DataMenu = {
       text: "Трансферы",
     },
     {
-      id: 9,
+      id: 10,
       icons: () => SettingsIcon(),
       link: "/settings",
       text: "Настройка",

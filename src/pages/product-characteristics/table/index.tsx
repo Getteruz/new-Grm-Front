@@ -1,5 +1,4 @@
 import { parseAsInteger, useQueryState } from "nuqs";
-import { useState } from "react";
 
 import { DataTable } from "@/components/ui/data-table";
 
@@ -10,9 +9,6 @@ import useCharacteristicsFetch from "./queries";
 export default function ProductCharacteristics() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
-  
-  // State for selected characteristics
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useCharacteristicsFetch({
@@ -24,17 +20,9 @@ export default function ProductCharacteristics() {
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
-  // Function to clear selection
-  const clearSelection = () => {
-    setSelectedItems([]);
-  };
-
   return (
     <>
-      <Filters 
-        selectedItems={selectedItems}
-        clearSelection={clearSelection}
-      />
+      <Filters />
       <DataTable
         isLoading={isLoading}
         columns={ProductCharacteristicColumns}

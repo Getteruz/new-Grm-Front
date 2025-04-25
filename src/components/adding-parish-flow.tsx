@@ -5,7 +5,7 @@ import { Receipt } from "lucide-react";
 import { BriefcaseBusiness } from "lucide-react";
 import { JSX } from "react";
 import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 
@@ -85,10 +85,13 @@ export default function AddingParishOrFlow() {
         </DialogTrigger>
       </div>
 
+
       <DialogContent className="min-w-[494px] p-1">
-        <div className="text-center text-xl p-4 border-b">
+        
+        <div className={`p-2 rounded-[7px] text-center ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}>
           {type === "parish" ? "Добавление прихода" : "Добавление расхода"}
         </div>
+
         
         <div className="flex gap-1">
           <div className="flex w-full max-w-[210px] flex-wrap gap-0.5">
@@ -109,6 +112,7 @@ export default function AddingParishOrFlow() {
               <Input
                 placeholder="0.00"
                 value={amount}
+                type="number"
                 onChange={(e) => setAmount(e.target.value)}
                 className="w-full border-none h-[90px]  placeholder:text-[32px] !text-[32px] font-semibold rounded-[7px] bg-transparent px-0"
               />

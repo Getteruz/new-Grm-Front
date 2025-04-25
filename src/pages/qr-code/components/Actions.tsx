@@ -42,7 +42,7 @@ const Actions: React.FC<ActionsProps> = ({
         onClick={onPrint}
         className="flex items-center w-[180px] justify-center gap-2 px-6 py-8 border-l border-border text-white"
       >
-        <Printer size={18} />
+        <Printer size={1} />
         <span>Распечатать</span>
       </Button>
     </div>

@@ -110,7 +110,7 @@ export const DataMenu = {
       id: 1,
       icons: () => DeviceDesktopIcons({ width: 28, height: 28 }),
       link: "/cashier/home",
-      text: "cashier/home",
+      text: "Касса",
     },
     {
       id: 2,

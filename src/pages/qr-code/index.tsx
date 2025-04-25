@@ -14,8 +14,6 @@ import { generatePDF, printQRCodes } from './utils';
 import { useQRCodesFetch, useGenerateQRCodes, useClearQRCodes } from './queries';
 
 const QRCodeGenerator: React.FC = () => {
-  const navigate = useNavigate();
-  
   // Query state
   const [limit] = useQueryState('limit', parseAsInteger.withDefault(10)); // Match API default
   const [prefix, setPrefix] = useQueryState('prefix', { defaultValue: '' });

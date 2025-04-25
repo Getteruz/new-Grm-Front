@@ -24,7 +24,7 @@ const Filters: React.FC<FiltersProps> = ({
   actions
 }) => {
   return (
-    <div className="bg-sidebar h-[64px] flex justify-between sticky">
+    <div className="bg-sidebar h-[64px] flex justify-between sticky top-0">
       <div className="flex">
         <Button
           className={`flex w-[210px] items-center justify-center gap-2 text-[#5D5D53] bg-[#E6E6D9] py-8 ${

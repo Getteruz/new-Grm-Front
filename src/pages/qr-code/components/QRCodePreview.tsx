@@ -1,9 +1,10 @@
 import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import Controls from './Controls';
+import { QRCode } from '../type';
 
 interface QRCodePreviewProps {
-    value: string;
+    previewCode?: QRCode | null;
     inputCount: string | number;
     handleCountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleGenerate: () => void;
@@ -11,24 +12,30 @@ interface QRCodePreviewProps {
 }
 
 const QRCodePreview: React.FC<QRCodePreviewProps> = ({ 
+    previewCode,
     inputCount, 
     handleCountChange, 
     handleGenerate, 
-    value,
     isGenerating = false
 }) => {
+    // Generate a QR code value from the preview code or use a placeholder
+    const qrValue = previewCode 
+        ? `${previewCode.id}_${previewCode.sequence}` 
+        : 'https://example.com/placeholder';
+        
     return (
-        <div className='flex w-158 flex-col items-center justify-around sticky top-0 border-r-2'>
-            <div className="w-[270px] h-[270px] bg-white flex px-32 py-0 justify-center items-center">
+        <div className='flex min-w-[420px] flex-col items-center justify-around h-full sticky top-0 z-10 border-r-2'>
+            <div className="flex items-center justify-center rounded-[32px] bg-white w-[270px] h-[270px]">
                 <div className="w-[190px] h-[190px] flex items-center justify-center">
                     <QRCodeSVG
-                        value={value}
+                        value={qrValue}
                         size={190}
                         level="H"
                         className="w-[190px] h-[190px]"
                     />
                 </div>
             </div>
+            
             {/* Controls */}
             <Controls
                 count={inputCount}

@@ -1,10 +1,8 @@
 export type QRCode = {
     id: string;
-    value: string;
-    sequence:number;
-    code: string;
+    sequence: number;
+    is_active: boolean;
     createdAt: string;
-    updatedAt: string;
   };
   
   export type TabType = 'barcode' | 'qr' | string;

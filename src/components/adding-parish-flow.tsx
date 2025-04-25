@@ -5,7 +5,7 @@ import { Receipt } from "lucide-react";
 import { BriefcaseBusiness } from "lucide-react";
 import { JSX } from "react";
 import { Button } from "./ui/button";
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from "./ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 

@@ -1,5 +1,4 @@
 import {
-  BasketIcons,
   BrCodeIcons,
   BronedIcons,
   BuildingIcons,

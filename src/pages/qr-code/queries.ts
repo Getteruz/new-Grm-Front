@@ -18,6 +18,6 @@ export const useQRCodesFetch = (queries: QRGeneratorQuery) => {
     queryKey: ["qr-codes", queries],
     queryFn: () => fetchQRCodes(queries),
     // Keep previously fetched data while new data is being requested
-    keepPreviousData: true,
+    // keepPreviousData: true,
   });
 };

@@ -3,7 +3,7 @@ export type QRCode = {
     value: string;
   };
   
-  export type TabType = 'barcode' | 'qr';
+  export type TabType = 'barcode' | 'qr' | string;
   
   export type QRGeneratorQuery = {
     count?: number;

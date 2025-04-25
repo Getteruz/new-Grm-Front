@@ -4,7 +4,7 @@ import Controls from './Controls';
 
 interface QRCodePreviewProps {
     value: string;
-    inputCount:string;
+    inputCount:string | number;
     handleCountChange:any;
     handleGenerate:any
 }

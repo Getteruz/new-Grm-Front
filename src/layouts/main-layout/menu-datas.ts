@@ -1,5 +1,4 @@
 import {
-  BasketIcons,
   BrCodeIcons,
   BronedIcons,
   BuildingIcons,
@@ -111,7 +110,7 @@ export const DataMenu = {
       id: 1,
       icons: () => DeviceDesktopIcons({ width: 28, height: 28 }),
       link: "/cashier/home",
-      text: "cashier/home",
+      text: "Касса",
     },
     {
       id: 2,
@@ -121,33 +120,33 @@ export const DataMenu = {
     },
     {
       id: 3,
-      icons: () => BasketIcons(),
-      link: "/new",
-      text: "",
+      icons: () => ProductIcons(),
+      link: "/products",
+      text: "Продукты",
     },
     {
       id: 4,
       icons: () => RefleshIcons(),
-      link: "/new",
-      text: "",
-    },
-    {
-      id: 9,
-      icons: () => BrCodeIcons({ width: 28, height: 28 }),
-      link: "/new",
-      text: "",
+      link: "/transfers",
+      text: "Трансферы",
     },
     {
       id: 5,
+      icons: () => BrCodeIcons({ width: 28, height: 28 }),
+      link: "/product-check",
+      text: "Проверка продукта",
+    },
+    {
+      id: 6,
       icons: () => DataLibrary({ width: 28, height: 28 }),
       link: "/data-library",
       text: "data-library",
     },
     {
-      id: 2,
+      id: 7,
       icons: () => PriceIcons({ width: 28, height: 28 }),
       link: "/price",
-      text: "price",
+      text: "Цени и скидки",
     },
   ],
   4: [

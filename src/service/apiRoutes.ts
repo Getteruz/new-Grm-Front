@@ -30,4 +30,5 @@ export const apiRoutes = {
   order: "/order",
   orderByKassa: "/order/order-by-kassa",
   notes: "/notes",
+  qrCodes: "/qr-codes",
 } as const;

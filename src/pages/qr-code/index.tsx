@@ -40,7 +40,9 @@ const QRCodeGenerator: React.FC = () => {
   
   // Get the first QR code for preview
   const previewCode = qrCodes.length > 0 ? qrCodes[0] : null;
-  
+  const totalItems = data?.pages[0].meta.totalItems || 0;
+  console.log('hdjdsn,', data?.pages[0])
+  console.log(totalItems)
   // Generate QR codes mutation
   const { mutate: generateQRCodes, isPending: isGenerating } = useGenerateQRCodes();
   
@@ -141,6 +143,7 @@ const QRCodeGenerator: React.FC = () => {
           handleCountChange={handleCountChange} 
           handleGenerate={handleGenerate} 
           isGenerating={isGenerating}
+          totalItems={totalItems}
         />
         
         {/* QR Code Grid with Infinite Scrolling */}

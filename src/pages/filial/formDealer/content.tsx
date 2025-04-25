@@ -78,7 +78,13 @@ export default function FormContent() {
         <p className="col-span-3 mt-8 text-[#5D5D53] font-medium text-[14px] text-left">
           Доступ в систему
         </p>
-
+        <FormTextInput
+          readOnly
+          label="Должность"
+          className="w-full"
+          name="position"
+          placeholder="Менеджер"
+        />
         <div className="relative col-span-2">
           <FormTextInput
             label="Генерация id для входа"

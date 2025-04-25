@@ -1,6 +1,7 @@
 export interface TData {
   isMetric: boolean;
   id: string;
+  cashflow_type: { title: string };
   code: string;
   comment: string;
   imgUrl: string | null;

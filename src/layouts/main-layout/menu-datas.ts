@@ -160,17 +160,22 @@ export const DataMenu = {
         {
           id: 22,
           link: "/report",
-          text: "Кассовый учёт",
+          text: "Касса магазина",
         },
         {
           id: 23,
           link: "/report-item-2",
-          text: "Финансовый учёт",
+          text: "Ежемесячный отчет",
         },
         {
           id: 24,
           link: "/report-item-3",
-          text: "Снабжение и документооборот",
+          text: "Отчет об остатке",
+        },
+        {
+          id: 25,
+          link: "/report-item-4",
+          text: "Отчёт по сотрудикам",
         },
       ],
     },

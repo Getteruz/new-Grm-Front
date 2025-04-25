@@ -4,7 +4,7 @@ import CardSort from "@/components/card-sort";
 import { DataTable } from "@/components/ui/data-table";
 import { useMeStore } from "@/store/me-store";
 
-import { Columns, ColumnsDManager } from "./columns";
+import { Columns, ColumnsDManager, ColumnsFManager } from "./columns";
 import Filter from "./filter";
 import useDataLibrary from "./queries";
 
@@ -29,7 +29,13 @@ export default function Page() {
       <DataTable
         className="px-4"
         isLoading={isLoading}
-        columns={meUser?.position.role === 6 ? ColumnsDManager : Columns}
+        columns={
+          meUser?.position.role === 6
+            ? ColumnsDManager
+            : meUser?.position.role === 4
+              ? ColumnsFManager
+              : Columns
+        }
         data={data?.items ?? []}
       />
     </>

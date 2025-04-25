@@ -1,12 +1,18 @@
-import { BellRing, Grip, User } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { BellRing, Grip } from "lucide-react";
 import { ReactElement } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { getAllData } from "@/service/apiHelpers";
+import { useAuthStore } from "@/store/auth-store";
 import { useMeStore } from "@/store/me-store";
 
 import { DataMenu } from "./menu-datas";
 import NotePage from "./note/list";
+import { CurrencyData } from "./types";
+import Weather from "./weather";
 
 type Tmenu = {
   id: number;
@@ -20,9 +26,15 @@ type Tmenu = {
   }[];
 };
 export default function Header() {
+  const token = useAuthStore((state) => state.token);
+
   const location = useLocation();
   const { meUser } = useMeStore();
   const navigate = useNavigate();
+  const { data: currency } = useQuery({
+    queryKey: ["currency", token, meUser],
+    queryFn: () => getAllData<CurrencyData, unknown>("currency"),
+  });
 
   const oneMenu = DataMenu?.[
     meUser?.position?.role as keyof typeof DataMenu
@@ -57,19 +69,22 @@ export default function Header() {
       <NotePage />
       <BellRing className="text-primary w-5 h-5" />
       <Grip className="text-primary w-5 h-5" />
-      <User />
-      <div className="flex items-center gap-[5px]">
-        {/* <RinigIcons /> */}
-        <p className="text-[25px] leading-[30px] text-foreground relative">
-          13
-          <span className="text-[8px] leading-[12px] text-foreground absolute -top-[2px] -right-[2px]">
-            ° C
-          </span>
-        </p>
-      </div>
+
+      <Avatar>
+        <AvatarImage src={meUser?.avatar || undefined} />
+        <AvatarFallback className="bg-primary text-white  flex items-center justify-center">
+          {meUser?.firstName?.[0]}
+          {meUser?.lastName?.[0]}
+        </AvatarFallback>
+      </Avatar>
+      <Weather />
       <div>
-        <p className="text-[14px] leading-[17px] text-foreground">11:58</p>
-        <p className="text-[14px] leading-[17px] text-foreground">Ташкент</p>
+        <p className="text-[14px] leading-[17px] font-semibold text-foreground">
+          {currency?.items?.[0]?.usd.toLocaleString("uz-UZ")} $
+        </p>
+        <p className="text-[14px] leading-[17px] font-semibold text-[#E38157]">
+          {currency?.items?.[0]?.uzs.toLocaleString("uz-UZ")} сум
+        </p>
       </div>
     </div>
   );

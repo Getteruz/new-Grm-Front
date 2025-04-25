@@ -39,9 +39,9 @@ export const Columns: ColumnDef<TData>[] = [
       return (
         <div className="flex">
           <p
-            className={`${row.original.type === "Приход" ? "border-[#89A143] text-[#89A143]" : "border-[#E38157] text-[#E38157]"} rounded-4xl px-[14px]  w-[100px] text-center py-3 border `}
+            className={`${row.original.type === "Приход" ? "border-[#89A143] text-[#89A143]" : "border-[#E38157] text-[#E38157]"} rounded-4xl px-[14px]  min-w-[100px] text-center py-3 border `}
           >
-            {row.original.tip === "order" ? "Продажа" : row.original.tip}
+            {row.original?.cashflow_type?.title}
           </p>
         </div>
       );
@@ -91,6 +91,90 @@ export const Columns: ColumnDef<TData>[] = [
 
     cell: ({ row }) => {
       return <p>{format(row.original.date, "HH:mm")} </p>;
+    },
+  },
+  {
+    id: "actions",
+    enableHiding: true,
+    header: () => <div className="text-right">{"actions"}</div>,
+    size: 50,
+    cell: ({ row }) => {
+      return <TableAction url={apiRoutes.qrBase} id={row.original?.id} />;
+    },
+  },
+];
+export const ColumnsFManager: ColumnDef<TData>[] = [
+  {
+    header: "Дата",
+    accessorKey: "date",
+
+    cell: ({ row }) => {
+      return <p>{format(row.original.date, "d-MMMM")} </p>;
+    },
+  },
+  {
+    header: "Сумма",
+    accessorKey: "price",
+
+    cell: ({ row }) => {
+      return <p className="text-[#89A143]">{row.original.price} $</p>;
+    },
+  },
+  {
+    header: "Терминал",
+    accessorKey: "price",
+
+    cell: ({ row }) => {
+      return <p className="text-[#58A0C6]">{row.original.price} $</p>;
+    },
+  },
+  {
+    header: "Скидка",
+    accessorKey: "price",
+
+    cell: () => {
+      return <p className="text-[#E38157]">0 $</p>;
+    },
+  },
+
+  {
+    header: "Навар",
+    accessorKey: "collection.title",
+  },
+  {
+    header: "Объём",
+    accessorKey: "model.title",
+  },
+  {
+    header: "Приход",
+    accessorKey: "size.title",
+  },
+  {
+    header: "Расход",
+    accessorKey: "filial.title",
+  },
+  {
+    header: "Инкассация",
+    accessorKey: "sller.title",
+  },
+  {
+    header: "Кассир",
+    accessorKey: "casher.title",
+  },
+  {
+    header: "Статус",
+    accessorKey: "date",
+
+    cell: ({ row }) => {
+      return (
+        <div className="flex">
+          <p
+            className={`${row.original.type === "Приход" ? "border-[#89A143] text-[#89A143]" : "border-[#E38157] text-[#E38157]"} min-w-[120px] rounded-4xl px-[14px]  w-[100px] text-center py-3 border `}
+          >
+            {row.original.tip === "order" ? "В процессе" : "Принято"}
+          </p>
+        </div>
+      );
     },
   },
   {

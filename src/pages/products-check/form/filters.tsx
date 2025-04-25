@@ -15,7 +15,7 @@ export default function Filters() {
         variant={"outline"}
       >
         <QrCode />
-        Баркод
+        QR код
       </Button>
     </div>
   );

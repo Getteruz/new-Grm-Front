@@ -14,13 +14,25 @@ export const Columns: ColumnDef<TData>[] = [
   },
   {
     header: "Название",
-    accessorKey: "name",
-    id: "name",
+    accessorKey: "title",
+    id: "title",
   },
   {
     header: "Адресс",
     accessorKey: "address",
     id: "address",
+  },
+  {
+    header: "Ответственное лицо",
+    accessorKey: "address",
+    id: "address",
+    cell: ({ row }) => {
+      return (
+        <p>
+          {row?.original?.firstName} {row?.original?.lastName}
+        </p>
+      );
+    },
   },
 
   {

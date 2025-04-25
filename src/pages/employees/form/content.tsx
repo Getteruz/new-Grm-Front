@@ -1,64 +1,143 @@
-
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { Button } from "@/components/ui/button";
-import {   DialogFooter, DialogHeader } from "@/components/ui/dialog";
+import { Copy } from "lucide-react";
+import { useFormContext } from "react-hook-form";
+
+import FormComboboxDemoInput from "@/components/forms/FormCombobox";
+import FormDatePicker from "@/components/forms/FormDateRangePicker";
 import FormTextInput from "@/components/forms/FormTextInput";
 import FormTimePicker from "@/components/forms/FormTimePicker";
-import FormDatePicker from "@/components/forms/FormDateRangePicker";
-import FormComboboxDemoInput from "@/components/forms/FormCombobox";
+import ShadcnSelect from "@/components/Select";
+import { Button } from "@/components/ui/button";
+import { DialogFooter, DialogHeader } from "@/components/ui/dialog";
+import useDataFetch from "@/pages/filial/table/queries";
+import { apiRoutes } from "@/service/apiRoutes";
+import api from "@/service/fetchInstance";
 
 export default function FormContent() {
+  const { watch, setValue } = useFormContext();
+  const { data } = useDataFetch({});
+  const filial = watch("filial");
+  const generateLoginId = () => {
+    api
+      .get(apiRoutes.userLoginGenerate)
+      .then((res) => setValue("login", String(res.data)));
+  };
   return (
-      <>
-        <DialogHeader>
-          <DialogTitle>Edit</DialogTitle>
-        </DialogHeader>
-      <div className="grid row-start  mb-2 gap-4 lg:grid-cols-3">
-      <FormTextInput label="firstName" className="w-full" name="firstName" placeholder="firstName"  />
-        <FormTextInput label="lastName" className="w-full" name="lastName" placeholder="lastName"  />
-        <FormTextInput label="fatherName" className="w-full" name="fatherName" placeholder="fatherName"  />
-        <FormDatePicker label="hired" className="w-full" name="hired" placeholder="hired" />
-      <div className="flex w-full overflow-hidden items-end">
-      <FormTimePicker label="Время работы" className="w-1/2" name="from" placeholder="from" />
-      <FormTimePicker  className="w-1/2" name="to" placeholder="to" />
-      </div>
-      <FormTextInput type="tel" label="phone" className="w-full" name="phone" placeholder="phone"  />
-      <FormComboboxDemoInput
-            fieldNames={{ value: "id", label: "title" }}
-            fetchUrl="/filial"
-            name="filial"
-            placeholder="filial"
-            label="filial"
+    <>
+      <DialogHeader>
+        <DialogTitle>Добавления сотрудника</DialogTitle>
+      </DialogHeader>
+      <div className="grid px-14 py-8 row-start   mb-2 gap-4 lg:grid-cols-3">
+        <FormTextInput
+          label="Имя"
+          className="w-full"
+          name="firstName"
+          placeholder="Имя"
+        />
+        <FormTextInput
+          label="Фамилия"
+          className="w-full"
+          name="lastName"
+          placeholder="Фамилия"
+        />
+        <FormTextInput
+          label="Отчество"
+          className="w-full"
+          name="fatherName"
+          placeholder="Отчество"
+        />
+        <FormDatePicker
+          label="Дата приёма"
+          className="w-full"
+          name="hired"
+          placeholder="Дата приёма"
+        />
+        <div className="flex w-full overflow-hidden items-end">
+          <FormTimePicker
+            label="Время работы"
+            className="w-1/2"
+            name="from"
+            placeholder="От"
           />
-         
-      <FormTextInput type="number" label="salary"  name="salary" placeholder="salary"  />
+          <FormTimePicker className="w-1/2" name="to" placeholder="До" />
+        </div>
+        <FormTextInput
+          type="number"
+          label="Номер телефона"
+          className="w-full"
+          name="phone"
+          placeholder="Номер телефона"
+        />
+        <div>
+          <p className="font-medium text-primary text-[12px] dark:text-white mb-1">
+            Филиал
+          </p>
+          <ShadcnSelect
+            value={filial}
+            options={
+              data?.pages[0].items.map((i) => ({
+                value: i.id,
+                label: i.title,
+              })) || []
+            }
+            placeholder={"Филиал"}
+            onChange={(value) => {
+              setValue("filial", value || "");
+            }}
+            className="w-full h-[42px] bg-[#e7e7da]"
+          />{" "}
+        </div>
 
-      <FormComboboxDemoInput
-            fieldNames={{ value: "id", label: "title" }}
-            name="bonus"
-            option={[]}
-            disabled={true}
-            placeholder="bonus"
-            label="bonus"
-          />
+        <FormTextInput
+          type="number"
+          label="Зарплата"
+          name="salary"
+          placeholder="0.00"
+        />
+
+        <FormComboboxDemoInput
+          fieldNames={{ value: "id", label: "title" }}
+          name="bonus"
+          option={[]}
+          disabled={true}
+          placeholder="Нет бонусов"
+          label="Бонус"
+        />
 
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/position"
           name="position"
-          placeholder="position"
-          label="position"
+          placeholder="Укажите должность"
+          label="Должность"
         />
-      <FormTextInput label="login"  name="login" placeholder="login"  />
-
+        <div className="relative col-span-2">
+          <FormTextInput
+            label="Генерация id для входа"
+            className="w-full"
+            name="login"
+            placeholder="# id"
+          />
+          <div className="absolute right-1 bottom-0.5 flex gap-2 items-center">
+            <Copy width={16} height={16} color="#5D5D53" />
+            <Button onClick={() => generateLoginId()} type="button">
+              Сгенерировать
+            </Button>
+          </div>
+        </div>
       </div>
-        <DialogFooter className="justify-start mt-2 flex">
-          <Button type="submit">Save</Button>
-          <Button variant={'outline'} type="button">back</Button>
-        </DialogFooter>
-      </>
-     
-   
-   
+      <DialogFooter className="!justify-start mt-2 flex">
+        <Button type="submit" className="w-[220px] h-[44px]">
+          Сохранить
+        </Button>
+        <Button
+          variant={"outline"}
+          type="button"
+          className="bg-white w-[220px] h-[44px]"
+        >
+          Отменить
+        </Button>
+      </DialogFooter>
+    </>
   );
 }

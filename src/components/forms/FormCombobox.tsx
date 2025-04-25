@@ -26,7 +26,7 @@ interface Props<TQuery> {
   disabled?: boolean;
   queries?: TQuery;
   option?: TOption[];
-  classNameChild?:string;
+  classNameChild?: string;
   fieldNames?: {
     value: string;
     label: string;
@@ -60,7 +60,9 @@ export default function FormComboboxDemoInput<IData, TQuery>({
     enabled: open && Boolean(fetchUrl),
     queryFn: () =>
       getAllData<TResponse<IData>, TQuery>(fetchUrl || "", {
-        search:search || undefined ,
+        search: search || undefined,
+        limit: 20,
+        page: 1,
         ...queries,
       } as TQuery),
     select: (res) => ({
@@ -82,7 +84,9 @@ export default function FormComboboxDemoInput<IData, TQuery>({
     const value = watch(name);
 
     if (!data?.data) return [value];
-    const containsValue = data?.data.some((item) => item?.value === value?.value);
+    const containsValue = data?.data.some(
+      (item) => item?.value === value?.value
+    );
     return containsValue ? data?.data : [value, ...data?.data];
   }, [data, fieldNames, watch(name), option]);
 
@@ -102,13 +106,13 @@ export default function FormComboboxDemoInput<IData, TQuery>({
             )}
             <FormControl className="w-full">
               <ComboboxDemo
-               className={cn("w-full h-[42px]", classNameChild)}
+                className={cn("w-full h-[42px]", classNameChild)}
                 onOpenChange={() => setOpen(true)}
                 onFilter={debounce((e) => setSearch(e.target.value), 500)}
                 disabled={disabled}
-                value={field?.value?.value ||""}
+                value={field?.value?.value || ""}
                 isLoading={isLoading}
-                options={memoizedData}
+                options={memoizedData.filter((i) => i)}
                 placeholder={placeholder ? t(placeholder) : ""}
                 onChange={field.onChange}
               />

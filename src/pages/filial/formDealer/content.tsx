@@ -20,12 +20,12 @@ export default function FormContent() {
 
   return (
     <>
-      <DialogHeader className="mb-8 ">
+      <DialogHeader className=" ">
         <DialogTitle className="text-[18px]">
           {meUser?.position.role === 6 ? "Дилер" : "Филиал"}
         </DialogTitle>
       </DialogHeader>
-      <div className="grid row-start  my-2 gap-4 grid-cols-3">
+      <div className="grid row-start px-14 py-8   gap-4 grid-cols-3">
         <p className="col-span-3 text-[#5D5D53] font-medium text-[14px] text-left">
           Данные Дилера
         </p>
@@ -94,7 +94,7 @@ export default function FormContent() {
           </div>
         </div>
       </div>
-      <DialogFooter className="!justify-start !flex  !flex-row mt-10 ">
+      <DialogFooter className="!justify-start !flex  !flex-row  ">
         <Button type="submit" className="w-[220px] h-[44px]">
           Создать
         </Button>

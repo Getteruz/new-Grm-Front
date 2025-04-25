@@ -23,7 +23,8 @@ import {
   SettingsIcon,
   TransferIcons,
   UfoBottom,
-  WareHouseIcons} from "../../components/icons";
+  WareHouseIcons,
+} from "../../components/icons";
 
 // {
 //   OTHER = 0,
@@ -154,7 +155,7 @@ export const DataMenu = {
       id: 2,
       icons: () => ReportBottom({}),
       link: "/report",
-      text: "report",
+      text: "Отчеты",
       items: [
         {
           id: 22,
@@ -233,7 +234,7 @@ export const DataMenu = {
       id: 2,
       icons: () => ReportBottom({}),
       link: "/report",
-      text: "report",
+      text: "Отчеты",
       items: [
         {
           id: 22,
@@ -313,7 +314,7 @@ export const DataMenu = {
       id: 2,
       icons: () => ReportBottom({}),
       link: "/report",
-      text: "report",
+      text: "Отчеты",
       items: [
         {
           id: 22,
@@ -339,7 +340,7 @@ export const DataMenu = {
       id: 2,
       icons: () => ReportBottom({}),
       link: "/report",
-      text: "report",
+      text: "Отчеты",
       items: [
         {
           id: 22,
@@ -499,7 +500,7 @@ export const DataMenu = {
       id: 2,
       icons: () => ReportBottom({}),
       link: "/report",
-      text: "report",
+      text: "Отчеты",
       items: [
         {
           id: 22,
@@ -600,12 +601,6 @@ export const DataMenu = {
     },
   ],
   11: [
-    {
-      id: 2,
-      icons: () => HomeIcons(),
-      link: "/monitoring",
-      text: "monitoring",
-    },
     {
       id: 4,
       icons: () => PersonsIcons(),

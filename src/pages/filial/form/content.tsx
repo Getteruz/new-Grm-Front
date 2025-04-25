@@ -24,7 +24,7 @@ export default function FormContent() {
           {meUser?.position.role === 6 ? "Дилер" : "Филиал"}
         </DialogTitle>
       </DialogHeader>
-      <div className="grid row-start  my-2 gap-4 grid-cols-3">
+      <div className="grid row-start px-14 py-8  my-2 gap-4 grid-cols-3">
         <p className="col-span-3 text-[#5D5D53] font-medium text-[14px] text-left">
           Данные Дилера
         </p>

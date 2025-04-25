@@ -9,6 +9,9 @@ export interface TData {
   date: string;
   isActive: boolean;
   title: string;
+  firstName: string;
+  lastName: string;
+  fatherName: string;
   name: string;
   type: string;
   model: {

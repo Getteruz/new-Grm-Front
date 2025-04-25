@@ -224,8 +224,7 @@ export const printQRCodes = (codes: QRCode[]): void => {
     `;
     
     // Create a page for each QR code
-    codes.forEach((code, index) => {
-      const codeNumber = index + 1;
+    codes.forEach((code) => {
       const qrValue = generateQRValue(code);
       
       html += `
@@ -237,9 +236,8 @@ export const printQRCodes = (codes: QRCode[]): void => {
                 alt="QR Code ${code.sequence}" 
               />
             </div>
-            <div class="qr-value">QR Код #${code.sequence}</div>
+            <div class="qr-value">${code.sequence}</div>
           </div>
-          <div class="page-number">Страница ${codeNumber} из ${codes.length}</div>
         </div>
       `;
     });

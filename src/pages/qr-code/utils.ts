@@ -16,8 +16,8 @@ export const formatDate = (dateString: string): string => {
 /**
  * Generate QR code value from QR code object
  */
-export const generateQRValue = (qrCode: QRCode): string => {
-  return `${qrCode.id}_${qrCode.sequence}`;
+export const generateQRValue = (qrCode:any): string => {
+  return `${qrCode.id}`;
 };
 
 /**
@@ -224,8 +224,8 @@ export const printQRCodes = (codes: QRCode[]): void => {
     `;
     
     // Create a page for each QR code
-    codes.forEach((code) => {
-      const qrValue = generateQRValue(code);
+    codes.forEach((code: QRCode) => {
+      const qrValue = generateQRValue(code.id);
       
       html += `
         <div class="page">

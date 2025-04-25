@@ -110,10 +110,9 @@ const QRCodeGenerator: React.FC = () => {
       toast.error("Нет QR-кодов для печати");
       return;
     }
-    
     printQRCodes(qrCodes);
   };
-  
+
   // Action handlers for Filters component
   const actions = {
     handleClear,

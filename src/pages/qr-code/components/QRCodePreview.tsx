@@ -22,7 +22,7 @@ const QRCodePreview: React.FC<QRCodePreviewProps> = ({
 }) => {
     // Generate a QR code value from the preview code or use a placeholder
     const qrValue = previewCode 
-        ? `${previewCode.id}_${previewCode.sequence}` 
+        ? `${previewCode.id}`
         : 'https://example.com/placeholder';
     
     return (

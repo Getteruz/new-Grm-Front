@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useQueryState, parseAsInteger } from 'nuqs';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 // Components imports

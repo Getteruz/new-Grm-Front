@@ -8,13 +8,15 @@ interface ControlsProps {
   onCountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onGenerate: () => void;
   isGenerating?: boolean;
+  totalItems:number;
 }
 
 const Controls: React.FC<ControlsProps> = ({
   count,
   onCountChange,
   onGenerate,
-  isGenerating = false
+  isGenerating = false,
+  totalItems
 }) => {
   return (
     <div className="p-4 border-t w-full flex-col border-border flex items-center justify-center gap-4">
@@ -33,7 +35,7 @@ const Controls: React.FC<ControlsProps> = ({
       <Button 
         onClick={onGenerate}
         className="py-6 px-8 w-[346px] bg-[#5D5D53] text-white rounded-[2px]"
-        disabled={isGenerating}
+        disabled={!!totalItems}
       >
         {isGenerating ? (
           <>
@@ -41,7 +43,8 @@ const Controls: React.FC<ControlsProps> = ({
             Генерация...
           </>
         ) : (
-          'Сгенерировать'
+          `Сгенерировать`
+          
         )}
       </Button>
     </div>

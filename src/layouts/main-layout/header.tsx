@@ -66,7 +66,7 @@ export default function Header() {
             Переучёт
           </Button>
         )}
-      <NotePage />
+      <NotePage isCashier={false} />
       <BellRing className="text-primary w-5 h-5" />
       <Grip className="text-primary w-5 h-5" />
 

@@ -9,7 +9,13 @@ interface FiltersProps {
   prefix: string;
   onPrefixChange: (prefix: string) => void;
   onTabChange: (tab: TabType) => void;
-  actions:any;
+  actions: {
+    handleClear: () => void;
+    handleDownload: () => void;
+    handlePrint: () => void;
+    isClearing?: boolean;
+    isDownloading?: boolean;
+  };
 }
 
 const Filters: React.FC<FiltersProps> = ({
@@ -18,10 +24,10 @@ const Filters: React.FC<FiltersProps> = ({
   actions
 }) => {
   return (
-    <div className="bg-sidebar h-[64px] flex justify-between sticky">
-      <div className="flex ">
+    <div className="bg-sidebar h-[64px] flex justify-between sticky top-0">
+      <div className="flex">
         <Button
-          className={`flex  w-[210px] items-center justify-center gap-2 text-[#5D5D53] bg-[#E6E6D9] py-8 ${
+          className={`flex w-[210px] items-center justify-center gap-2 text-[#5D5D53] bg-[#E6E6D9] py-8 ${
             activeTab === 'barcode' ? 'bg-accent' : ''
           }`}
           variant="outline"
@@ -32,7 +38,7 @@ const Filters: React.FC<FiltersProps> = ({
         </Button>
         
         <Button
-          className={`flex w-[210px] items-center justify-center  text-[#5D5D53] bg-[#E6E6D9] px-6 py-8 ${
+          className={`flex w-[210px] items-center justify-center gap-2 text-[#5D5D53] bg-[#E6E6D9] px-6 py-8 ${
             activeTab === 'qr' ? 'bg-accent' : ''
           }`}
           variant="outline"
@@ -43,13 +49,14 @@ const Filters: React.FC<FiltersProps> = ({
         </Button>
       </div>
       <div className="flex">
-            <Actions 
-              onClear={actions.handleClear}
-              onCancel={actions.handleCancel}
-              onDownload={actions.handleDownload}
-              onPrint={actions.handlePrint}
-            />
-          </div>
+        <Actions 
+          onClear={actions.handleClear}
+          onDownload={actions.handleDownload}
+          onPrint={actions.handlePrint}
+          isClearing={actions.isClearing}
+          isDownloading={actions.isDownloading}
+        />
+      </div>
     </div>
   );
 };

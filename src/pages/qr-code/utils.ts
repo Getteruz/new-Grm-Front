@@ -2,13 +2,6 @@ import { QRCode } from './type';
 import { toast } from 'sonner';
 
 /**
- * Generate random string for QR code values
- */
-export const generateRandomString = (): string => {
-  return Math.random().toString(36).substring(2, 15);
-};
-
-/**
  * Format date to readable format
  */
 export const formatDate = (dateString: string): string => {
@@ -21,36 +14,101 @@ export const formatDate = (dateString: string): string => {
 };
 
 /**
- * Generate a PDF document with QR codes
+ * Generate QR code value from QR code object
  */
-export const generatePDF = (codes: QRCode[]): void => {
+export const generateQRValue = (qrCode:any): string => {
+  return `${qrCode.id}`;
+};
+
+/**
+ * Generate a PDF document with QR codes - one QR code per page
+ * Uses jspdf and qrcode libraries
+ */
+export const generatePDF = async (codes: QRCode[]): Promise<void> => {
   try {
-    // This is a simplified implementation
-    // In a real app, you would use a library like jsPDF with canvas to render QR codes
-    console.log('Generating PDF with', codes.length, 'QR codes');
+    toast.info('Подготовка PDF документа...');
     
-    // Mock PDF generation for now
-    toast.success(`PDF с ${codes.length} QR-кодами готов к скачиванию`);
+    // Dynamically import jsPDF and qrcode for better performance
+    const [jsPDFModule, QRCodeModule] = await Promise.all([
+      import('jspdf'),
+      import('qrcode')
+    ]);
     
-    // Simulate download delay
-    setTimeout(() => {
-      // Create a fake download
-      const element = document.createElement('a');
-      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent('QR codes data'));
-      element.setAttribute('download', `qr-codes-${new Date().toISOString().slice(0, 10)}.pdf`);
-      element.style.display = 'none';
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element);
-    }, 500);
+    const { default: jsPDF } = jsPDFModule;
+    const { toDataURL } = QRCodeModule;
+    
+    // Create a new PDF document
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4'
+    });
+    
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    
+    // Settings for QR codes layout
+    const qrSize = 100; // Larger QR code since we're only putting one per page
+    
+    // Process each QR code
+    const generateQRDataUrls = async () => {
+      const urls = [];
+      for (const code of codes) {
+        const qrValue = generateQRValue(code);
+        const dataUrl = await toDataURL(qrValue, {
+          errorCorrectionLevel: 'H',
+          margin: 1,
+          width: qrSize * 3 // Higher resolution for better quality
+        });
+        urls.push({ dataUrl, code });
+      }
+      return urls;
+    };
+    
+    const qrDataUrls = await generateQRDataUrls();
+    
+    // Generate PDF pages - one QR code per page
+    for (let i = 0; i < qrDataUrls.length; i++) {
+      // Add a new page for each QR code (except the first one)
+      if (i > 0) {
+        doc.addPage();
+      }
+      
+      const { dataUrl, code } = qrDataUrls[i];
+      
+      // Center the QR code on the page
+      const x = (pageWidth - qrSize) / 2;
+      const y = (pageHeight - qrSize) / 2 - 10; // Slightly above center to make room for text
+      
+      // Add QR code image
+      doc.addImage(dataUrl, 'PNG', x, y, qrSize, qrSize);
+      
+      // Add QR code number as text
+      doc.setFontSize(14);
+      const text = `QR Код #${code.sequence}`;
+      const textWidth = doc.getStringUnitWidth(text) * doc.getFontSize() / doc.internal.scaleFactor;
+      const textX = (pageWidth - textWidth) / 2;
+      doc.text(text, textX, y + qrSize + 10);
+      
+      // Add page number at the bottom
+      doc.setFontSize(10);
+      const pageText = `Страница ${i + 1} из ${qrDataUrls.length}`;
+      doc.text(pageText, pageWidth / 2, pageHeight - 10, { align: 'center' });
+    }
+    
+    // Save the PDF
+    doc.save(`qr-codes-${new Date().toISOString().slice(0, 10)}.pdf`);
+    
+    toast.success(`PDF с ${codes.length} QR-кодами успешно создан`);
   } catch (error) {
     console.error('Error generating PDF:', error);
-    toast.error('Ошибка при создании PDF');
+    toast.error('Ошибка при создании PDF. Попробуйте еще раз или обратитесь к администратору.');
+    throw error; // Re-throw to allow handling in the component
   }
 };
 
 /**
- * Print QR codes directly
+ * Print QR codes directly - one QR code per page
  */
 export const printQRCodes = (codes: QRCode[]): void => {
   try {
@@ -64,70 +122,100 @@ export const printQRCodes = (codes: QRCode[]): void => {
       return;
     }
     
-    // Generate HTML content for printing - one QR code per page
+    // Generate HTML content for printing - one QR code per page with flexible sizing
     let html = `
       <html>
       <head>
         <title>QR Codes Print</title>
         <style>
-          @page {
-            size: A9;
-            margin: 1cm;
-          }
-          body {
-            font-family: Arial, sans-serif;
+          /* Reset margins and padding */
+          * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
           }
+          
+          /* Basic body setup */
+          body {
+            font-family: Arial, sans-serif;
+          }
+          
+          /* Page container that works for any page size */
           .page {
-            height: 27.7cm;
-            width: 19cm;
+            width: 100vw;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             page-break-after: always;
             position: relative;
+            padding: 5%;
           }
+          
           .page:last-child {
             page-break-after: avoid;
           }
+          
+          /* QR code container - will center on any page size */
           .qr-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            width: 100%;
+            max-width: 100vmin; /* Responsive to viewport */
           }
+          
+          /* QR code - adapts to available space while maintaining aspect ratio */
           .qr-code {
-            width: 10cm;
-            height: 10cm;
+            width: 70vmin; /* Larger size since we have one per page */
+            height: 70vmin;
+            max-width: 500px; /* Cap size for very large displays */
+            max-height: 500px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: center;
           }
+          
           .qr-code img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
           }
+          
+          /* QR code label */
           .qr-value {
-            margin-top: 1cm;
-            font-size: 14pt;
+            margin-top: 4vmin;
+            font-size: calc(12pt + 0.5vmin);
             font-weight: bold;
             text-align: center;
           }
+          
+          /* Page number - stays at bottom */
           .page-number {
             position: absolute;
-            bottom: 0.5cm;
+            bottom: 3vmin;
             text-align: center;
-            font-size: 10pt;
+            font-size: calc(8pt + 0.3vmin);
             color: #666;
-            width: 100%;
           }
-          /* Make sure the content doesn't overflow */
+          
+          /* Print-specific settings */
           @media print {
             body {
               -webkit-print-color-adjust: exact;
               print-color-adjust: exact;
+            }
+            
+            /* Ensure page breaks work properly */
+            .page {
+              break-inside: avoid;
+              break-after: page;
+            }
+            
+            .page:last-child {
+              break-after: auto;
             }
           }
         </style>
@@ -136,21 +224,20 @@ export const printQRCodes = (codes: QRCode[]): void => {
     `;
     
     // Create a page for each QR code
-    codes.forEach((code, index) => {
-      const codeNumber = index + 1;
+    codes.forEach((code: QRCode) => {
+      const qrValue = generateQRValue(code.id);
       
       html += `
         <div class="page">
           <div class="qr-container">
             <div class="qr-code">
               <img 
-                src="https://api.qrserver.com/v1/create-qr-code/?size=140x197&data=${encodeURIComponent(code.code || code.value)}" 
-                alt="QR Code ${codeNumber}" 
+                src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(qrValue)}" 
+                alt="QR Code ${code.sequence}" 
               />
             </div>
-            <div class="qr-value">QR Код #${codeNumber}</div>
+            <div class="qr-value">${code.sequence}</div>
           </div>
-          <div class="page-number">Страница ${codeNumber} из ${codes.length}</div>
         </div>
       `;
     });

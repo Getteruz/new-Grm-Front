@@ -10,4 +10,5 @@ export type CurrencyData = {
 };
 export type WeatherData = {
   current: { temp_c: string; condition: { icon: string } };
+  className:string[]
 };

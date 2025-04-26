@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useQueryState, parseAsInteger } from 'nuqs';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 // Components imports
@@ -11,40 +10,42 @@ import Filters from './components/Filters';
 // Utilities and types
 import { TabType } from './type';
 import { generatePDF, printQRCodes } from './utils';
-import { useQRCodesFetch, useGenerateQRCodes } from './queries';
+import { useQRCodesFetch, useGenerateQRCodes, useClearQRCodes } from './queries';
 
 const QRCodeGenerator: React.FC = () => {
-  const navigate = useNavigate();
-  
   // Query state
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
-  const [limit] = useQueryState('limit', parseAsInteger.withDefault(18));
+  const [limit] = useQueryState('limit', parseAsInteger.withDefault(10)); // Match API default
   const [prefix, setPrefix] = useQueryState('prefix', { defaultValue: '' });
   const [type, setType] = useQueryState('type', { defaultValue: 'qr' as TabType });
   
   // Local state
   const [inputCount, setInputCount] = useState<number | string>(100);
+  const [isDownloading, setIsDownloading] = useState(false);
   
-  // Fetch QR codes
-  const { data, isLoading } = useQRCodesFetch({
+  // Fetch QR codes with infinite scrolling
+  const { 
+    data, 
+    isLoading, 
+    fetchNextPage, 
+    hasNextPage, 
+    isFetchingNextPage 
+  } = useQRCodesFetch({
     limit,
-    page,
     prefix,
     type
   });
   
-  // Extract data from API response
-  const qrCodes = data?.items || [];
-  const totalPages = data?.meta?.totalPages || 1;
-  const totalItems = data?.meta?.totalItems || 0;
+  // Extract data from API response and flatten pages
+  const qrCodes = data?.pages?.flatMap(page => page.items) || [];
   
+  // Get the first QR code for preview
+  const previewCode = qrCodes.length > 0 ? qrCodes[0] : null;
+  const totalItems = data?.pages[0].meta.totalItems || 0;
   // Generate QR codes mutation
   const { mutate: generateQRCodes, isPending: isGenerating } = useGenerateQRCodes();
   
-  // Preview QR code (first one in the list or a placeholder)
-  const previewCode = qrCodes.length > 0 
-    ? (qrCodes[0].code || `https://example.com/${qrCodes[0].value}`)
-    : 'https://example.com/placeholder';
+  // Clear QR codes mutation
+  const { mutate: clearQRCodes, isPending: isClearing } = useClearQRCodes();
   
   // Handlers
   const handleCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,23 +70,37 @@ const QRCodeGenerator: React.FC = () => {
   };
   
   const handleClear = () => {
-    // Reset form, but don't delete QR codes from server
-    setInputCount(100);
-    setPage(1);
-    setPrefix('');
+    // Check if there are QR codes to clear
+    if (qrCodes.length === 0) {
+      toast.info("Нет QR-кодов для очистки");
+      return;
+    }
+    
+    // Ask for confirmation before clearing
+    if (window.confirm("Вы уверены, что хотите очистить все QR-коды?")) {
+      // Call the clear API
+      clearQRCodes();
+      // Reset form state
+      setInputCount(100);
+      setPrefix('');
+    }
   };
   
-  const handleCancel = () => {
-    navigate(-1);
-  };
-  
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (qrCodes.length === 0) {
       toast.error("Нет QR-кодов для скачивания");
       return;
     }
     
-    generatePDF(qrCodes);
+    try {
+      setIsDownloading(true);
+      await generatePDF(qrCodes);
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+      toast.error('Ошибка при скачивании PDF');
+    } finally {
+      setIsDownloading(false);
+    }
   };
   
   const handlePrint = () => {
@@ -93,16 +108,16 @@ const QRCodeGenerator: React.FC = () => {
       toast.error("Нет QR-кодов для печати");
       return;
     }
-    
     printQRCodes(qrCodes);
   };
-  
+
   // Action handlers for Filters component
   const actions = {
     handleClear,
-    handleCancel,
     handleDownload,
-    handlePrint
+    handlePrint,
+    isClearing,
+    isDownloading
   };
   
   return (
@@ -118,25 +133,24 @@ const QRCodeGenerator: React.FC = () => {
       
       {/* Main Content */}
       <div className="flex flex-1">
-        {/* Navigation Header */}
-        <div className="flex flex-col w-full">
-          <div className="flex">
-            <QRCodePreview 
-              inputCount={inputCount} 
-              handleCountChange={handleCountChange} 
-              handleGenerate={handleGenerate} 
-              value={previewCode}
-              isGenerating={isGenerating}
-            />
-            <QRCodeGrid 
-              codes={qrCodes} 
-              isLoading={isLoading}
-              currentPage={page}
-              totalPages={totalPages}
-              onPageChange={setPage}
-            />
-          </div>
-        </div>
+        {/* QR Code Preview & Controls */}
+        <QRCodePreview 
+          previewCode={previewCode}
+          inputCount={inputCount} 
+          handleCountChange={handleCountChange} 
+          handleGenerate={handleGenerate} 
+          isGenerating={isGenerating}
+          totalItems={totalItems}
+        />
+        
+        {/* QR Code Grid with Infinite Scrolling */}
+        <QRCodeGrid 
+          codes={qrCodes} 
+          isLoading={isLoading}
+          hasNextPage={hasNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+          fetchNextPage={fetchNextPage}
+        />
       </div>
     </div>
   );

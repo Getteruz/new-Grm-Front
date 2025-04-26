@@ -10,7 +10,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { IData } from "../type";
 
 export default function Pricecheck({ selected }: { selected: IData[] }) {
-  const price = selected?.reduce((a, b) => a + b.price, 0);
+  const price = selected?.reduce((a, b) => a + b.additionalProfitSum, 0);
   const discount = selected?.reduce(
     (a, b) => a + Number(b.discountPercentage),
     0
@@ -29,6 +29,7 @@ export default function Pricecheck({ selected }: { selected: IData[] }) {
   return (
     <div className="w-full bg-card max-w-[312px] flex flex-col justify-between  h-[calc(100vh-90px)] pt-[23px] ">
       <div className="w-full  h-[calc(100vh-260px)]  overflow-y-scroll px-5">
+        <div className="sticky top-0">
         <p className="text-primary text-[14px] font-medium">Итого:</p>
         <p className="text-primary font-bold text-[28px] mt-0.5 mb-[27px]">
           {price} $
@@ -38,17 +39,20 @@ export default function Pricecheck({ selected }: { selected: IData[] }) {
           <p className="text-[22px] font-semibold">
             - {(price * discount) / 100}$
           </p>
-          <p className="text-[14px] font-semibold mt-2.5 text-[#E38157]">
+          {/* <p className="text-[14px] font-semibold mt-2.5 text-[#E38157]">
             -{discount}%
-          </p>
+          </p> */}
         </div>
         <div className="bg-background flex items-center  mb-2 text-primary justify-between px-[13px] py-[14px] ">
           <p className="text-[14px] font-semibold ">Промокод:</p>
           <p className="text-[22px] font-semibold">~</p>
         </div>
-
+        </div>
+        
+        
         <CheckList selected={selected} />
       </div>
+
       <div className="w-full">
         <Button
           onClick={AccepedFunt}

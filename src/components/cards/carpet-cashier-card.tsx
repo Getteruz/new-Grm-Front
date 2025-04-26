@@ -87,10 +87,10 @@ export default function CarpetCashierCard({
         className="absolute data-[state=checked]:bg-[#89A143] data-[state=checked]:border-[#89A143] w-[20px] h-[20px] rounded-full bg-background top-2 left-2 "
       />
       <img
-        className="object-cover"
+        className="object-cover min-w-[120px] h-full"
         style={{ aspectRatio: "0.72/1" }}
         src={img}
-        width={102.5}
+        width={120}
         height={140}
         alt="img"
       />
@@ -113,7 +113,7 @@ export default function CarpetCashierCard({
             <p className="text-[18px] ml-2 font-semibold text-[#58A0C6]">{plasticSum}</p>
           </div>
         </div>
-        <div className="mt-[14px] flex  items-start justify-between gap-7 mb-7">
+        <div className="mt-[14px] flex  items-start justify-between gap-7 mb-0">
           <div className="flex w-full gap-[4px] flex-wrap">
             {tags?.map((e) => (
               <p

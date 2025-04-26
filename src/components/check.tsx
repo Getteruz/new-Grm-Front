@@ -7,7 +7,7 @@ interface ICheckList{
 }
 export default function CheckList({selected}:ICheckList) {
     const {meUser} = useMeStore() 
-    const price =selected?.reduce((a,b)=> a + b.price, 0)
+    const price =selected?.reduce((a,b)=> a + b.additionalProfitSum, 0)
   return (
     <div className='w-full bg-background p-5 mb-[25px]'>
         <h3 className="text-center text-primary font-bold text-[18px]">{meUser?.filial?.name}</h3>
@@ -24,7 +24,7 @@ export default function CheckList({selected}:ICheckList) {
                 <p className="w-full">{String(item?.product?.bar_code?.collection?.title || '')}</p>
                 <p className="w-full text-end">{item?.product?.bar_code?.size?.title}</p>
                 <p className="w-full text-end">{item?.x}x</p>
-                <p className="w-full text-end">{item?.price}$</p>
+                <p className="w-full text-end">{item?.additionalProfitSum}$</p>
             </li> 
             ))
            }

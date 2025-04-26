@@ -8,7 +8,7 @@ export default function Weather(props:any) {
   const fetchWeather = async () => {
     try {
       const response = await fetch(
-        `http://api.weatherapi.com/v1/current.json?key=${
+        `https://api.weatherapi.com/v1/current.json?key=${
           // import.meta.env.VITE_WEATHER_API_KEY
           "2722cca9280348888f7220344250304"
         }&q=Tashkent&aqi=no`

@@ -138,15 +138,15 @@ export const DataMenu = {
     },
     {
       id: 6,
-      icons: () => DataLibrary({ width: 28, height: 28 }),
-      link: "/data-library",
-      text: "data-library",
-    },
-    {
-      id: 7,
       icons: () => PriceIcons({ width: 28, height: 28 }),
       link: "/price",
       text: "Цени и скидки",
+    },
+    {
+      id: 7,
+      icons: () => DataLibrary({ width: 28, height: 28 }),
+      link: "/data-library",
+      text: "Библиотека",
     },
   ],
   4: [

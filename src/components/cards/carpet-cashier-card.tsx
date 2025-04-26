@@ -156,7 +156,7 @@ export default function CarpetCashierCard({
                 className={`${status == "rejected" ? "text-[#E38157] border-[#E38157] hover:text-[#E38157]" : status == "accepted" ? "text-[#89A143] border-[#89A143] hover:text-[#89A143]" : "text-primary border-primary hover:text-primary"} rounded-[70px] p-[14px] h-10 `}
                 variant={"outline"}
               >
-                {status === "rejected" ? "Отменено" : status === "cancelled" ? "Возвращено" : "Подтверждено" }
+                {status === "rejected" ? "Отменено" : status === "canceled" ? "Возвращено" : "Подтверждено" }
               </Button>
             )}
 

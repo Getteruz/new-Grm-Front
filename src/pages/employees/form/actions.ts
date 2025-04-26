@@ -8,7 +8,7 @@ import {
 import { AddData, getByIdData, UpdatePatchData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
-import { TQuery,TData } from "../type";
+import { TData, TQuery } from "../type";
 import { UserFormType } from "./schema";
 
 interface AuthResponse {
@@ -38,12 +38,19 @@ export const useUserMutation = ({
     mutationFn: async ({ data, id }) => {
       const costomData: object = {
         ...data,
-        filial:data?.filial?.value,
-        position:data?.position?.value
+
+        position: data?.position?.value,
       };
       if (id)
-        return await UpdatePatchData<UserFormType>(apiRoutes.user, id, costomData as UserFormType);
-      return await AddData<UserFormType>(apiRoutes.user, costomData as UserFormType);
+        return await UpdatePatchData<UserFormType>(
+          apiRoutes.user,
+          id,
+          costomData as UserFormType
+        );
+      return await AddData<UserFormType>(
+        apiRoutes.user,
+        costomData as UserFormType
+      );
     },
   });
 

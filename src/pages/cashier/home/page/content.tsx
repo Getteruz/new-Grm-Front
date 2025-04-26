@@ -35,7 +35,7 @@ export default function Content({orderList}:{orderList:IData[]}) {
             item?.product?.bar_code?.country?.title,
             item?.product?.partiya_title,
             ]} 
-          discount={`-${item?.discountPercentage}%`} 
+          discount={item?.discountPercentage === null ? "~" : `-${item?.discountPercentage}%`} 
           id={item?.id } 
           img="/images/image.png" 
           model={item?.product?.bar_code?.model?.title}

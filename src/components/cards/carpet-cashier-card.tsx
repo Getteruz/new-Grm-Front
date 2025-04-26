@@ -3,7 +3,7 @@ import { FileOutput, MoreVertical, OctagonX } from "lucide-react";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { IData } from "@/pages/cashier/home/type";
-import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useMeStore } from "@/store/me-store";
 import { UpdatePatchData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
@@ -15,6 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { minio_img_url } from "@/constants";
 
 interface ICarpetCard {
   id: string;
@@ -90,17 +91,19 @@ export default function CarpetCashierCard({
         alt="img"
       />
       <div className="w-full pt-[20px] px-[12px]">
-        <div className="flex items-center flex-wrap gap-3">
-          <p className="text-[18px] font-semibold text-[#5D5D53]">
-            {colaction}
-          </p>
-          <p className="text-[18px] font-semibold text-[#5D5D53]">{model}</p>
-          <p className="text-[18px] font-semibold text-[#5D5D53]">{size}</p>
-          <p className="text-[18px] font-semibold text-[#5D5D53]">
-            {priceMitr}
-          </p>
-          <p className="text-[18px] font-semibold text-[#5D5D53]">{count}</p>
-          <p className="text-[18px] font-semibold text-[#E38157]">{discount}</p>
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <div className="flex items-center justify-between flex-wrap w-2/3">
+            <p className="text-[18px] font-semibold text-[#5D5D53]">
+              {colaction}
+            </p>
+            <p className="text-[18px] font-semibold text-[#5D5D53]">{model}</p>
+            <p className="text-[18px] font-semibold text-[#5D5D53]">{size}</p>
+            <p className="text-[18px] font-semibold text-[#5D5D53]">
+              {priceMitr}
+            </p>
+            <p className="text-[18px] font-semibold text-[#5D5D53]">{count}</p>
+          </div>
+          <p className="text-[18px] font-semibold text-[#E38157]">{discount === null ? "~" : discount}</p>
           <p className="text-[18px] font-semibold text-[#5D5D53]">{price}</p>
         </div>
         <div className="mt-[14px] flex  items-start justify-between gap-7 mb-7">
@@ -119,6 +122,7 @@ export default function CarpetCashierCard({
           <div className="flex gap-1 items-center">
             {seller && (
               <Avatar className="w-[40px] h-[40px]">
+                <AvatarImage src={minio_img_url + seller?.avatar?.path}/>
                 <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
                   {seller?.firstName?.[0]} {seller?.lastName?.[0]}
                 </AvatarFallback>
@@ -126,6 +130,7 @@ export default function CarpetCashierCard({
             )}
             {status != "progress" && meUser && (
               <Avatar className="w-[40px] h-[40px]">
+                <AvatarImage src={minio_img_url + seller?.avatar?.path}/>
                 <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
                   {meUser?.firstName?.[0]}
                   {meUser?.lastName?.[0]}
@@ -141,10 +146,10 @@ export default function CarpetCashierCard({
               </Button>
             ) : (
               <Button
-                className={`${status == "rejected" ? "text-[#E38157] border-[#E38157]" : status == "accepted" ? "text-[#89A143] border-[#89A143]" : "text-primary border-primary"} rounded-[70px] p-[14px] h-10 `}
+                className={`${status == "rejected" ? "text-[#E38157] border-[#E38157] hover:text-[#E38157]" : status == "accepted" ? "text-[#89A143] border-[#89A143] hover:text-[#89A143]" : "text-primary border-primary hover:text-primary"} rounded-[70px] p-[14px] h-10 `}
                 variant={"outline"}
               >
-                {status}
+                {status === "rejected" ? "Отменено" : status === "cancelled" ? "Возвращено" : "Подтверждено" }
               </Button>
             )}
 
@@ -153,8 +158,8 @@ export default function CarpetCashierCard({
             ) : (
               <DropdownMenu>
                 <DropdownMenuTrigger className="text-end" asChild>
-                  <Button className="w-10 h-10 rounded-full text-[#5D5D53] bg-white">
-                    <MoreVertical className="h-4 w-4" />
+                  <Button className="w-10 h-10 rounded-full text-[#5D5D53] bg-[#F0F0E5] hover:text-[#F0F0E5]">
+                    <MoreVertical className="h-4 w-4 hover:text-[#F0F0E5]" />
                   </Button>
                 </DropdownMenuTrigger>
 

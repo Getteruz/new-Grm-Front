@@ -74,7 +74,7 @@ export default function CardSort() {
 
   return (
     <>
-        <div className="p-6 flex gap-1 sticky top-10 z-30 bg-[#f8f6e9]">
+        <div className="p-6 flex gap-1 sticky top-10 z-10 bg-[#f8f6e9]">
           <div className="bg-sidebar p-5 w-full max-w-[399px]">
             <div className="flex items-center">
               <DollarIcon />

@@ -25,11 +25,13 @@ interface ICarpetCard {
   count: string;
   img: string;
   price: string;
+  plasticSum:string;
   priceMitr: string;
   color: string;
   colaction: string;
   discount: string;
   tags: string[];
+  date: string;
   status?: string;
   onCheckedChange: (e: boolean) => void;
   seller: IData["seller"];
@@ -45,11 +47,13 @@ export default function CarpetCashierCard({
   model,
   size,
   price,
+  plasticSum,
   discount,
   count,
   img,
   colaction,
   tags,
+  date,
 }: ICarpetCard) {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
@@ -104,7 +108,10 @@ export default function CarpetCashierCard({
             <p className="text-[18px] font-semibold text-[#5D5D53]">{count}</p>
           </div>
           <p className="text-[18px] font-semibold text-[#E38157]">{discount === null ? "~" : discount}</p>
-          <p className="text-[18px] font-semibold text-[#5D5D53]">{price}</p>
+          <div className="flex justify-between">
+            <p className="text-[18px] font-semibold text-[#5D5D53]">{price}</p>
+            <p className="text-[18px] ml-2 font-semibold text-[#58A0C6]">{plasticSum}</p>
+          </div>
         </div>
         <div className="mt-[14px] flex  items-start justify-between gap-7 mb-7">
           <div className="flex w-full gap-[4px] flex-wrap">
@@ -130,7 +137,7 @@ export default function CarpetCashierCard({
             )}
             {status != "progress" && meUser && (
               <Avatar className="w-[40px] h-[40px]">
-                <AvatarImage src={minio_img_url + seller?.avatar?.path}/>
+                <AvatarImage src={minio_img_url + meUser?.avatar?.path.slice(1)}/>
                 <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
                   {meUser?.firstName?.[0]}
                   {meUser?.lastName?.[0]}
@@ -199,8 +206,7 @@ export default function CarpetCashierCard({
           </div>
         </div>
         <div className="flex items-center justify-end gap-2 text-[10px] text-[#5D5D53]">
-          <p>Продажа</p>
-          <p>10:37</p>
+          <p>{date}</p>
         </div>
       </div>
     </label>

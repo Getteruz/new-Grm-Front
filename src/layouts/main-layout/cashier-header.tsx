@@ -15,7 +15,6 @@ import { CurrencyData } from "./types";
 import { DollarIcon } from "@/components/icons";
 import { Badge } from "@/components/ui/badge";
 import { minio_img_url } from "@/constants";
-import { any } from "zod";
 
 export default function CashierHeader() {
   const { meUser } = useMeStore();
@@ -35,6 +34,8 @@ export default function CashierHeader() {
       queryKey: ["currency", token, meUser],
       queryFn: () => getAllData<CurrencyData, unknown>("currency"),
   });
+
+  const notificationCount = data?.orders.filter((order)=>order.status === "progress").length;
 
   return (
     <header className="h-[90px] bg-sidebar border-b border-border flex ">
@@ -56,7 +57,10 @@ export default function CashierHeader() {
           </div>
           <div className="relative">
             <BellRing className="text-primary w-7 h-7" />
-            <Badge variant={"destructive"} className="absolute -top-2 -right-1 rounded-full flex align-middle justify-center items-center w-5 h-5 bg-[#E38157] border-[#E38157] text-white">2</Badge>
+            
+            <Badge variant={"destructive"} className="absolute -top-2 -right-1 rounded-full flex align-middle justify-center items-center w-5 h-5 bg-[#E38157] border-[#E38157] text-white">
+             {notificationCount}
+            </Badge>
           </div>
           <div>
             <Avatar className="w-[50px] h-[50px]">

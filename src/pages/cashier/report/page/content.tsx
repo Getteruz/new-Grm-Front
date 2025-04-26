@@ -10,8 +10,8 @@ import { IData } from "../../home/type";
 export default function Content() {
   // Fetch report data
   const { data: reportData, isLoading } = useKassaReport();
-  const [selected, setSelected] =useState<IData[]>([])
-
+  const [selected, _setSelected] =useState<IData[]>([])
+  
   return (
     <div className="flex">
       <div className="w-full">

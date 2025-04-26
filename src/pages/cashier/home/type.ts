@@ -15,7 +15,7 @@ export interface IData {
   seller: {
     id: string;
     isActive: boolean;
-    avatar: string | null;
+    avatar: any;
     firstName: string;
     lastName: string;
     fatherName: string;

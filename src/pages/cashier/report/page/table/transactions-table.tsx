@@ -31,7 +31,7 @@ export default function TransactionsTable({ report }: TransactionsTableProps) {
       inkassation: formatPrice(report.cashFlowSumBoss),
       isFirstRow: true 
     },
-    ...(report.cashflowAndOrders || []).slice(0, 8).map((item, index) => {
+    ...(report.cashflowAndOrders || []).slice(0, 8).map((_item, index) => {
       return {
         id: index + 2,
         date: "10 Март 2025",

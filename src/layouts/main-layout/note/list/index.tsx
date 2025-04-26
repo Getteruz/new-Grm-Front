@@ -7,7 +7,6 @@ import Content from "./content";
 import useDataFetch from "./queries";
 
 export default function NotePage(isCashier:any) {
-  console.log(isCashier)
   const [active, setActive] = useState(false);
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));

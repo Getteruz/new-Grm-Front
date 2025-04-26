@@ -25,7 +25,7 @@ const Sort = [
 ]
 export default function Filters({countLength}:{countLength:number}) {
   return (
-    <div className='w-full flex h-[40px] bg-sidebar'>
+    <div className='w-full sticky top-0 flex h-[40px] bg-sidebar'>
         <FilterSelect 
             options={Sort}
             className='max-w-[426px] bg-primary text-[#E6E6D9]  w-full'

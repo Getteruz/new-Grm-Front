@@ -34,6 +34,7 @@ interface DataTableProps<TData, TValue> {
   isRowClickble?: boolean;
   fetchNextPage?: () => void;
   onSelectionChange?: (selectedRows: TData[]) => void;
+  hasHeader?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -46,6 +47,7 @@ export function DataTable<TData, TValue>({
   hasNextPage = false,
   fetchNextPage,
   onSelectionChange,
+  hasHeader = true,
 }: DataTableProps<TData, TValue>) {
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -137,7 +139,7 @@ export function DataTable<TData, TValue>({
       ) : (
         <>
           <Table>
-            <TableHeader>
+            {hasHeader ? <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
@@ -149,30 +151,31 @@ export function DataTable<TData, TValue>({
                         {header.isPlaceholder
                           ? null
                           : typeof flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              ) == "string"
+                            header.column.columnDef.header,
+                            header.getContext()
+                          ) == "string"
                             ? t(
-                                String(
-                                  flexRender(
-                                    header.column.columnDef.header,
-                                    header.getContext()
-                                  )
+                              String(
+                                flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
                                 )
                               )
+                            )
                             : null}
                       </TableHead>
                     );
                   })}
                 </TableRow>
               ))}
-            </TableHeader>
+            </TableHeader> : ""
+            }
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    className="px-5 cursor-pointer "
+                    className="px-5 cursor-pointer odd:bg-[#f8f6e9] even:bg-[#E6E6D9]"
                     onClick={() => {
                       if (isRowClickble) {
                         navigate(

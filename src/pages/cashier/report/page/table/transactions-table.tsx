@@ -66,7 +66,7 @@ export default function TransactionsTable({ report }: TransactionsTableProps) {
   }
 
   const columns = getTransactionColumns();
-
+  
   return (
     <div className="bg-white border rounded">
       <DataTable 
@@ -74,6 +74,7 @@ export default function TransactionsTable({ report }: TransactionsTableProps) {
         data={tableData} 
         isLoading={false}
         className="rounded-none border-none"
+        isRowClickble={true}
       />
     </div>
   );

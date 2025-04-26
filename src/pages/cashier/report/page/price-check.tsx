@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 
 export default function Pricecheck() {
   return (
-    <div className="w-full bg-card max-w-[312px] flex flex-col justify-between h-[calc(100vh-90px)] p-[20px]">
-      <div className="w-full max-w-md bg-[#f8f6e9] text-[#5D5D53] p-5 mx-auto font-sans">
+    <div className="w-full bg-card max-w-[312px] flex flex-col justify-between h-full p-[10px] pt-0 sticky top-10">
+      <div className="w-full max-w-md bg-[#f8f6e9] text-[#5D5D53] p-5 mx-auto font-sans overflow-scroll h-[470px]">
       {/* Header */}
       <h1 className="text-[18px] text-center text-[#5D5D53] mb-1">Sanat Hali</h1>
       <p className="text-center text-[#5D5D53] text-[10px] mb-6">Вс, Май 5, 2024 • 20:07:53</p>
@@ -20,6 +20,31 @@ export default function Pricecheck() {
       {/* Items Section */}
       <div className="mb-4">
         <div className="flex justify-between mb-6">
+          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
+          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
+        </div>
+        <div className="flex justify-between mb-6">
+          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
+          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
+        </div><div className="flex justify-between mb-6">
+          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
+          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
+        </div><div className="flex justify-between mb-6">
+          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
+          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
+        </div><div className="flex justify-between mb-6">
+          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
+          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
+        </div><div className="flex justify-between mb-6">
+          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
+          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
+        </div><div className="flex justify-between mb-6">
+          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
+          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
+        </div><div className="flex justify-between mb-6">
+          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
+          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
+        </div><div className="flex justify-between mb-6">
           <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
           <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
         </div>
@@ -59,11 +84,11 @@ export default function Pricecheck() {
        
         
         <Button className="w-full py-10.5 p-10 bg-primary mt-auto text-background text-[22px] font-semibold">
-          Подтвердить продажу
+        Закрыть кассу
         </Button>
         
         <div className="flex items-center text-primary justify-end px-4 py-2">
-          <p className="text-[14px] font-medium mr-3">12 Mart. 2025</p>
+          <p className="text-[14px] font-medium mr-3 ">12 Mart. 2025</p>
           <p className="text-[14px] font-medium">08:32</p>
         </div>
       </div>

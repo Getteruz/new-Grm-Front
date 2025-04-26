@@ -10,25 +10,27 @@ import { IData } from "../../home/type";
 export default function Content() {
   // Fetch report data
   const { data: reportData, isLoading } = useKassaReport();
-  const [selected, _setSelected] =useState<IData[]>([])
-  
+  const [selected, _setSelected] = useState<IData[]>([])
+
   return (
-    <div className="flex">
-      <div className="w-full">
-        <Filters countLength={selected.length} />
-        <CardSort />
-        <div className="my-[13px] mx-[30px]">
-          {isLoading ? (
-            <div className="space-y-4">
-              <Skeleton className="h-12 w-full" />
-              <Skeleton className="h-64 w-full" />
-            </div>
-          ) : (
-            <TransactionsTable report={reportData} />
-          )}
+    <>
+      <Filters countLength={selected.length} />
+      <div className="flex justify-between w-full bg-[#f8f6e9]">
+        <div className="flex flex-col h-screen w-full">
+          <CardSort />
+          <div className="flex-1 overflow-auto p-4">
+            {isLoading ? (
+              <div className="space-y-2">
+                <Skeleton className="h-12 w-full" />
+                <Skeleton className="h-64 w-full" />
+              </div>
+            ) : (
+              <TransactionsTable report={reportData} />
+            )}
+          </div>
         </div>
+        <Pricecheck />
       </div>
-      <Pricecheck/>
-    </div>
+    </>
   )
 }

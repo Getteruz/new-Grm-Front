@@ -48,7 +48,7 @@ export default function Content({orderList}:{orderList:IData[]}) {
           priceMitr={item?.product?.collection_price?.priceMeter ? item?.product?.collection_price?.priceMeter  +"$": 0 +"$"}
           colaction={item?.product?.bar_code?.collection?.title}
           color="Beige"
-          date={format(item.date, 'yyyy-dd-MM HH:MM')}
+          date={format(item.date, 'yyyy-MM-dd HH:MM')}
           />
         })
      }

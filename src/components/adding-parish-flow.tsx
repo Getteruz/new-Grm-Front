@@ -14,7 +14,7 @@ import { useMeStore } from "@/store/me-store";
 import { useQuery } from "@tanstack/react-query";
 import { Spinner } from "./ui/spinner";
 import { TResponse } from "@/types";
-interface CategoryProps {
+export interface CategoryProps {
   title: string;
   icons?: () => JSX.Element;
   isSelected: boolean;
@@ -86,7 +86,7 @@ export default function AddingParishOrFlow() {
 
   // Prepare categories data with cashflow type IDs
   const getCategories = () => {
-    if (!cashflowTypes || !Array.isArray(cashflowTypes)) {
+    if (cashflowTypes || Array.isArray(cashflowTypes)) {
       return [
         { id: "inkasatsiya", title: "Инкасатсия", icon: () => <Shield /> },
         { id: "arenda", title: "Аренда", icon: () => <Store /> },
@@ -97,8 +97,7 @@ export default function AddingParishOrFlow() {
 
     // Filter cashflow types based on current operation type (parish = "Приход", flow = "Расход")
     const operationType = type === "parish" ? "in" : "out";
-    return cashflowTypes
-      .filter(ct => ct.type === operationType || ct.type === "both")
+    return cashflowTypes ? cashflowTypes : [{type:"",id:"",title:"", icon:""}].filter(ct => ct.type === operationType || ct.type === "both")
       .map(ct => ({
         id: ct.id,
         title: ct.title,
@@ -154,6 +153,7 @@ export default function AddingParishOrFlow() {
       tip: "cashflow"
     };
 
+
     // Send to API
     addCashflow(cashflowData);
   };
@@ -180,7 +180,7 @@ export default function AddingParishOrFlow() {
       </div>
 
 
-      <DialogContent className="min-w-[494px] p-1">
+      <DialogContent className="min-w-[494px] p-1 rounded-[10px]">
         
         <div className={`p-2 rounded-[7px] text-center ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}>
           {type === "parish" ? "Добавление прихода" : "Добавление расхода"}
@@ -213,10 +213,11 @@ export default function AddingParishOrFlow() {
                 placeholder="0.00"
                 value={amount}
                 type="number"
+                min={0}
                 onChange={(e) => setAmount(e.target.value)}
                 className="w-full border-none h-[90px] placeholder:text-[32px] !text-[32px] font-semibold rounded-[7px] bg-transparent px-0"
               />
-              <div className="text-4xl text-gray-400 mx-4">$</div>
+              <div className="text-4xl text-[#5D5D53] mx-4">$</div>
             </div>
             
             <Textarea

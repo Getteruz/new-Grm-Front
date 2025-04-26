@@ -55,7 +55,7 @@ export default function CarpetCard({
     <div
       className={`w-full relative bg-sidebar border-border border ${className && className}`}
     >
-      <div className="flex ">
+      <div className="flex border-b border-border">
         <p className="p-2 w-full text-[12px] text-primary text-center border-border border-r">
           {model}
         </p>

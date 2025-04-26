@@ -27,9 +27,9 @@ type Tmenu = {
 };
 export default function Header() {
   const token = useAuthStore((state) => state.token);
+  const { meUser } = useMeStore();
 
   const location = useLocation();
-  const { meUser } = useMeStore();
   const navigate = useNavigate();
   const { data: currency } = useQuery({
     queryKey: ["currency", token, meUser],

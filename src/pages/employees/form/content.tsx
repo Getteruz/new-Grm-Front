@@ -62,7 +62,6 @@ export default function FormContent() {
           <FormTimePicker className="w-1/2" name="to" placeholder="До" />
         </div>
         <FormTextInput
-          type="number"
           label="Номер телефона"
           className="w-full"
           name="phone"

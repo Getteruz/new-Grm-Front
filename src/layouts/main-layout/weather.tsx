@@ -3,7 +3,7 @@ import { toast } from "sonner";
 
 import { WeatherData } from "./types";
 
-export default function Weather(props:any) {
+export default function Weather() {
   const [weather, setWeather] = useState<WeatherData>();
   const fetchWeather = async () => {
     try {
@@ -27,7 +27,7 @@ export default function Weather(props:any) {
   }, []);
 
   return (
-    <div className={`flex items-center gap-1 mr-2 ${props.className}`}>
+    <div className={`flex items-center gap-1 mr-2 `}>
       <img width={48} src={weather?.current?.condition?.icon} />
       <h3 className="text-[24px] relative text-primary leading-[120%]">
         {weather?.current?.temp_c}

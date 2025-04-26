@@ -23,10 +23,6 @@ const ActionPage = () => {
   const queryClient = useQueryClient();
   const resetFrom = () => {
     form.reset({
-      filial: {
-        value: undefined,
-        label: undefined,
-      },
       firstName: undefined,
       lastName: undefined,
       fatherName: undefined,
@@ -58,10 +54,6 @@ const ActionPage = () => {
   useEffect(() => {
     if (data) {
       form.reset({
-        filial: {
-          value: data?.filial?.id,
-          label: data?.filial?.title,
-        },
         firstName: data?.firstName,
         lastName: data?.lastName,
         fatherName: data?.fatherName,

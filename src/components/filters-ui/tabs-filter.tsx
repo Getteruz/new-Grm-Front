@@ -28,7 +28,7 @@ export default function TabsFilter() {
     <div className="flex  ">
       {data?.data?.map((e) => (
         <p
-          className={`${filial == e?.id ? "bg-primary text-sidebar" : ""} border-border border text-[] bg-background px-4 border-r border-border py-2.5 text-foreground cursor-pointer`}
+          className={`${filial == e?.id ? "bg-primary text-sidebar" : ""} border text-[] bg-background px-4 border-r border-border py-2.5 text-foreground cursor-pointer`}
           onClick={() => setFilial(e?.id)}
           key={e?.id}
         >

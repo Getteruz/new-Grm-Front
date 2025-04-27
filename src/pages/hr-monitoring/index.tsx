@@ -19,7 +19,6 @@ import { mockEmployees, mockFilials, monitoringTypes } from "./mock-data";
 import { useMonitoringItems } from "./queries";
 
 export default function MonitoringDashboard() {
-  const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [employeeId, setEmployeeId] = useState<string | undefined>(undefined);
   const [filialId, setFilialId] = useState<string | undefined>(undefined);
   const [type, setType] = useState<string | undefined>(undefined);
@@ -31,14 +30,6 @@ export default function MonitoringDashboard() {
     employeeId,
     type
   });
-  
-  const handleSelectRow = (id: string) => {
-    setSelectedRows(prev => 
-      prev.includes(id) 
-        ? prev.filter(rowId => rowId !== id) 
-        : [...prev, id]
-    );
-  };
   
   return (
     <div className="flex flex-col h-full">
@@ -99,10 +90,7 @@ export default function MonitoringDashboard() {
       {/* Data Table */}
       <div className="mx-4 mb-4 flex-1">
         <DataTable
-          columns={MonitoringColumns({
-            selectedRows,
-            onSelect: handleSelectRow
-          })}
+          columns={MonitoringColumns()}
           data={monitoringData?.pages.flatMap(page => page.items) ?? []}
           isLoading={isLoading}
         //   fetchNextPage={fetchNextPage}

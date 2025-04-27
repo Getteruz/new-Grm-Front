@@ -6,68 +6,21 @@ import { GiftIcon, Wallet } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 
 import { MonitoringItem } from "./types";
 
-interface MonitoringColumnsProps {
-  selectedRows: string[];
-  onSelect: (id: string) => void;
-}
-
-export const MonitoringColumns = ({
-  selectedRows,
-  onSelect,
-}: MonitoringColumnsProps): ColumnDef<MonitoringItem>[] => [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getRowModel().rows.length > 0 &&
-          table.getRowModel().rows.every(row => 
-            selectedRows.includes(row.original.id)
-          )
-        }
-        onCheckedChange={(checked) => {
-          if (checked) {
-            const allRowIds = table.getRowModel().rows.map(row => row.original.id);
-            allRowIds.forEach(id => {
-              if (!selectedRows.includes(id)) {
-                onSelect(id);
-              }
-            });
-          } else {
-            table.getRowModel().rows.forEach(row => {
-              if (selectedRows.includes(row.original.id)) {
-                onSelect(row.original.id);
-              }
-            });
-          }
-        }}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center">
-        <Checkbox
-          checked={selectedRows.includes(row.original.id)}
-          onCheckedChange={() => onSelect(row.original.id)}
-          aria-label="Select row"
-          className="mr-2"
-        />
-        {getTypeIcon(row.original.type)}
-      </div>
-    ),
-    enableSorting: false,
-    size:50
-  },
+export const MonitoringColumns = (): ColumnDef<MonitoringItem>[] => [
   {
     id: "amount",
     header: "Сумма",
     cell: ({ row }) => {
       const { type, amount } = row.original;
-      return getTypeColor(type, amount);
+      return (
+        <div className="flex items-center">
+        {getTypeIcon(row.original.type)}
+        {getTypeColor(type, amount)}
+        </div>
+      );
     },
     size:50
   },
@@ -141,19 +94,19 @@ const getTypeIcon = (type: string) => {
   switch (type) {
     case 'bonus':
       return (
-        <div className="w-12 h-12 bg-[#CBB26A] flex items-center justify-center">
+        <div className="w-12 h-12 mr-2 bg-[#CBB26A] flex items-center justify-center">
           <GiftIcon className="text-white" />
         </div>
       );
     case 'salary':
       return (
-        <div className="w-12 h-12 bg-[#E38157] flex items-center justify-center">
+        <div className="w-12 h-12 mr-2 bg-[#E38157] flex items-center justify-center">
           <Wallet className="text-white" />
         </div>
       );
     case 'premium':
       return (
-        <div className="w-12 h-12 bg-[#89A1C8] flex items-center justify-center">
+        <div className="w-12 h-12 mr-2 bg-[#89A1C8] flex items-center justify-center">
           <GiftIcon className="text-white" />
         </div>
       );

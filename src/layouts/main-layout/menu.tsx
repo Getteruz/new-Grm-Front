@@ -16,7 +16,7 @@ export default function Menu() {
 
   return (
     <div
-      className={`${meUser?.position?.role == 3 ? " w-[90px] " : " w-[104px] "} h-screen flex relative pb-[110px] justify-between flex-col  border-r bg-sidebar  border-border`}
+      className={`${meUser?.position?.role == 3 ? " w-[90px] " : " w-[104px] "} h-screen flex relative pb-[110px] justify-between flex-col  border-r bg-sidebar  border-border `}
     >
       <img
         src="/logo1.svg"
@@ -29,7 +29,7 @@ export default function Menu() {
               onClick={() => {
                 navigate("/dashboard");
               }}
-              className={`group hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[12px]`}
+              className={`${meUser?.position?.role === 11 ? "hidden":""} group hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[12px]`}
             >
               <HomeIcons />
               <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-[#F0F0E5] border-[#CBCBC1] border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">

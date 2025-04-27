@@ -614,6 +614,12 @@ export const DataMenu = {
   ],
   11: [
     {
+      id: 1,
+      icons: () => HomeIcons(),
+      link: "/monitoring", // This should point to the monitoring dashboard
+      text: "Мониторинг",
+    },
+    {
       id: 2,
       icons: () => StatementIcon(),
       link: "/statement",

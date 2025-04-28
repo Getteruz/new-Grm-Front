@@ -222,12 +222,12 @@ export const DataMenu = {
       link: "/product-check",
       text: "Проверка продукта",
     },
-    // {
-    //   id: 3,
-    //   icons: () => ClientsIcon(),
-    //   link: "/client",
-    //   text: "Клиенты",
-    // },
+    {
+      id: 3,
+      icons: () => ClientsIcon(),
+      link: "/client",
+      text: "Клиенты",
+    },
     {
       id: 4,
       icons: () => DataLibrary({}),
@@ -600,10 +600,10 @@ export const DataMenu = {
   ],
   10: [
     {
-      id: 3,
-      icons: () => PersonsIcons(),
-      link: "/user",
-      text: "Сотрудники",
+      id: 1,
+      icons: () => UfoBottom(),
+      link: "/report",
+      text: "Дилеры",
     },
     {
       id: 4,
@@ -616,12 +616,6 @@ export const DataMenu = {
       icons: () => PriceIcons({}),
       link: "/price",
       text: "Цени и скидки",
-    },
-    {
-      id: 6,
-      icons: () => HikVision(),
-      link: "/hik-vision",
-      text: "Hik Vision",
     },
   ],
   11: [

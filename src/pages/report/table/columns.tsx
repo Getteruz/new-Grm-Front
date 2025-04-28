@@ -401,7 +401,7 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
       return (
         <div className="flex">
           <p
-            className={`${row.original.tip === "order" ? "border-[#E38157] text-[#E38157]" : "border-[#21212130] text-[#21212130]"} min-w-[140px] rounded-4xl px-[14px]  w-[100px] text-center py-3 border `}
+            className={`${row.original.tip === "Приход" ? "border-[#E38157] text-[#E38157]" : "border-[#21212130] text-[#21212130]"} min-w-[140px] rounded-4xl px-[14px]  w-[100px] text-center py-3 border `}
           >
             {row.original.tip === "order" ? "Не принято" : "Принято"}
           </p>

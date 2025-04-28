@@ -220,12 +220,12 @@ export const DataMenu = {
       link: "/product-check",
       text: "Проверка продукта",
     },
-    {
-      id: 3,
-      icons: () => ClientsIcon(),
-      link: "/client",
-      text: "Клиенты",
-    },
+    // {
+    //   id: 3,
+    //   icons: () => ClientsIcon(),
+    //   link: "/client",
+    //   text: "Клиенты",
+    // },
     {
       id: 4,
       icons: () => DataLibrary({}),

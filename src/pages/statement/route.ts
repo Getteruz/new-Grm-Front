@@ -1,14 +1,15 @@
+import DetailPage from "./detail";
 import Page from "./table";
 
 const Route = [
   {
-    url: "/hik-vision",
+    url: "/statement",
     Element: Page,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {
-    url: "/hik-vision/user/:id",
-    Element: Page,
+    url: "/statement/:id/info",
+    Element: DetailPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
 ];

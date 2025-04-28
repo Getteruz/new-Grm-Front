@@ -18,6 +18,17 @@ export const HomeIcons = () => {
   );
 };
 
+export const StatementIcon = () => {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 5H6C5.46957 5 4.96086 5.21071 4.58579 5.58579C4.21071 5.96086 4 6.46957 4 7V19C4 19.5304 4.21071 20.0391 4.58579 20.4142C4.96086 20.7893 5.46957 21 6 21H11.697M8 5C8 6.10457 8.89543 7 10 7H12C13.1046 7 14 6.10457 14 5M8 5C8 3.89543 8.89543 3 10 3H12C13.1046 3 14 3.89543 14 5M18 14V18H22M18 14C15.7909 14 14 15.7909 14 18C14 20.2091 15.7909 22 18 22C20.2091 22 22 20.2091 22 18M18 14C20.2091 14 22 15.7909 22 18M18 11V7C18 6.46957 17.7893 5.96086 17.4142 5.58579C17.0391 5.21071 16.5304 5 16 5H14M8 11H12M8 15H11" stroke="#5D5D53" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  )
+}
+
+
+
+
 export const DollarIcon = () => {
   return (
     <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -423,6 +434,9 @@ export const DataLibrary = ({
   );
 };
 
+
+
+
 export const PersonsIcons = () => {
   return (
     <svg
@@ -439,6 +453,22 @@ export const PersonsIcons = () => {
         stroke-linecap="round"
         stroke-linejoin="round"
       />
+    </svg>
+  );
+};
+
+export const HikVisionIcon = () => {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 8V6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8M4 16V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H8M16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V8M16 20H18C18.5304 20 19.0391 19.7893 19.4142 19.4142C19.7893 19.0391 20 18.5304 20 18V16M12 12H11.99M7 12C10.333 7.33301 13.667 7.33301 17 12C13.667 16.667 10.333 16.667 7 12Z" stroke="#5D5D53" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  );
+};
+
+export const DiamondIcon = () => {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22 12C22 9.34784 20.9464 6.8043 19.0711 4.92893C17.1957 3.05357 14.6522 2 12 2C9.34784 2 6.8043 3.05357 4.92893 4.92893C3.05357 6.8043 2 9.34784 2 12M22 12C22 10.34 20.54 9 18.75 9C16.95 9 15.5 10.34 15.5 12M22 12L12 22M2 12C2 10.34 3.45 9 5.25 9C7.04 9 8.5 10.34 8.5 12M2 12L12 22M15.5 12C15.5 10.34 13.93 9 12 9C10.07 9 8.5 10.34 8.5 12M15.5 12L12 22M8.5 12L12 22" stroke="#5D5D53" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
   );
 };

@@ -180,7 +180,7 @@ export function DataTable<TData, TValue>({
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    className="px-5 cursor-pointer odd:bg-[#f8f6e9] even:bg-[#EAEADE]"
+                    className="px-5 cursor-pointer odd:bg-[#F0F0E5]  even:bg-[#EAEADE] hover:bg-[#E6E6D9]"
                     onClick={() => {
                       if (isRowClickble) {
                         navigate(

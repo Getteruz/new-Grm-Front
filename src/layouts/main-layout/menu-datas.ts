@@ -5,6 +5,7 @@ import {
   ClientsIcon,
   DataLibrary,
   DeviceDesktopIcons,
+  DiamondIcon,
   HikVision,
   HomeIcons,
   NotPublishedIcons,
@@ -20,6 +21,7 @@ import {
   RefleshIcons,
   ReportBottom,
   SettingsIcon,
+  StatementIcon,
   TransferIcons,
   UfoBottom,
   WareHouseIcons,
@@ -612,10 +614,40 @@ export const DataMenu = {
   ],
   11: [
     {
-      id: 4,
+      id: 1,
+      icons: () => HomeIcons(),
+      link: "/monitoring", // This should point to the monitoring dashboard
+      text: "Мониторинг",
+    },
+    {
+      id: 2,
+      icons: () => StatementIcon(),
+      link: "/statement",
+      text: "Ведомость",
+    },
+    {
+      id: 3,
       icons: () => PersonsIcons(),
       link: "/user",
-      text: "user",
+      text: "Сотрудники",
+    },
+    {
+      id: 4,
+      icons: () => HikVision(),
+      link: "/hik-vision",
+      text: "Hik Vision",
+    },
+    {
+      id: 5,
+      icons: () => PriceIcons({ width: 28, height: 28 }),
+      link: "/awards",
+      text: "Премии",
+    },
+    {
+      id: 6,
+      icons: () => DiamondIcon(),
+      link: "/bonuses",
+      text: "Бонусы",
     },
   ],
 };

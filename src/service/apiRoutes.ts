@@ -31,5 +31,6 @@ export const apiRoutes = {
   orderByKassa: "/order/order-by-kassa",
   notes: "/notes",
   qrCodes: "/qr-codes",
-  kassaReport:"/kassa/report"
+  kassaReport:"/kassa/report",
+  statement:"/statement"
 } as const;

@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { MessageSquareText, Plus } from "lucide-react";
+import { MessageSquareText, Plus, RefreshCcw } from "lucide-react";
 
 import TableAction from "@/components/table-action";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -287,11 +287,16 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
     header: "Дата",
     accessorKey: "date",
 
-    cell: () => {
-      // return <p>{format(row.original.date, "d-MMMM")} </p>;
+    cell: ({ row }) => {
       return (
-        <div className="bg-[#89A143] w-12 h-12 flex justify-center items-center">
-          <Plus color="white" width={24} height={24} />
+        <div
+          className={`${row?.original?.type === "Приход" ? (row?.original?.cashflow_type?.title === "Трансфер" ? "bg-[#94C3DC]" : "bg-[#89A143]") : " bg-[#E38157]"} w-12 h-12 flex justify-center items-center`}
+        >
+          {row.original?.cashflow_type?.title === "Трансфер" ? (
+            <RefreshCcw color="white" width={24} height={24} />
+          ) : (
+            <Plus color="white" width={24} height={24} />
+          )}
         </div>
       );
     },
@@ -299,8 +304,15 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
   {
     header: "Сумма",
     accessorKey: "price",
-    cell: () => {
-      return <p className="text-[#89A143] ">+900 $</p>;
+    cell: ({ row }) => {
+      return (
+        <p
+          className={`${row.original?.type === "Приход" ? (row.original?.cashflow_type?.title === "Трансфер" ? " text-[#94C3DC]" : " text-[#89A143]") : " text-[#E38157]"}`}
+        >
+          {row.original?.type === "Приход" ? "+" : "-"}
+          {row.original.price} $
+        </p>
+      );
     },
   },
   {
@@ -311,9 +323,11 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
       return (
         <div className="flex">
           <p
-            className={`${row.original.type === "Приход" ? "border-[#89A143] text-[#89A143]" : "border-[#E38157] text-[#E38157]"} rounded-4xl px-[14px]  w-[100px] text-center py-3 border `}
+            className={`${row.original?.type === "Приход" ? (row.original?.cashflow_type?.title === "Трансфер" ? "border-[#94C3DC] text-[#94C3DC]" : "border-[#89A143] text-[#89A143]") : "border-[#E38157] text-[#E38157]"} rounded-4xl px-[14px]  min-w-[100px] text-center py-3 border `}
           >
-            {row.original.tip === "order" ? "Приход" : "Трансфер"}
+            {row.original?.tip === "order"
+              ? "Приход"
+              : row.original?.cashflow_type?.title}
           </p>
         </div>
       );
@@ -331,6 +345,9 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
   {
     header: "Обём",
     accessorKey: "size.title",
+    cell: () => {
+      return <p>~</p>;
+    },
   },
 
   {
@@ -384,7 +401,7 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
       return (
         <div className="flex">
           <p
-            className={`${row.original.type === "Приход" ? "border-[#E38157] text-[#E38157]" : "border-[#21212130] text-[#21212130]"} min-w-[140px] rounded-4xl px-[14px]  w-[100px] text-center py-3 border `}
+            className={`${row.original.tip === "order" ? "border-[#E38157] text-[#E38157]" : "border-[#21212130] text-[#21212130]"} min-w-[140px] rounded-4xl px-[14px]  w-[100px] text-center py-3 border `}
           >
             {row.original.tip === "order" ? "Не принято" : "Принято"}
           </p>

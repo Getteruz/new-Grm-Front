@@ -1,5 +1,5 @@
 export interface TData {
-  isMetric: boolean;
+  isMetric?: boolean;
   id: string;
   cashflow_type: { title: string };
   code: string;
@@ -9,6 +9,7 @@ export interface TData {
   internetInfo: string | null;
   is_active: boolean;
   date: string;
+  is_online: boolean;
   price: number;
   tip: string;
   title: string;

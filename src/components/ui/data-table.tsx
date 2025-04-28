@@ -29,6 +29,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   isLoading: boolean;
   className?: string;
+  link?: string;
   isFetchingNextPage?: boolean;
   hasNextPage?: boolean;
   isRowClickble?: boolean;
@@ -42,6 +43,7 @@ export function DataTable<TData, TValue>({
   data,
   isLoading,
   className,
+  link,
   isRowClickble = false,
   isFetchingNextPage = false,
   hasNextPage = false,
@@ -139,47 +141,53 @@ export function DataTable<TData, TValue>({
       ) : (
         <>
           <Table>
-            {hasHeader ? <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead
-                        key={header.id}
-                        className="!flex !justify-center  "
-                      >
-                        {header.isPlaceholder
-                          ? null
-                          : typeof flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          ) == "string"
-                            ? t(
-                              String(
-                                flexRender(
+            {hasHeader ? (
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead
+                          key={header.id}
+                          className="!flex !justify-center  "
+                        >
+                          {header.isPlaceholder
+                            ? null
+                            : typeof flexRender(
                                   header.column.columnDef.header,
                                   header.getContext()
+                                ) == "string"
+                              ? t(
+                                  String(
+                                    flexRender(
+                                      header.column.columnDef.header,
+                                      header.getContext()
+                                    )
+                                  )
                                 )
-                              )
-                            )
-                            : null}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader> : ""
-            }
+                              : null}
+                        </TableHead>
+                      );
+                    })}
+                  </TableRow>
+                ))}
+              </TableHeader>
+            ) : (
+              ""
+            )}
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    className="px-5 cursor-pointer odd:bg-[#f8f6e9] even:bg-[#E6E6D9]"
+                    className="px-5 cursor-pointer odd:bg-[#f8f6e9] even:bg-[#EAEADE]"
                     onClick={() => {
                       if (isRowClickble) {
                         navigate(
-                          (row.original as { id: string })?.id + "/info"
+                          link
+                            ? link +
+                                `?id=${(row.original as { id: string })?.id}`
+                            : (row.original as { id: string })?.id + "/info"
                         );
                       } else {
                         setId((row.original as { id: string })?.id);

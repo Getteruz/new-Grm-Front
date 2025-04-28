@@ -1,30 +1,29 @@
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { useQuery } from "@tanstack/react-query";
 import { BellRing } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 import AddingParishOrFlow from "@/components/adding-parish-flow";
+import { DollarIcon } from "@/components/icons";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { minio_img_url } from "@/constants";
 import { getAllData, getByIdData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useAuthStore } from "@/store/auth-store";
 import { useMeStore } from "@/store/me-store";
 import { IOpenKassa } from "@/types/api-type";
 
+import { DataMenu } from "./menu-datas";
 import NotePage from "./note/list";
 import { CurrencyData } from "./types";
-import { DollarIcon } from "@/components/icons";
-import { Badge } from "@/components/ui/badge";
-import { minio_img_url } from "@/constants";
-import { useLocation } from "react-router-dom";
-import { DataMenu } from "./menu-datas";
 import Weather from "./weather";
 
 export default function CashierHeader() {
   const { meUser } = useMeStore();
   const token = useAuthStore((state) => state.token);
-  const location = useLocation()
-  console.log(location.pathname)
-  const filialId = meUser?.filial.id
+  const location = useLocation();
+  const filialId = meUser?.filial.id;
   const { data } = useQuery({
     queryKey: [apiRoutes.filial, filialId],
     queryFn: () =>
@@ -36,26 +35,32 @@ export default function CashierHeader() {
     queryFn: () => getAllData<CurrencyData, unknown>("currency"),
   });
 
-
-  const notificationCount = data?.orders.filter((order)=>order.status === "progress").length;
+  const notificationCount = data?.orders.filter(
+    (order) => order.status === "progress"
+  ).length;
 
   const oneMenu = DataMenu?.[
-      meUser?.position?.role as keyof typeof DataMenu
-    ]?.find((e) => location.pathname.includes(e?.link));
+    meUser?.position?.role as keyof typeof DataMenu
+  ]?.find((e) => location.pathname.includes(e?.link));
 
   return (
     <header className="h-[90px] bg-sidebar border-b border-border flex ">
       <div className="flex p-[15px] mr-auto items-center">
-        {
-          location.pathname !== "/cashier/home" ? <h2 className="text-[#5D5D53] font-medium text-[22px] ml-3">{oneMenu?.text}</h2> : <>
+        {location.pathname !== "/cashier/home" ? (
+          <h2 className="text-[#5D5D53] font-medium text-[22px] ml-3">
+            {oneMenu?.text}
+          </h2>
+        ) : (
+          <>
             <DollarIcon />
             <div>
               <p className="text-[12px] ext-primary ">Касса за сегодня:</p>
-              <p className="text-[25px] font-bold text-primary">{data?.totalSum}</p>
+              <p className="text-[25px] font-bold text-primary">
+                {data?.totalSum}
+              </p>
             </div>
           </>
-        }
-       
+        )}
       </div>
       <AddingParishOrFlow />
       <div className="ml-8">

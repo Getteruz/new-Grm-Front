@@ -29,7 +29,7 @@ export const Columns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       return (
         <p>
-          {row?.original?.firstName} {row?.original?.lastName}
+          {row?.original?.firstName || "~"} {row?.original?.lastName}
         </p>
       );
     },
@@ -41,10 +41,21 @@ export const Columns: ColumnDef<TData>[] = [
     id: "phone1",
   },
   {
+    header: "id для системы",
+    accessorKey: "login",
+    id: "login",
+  },
+  {
     header: "Задолжность",
+    cell: () => {
+      return <p className="text-[#FF6600]">~</p>;
+    },
   },
   {
     header: "Дано",
+    cell: () => {
+      return <p className="text-[#89A143]">~</p>;
+    },
   },
   {
     header: "Статус",

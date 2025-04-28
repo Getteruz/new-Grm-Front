@@ -12,7 +12,7 @@ export default function Filters() {
       {meUser?.position.role !== 4 ? (
         <>
           <FilterSelect placeholder="Все" name="news" />
-          <FilterSelect placeholder="Тип операции" name="news" />
+          {/* <FilterSelect placeholder="Тип операции" name="news" /> */}
         </>
       ) : (
         <p className="text-[#272727] text-[20px]">Касса</p>

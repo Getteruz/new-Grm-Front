@@ -600,6 +600,12 @@ export const DataMenu = {
   ],
   10: [
     {
+      id: 3,
+      icons: () => PersonsIcons(),
+      link: "/user",
+      text: "Сотрудники",
+    },
+    {
       id: 4,
       icons: () => UfoBottom(),
       link: "/dealer",
@@ -610,6 +616,12 @@ export const DataMenu = {
       icons: () => PriceIcons({}),
       link: "/price",
       text: "Цени и скидки",
+    },
+    {
+      id: 6,
+      icons: () => HikVision(),
+      link: "/hik-vision",
+      text: "Hik Vision",
     },
   ],
   11: [

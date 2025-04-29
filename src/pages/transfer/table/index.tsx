@@ -43,7 +43,7 @@ export default function Page() {
     queries: {
       limit: 50,
       page: 1,
-      type: type || undefined,
+      type: meUser?.position.role === 9 ? undefined : type || undefined,
       from:
         meUser?.position.role === 9 ? filial || "" : meUser?.filial?.id || "",
       to: meUser?.position.role === 9 ? filialTo : filial,

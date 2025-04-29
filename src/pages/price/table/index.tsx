@@ -34,7 +34,9 @@ export default function Page() {
         // }}
         isLoading={isLoading}
         columns={
-          me.meUser?.position.role === 8 || me.meUser?.position.role === 10
+          me.meUser?.position.role === 8 ||
+          me.meUser?.position.role === 10 ||
+          me.meUser?.position.role === 3
             ? IManagerColumns
             : me.meUser?.position.role === 9
               ? Columns

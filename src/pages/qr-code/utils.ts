@@ -85,15 +85,11 @@ export const generatePDF = async (codes: QRCode[]): Promise<void> => {
       
       // Add QR code number as text
       doc.setFontSize(14);
-      const text = `QR Код #${code.sequence}`;
+      const text = `${code.sequence}`;
       const textWidth = doc.getStringUnitWidth(text) * doc.getFontSize() / doc.internal.scaleFactor;
       const textX = (pageWidth - textWidth) / 2;
       doc.text(text, textX, y + qrSize + 10);
       
-      // Add page number at the bottom
-      doc.setFontSize(10);
-      const pageText = `Страница ${i + 1} из ${qrDataUrls.length}`;
-      doc.text(pageText, pageWidth / 2, pageHeight - 10, { align: 'center' });
     }
     
     // Save the PDF

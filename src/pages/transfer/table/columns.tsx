@@ -18,12 +18,12 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
   {
     header: "collection",
     id: "product?.bar_code?.collection?.title",
-    accessorKey: "product?.bar_code?.collection?.title",
+    accessorKey: "product.bar_code.collection.title",
   },
   {
     header: "model",
-    id: "product?.bar_code?.model?.title",
-    accessorKey: "product?.bar_code?.model?.title",
+    id: "product.bar_code.model.title",
+    accessorKey: "product.bar_code.model.title",
   },
   {
     header: "size",
@@ -49,23 +49,23 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
 
   {
     header: "shape",
-    id: "product?.bar_code?.shape?.title",
-    accessorKey: "product?.bar_code?.shape?.title",
+    id: "product.bar_code.shape.title",
+    accessorKey: "product.bar_code.shape.title",
   },
   {
     header: "style",
-    id: "product?.bar_code?.style?.title",
+    id: "product.bar_code.style.title",
     accessorKey: "product?.bar_code?.style?.title",
   },
   {
     header: "color",
-    id: "product?.bar_code?.color?.title",
-    accessorKey: "product?.bar_code?.color?.title",
+    id: "product.bar_code.color.title",
+    accessorKey: "product.bar_code.color.title",
   },
   {
     header: "country",
-    id: "product?.bar_code?.country?.title",
-    accessorKey: "product?.bar_code?.country?.title",
+    id: "product.bar_code.country.title",
+    accessorKey: "product.bar_code.country.title",
   },
 
   {

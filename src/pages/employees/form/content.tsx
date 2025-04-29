@@ -22,6 +22,7 @@ export default function FormContent() {
       .get(apiRoutes.userLoginGenerate)
       .then((res) => setValue("login", String(res.data)));
   };
+
   return (
     <>
       <DialogHeader>

@@ -634,12 +634,6 @@ export const DataMenu = {
       link: "/price",
       text: "Цени и скидки",
     },
-    {
-      id: 4,
-      icons: () => PersonsIcons(),
-      link: "/user",
-      text: "Сотрудники",
-    },
   ],
   11: [
     {

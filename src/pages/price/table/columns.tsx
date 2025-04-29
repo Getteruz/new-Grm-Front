@@ -245,3 +245,70 @@ export const Columns: ColumnDef<ProductsData>[] = [
     size: 50,
   },
 ];
+export const AColumns: ColumnDef<ProductsData>[] = [
+  {
+    header: "Коллекция",
+    cell: ({ row }) => {
+      return <p>{row.original?.title}</p>;
+    },
+  },
+
+  {
+    header: "Обём",
+    cell: ({ row }) => {
+      return (
+        <p>
+          {Number(row.original?.bar_code?.size?.x) *
+            Number(
+              row.original?.bar_code?.isMetric
+                ? row.original?.check_count
+                : row.original?.bar_code?.size?.y
+            )}
+          м²
+        </p>
+      );
+    },
+  },
+  {
+    header: "Акция",
+    cell: () => {
+      return <p className="">~</p>;
+    },
+  },
+  {
+    header: "Бонусы",
+    cell: () => {
+      return <p className="">~</p>;
+    },
+  },
+  {
+    header: "Промокоды",
+    cell: () => {
+      return <p className="">~</p>;
+    },
+  },
+  {
+    header: "Скидка",
+    cell: () => {
+      return <p className="">~</p>;
+    },
+  },
+  {
+    header: "Зав-цена за м² ($)",
+    cell: ({ row }) => {
+      return <>{row?.original?.collection_prices?.[0]?.comingPrice}</>;
+    },
+  },
+  {
+    header: "Цена за м² ($)",
+    cell: ({ row }) => {
+      return <>{row?.original?.collection_prices?.[0]?.priceMeter}</>;
+    },
+  },
+  {
+    id: "actions",
+    enableHiding: true,
+    header: () => <div className="text-right">{"actions"}</div>,
+    size: 50,
+  },
+];

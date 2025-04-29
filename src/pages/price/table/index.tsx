@@ -3,7 +3,7 @@ import { parseAsInteger, useQueryState } from "nuqs";
 import { DataTable } from "@/components/ui/data-table";
 import { useMeStore } from "@/store/me-store";
 
-import { Columns, IManagerColumns } from "./columns";
+import { AColumns, Columns, IManagerColumns } from "./columns";
 import Filters from "./filters";
 import useDataFetch from "./queries";
 
@@ -36,7 +36,9 @@ export default function Page() {
         columns={
           me.meUser?.position.role === 8 || me.meUser?.position.role === 10
             ? IManagerColumns
-            : Columns
+            : me.meUser?.position.role === 9
+              ? Columns
+              : AColumns
         }
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}

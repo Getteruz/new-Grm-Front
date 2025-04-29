@@ -1,8 +1,9 @@
+import {  Archive, FileOutput, Plus, Trash2 } from "lucide-react";
+import { useQueryState } from "nuqs";
+
 import SearchInput from "@/components/filters-ui/search-input";
 import Statistics from "@/components/filters-ui/statistics";
 import { Button } from "@/components/ui/button";
-import {  Archive, FileOutput, Plus, Trash2 } from "lucide-react";
-import { useQueryState } from "nuqs";
 
 export default function Filters() {
   const [, setId] = useQueryState("id");

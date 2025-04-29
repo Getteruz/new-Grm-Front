@@ -601,21 +601,44 @@ export const DataMenu = {
   10: [
     {
       id: 1,
-      icons: () => UfoBottom(),
+      icons: () => ReportBottom({}),
       link: "/report",
-      text: "Дилеры",
+      text: "Отчеты",
+      items: [
+        {
+          id: 22,
+          link: "/report",
+          text: "Кассовый учёт",
+        },
+        {
+          id: 23,
+          link: "/report-item-2",
+          text: "Финансовый учёт",
+        },
+        {
+          id: 24,
+          link: "/report-item-3",
+          text: "Снабжение и документооборот",
+        },
+      ],
     },
     {
-      id: 4,
+      id: 2,
       icons: () => UfoBottom(),
       link: "/dealer",
       text: "Дилеры",
     },
     {
-      id: 4,
+      id: 3,
       icons: () => PriceIcons({}),
       link: "/price",
       text: "Цени и скидки",
+    },
+    {
+      id: 4,
+      icons: () => PersonsIcons(),
+      link: "/user",
+      text: "Сотрудники",
     },
   ],
   11: [

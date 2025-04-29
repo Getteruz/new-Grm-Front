@@ -1,5 +1,6 @@
 export const apiRoutes = {
   aboutUs: "/aboutus",
+  report:"/report",
   user: "/user",
   userLoginGenerate: "/user/generate/login-user",
   crops: "/crops",

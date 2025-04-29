@@ -22,7 +22,7 @@ const useDataFetch = ({ options, queries }: ITransfers) =>
       getAllData<TResponse<TransferData>, TransferQuery>(apiRoutes.transfers, {
         ...queries,
         page: pageParam as number,
-        limit: 50,
+        limit: 10,
       }),
     getNextPageParam: (lastPage) => {
       if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {

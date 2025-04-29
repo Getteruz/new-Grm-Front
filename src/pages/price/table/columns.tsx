@@ -84,7 +84,7 @@ export const IManagerColumns: ColumnDef<ProductsData>[] = [
   {
     header: "Цена за м²",
     cell: ({ row }) => {
-      return <>{row?.original?.collection_prices?.[0]?.priceMeter}</>;
+      return <>{row?.original?.collection_prices?.[0]?.priceMeter}$</>;
       return (
         <Input
           className="bg-transparent  max-w-[90px]  border-border border rounded-[5px]"

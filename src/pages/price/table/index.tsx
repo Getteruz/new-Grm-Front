@@ -33,7 +33,11 @@ export default function Page() {
         //   }
         // }}
         isLoading={isLoading}
-        columns={me.meUser?.position.role === 8 || me.meUser?.position.role === 10 ? IManagerColumns : Columns}
+        columns={
+          me.meUser?.position.role === 8 || me.meUser?.position.role === 10
+            ? IManagerColumns
+            : Columns
+        }
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}

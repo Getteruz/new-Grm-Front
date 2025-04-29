@@ -1,4 +1,4 @@
-import { parseAsString, useQueryState } from "nuqs";
+import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
 import useDataFetch from "@/pages/deller/table/queries";
@@ -10,8 +10,16 @@ import useTransfers from "./queries";
 
 export default function Page() {
   const { meUser } = useMeStore();
+  const [limit] = useQueryState("limit", parseAsInteger.withDefault(50));
+  const [page] = useQueryState("page", parseAsInteger.withDefault(1));
 
-  const { data: filialData } = useDataFetch({});
+  const { data: filialData } = useDataFetch({
+    queries: {
+      limit,
+      page,
+    },
+  });
+
   const flatDataFilial =
     filialData?.pages?.flatMap((page) => page?.items) || [];
   // .filter((i) => i.id !== meUser?.filial?.id) || [];
@@ -33,7 +41,7 @@ export default function Page() {
   );
   const { data, isLoading } = useTransfers({
     queries: {
-      limit: 10,
+      limit: 50,
       page: 1,
       type: type || undefined,
       from:
@@ -65,7 +73,7 @@ export default function Page() {
                     onClick={() => setFilial(e?.id)}
                     className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                   >
-                    {e.name}
+                    {e.title}
                   </button>
                 ))}
             </div>
@@ -81,7 +89,7 @@ export default function Page() {
                     onClick={() => setFilial(e?.id)}
                     className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                   >
-                    {e.name}
+                    {e.title}
                   </button>
                 ))}
             </div>
@@ -98,7 +106,7 @@ export default function Page() {
                   onClick={() => setFilial(e?.id)}
                   className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                 >
-                  {e.name}
+                  {e.title}
                 </button>
               ))}
           </div>
@@ -113,7 +121,7 @@ export default function Page() {
                     onClick={() => setFilial(e?.id)}
                     className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                   >
-                    {e.name}
+                    {e.title}
                   </button>
                 ))}
             </div>
@@ -136,7 +144,7 @@ export default function Page() {
                     onClick={() => setFilialTo(e?.id)}
                     className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                   >
-                    {e.name}
+                    {e.title}
                   </button>
                 ))}
             </div>
@@ -150,7 +158,7 @@ export default function Page() {
                     onClick={() => setFilialTo(e?.id)}
                     className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                   >
-                    {e.name}
+                    {e.title}
                   </button>
                 ))}
             </div>
@@ -164,7 +172,7 @@ export default function Page() {
                     onClick={() => setFilialTo(e?.id)}
                     className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                   >
-                    {e.name}
+                    {e.title}
                   </button>
                 ))}
             </div>
@@ -178,7 +186,7 @@ export default function Page() {
                     onClick={() => setFilialTo(e?.id)}
                     className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                   >
-                    {e.name}
+                    {e.title}
                   </button>
                 ))}
             </div>

@@ -2,21 +2,24 @@
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
-
+.cashflow_type svg {
+  width: 24px;
+  height: 24px;
+}
 :root {
   --background: hsl(60, 27%, 92%);
-  --foreground:  #5D5D53;
-  --card:  hsl(60, 21%, 88%);
-  --card-foreground:  rgb(38, 38, 38);
+  --foreground: #5d5d53;
+  --card: hsl(60, 21%, 88%);
+  --card-foreground: rgb(38, 38, 38);
   --popover: hsl(60, 21%, 88%);
   --popover-foreground: hsl(20 14.3% 4.1%);
-  --primary:hsl(60, 6%, 35%);
-  --primary-foreground:hsl(60, 27%, 92%);
+  --primary: hsl(60, 6%, 35%);
+  --primary-foreground: hsl(60, 27%, 92%);
   --secondary: hsl(60 4.8% 95.9%);
   --secondary-foreground: hsl(24 9.8% 10%);
-  --muted:  hsl(60, 21%, 88%);
-  --muted-foreground:hsl(60, 6%, 35%);
-  --accent:hsl(60, 13%, 82%);
+  --muted: hsl(60, 21%, 88%);
+  --muted-foreground: hsl(60, 6%, 35%);
+  --accent: hsl(60, 13%, 82%);
   --accent-foreground: hsl(24 9.8% 10%);
   --destructive: hsl(0 84.2% 60.2%);
   --destructive-foreground: hsl(60 9.1% 97.8%);

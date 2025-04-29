@@ -47,67 +47,101 @@ export default function CardSort() {
   const columns = [
     {
       title: "Продажа",
-      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.income || 120)
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(reportData?.income || 120)
+      ),
     },
     {
       title: "Терминал",
-      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.plasticSum || 540)
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(reportData?.plasticSum || 540)
+      ),
     },
     {
       title: "Инкассация",
-      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.cashFlowSumBoss || 1350),
-      button: (
-        meUser?.position.role === 3 ? "" :
-        <div
-          onClick={() => {
-            setType("Приход");
-            setDialogOpen(true);
-          }}
-          className="bg-[#F0F0E5] p-2.5 rounded-4xl"
-        >
-          <Plus size={13} color="#5D5D5390" />
-        </div>
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(reportData?.cashFlowSumBoss || 1350)
       ),
+      button:
+        meUser?.position.role === 3 ? (
+          ""
+        ) : (
+          <div
+            onClick={() => {
+              setType("Приход");
+              setDialogOpen(true);
+            }}
+            className="bg-[#F0F0E5] p-2.5 rounded-4xl"
+          >
+            <Plus size={13} color="#5D5D5390" />
+          </div>
+        ),
     },
     {
       title: "Навар",
-      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.netProfitTotalSum || 0)
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(reportData?.netProfitTotalSum || 0)
+      ),
     },
     {
       title: "Скидка",
-      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.expenditureShop || 289)
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(reportData?.expenditureShop || 289)
+      ),
     },
     {
       title: "Приход",
-      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.income || 0),
-      button: (
-        meUser?.position.role === 3 ? "" :
-        <div
-          onClick={() => {
-            setType("Приход");
-            setDialogOpen(true);
-          }}
-          className="bg-[#F0F0E5] p-2.5 rounded-4xl"
-        >
-          <Plus size={13} color="#5D5D5390" />
-        </div>
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(reportData?.income || 0)
       ),
+      button:
+        meUser?.position.role === 3 ? (
+          ""
+        ) : (
+          <div
+            onClick={() => {
+              setType("Приход");
+              setDialogOpen(true);
+            }}
+            className="bg-[#F0F0E5] p-2.5 rounded-4xl"
+          >
+            <Plus size={13} color="#5D5D5390" />
+          </div>
+        ),
     },
     {
       title: "Расход",
-      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : `-${formatPrice(reportData?.expense || 90)}`,
-      button: (
-        meUser?.position.role === 3 ? "" :
-        <div
-          onClick={() => {
-            setType("Расход");
-            setDialogOpen(true);
-          }}
-          className="bg-[#F0F0E5] p-2.5 rounded-4xl"
-        >
-          <Plus size={13} color="#5D5D5390" />
-        </div>
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        `-${formatPrice(reportData?.expense || 90)}`
       ),
+      button:
+        meUser?.position.role === 3 ? (
+          ""
+        ) : (
+          <div
+            onClick={() => {
+              setType("Расход");
+              setDialogOpen(true);
+            }}
+            className="bg-[#F0F0E5] p-2.5 rounded-4xl"
+          >
+            <Plus size={13} color="#5D5D5390" />
+          </div>
+        ),
     },
   ];
 
@@ -154,7 +188,6 @@ export default function CardSort() {
 
       // Invalidate queries to refresh data
       queryClient.invalidateQueries({ queryKey: ["kassa-report"] });
-
     } catch (error) {
       console.error("Error submitting cashflow:", error);
       toast.error("Не удалось добавить операцию");
@@ -198,10 +231,12 @@ export default function CardSort() {
                     {e.title} <ChevronDown size={18} className="ml-3" />
                   </p>
                   {meUser?.position?.role !== 6 && e.button && (
-                    <DialogTrigger onClick={(event) => {
-                      event.stopPropagation();
-                      setType(e.title === "Расход" ? "Расход" : "Приход");
-                    }}>
+                    <DialogTrigger
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setType(e.title === "Расход" ? "Расход" : "Приход");
+                      }}
+                    >
                       {e.button}
                     </DialogTrigger>
                   )}
@@ -222,7 +257,10 @@ export default function CardSort() {
                   className={`${cashflow_type === item.id ? "bg-[#5D5D53] text-[white]" : "bg-input text-primary"} flex items-center justify-center flex-col pt-4 rounded-[7px] text-center cursor-pointer`}
                 >
                   {item.icon ? (
-                    <div dangerouslySetInnerHTML={{ __html: item.icon }} />
+                    <div
+                      className="cashflow_type"
+                      dangerouslySetInnerHTML={{ __html: item.icon }}
+                    />
                   ) : (
                     <BadgeCheck />
                   )}
@@ -266,7 +304,9 @@ export default function CardSort() {
             disabled={isSubmitting}
             className={`p-5 rounded-[7px] ${type === "Приход" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white ${isSubmitting ? "opacity-70" : ""}`}
           >
-            {isSubmitting ? "Добавление..." : `Добавить в ${type === "Приход" ? "приход" : "расход"}`}
+            {isSubmitting
+              ? "Добавление..."
+              : `Добавить в ${type === "Приход" ? "приход" : "расход"}`}
           </Button>
         </DialogContent>
       </Dialog>

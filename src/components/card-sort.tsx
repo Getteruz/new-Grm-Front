@@ -23,13 +23,13 @@ import { useKassaReport } from "../pages/cashier/report/queries";
 
 export default function CardSort() {
   const { meUser } = useMeStore();
-const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-// Fetch kassa report data
-const { data: reportData, isLoading: isReportLoading } = useKassaReport();
+  // Fetch kassa report data
+  const { data: reportData, isLoading: isReportLoading } = useKassaReport();
 
-// State variables for form
-const [sorttype, setSortType] = useQueryState("sorttype", parseAsString);
+  // State variables for form
+  const [sorttype, setSortType] = useQueryState("sorttype", parseAsString);
   const [type, setType] = useState<string>("Приход");
   const [cashflow_type, setCashflow_type] = useState<string>("");
   const [comment, setComment] = useState<string>("");
@@ -38,25 +38,26 @@ const [sorttype, setSortType] = useQueryState("sorttype", parseAsString);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
-// Fetch necessary data
+  // Fetch necessary data
   const { data: filialData } = useDataFetch({});
   const { data: kassaId } = useOpenKassa({ id: filial });
   const { data: types } = useDataCashflowTypes({});
 
-// Prepare column data using report data
-const columns = [
-{ 
-title: "Продажа", 
-price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.income || 120) 
-},
-{ 
-title: "Терминал", 
-price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.plasticSum || 540) 
-},
-{
-title: "Инкассация",
-price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.cashFlowSumBoss || 1350),
+  // Prepare column data using report data
+  const columns = [
+    {
+      title: "Продажа",
+      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.income || 120)
+    },
+    {
+      title: "Терминал",
+      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.plasticSum || 540)
+    },
+    {
+      title: "Инкассация",
+      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.cashFlowSumBoss || 1350),
       button: (
+        meUser?.position.role === 3 ? "" :
         <div
           onClick={() => {
             setType("Приход");
@@ -67,19 +68,20 @@ price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportD
           <Plus size={13} color="#5D5D5390" />
         </div>
       ),
-},
-{ 
-title: "Навар", 
-price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.netProfitTotalSum || 0) 
-},
-{ 
-title: "Скидка", 
-price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.expenditureShop || 289)
-},
-{
-title: "Приход",
-price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.income || 0),
+    },
+    {
+      title: "Навар",
+      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.netProfitTotalSum || 0)
+    },
+    {
+      title: "Скидка",
+      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.expenditureShop || 289)
+    },
+    {
+      title: "Приход",
+      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportData?.income || 0),
       button: (
+        meUser?.position.role === 3 ? "" :
         <div
           onClick={() => {
             setType("Приход");
@@ -90,11 +92,12 @@ price: isReportLoading ? <Skeleton className="h-5 w-12" /> : formatPrice(reportD
           <Plus size={13} color="#5D5D5390" />
         </div>
       ),
-},
-{
-title: "Расход",
-price: isReportLoading ? <Skeleton className="h-5 w-12" /> : `-${formatPrice(reportData?.expense || 90)}`,
+    },
+    {
+      title: "Расход",
+      price: isReportLoading ? <Skeleton className="h-5 w-12" /> : `-${formatPrice(reportData?.expense || 90)}`,
       button: (
+        meUser?.position.role === 3 ? "" :
         <div
           onClick={() => {
             setType("Расход");
@@ -105,13 +108,13 @@ price: isReportLoading ? <Skeleton className="h-5 w-12" /> : `-${formatPrice(rep
           <Plus size={13} color="#5D5D5390" />
         </div>
       ),
-},
-];
+    },
+  ];
 
-// Helper function to format price
-function formatPrice(price: number): string {
-return Number(price).toFixed(2);
-}
+  // Helper function to format price
+  function formatPrice(price: number): string {
+    return Number(price).toFixed(2);
+  }
 
   const handleSubmit = async () => {
     try {
@@ -126,7 +129,7 @@ return Number(price).toFixed(2);
       }
 
       setIsSubmitting(true);
-      
+
       const body = {
         cashflow_type,
         type,
@@ -136,22 +139,22 @@ return Number(price).toFixed(2);
         casher: meUser?.id,
         kassa: kassaId?.id || meUser?.position?.id,
       };
-      
+
       await api.post(apiRoutes.cashflow, body);
-      
+
       toast.success(`${type} успешно добавлен`);
-      
+
       // Reset form fields
       setCashflow_type("");
       setComment("");
       setPrice(0);
-      
+
       // Close dialog
       setDialogOpen(false);
-      
+
       // Invalidate queries to refresh data
       queryClient.invalidateQueries({ queryKey: ["kassa-report"] });
-      
+
     } catch (error) {
       console.error("Error submitting cashflow:", error);
       toast.error("Не удалось добавить операцию");
@@ -160,40 +163,40 @@ return Number(price).toFixed(2);
     }
   };
 
-return (
-<>
+  return (
+    <>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <div className="p-4 flex gap-1">
-<div className="bg-sidebar p-5 w-full max-w-[399px]">
-<div className="flex items-center">
+          <div className="bg-sidebar p-5 w-full max-w-[399px]">
+            <div className="flex items-center">
               <DollarSign size={54} />
-<div>
-<p className="text-[12px] ">Итого</p>
-{isReportLoading ? (
-<Skeleton className="h-7 w-24 mt-1" />
-) : (
-<p className="text-[25px] font-bold text-foreground">
-{formatPrice(reportData?.totalSum || 890)}
-</p>
-)}
-</div>
-</div>
-<p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
+              <div>
+                <p className="text-[12px] ">Итого</p>
+                {isReportLoading ? (
+                  <Skeleton className="h-7 w-24 mt-1" />
+                ) : (
+                  <p className="text-[25px] font-bold text-foreground">
+                    {formatPrice(reportData?.totalSum || 890)}
+                  </p>
+                )}
+              </div>
+            </div>
+            <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
               Выбранные кол-во кассы:
-</p>
+            </p>
             <p className="text-[14px] font-semibold">1 шт</p>
-</div>
-<div className="grid row-start w-full gap-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          </div>
+          <div className="grid row-start w-full gap-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {columns?.map((e) => (
               <div
-key={e.title}
-onClick={() => setSortType(e.title)}
+                key={e.title}
+                onClick={() => setSortType(e.title)}
                 className={`${sorttype == e.title ? "bg-primary text-background" : "bg-sidebar rounded-[3px] text-[#7E7E72]"} cursor-pointer px-4 py-5`}
->
-<div className="flex justify-between items-center">
-<p className="text-[12px] mb-0.5 flex items">
+              >
+                <div className="flex justify-between items-center">
+                  <p className="text-[12px] mb-0.5 flex items">
                     {e.title} <ChevronDown size={18} className="ml-3" />
-</p>
+                  </p>
                   {meUser?.position?.role !== 6 && e.button && (
                     <DialogTrigger onClick={(event) => {
                       event.stopPropagation();
@@ -202,12 +205,12 @@ onClick={() => setSortType(e.title)}
                       {e.button}
                     </DialogTrigger>
                   )}
-</div>
-<p className="text-[15px] font-medium">{e.price}</p>
-</div>
+                </div>
+                <p className="text-[15px] font-medium">{e.price}</p>
+              </div>
             ))}
-</div>
-</div>
+          </div>
+        </div>
 
         <DialogContent className="sm:max-w-[640px] p-1">
           <div className="grid grid-cols-2 gap-1">
@@ -267,6 +270,6 @@ onClick={() => setSortType(e.title)}
           </Button>
         </DialogContent>
       </Dialog>
-</>
-);
+    </>
+  );
 }

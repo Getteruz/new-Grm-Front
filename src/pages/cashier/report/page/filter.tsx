@@ -1,6 +1,7 @@
+import { CircleX, SquareCheckBig, SquarePen, Tornado } from 'lucide-react'
+
 import FilterSelect from '@/components/filters-ui/filter-select'
 import { Button } from '@/components/ui/button'
-import { CircleX, SquareCheckBig, SquarePen, Tornado } from 'lucide-react'
 const Sort = [
     {
         label:"Все",
@@ -28,11 +29,11 @@ export default function Filters({countLength}:{countLength:number}) {
     <div className='w-full sticky top-0 flex h-[40px] bg-sidebar'>
         <FilterSelect 
             options={Sort}
-            className='max-w-[426px] bg-primary text-[#E6E6D9]  w-full'
+            className='max-w-[426px] bg-primary text-[#E6E6D9]  w-full text-[20px]'
             classNameValue='bg-red-200'
             placeholder='Все операции' 
             classNameContainer="bg-primary text-[#E6E6D9]"
-            classNameItem="bg-[#5D5D53CC] hover:bg-[#5D5D53CC]"
+            classNameItem="bg-[#5D5D53CC] hover:bg-[#5D5D53CC] p-4 text-[20px]"
             defaultValue='all'
             name='sort'
         />

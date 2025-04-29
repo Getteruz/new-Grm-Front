@@ -26,7 +26,7 @@ export default function BarcodeQenerat() {
   console.log(WatchValue);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full">
       <div className="bg-sidebar border-y border-border  h-[64px]   flex   ">
         <Button
           type="button"
@@ -43,7 +43,7 @@ export default function BarcodeQenerat() {
           QR-код
         </Button>
       </div>
-      <div ref={printRef} className="p-[30px] h-full">
+      <div ref={printRef} className="p-[30px]">
         <div className="bg-white rounded-1 px-11 py-[24px] text-center">
           <h4 className="font-bold text-[24px] ">
             {WatchValue?.collection?.label || WatchValue?.collection}
@@ -62,7 +62,7 @@ export default function BarcodeQenerat() {
           <BarcodeGenerator value={WatchValue?.code || ""} />
         </div>
       </div>
-      <div className="bg-sidebar border-y text-primary border-border  h-[44px] flex   ">
+      <div className="bg-sidebar border-y text-primary border-border  h-[44px] flex">
         <Button
           type="button"
           className="h-full border-r-1 w-1/3 justify-center font-[16px] gap-1  border-y-0  border-l-0"

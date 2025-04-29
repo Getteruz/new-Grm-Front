@@ -26,27 +26,6 @@ export default function Pricecheck() {
         <div className="flex justify-between mb-6">
           <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
           <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
-        </div><div className="flex justify-between mb-6">
-          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
-          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
-        </div><div className="flex justify-between mb-6">
-          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
-          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
-        </div><div className="flex justify-between mb-6">
-          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
-          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
-        </div><div className="flex justify-between mb-6">
-          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
-          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
-        </div><div className="flex justify-between mb-6">
-          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
-          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
-        </div><div className="flex justify-between mb-6">
-          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
-          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
-        </div><div className="flex justify-between mb-6">
-          <span className="text-[#5D5D53] text-[11px]">Магазин расход</span>
-          <span className="text-[#5D5D53] text-[11px]">-189.00$</span>
         </div>
       </div>
       

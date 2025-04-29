@@ -1,16 +1,18 @@
+import { useState } from "react";
+
+import CardSort from "@/components/card-sort";
+import { Skeleton } from "@/components/ui/skeleton";
+
+import { IData } from "../../home/type";
+import { useKassaReport } from "../queries";
 import Filters from "./filter";
 import Pricecheck from "./price-check";
-import CardSort from "@/components/card-sort";
-import { useKassaReport } from "../queries";
-import { Skeleton } from "@/components/ui/skeleton";
 import TransactionsTable from "./table/transactions-table";
-import { useState } from "react";
-import { IData } from "../../home/type";
 
 export default function Content() {
   // Fetch report data
   const { data: reportData, isLoading } = useKassaReport();
-  const [selected, _setSelected] = useState<IData[]>([])
+  const [selected, ] = useState<IData[]>([])
 
   return (
     <>

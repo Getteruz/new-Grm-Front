@@ -55,7 +55,7 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
   {
     header: "style",
     id: "product.bar_code.style.title",
-    accessorKey: "product?.bar_code?.style?.title",
+    accessorKey: "product.bar_code.style.title",
   },
   {
     header: "color",

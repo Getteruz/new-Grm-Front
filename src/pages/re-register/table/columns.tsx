@@ -44,10 +44,10 @@ export const Columns: ColumnDef<TData>[] = [
       return (
         <p>
           {row.original?.bar_code?.isMetric ? (
-            row.original?.check_count - row.original?.y
+            row.original?.check_count
           ) : (
             <>
-              {type === "переучет" && row.original?.count}
+              {type === "переучет" && row.original?.check_count}
               {type === "дефицит" &&
                 row.original?.count - row.original?.check_count}
               {type === "излишки" &&

@@ -25,6 +25,7 @@ const ActionPage = () => {
     form.reset({
       filial: undefined,
       firstName: undefined,
+      avatar: undefined,
       lastName: undefined,
       fatherName: undefined,
       hired: undefined,
@@ -57,6 +58,7 @@ const ActionPage = () => {
       form.reset({
         filial: String(data.filial),
         firstName: data?.firstName,
+        avatar: data?.avatar || undefined,
         lastName: data?.lastName,
         fatherName: data?.fatherName,
         hired: new Date(data?.hired || ""),

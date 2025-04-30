@@ -3,6 +3,7 @@ import { z } from "zod";
 export const UserSchema = z.object({
   firstName: z.string(),
   filial: z.string(),
+  avatar: z.string(),
   lastName: z.string(),
   fatherName: z.string(),
   hired: z.date(),

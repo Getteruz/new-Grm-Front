@@ -10,6 +10,7 @@ import FormTimePicker from "@/components/forms/FormTimePicker";
 import ShadcnSelect from "@/components/Select";
 import { Button } from "@/components/ui/button";
 import { DialogFooter, DialogHeader } from "@/components/ui/dialog";
+import { UploadAvatarButton } from "@/components/UploadCloud";
 import useDataFetch from "@/pages/filial/table/queries";
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
@@ -138,6 +139,12 @@ export default function FormContent() {
               Сгенерировать
             </Button>
           </div>
+        </div>
+        <div>
+          <p className="text-[#5D5D53] font-medium text-sm my-4">
+            Файлы сторудника
+          </p>
+          <UploadAvatarButton />
         </div>
       </div>
       <DialogFooter className="!justify-start mt-2 flex">

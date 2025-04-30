@@ -1,6 +1,6 @@
 export const apiRoutes = {
   aboutUs: "/aboutus",
-  report:"/report",
+  report: "/report",
   user: "/user",
   userLoginGenerate: "/user/generate/login-user",
   crops: "/crops",
@@ -19,6 +19,7 @@ export const apiRoutes = {
   dataLibrary: "/product",
   transfers: "/transfer",
   broned: "/booking",
+  upload: "/media-upload/single/avatar/products",
   filial: "/filial",
   dealer: "/filial/dealer",
   filialMakeReport: "/filial/maker-report",
@@ -32,6 +33,6 @@ export const apiRoutes = {
   orderByKassa: "/order/order-by-kassa",
   notes: "/notes",
   qrCodes: "/qr-codes",
-  kassaReport:"/kassa/report",
-  statement:"/statement"
+  kassaReport: "/kassa/report",
+  statement: "/statement",
 } as const;

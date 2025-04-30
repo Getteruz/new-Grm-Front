@@ -19,7 +19,7 @@ const ActionPage = () => {
   const form = useForm<FilialFormType>({
     resolver: zodResolver(FilialSchema),
     defaultValues: {
-      type: pathName.pathname,
+      type: pathName.pathname.split("/")[1],
     },
   });
   const [id, setId] = useQueryState("id");

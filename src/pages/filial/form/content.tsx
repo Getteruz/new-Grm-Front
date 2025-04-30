@@ -135,36 +135,41 @@ export default function FormContent() {
             />
           </div>
         )}
-        <p className="col-span-3 mt-8 text-[#5D5D53] font-medium text-[14px] text-left">
-          Доступ в систему
-        </p>
-        {/* <FormTextInput
+        {meUser?.position.role !== 9 && (
+          <>
+            <p className="col-span-3 mt-8 text-[#5D5D53] font-medium text-[14px] text-left">
+              Доступ в систему
+            </p>
+            {/* <FormTextInput
           readOnly
           label="Должность"
           className="w-full"
           name="position"
           placeholder="Менеджер"
         /> */}
-        <div className="relative col-span-2">
-          <FormTextInput
-            label="Генерация id для входа"
-            className="w-full"
-            name="login"
-            value={login}
-            placeholder="# id"
-          />
-          <div className="absolute right-1 bottom-0.5 flex gap-2 items-center">
-            <Copy
-              onClick={() => copyToClipboard()}
-              width={16}
-              height={16}
-              color="#5D5D53"
-            />
-            <Button onClick={() => generateLoginId()} type="button">
-              Сгенерировать
-            </Button>
-          </div>
-        </div>
+
+            <div className="relative col-span-2">
+              <FormTextInput
+                label="Генерация id для входа"
+                className="w-full"
+                name="login"
+                value={login}
+                placeholder="# id"
+              />
+              <div className="absolute right-1 bottom-0.5 flex gap-2 items-center">
+                <Copy
+                  onClick={() => copyToClipboard()}
+                  width={16}
+                  height={16}
+                  color="#5D5D53"
+                />
+                <Button onClick={() => generateLoginId()} type="button">
+                  Сгенерировать
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <DialogFooter className="!justify-start !flex  !flex-row mt-10 ">
         <Button type="submit" className="w-[220px] h-[44px]">

@@ -1,6 +1,7 @@
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Copy } from "lucide-react";
 import { useFormContext } from "react-hook-form";
+import { toast } from "sonner";
 
 import FormComboboxDemoInput from "@/components/forms/FormCombobox";
 import FormDatePicker from "@/components/forms/FormDateRangePicker";
@@ -21,6 +22,14 @@ export default function FormContent() {
     api
       .get(apiRoutes.userLoginGenerate)
       .then((res) => setValue("login", String(res.data)));
+  };
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(watch("login"));
+      toast.success("Скопировано");
+    } catch (err) {
+      toast.error(String(err));
+    }
   };
   return (
     <>
@@ -118,7 +127,12 @@ export default function FormContent() {
             placeholder="# id"
           />
           <div className="absolute right-1 bottom-0.5 flex gap-2 items-center">
-            <Copy width={16} height={16} color="#5D5D53" />
+            <Copy
+              onClick={() => copyToClipboard()}
+              width={16}
+              height={16}
+              color="#5D5D53"
+            />
             <Button onClick={() => generateLoginId()} type="button">
               Сгенерировать
             </Button>

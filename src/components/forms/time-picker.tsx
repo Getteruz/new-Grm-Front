@@ -46,7 +46,7 @@ const TimePicker = ({ onChange, value = "", placeholder }: iTimePicker) => {
   };
 
   return (
-    <div className="flex flex-col space-y-2 w-[250px]">
+    <div className="flex flex-col space-y-2 max-w-[250px]">
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
         <PopoverTrigger asChild>
           <div className="relative">

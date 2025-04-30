@@ -1,6 +1,7 @@
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Copy } from "lucide-react";
 import { useFormContext } from "react-hook-form";
+import { toast } from "sonner";
 
 import FormTextInput from "@/components/forms/FormTextInput";
 import { Button } from "@/components/ui/button";
@@ -11,11 +12,19 @@ import { useMeStore } from "@/store/me-store";
 
 export default function FormContent() {
   const { meUser } = useMeStore();
-  const { setValue } = useFormContext();
+  const { setValue, watch } = useFormContext();
   const generateLoginId = () => {
     api
       .get(apiRoutes.userLoginGenerate)
       .then((res) => setValue("login", String(res.data)));
+  };
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(watch("login"));
+      toast.success("Скопировано");
+    } catch (err) {
+      toast.error(String(err));
+    }
   };
 
   return (
@@ -27,7 +36,7 @@ export default function FormContent() {
       </DialogHeader>
       <div className="grid row-start px-14 py-8   gap-4 grid-cols-3">
         <p className="col-span-3 text-[#5D5D53] font-medium text-[14px] text-left">
-          Данные Дилера
+          Данные
         </p>
         <FormTextInput
           label={
@@ -93,7 +102,12 @@ export default function FormContent() {
             placeholder="# id"
           />
           <div className="absolute right-1 bottom-0.5 flex gap-2 items-center">
-            <Copy width={16} height={16} color="#5D5D53" />
+            <Copy
+              onClick={() => copyToClipboard()}
+              width={16}
+              height={16}
+              color="#5D5D53"
+            />
             <Button onClick={() => generateLoginId()} type="button">
               Сгенерировать
             </Button>

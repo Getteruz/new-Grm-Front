@@ -19,7 +19,7 @@ export const apiRoutes = {
   dataLibrary: "/product",
   transfers: "/transfer",
   broned: "/booking",
-  upload: "/media-upload/single/avatar/products",
+  upload: "/media-upload/single/avatar/avatar",
   filial: "/filial",
   dealer: "/filial/dealer",
   filialMakeReport: "/filial/maker-report",

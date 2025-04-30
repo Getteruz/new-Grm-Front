@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import {  useProdcutCheck, useBarCodeById } from "./actions";
+import { useProdcutCheck, useBarCodeById } from "./actions";
 import FormContent from "./content";
 import { CropFormType, CropSchema } from "./schema";
 import { useQueryClient } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ import { parseAsBoolean, useQueryState } from "nuqs";
 const ActionPageQrCode = () => {
   const form = useForm<CropFormType>({
     resolver: zodResolver(CropSchema),
-    defaultValues:{
+    defaultValues: {
       country: {
         value: undefined,
         label: "",
@@ -46,27 +46,27 @@ const ActionPageQrCode = () => {
         value: undefined,
         label: "",
       },
-    }
+    },
   });
-  const [id,setId] = useQueryState("id");
-  const [auto,setAuto] = useQueryState("auto",parseAsBoolean);
-  
-const brcode = form.watch("code")
+  const [id, setId] = useQueryState("id");
+  const [auto, setAuto] = useQueryState("auto", parseAsBoolean);
 
-  const { data:qrBaseOne } = useBarCodeById({
-    id: brcode|| undefined,
+  const brcode = form.watch("code");
+
+  const { data: qrBaseOne } = useBarCodeById({
+    id: brcode || undefined,
   });
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const { mutate } = useProdcutCheck({
     onSuccess: () => {
       form.reset({
-        code:  "",
-        isMetric:'',
+        code: "",
+        isMetric: "",
         count: undefined,
         country: {
-          value: '',
-          label: '',
+          value: "",
+          label: "",
         },
         collection: {
           value: "",
@@ -78,30 +78,29 @@ const brcode = form.watch("code")
         },
         shape: {
           value: "",
-          label:"",
+          label: "",
         },
         style: {
           value: "",
           label: "",
         },
         color: {
-          value:"",
-          label:"",
+          value: "",
+          label: "",
         },
         model: {
           value: "",
-          label:"",
+          label: "",
         },
-        });
-        const codeInput = document.querySelector('input[name="code"]');
-          if (codeInput) {
-            (codeInput as HTMLInputElement).select();
-          }
+      });
+      const codeInput = document.querySelector('input[name="code"]');
+      if (codeInput) {
+        (codeInput as HTMLInputElement).select();
+      }
       queryClient.invalidateQueries({ queryKey: [apiRoutes.productReport] });
       if (id == "new") {
-        setId("new")
+        setId("new");
         toast.success("Продукт добавлено успешно");
-       
       } else {
         toast.success("Продукт добавлено успешно");
       }
@@ -109,13 +108,13 @@ const brcode = form.watch("code")
   });
   useEffect(() => {
     if (qrBaseOne) {
-      if(qrBaseOne?.isMetric){
-        setAuto(false)
+      if (qrBaseOne?.isMetric) {
+        setAuto(false);
       }
       form.reset({
         code: qrBaseOne?.code || "",
-        isMetric:qrBaseOne?.isMetric ? "Метражный":"Штучный",
-        count:  qrBaseOne?.count || qrBaseOne?.isMetric ? undefined : 1,
+        isMetric: qrBaseOne?.isMetric ? "Метражный" : "Штучный",
+        count: qrBaseOne?.count || qrBaseOne?.isMetric ? undefined : 1,
         country: {
           value: qrBaseOne?.country?.id,
           label: qrBaseOne?.country?.title,
@@ -148,11 +147,12 @@ const brcode = form.watch("code")
           value: qrBaseOne?.factory?.id,
           label: qrBaseOne?.factory?.title,
         },
+      });
+      if (auto && !qrBaseOne?.isMetric) {
+        mutate({
+          data: { bar_code: qrBaseOne?.id || "", y: qrBaseOne?.count || 1 },
         });
-        if(auto && !qrBaseOne?.isMetric){
-          mutate({ data: {bar_code:qrBaseOne?.id || '', y:qrBaseOne?.count || 1} });
-        }
-        
+      }
     }
   }, [qrBaseOne]);
 
@@ -164,13 +164,12 @@ const brcode = form.watch("code")
           if (e.key === "Enter") e.preventDefault();
         }}
         onSubmit={form.handleSubmit((data) => {
-          mutate({ data: {bar_code:qrBaseOne?.id || '', y:data?.count} });
+          mutate({ data: { bar_code: qrBaseOne?.id || "", y: data?.count } });
         })}
       >
         <FormContent />
       </form>
-    </FormProvider> 
-
+    </FormProvider>
   );
 };
 

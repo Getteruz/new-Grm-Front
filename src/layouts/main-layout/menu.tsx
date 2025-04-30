@@ -29,7 +29,7 @@ export default function Menu() {
               onClick={() => {
                 navigate("/dashboard");
               }}
-              className={`${meUser?.position?.role === 11 ? "hidden":""} group hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[12px]`}
+              className={`${meUser?.position?.role === 11 ? "hidden" : ""} group hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[12px]`}
             >
               <HomeIcons />
               <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-[#F0F0E5] border-[#CBCBC1] border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
@@ -57,7 +57,7 @@ export default function Menu() {
               }
             }}
             className={`${pathName.pathname.includes(e?.link) ? "bg-sidebar-accent" : ""} group hover:bg-sidebar-accent border-transparent cursor-pointer border-b hover:border-border text-center flex items-center justify-center p-[12px]`}
-            key={e?.id}
+            key={e?.link}
           >
             {e?.icons()}
             <span className="absolute hidden opacity-0 text-[15px] group-hover:opacity-100 group-hover:flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-[#F0F0E5] border-[#CBCBC1] border-1 text-md rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
@@ -76,7 +76,7 @@ export default function Menu() {
           >
             <LogOut width={20} />
             <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-[#F0F0E5] border-[#CBCBC1] border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
-             Выйти
+              Выйти
             </span>
           </div>
           {meUser?.position?.role == 3 ? (

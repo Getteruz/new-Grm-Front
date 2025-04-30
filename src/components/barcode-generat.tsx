@@ -23,8 +23,7 @@ export default function BarcodeQenerat() {
     documentTitle: "Barcode Print",
     removeAfterPrint: true,
   });
-  console.log(WatchValue);
-
+  // return null;
   return (
     <div className="w-full">
       <div className="bg-sidebar border-y border-border  h-[64px]   flex   ">
@@ -46,17 +45,15 @@ export default function BarcodeQenerat() {
       <div ref={printRef} className="p-[30px]">
         <div className="bg-white rounded-1 px-11 py-[24px] text-center">
           <h4 className="font-bold text-[24px] ">
-            {WatchValue?.collection?.label || WatchValue?.collection}
+            {WatchValue?.collection?.label}
           </h4>
           <div className="flex items-center justify-center gap-[15px]">
             <p className="font-medium text-[15px]">
-              {WatchValue?.model?.label || WatchValue?.model}
+              {WatchValue?.model?.label}
             </p>
+            <p className="font-medium text-[15px]">{WatchValue?.size?.label}</p>
             <p className="font-medium text-[15px]">
-              {WatchValue?.size?.label || WatchValue?.size}
-            </p>
-            <p className="font-medium text-[15px]">
-              {WatchValue?.color?.label || WatchValue?.color}
+              {WatchValue?.color?.label}
             </p>
           </div>
           <BarcodeGenerator value={WatchValue?.code || ""} />

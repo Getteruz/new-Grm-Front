@@ -94,9 +94,9 @@ export default function CarpetCard({
             <path
               d="M9.33343 8.03924C9.24183 8.23679 9.10085 8.40739 8.9241 8.53457C8.21743 9.00991 7.2761 8.60924 6.89543 7.92191C6.3361 6.91324 6.9101 5.67657 7.9121 5.20191C9.24743 4.56857 10.8261 5.30457 11.4054 6.59257C12.1354 8.21391 11.2121 10.0912 9.59876 10.7566C7.64476 11.5619 5.41009 10.4779 4.64009 8.58657C3.73343 6.35791 5.01143 3.83057 7.23743 2.97991C9.80743 1.99724 12.7041 3.43324 13.6614 5.92791C14.7481 8.76324 13.1128 11.9439 10.2734 12.9786C7.0881 14.1386 3.52809 12.3512 2.38476 9.25191C2.16078 8.65032 2.03103 8.01776 2.0001 7.37657"
               stroke="#45453C"
-              stroke-width="1.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         )}
@@ -111,9 +111,9 @@ export default function CarpetCard({
             <path
               d="M8 14C5.79086 14 4 11.3137 4 8C4 4.68629 5.79086 2 8 2C10.2091 2 12 4.68629 12 8C12 11.3137 10.2091 14 8 14Z"
               stroke="#45453C"
-              stroke-width="1.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         )}

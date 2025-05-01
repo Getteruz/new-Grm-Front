@@ -617,7 +617,7 @@ export const DataMenu = {
         },
         {
           id: 24,
-          link: "/statement",
+          link: "/report-monthly",
           text: "Снабжение и документооборот",
         },
       ],
@@ -627,6 +627,12 @@ export const DataMenu = {
       icons: () => UfoBottom(),
       link: "/dealer",
       text: "Дилеры",
+    },
+    {
+      id: 3,
+      icons: () => PersonsIcons(),
+      link: "/user",
+      text: "Сотрудники",
     },
     {
       id: 3,

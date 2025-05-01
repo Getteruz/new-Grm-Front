@@ -249,7 +249,7 @@ export default function CardSort() {
 
         <DialogContent className="sm:max-w-[640px] p-1">
           <div className="grid grid-cols-2 gap-1">
-            <div className="w-full max-h-[90px] grid grid-cols-3 gap-0.5">
+            <div className="w-full  grid grid-cols-3 gap-0.5">
               {types?.items?.map((item) => (
                 <div
                   key={item.id}

@@ -612,12 +612,12 @@ export const DataMenu = {
         },
         {
           id: 23,
-          link: "/report-item-2",
+          link: "/report-finance",
           text: "Финансовый учёт",
         },
         {
           id: 24,
-          link: "/report-item-3",
+          link: "/report/item-3",
           text: "Снабжение и документооборот",
         },
       ],

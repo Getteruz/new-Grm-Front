@@ -1,7 +1,13 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { toast } from "sonner";
+import { useQueryState } from "nuqs";
 
 import TableAction from "@/components/table-action";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
@@ -22,12 +28,7 @@ export const IManagerColumns: ColumnDef<ProductsData>[] = [
     cell: ({ row }) => {
       return (
         <p>
-          {Number(row.original?.bar_code?.size?.x) *
-            Number(
-              row.original?.bar_code?.isMetric
-                ? row.original?.check_count
-                : row.original?.bar_code?.size?.y
-            )}
+          {row.original?.totalKv}
           м²
         </p>
       );
@@ -85,15 +86,6 @@ export const IManagerColumns: ColumnDef<ProductsData>[] = [
     header: "Цена за м²",
     cell: ({ row }) => {
       return <>{row?.original?.collection_prices?.[0]?.priceMeter}$</>;
-      return (
-        <Input
-          className="bg-transparent  max-w-[90px]  border-border border rounded-[5px]"
-          defaultValue={row?.original?.priceMeter}
-          placeholder="$"
-          type="number"
-          // onChange={() => toast.success("e.target.value")}
-        />
-      );
     },
   },
   {
@@ -128,12 +120,7 @@ export const Columns: ColumnDef<ProductsData>[] = [
     cell: ({ row }) => {
       return (
         <p>
-          {Number(row.original?.bar_code?.size?.x) *
-            Number(
-              row.original?.bar_code?.isMetric
-                ? row.original?.check_count
-                : row.original?.bar_code?.size?.y
-            )}
+          {row.original?.totalKv}
           м²
         </p>
       );
@@ -173,15 +160,34 @@ export const Columns: ColumnDef<ProductsData>[] = [
     header: "Скидка",
     cell: () => {
       return (
-        <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
-          Скидка
-        </p>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
+                Скидка
+              </p>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent align="center">
+              <DropdownMenuItem className="text-[#E38157]">
+                -5%
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-[#E38157]">
+                -10%
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
+        // <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
+        //   Скидка
+        // </p>
       );
     },
   },
   {
     header: "Зав-цена за м²",
     cell: ({ row }) => {
+      const [edit] = useQueryState("edit");
       const changePrices = (val: number, id: string) => {
         const body = [
           {
@@ -189,15 +195,12 @@ export const Columns: ColumnDef<ProductsData>[] = [
             collectionId: id,
           },
         ];
-        toast.warning("Действие отправлено");
-        api
-          .post(apiRoutes.collectionMultiple, body)
-          .then(() => toast.success("Действие завершено."))
-          .catch(() => toast.error("Действие не удалось"));
+        api.post(apiRoutes.collectionMultiple, body);
       };
 
       return (
         <Input
+          readOnly={!(edit === "edit")}
           className="bg-transparent max-w-[90px] border-border border rounded-[5px]"
           defaultValue={row?.original?.collection_prices?.[0]?.comingPrice}
           placeholder="$"
@@ -213,6 +216,8 @@ export const Columns: ColumnDef<ProductsData>[] = [
   {
     header: "Цена за м²",
     cell: ({ row }) => {
+      const [edit] = useQueryState("edit");
+
       const changePrices = (val: { val: number }, id: string) => {
         const body = [
           {
@@ -220,14 +225,11 @@ export const Columns: ColumnDef<ProductsData>[] = [
             collectionId: id,
           },
         ];
-        toast.warning("Действие отправлено");
-        api
-          .post(apiRoutes.collectionMultiple, body)
-          .then(() => toast.success("Действие завершено."))
-          .catch(() => toast.error("Действие не удалось"));
+        api.post(apiRoutes.collectionMultiple, body);
       };
       return (
         <Input
+          readOnly={!(edit === "edit")}
           className="bg-transparent  max-w-[90px]  border-border border rounded-[5px]"
           defaultValue={row?.original?.collection_prices?.[0]?.priceMeter}
           placeholder="$"
@@ -259,12 +261,7 @@ export const AColumns: ColumnDef<ProductsData>[] = [
     cell: ({ row }) => {
       return (
         <p>
-          {Number(row.original?.bar_code?.size?.x) *
-            Number(
-              row.original?.bar_code?.isMetric
-                ? row.original?.check_count
-                : row.original?.bar_code?.size?.y
-            )}
+          {row.original?.totalKv}
           м²
         </p>
       );

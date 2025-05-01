@@ -6,7 +6,7 @@ export const apiRoutes = {
   crops: "/crops",
   products: "/product",
   productsIManager: "/product/internet-shop",
-  collection: "/collection",
+  collection: "/collection/remaining-collections",
   collectionPrice: "/collection-prices",
   collectionMultiple: "/collection-prices/multiple",
   productscheck: "/product/check-product",

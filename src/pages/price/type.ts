@@ -2,6 +2,7 @@ export interface ProductsData {
   isInternetShop: boolean;
   title: string;
   id: string;
+  totalKv: number;
   code: string | null;
   count: number;
   booking_count: number;

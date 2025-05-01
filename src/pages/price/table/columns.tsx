@@ -216,7 +216,7 @@ export const Columns: ColumnDef<ProductsData>[] = [
       const changePrices = (val: { val: number }, id: string) => {
         const body = [
           {
-            priceMeter: val,
+            priceMeter: Number(val),
             collectionId: id,
           },
         ];

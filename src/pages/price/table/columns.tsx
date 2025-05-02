@@ -164,8 +164,8 @@ export const Columns: ColumnDef<ProductsData>[] = [
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="center">
-              <DropdownMenuItem>12</DropdownMenuItem>
-              <DropdownMenuItem>20</DropdownMenuItem>
+              <DropdownMenuItem>12 шт</DropdownMenuItem>
+              <DropdownMenuItem>20 шт</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </>

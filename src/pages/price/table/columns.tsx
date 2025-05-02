@@ -245,7 +245,7 @@ export const Columns: ColumnDef<ProductsData>[] = [
         <div className="relative max-w-[90px]">
           <Input
             readOnly={!(edit === "edit")}
-            className="bg-transparent  border-border border rounded-[5px] "
+            className={`${edit !== "edit" ? "bg-[#DEDED0]" : "bg-transparent"}   border-border border rounded-[5px] `}
             defaultValue={row?.original?.collection_prices?.[0]?.comingPrice}
             placeholder="0"
             type="number"
@@ -277,7 +277,7 @@ export const Columns: ColumnDef<ProductsData>[] = [
         <div className="relative max-w-[90px]">
           <Input
             readOnly={!(edit === "edit")}
-            className="bg-transparent  max-w-[90px]  border-border border rounded-[5px]"
+            className={`${edit !== "edit" ? "bg-[#DEDED0]" : "bg-transparent"}   border-border border rounded-[5px] `}
             defaultValue={row?.original?.collection_prices?.[0]?.priceMeter}
             placeholder="0"
             type="number"

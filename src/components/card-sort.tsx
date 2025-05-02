@@ -209,7 +209,7 @@ export default function CardSort() {
                   <Skeleton className="h-7 w-24 mt-1" />
                 ) : (
                   <p className="text-[25px] font-bold text-foreground">
-                    {formatPrice(reportData?.totalSum || 890)}
+                    {formatPrice(reportData?.totalSum || 0)}
                   </p>
                 )}
               </div>

@@ -50,7 +50,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.income || 120)
+        formatPrice(reportData?.income || 0)
       ),
     },
     {
@@ -58,7 +58,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.plasticSum || 540)
+        formatPrice(reportData?.plasticSum || 0)
       ),
     },
     {
@@ -66,7 +66,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.cashFlowSumBoss || 1350)
+        formatPrice(reportData?.cashFlowSumBoss || 0)
       ),
       button:
         meUser?.position.role === 3 ? (
@@ -96,7 +96,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.expenditureShop || 289)
+        formatPrice(reportData?.expenditureShop || 0)
       ),
     },
     {
@@ -126,7 +126,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        `-${formatPrice(reportData?.expense || 90)}`
+        `-${formatPrice(reportData?.expense || 0)}`
       ),
       button:
         meUser?.position.role === 3 ? (
@@ -230,16 +230,18 @@ export default function CardSort() {
                   <p className="text-[12px] mb-0.5 flex items">
                     {e.title} <ChevronDown size={18} className="ml-3" />
                   </p>
-                  {meUser?.position?.role !== 6 && e.button && (
-                    <DialogTrigger
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        setType(e.title === "Расход" ? "Расход" : "Приход");
-                      }}
-                    >
-                      {e.button}
-                    </DialogTrigger>
-                  )}
+                  {meUser?.position?.role !== 6 &&
+                    meUser?.position?.role !== 10 &&
+                    e.button && (
+                      <DialogTrigger
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          setType(e.title === "Расход" ? "Расход" : "Приход");
+                        }}
+                      >
+                        {e.button}
+                      </DialogTrigger>
+                    )}
                 </div>
                 <p className="text-[15px] font-medium">{e.price}</p>
               </div>

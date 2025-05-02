@@ -1,6 +1,7 @@
 export interface TData {
   isMetric?: boolean;
   id: string;
+  is_visible: boolean;
   cashflow_type: { title: string };
   code: string;
   comment: string;

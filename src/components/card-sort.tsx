@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { BadgeCheck, DollarSign, Plus } from "lucide-react";
+import { DollarSign, Plus } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -43,7 +43,9 @@ export default function CardSort() {
   // Fetch necessary data
   const { data: filialData } = useDataFetch({});
   const { data: kassaId } = useOpenKassa({ id: filial });
-  const { data: types } = useDataCashflowTypes({});
+  const { data: types } = useDataCashflowTypes({
+    queries: { limit: 20, page: 1, search: "" },
+  });
 
   // Prepare column data using report data
   const columns = [
@@ -191,8 +193,7 @@ export default function CardSort() {
       // Invalidate queries to refresh data
       queryClient.invalidateQueries({ queryKey: ["kassa-report"] });
     } catch (error) {
-      console.error("Error submitting cashflow:", error);
-      toast.error("Не удалось добавить операцию");
+      toast.error(String(error));
     } finally {
       setIsSubmitting(false);
     }
@@ -253,23 +254,29 @@ export default function CardSort() {
         <DialogContent className="sm:max-w-[640px] p-1">
           <div className="grid grid-cols-2 gap-1">
             <div className="w-full  grid grid-cols-3 gap-0.5">
-              {types?.items?.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => setCashflow_type(item.id)}
-                  className={`${cashflow_type === item.id ? "bg-[#5D5D53] text-[white]" : "bg-input text-primary"} flex items-center justify-center flex-col pt-4 rounded-[7px] text-center cursor-pointer`}
-                >
-                  {item.icon ? (
-                    <div
-                      className="cashflow_type"
-                      dangerouslySetInnerHTML={{ __html: item.icon }}
+              {types?.items
+                ?.filter((i) => i?.is_visible)
+                ?.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => setCashflow_type(item.id)}
+                    className={`${cashflow_type === item.id ? "bg-[#5D5D53] text-[white]" : "bg-input text-primary"} flex items-center justify-center flex-col pt-4 rounded-[7px] text-center cursor-pointer`}
+                  >
+                    <img
+                      src={`/images/icons/${item.id === "46f17d71-cc7e-4af8-99f7-097c88562cb4" ? "bank" : item?.title}.svg`}
+                      style={{
+                        filter:
+                          cashflow_type === item.id
+                            ? "invert(1) brightness(2)"
+                            : "",
+                      }}
                     />
-                  ) : (
-                    <BadgeCheck />
-                  )}
-                  <p className="text-[13px] font-medium my-2.5">{item.title}</p>
-                </div>
-              ))}
+
+                    <p className="text-[13px] font-medium my-2.5">
+                      {item.title}
+                    </p>
+                  </div>
+                ))}
             </div>
             <div className="w-full">
               <ShadcnSelect

@@ -28,7 +28,6 @@ export const generatePDF = async (codes: QRCode[]): Promise<void> => {
   try {
     toast.info('Подготовка PDF документа...');
     
-    // Dynamically import jsPDF and qrcode for better performance
     const [jsPDFModule, QRCodeModule] = await Promise.all([
       import('jspdf'),
       import('qrcode')
@@ -108,8 +107,6 @@ export const generatePDF = async (codes: QRCode[]): Promise<void> => {
  */
 export const printQRCodes = (codes: QRCode[]): void => {
   try {
-    console.log('Printing', codes.length, 'QR codes');
-    
     // Create a new window for printing
     const printWindow = window.open('', '_blank');
     
@@ -221,7 +218,7 @@ export const printQRCodes = (codes: QRCode[]): void => {
     
     // Create a page for each QR code
     codes.forEach((code: QRCode) => {
-      const qrValue = generateQRValue(code.id);
+      const qrValue = generateQRValue(code);
       
       html += `
         <div class="page">

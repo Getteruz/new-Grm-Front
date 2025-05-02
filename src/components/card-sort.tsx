@@ -227,9 +227,7 @@ export default function CardSort() {
                 className={`${sorttype == e.title ? "bg-primary text-background" : "bg-sidebar rounded-[3px] text-[#7E7E72]"} cursor-pointer px-4 py-5`}
               >
                 <div className="flex justify-between items-center">
-                  <p className="text-[12px] mb-0.5 flex items">
-                    {e.title} <ChevronDown size={18} className="ml-3" />
-                  </p>
+                  <p className="text-[12px] mb-0.5 flex items">{e.title}</p>
                   {meUser?.position?.role !== 6 &&
                     meUser?.position?.role !== 10 &&
                     e.button && (

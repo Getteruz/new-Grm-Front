@@ -1,7 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { BadgeCheck, ChevronDown, DollarSign, Plus } from "lucide-react";
+import { BadgeCheck, DollarSign, Plus } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 import ShadcnSelect from "@/components/Select";
@@ -24,6 +25,7 @@ import { useKassaReport } from "../pages/cashier/report/queries";
 export default function CardSort() {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
+  const location = useLocation();
 
   // Fetch kassa report data
   const { data: reportData, isLoading: isReportLoading } = useKassaReport();
@@ -229,7 +231,8 @@ export default function CardSort() {
                 <div className="flex justify-between items-center">
                   <p className="text-[12px] mb-0.5 flex items">{e.title}</p>
                   {meUser?.position?.role !== 6 &&
-                    meUser?.position?.role !== 10 &&
+                    (meUser?.position?.role !== 10 ||
+                      location.pathname === "/report-finance") &&
                     e.button && (
                       <DialogTrigger
                         onClick={(event) => {

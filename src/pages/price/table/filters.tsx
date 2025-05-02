@@ -5,9 +5,11 @@ import { toast } from "sonner";
 
 import Statistics from "@/components/filters-ui/statistics";
 import { Button } from "@/components/ui/button";
+import { useMeStore } from "@/store/me-store";
 
 export default function Filters() {
   const [edit, setEdit] = useQueryState("edit");
+  const { meUser } = useMeStore();
   const navigate = useNavigate();
   const handleSave = () => {
     if (edit === "edit") {
@@ -56,9 +58,11 @@ export default function Filters() {
         </Button>
         <Statistics />
       </div>
-      <Button onClick={() => handleSave()} className="h-full w-[146px]">
-        {edit === "edit" ? "Сохранить" : "Изменить"}
-      </Button>
+      {meUser?.position.role === 9 && (
+        <Button onClick={() => handleSave()} className="h-full w-[146px]">
+          {edit === "edit" ? "Сохранить" : "Изменить"}
+        </Button>
+      )}
     </div>
   );
 }

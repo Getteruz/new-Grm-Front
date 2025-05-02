@@ -14,6 +14,7 @@ import api from "@/service/fetchInstance";
 import debounce from "@/utils/debounce";
 
 import { ProductsData } from "../type";
+import { ChevronDown } from "lucide-react";
 
 export const IManagerColumns: ColumnDef<ProductsData>[] = [
   {
@@ -130,9 +131,23 @@ export const Columns: ColumnDef<ProductsData>[] = [
     header: "Акция",
     cell: () => {
       return (
-        <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
-          Акция
-        </p>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <p className="p-2.5 flex justify-between items-center text-primary font-medium text-[14px] border border-border rounded-[5px]">
+                Акция <ChevronDown width={20} />
+              </p>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent align="center">
+              <DropdownMenuItem>1 шт 400x300+1 Afra</DropdownMenuItem>
+              <DropdownMenuItem>1+Joy namoz</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
+        // <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
+        //   Акция
+        // </p>
       );
     },
   },
@@ -140,9 +155,23 @@ export const Columns: ColumnDef<ProductsData>[] = [
     header: "Бонусы",
     cell: () => {
       return (
-        <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
-          Бонусы
-        </p>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <p className="p-2.5 flex justify-between items-center text-primary font-medium text-[14px] border border-border rounded-[5px]">
+                Бонусы <ChevronDown width={20} />
+              </p>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent align="center">
+              <DropdownMenuItem>12</DropdownMenuItem>
+              <DropdownMenuItem>20</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
+        // <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
+        //   Бонусы
+        // </p>
       );
     },
   },
@@ -150,9 +179,23 @@ export const Columns: ColumnDef<ProductsData>[] = [
     header: "Промокоды",
     cell: () => {
       return (
-        <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
-          Промокоды
-        </p>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <p className="p-2.5 flex justify-between items-center text-primary font-medium text-[14px] border border-border rounded-[5px]">
+                Промокоды <ChevronDown width={20} />
+              </p>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent align="center">
+              <DropdownMenuItem>i98349d4</DropdownMenuItem>
+              <DropdownMenuItem>i98349d4</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
+        // <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
+        //   Промокоды
+        // </p>
       );
     },
   },
@@ -163,8 +206,8 @@ export const Columns: ColumnDef<ProductsData>[] = [
         <>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
-                Скидка
+              <p className="p-2.5 flex justify-between items-center text-primary font-medium text-[14px] border border-border rounded-[5px]">
+                Скидка <ChevronDown width={20} />
               </p>
             </DropdownMenuTrigger>
 
@@ -199,17 +242,20 @@ export const Columns: ColumnDef<ProductsData>[] = [
       };
 
       return (
-        <Input
-          readOnly={!(edit === "edit")}
-          className="bg-transparent max-w-[90px] border-border border rounded-[5px]"
-          defaultValue={row?.original?.collection_prices?.[0]?.comingPrice}
-          placeholder="$"
-          type="number"
-          onChange={debounce((e) => {
-            const val = Number(e.target.value); // konvert qilish muhim
-            changePrices(val, row.original.id);
-          }, 800)}
-        />
+        <div className="relative max-w-[90px]">
+          <Input
+            readOnly={!(edit === "edit")}
+            className="bg-transparent  border-border border rounded-[5px] "
+            defaultValue={row?.original?.collection_prices?.[0]?.comingPrice}
+            placeholder="0"
+            type="number"
+            onChange={debounce((e) => {
+              const val = Number(e.target.value); // konvert qilish muhim
+              changePrices(val, row.original.id);
+            }, 800)}
+          />
+          <p className="absolute right-2 top-3 ">$</p>
+        </div>
       );
     },
   },
@@ -228,16 +274,19 @@ export const Columns: ColumnDef<ProductsData>[] = [
         api.post(apiRoutes.collectionMultiple, body);
       };
       return (
-        <Input
-          readOnly={!(edit === "edit")}
-          className="bg-transparent  max-w-[90px]  border-border border rounded-[5px]"
-          defaultValue={row?.original?.collection_prices?.[0]?.priceMeter}
-          placeholder="$"
-          type="number"
-          onChange={debounce((e) => {
-            changePrices(e.target.value, row.original.id);
-          }, 800)}
-        />
+        <div className="relative max-w-[90px]">
+          <Input
+            readOnly={!(edit === "edit")}
+            className="bg-transparent  max-w-[90px]  border-border border rounded-[5px]"
+            defaultValue={row?.original?.collection_prices?.[0]?.priceMeter}
+            placeholder="0"
+            type="number"
+            onChange={debounce((e) => {
+              changePrices(e.target.value, row.original.id);
+            }, 800)}
+          />
+          <p className="absolute right-2 top-3 ">$</p>
+        </div>
       );
     },
   },

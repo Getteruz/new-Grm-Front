@@ -17,7 +17,7 @@ export const formatDate = (dateString: string): string => {
  * Generate QR code value from QR code object
  */
 export const generateQRValue = (qrCode:any): string => {
-  return `${qrCode.id}`;
+  return `${qrCode.sequence}`;
 };
 
 /**
@@ -96,7 +96,6 @@ export const generatePDF = async (codes: QRCode[]): Promise<void> => {
     
     toast.success(`PDF с ${codes.length} QR-кодами успешно создан`);
   } catch (error) {
-    console.error('Error generating PDF:', error);
     toast.error('Ошибка при создании PDF. Попробуйте еще раз или обратитесь к администратору.');
     throw error; // Re-throw to allow handling in the component
   }

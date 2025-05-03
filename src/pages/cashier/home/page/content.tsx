@@ -50,11 +50,13 @@ export default function Content({ orderList }: { orderList: IData[] }) {
                   count={item?.x + "x"}
                   status={item?.status}
                   seller={item?.seller}
-                  price={item?.price + "$"}
-                  plasticSum={item?.plasticSum ? item?.plasticSum + "$" : "0$"}
+                  price={(item?.price || 0) + "$"}
+                  plasticSum={
+                    item?.plasticSum ? (item?.plasticSum || 0) + "$" : "0$"
+                  }
                   priceMitr={
-                    item?.product.bar_code.collection.collection_prices[0]
-                      .priceMeter + "$"
+                    (item?.product.bar_code?.collection?.collection_prices?.[0]
+                      ?.priceMeter || 0) + "$"
                   }
                   colaction={item?.product?.bar_code?.collection?.title}
                   color="Beige"

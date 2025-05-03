@@ -17,7 +17,7 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
 
   {
     header: "collection",
-    id: "product?.bar_code?.collection?.title",
+    id: "product.bar_code.collection.title",
     accessorKey: "product.bar_code.collection.title",
   },
   {

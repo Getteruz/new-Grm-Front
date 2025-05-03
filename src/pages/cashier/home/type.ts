@@ -83,6 +83,7 @@ export interface IData {
       collection: {
         id: string;
         title: string;
+        collection_prices: [{ priceMeter: number }];
       };
       color: {
         id: string;

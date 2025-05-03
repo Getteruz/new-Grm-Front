@@ -78,13 +78,15 @@ export default function Header() {
         </AvatarFallback>
       </Avatar>
       <Weather />
-      <div>
-        <p className="text-[14px] leading-[17px] font-semibold text-foreground">
-          {currency?.items?.[0]?.usd.toLocaleString("uz-UZ")} $
-        </p>
-        <p className="text-[14px] leading-[17px] font-semibold text-[#E38157]">
-          {currency?.items?.[0]?.uzs.toLocaleString("uz-UZ")} сум
-        </p>
+      <div className="flex gap-1">
+        <div>
+          <p className="text-[14px] leading-[17px] font-semibold text-foreground">
+            {currency?.items?.[0]?.usd.toLocaleString("uz-UZ")} $
+          </p>
+          <p className="text-[14px] leading-[17px] font-semibold text-[#E38157]">
+            {currency?.items?.[0]?.uzs.toLocaleString("uz-UZ")} сум
+          </p>
+        </div>
       </div>
     </div>
   );

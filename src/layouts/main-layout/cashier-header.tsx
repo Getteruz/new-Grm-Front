@@ -35,7 +35,7 @@ export default function CashierHeader() {
     queryFn: () => getAllData<CurrencyData, unknown>("currency"),
   });
 
-  const notificationCount = data?.orders.filter(
+  const notificationCount = data?.orders?.filter(
     (order) => order.status === "progress"
   ).length;
 

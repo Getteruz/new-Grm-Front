@@ -1,7 +1,5 @@
 import FilterSelect from "@/components/filters-ui/filter-select";
 import SearchInput from "@/components/filters-ui/search-input";
-import Statistics from "@/components/filters-ui/statistics";
-import FormComboboxDemoInput from "@/components/forms/FormCombobox";
 import { Button } from "@/components/ui/button";
 import useDataFetch from "@/pages/filial/table/queries";
 import {  Archive, FileOutput, Plus, Trash2 } from "lucide-react";

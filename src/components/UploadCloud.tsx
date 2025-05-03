@@ -5,7 +5,6 @@ import { useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { toast } from "sonner";
 
-import { minio_img_url } from "@/constants";
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 

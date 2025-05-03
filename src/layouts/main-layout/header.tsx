@@ -9,6 +9,7 @@ import { getAllData } from "@/service/apiHelpers";
 import { useAuthStore } from "@/store/auth-store";
 import { useMeStore } from "@/store/me-store";
 
+import Currency from "./currency";
 import { DataMenu } from "./menu-datas";
 import NotePage from "./note/list";
 import { CurrencyData } from "./types";
@@ -78,7 +79,7 @@ export default function Header() {
         </AvatarFallback>
       </Avatar>
       <Weather />
-      <div className="flex gap-1">
+      <div className="flex gap-2 items-center-">
         <div>
           <p className="text-[14px] leading-[17px] font-semibold text-foreground">
             {currency?.items?.[0]?.usd.toLocaleString("uz-UZ")} $
@@ -87,6 +88,7 @@ export default function Header() {
             {currency?.items?.[0]?.uzs.toLocaleString("uz-UZ")} сум
           </p>
         </div>
+        <Currency />
       </div>
     </div>
   );

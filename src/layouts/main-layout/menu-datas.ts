@@ -618,7 +618,7 @@ export const DataMenu = {
         {
           id: 24,
           link: "/report-monthly",
-          text: "Снабжение и документооборот",
+          text: "Зарплатный проект",
         },
       ],
     },

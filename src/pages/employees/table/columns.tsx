@@ -5,6 +5,7 @@ import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
+import { useMeStore } from "@/store/me-store";
 
 export const FilialColumns: ColumnDef<TData>[] = [
   {
@@ -74,7 +75,8 @@ export const FilialColumns: ColumnDef<TData>[] = [
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
     cell: ({ row }) => {
-      return <TableAction url={apiRoutes.user} id={row.original?.id} />;
+      const { meUser } = useMeStore();
+      return  meUser?.position.role == 11 && <TableAction url={apiRoutes.user} id={row.original?.id} />;
     },
   },
 ];

@@ -143,9 +143,7 @@ export function DataTable<TData, TValue>({
         <>
           <Table>
             {hasHeader ? (
-              <TableHeader>
-
-           
+              <TableHeader >
                 {table.getHeaderGroups().map((headerGroup) => (
                       <TableRow key={headerGroup.id}>
                        <TableHead style={{ width: "20px" }} className=" text-center">
@@ -181,7 +179,7 @@ export function DataTable<TData, TValue>({
             ) : (
               ""
             )}
-            <TableBody>
+          <TableBody className="">
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow

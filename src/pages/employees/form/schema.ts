@@ -2,7 +2,10 @@ import { z } from "zod";
 
 export const UserSchema = z.object({
   firstName: z.string(),
-  avatar: z.string(),
+  avatar: z.object({
+    id: z.string().optional(),
+    path: z.string().optional(),
+  }).optional(),
   lastName: z.string(),
   fatherName: z.string(),
   hired: z.date(),

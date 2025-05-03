@@ -18,7 +18,7 @@ function App() {
     queryKey: ["useMe", token, meUser],
     queryFn: () => getAllData<IUserData, unknown>(apiRoutes.userMe),
     enabled: location.pathname != "/login" && Boolean(token) && Boolean(meUser),
-  });
+  })
 
   useEffect(() => {
     if (data) {

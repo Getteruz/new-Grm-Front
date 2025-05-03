@@ -19,7 +19,8 @@ export default function FormContent() {
     api
       .get(apiRoutes.userLoginGenerate)
       .then((res) => setValue("login", String(res.data)));
-  };
+  }
+
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(watch("login"));
@@ -75,7 +76,7 @@ export default function FormContent() {
           placeholder="Номер телефона"
         />
 
-    <FormComboboxDemoInput
+        <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/filial"
           name="filial"

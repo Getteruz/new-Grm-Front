@@ -40,6 +40,7 @@ export const useUserMutation = ({
         ...data,
         position: data?.position?.value,
         filial: data?.filial?.value,
+        avatar: data?.avatar?.id,
       };
       if (id)
         return await UpdatePatchData<UserFormType>(

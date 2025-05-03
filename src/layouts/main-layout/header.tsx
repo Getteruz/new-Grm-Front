@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { BellRing, Grip } from "lucide-react";
+import { BellRing, Grip, Settings } from "lucide-react";
 import { ReactElement } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -78,13 +78,15 @@ export default function Header() {
         </AvatarFallback>
       </Avatar>
       <Weather />
-      <div>
-        <p className="text-[14px] leading-[17px] font-semibold text-foreground">
-          {currency?.items?.[0]?.usd.toLocaleString("uz-UZ")} $
-        </p>
-        <p className="text-[14px] leading-[17px] font-semibold text-[#E38157]">
-          {currency?.items?.[0]?.uzs.toLocaleString("uz-UZ")} сум
-        </p>
+      <div className="flex gap-1">
+        <div>
+          <p className="text-[14px] leading-[17px] font-semibold text-foreground">
+            {currency?.items?.[0]?.usd.toLocaleString("uz-UZ")} $
+          </p>
+          <p className="text-[14px] leading-[17px] font-semibold text-[#E38157]">
+            {currency?.items?.[0]?.uzs.toLocaleString("uz-UZ")} сум
+          </p>
+        </div>
       </div>
     </div>
   );

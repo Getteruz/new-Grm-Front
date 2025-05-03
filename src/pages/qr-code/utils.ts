@@ -17,7 +17,7 @@ export const formatDate = (dateString: string): string => {
  * Generate QR code value from QR code object
  */
 export const generateQRValue = (qrCode:any): string => {
-  return `${qrCode.id}`;
+  return `${qrCode.sequence}`;
 };
 
 /**
@@ -28,7 +28,6 @@ export const generatePDF = async (codes: QRCode[]): Promise<void> => {
   try {
     toast.info('Подготовка PDF документа...');
     
-    // Dynamically import jsPDF and qrcode for better performance
     const [jsPDFModule, QRCodeModule] = await Promise.all([
       import('jspdf'),
       import('qrcode')
@@ -97,7 +96,6 @@ export const generatePDF = async (codes: QRCode[]): Promise<void> => {
     
     toast.success(`PDF с ${codes.length} QR-кодами успешно создан`);
   } catch (error) {
-    console.error('Error generating PDF:', error);
     toast.error('Ошибка при создании PDF. Попробуйте еще раз или обратитесь к администратору.');
     throw error; // Re-throw to allow handling in the component
   }
@@ -108,8 +106,6 @@ export const generatePDF = async (codes: QRCode[]): Promise<void> => {
  */
 export const printQRCodes = (codes: QRCode[]): void => {
   try {
-    console.log('Printing', codes.length, 'QR codes');
-    
     // Create a new window for printing
     const printWindow = window.open('', '_blank');
     
@@ -221,7 +217,7 @@ export const printQRCodes = (codes: QRCode[]): void => {
     
     // Create a page for each QR code
     codes.forEach((code: QRCode) => {
-      const qrValue = generateQRValue(code.id);
+      const qrValue = generateQRValue(code);
       
       html += `
         <div class="page">

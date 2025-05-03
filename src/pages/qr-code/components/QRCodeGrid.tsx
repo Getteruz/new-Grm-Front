@@ -66,7 +66,7 @@ const QRCodeGrid: React.FC<QRCodeGridProps> = ({
 
   // Generate QR code value from sequence number
   const getQRValue = (code: QRCode) => {
-    return `${code.id}_${code.sequence}`;
+    return `${code.sequence}`;
   };
 
   return (

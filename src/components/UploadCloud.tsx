@@ -9,11 +9,12 @@ import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 
 import { Button } from "./ui/button";
+import { minio_img_url } from "@/constants";
 
 export const UploadAvatarButton = () => {
-  const [avatar, setAvatar] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const { setValue } = useFormContext();
+  const { watch, setValue } = useFormContext();
+  const avatar = watch("avatar");
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -26,8 +27,8 @@ export const UploadAvatarButton = () => {
     api
       .post(apiRoutes.upload, formData)
       .then((res) => {
-        setAvatar(res?.data?.image?.url);
-        setValue("avatar", res?.data?.image?.["0"].id);
+        console.log(res?.data);
+        setValue("avatar", res?.data?.[0] );
       })
       .catch((err) => toast.error(String(err)));
   };
@@ -48,9 +49,9 @@ export const UploadAvatarButton = () => {
         onChange={handleFileChange}
         className="hidden"
       />
-      {avatar && (
+      {avatar?.path && (
         <img
-          src={ avatar}
+          src={minio_img_url + avatar?.path}
           alt=""
           className="w-[95px] h-[117px] object-contain"
         />

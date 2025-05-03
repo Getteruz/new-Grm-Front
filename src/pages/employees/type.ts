@@ -1,7 +1,15 @@
 export type TData = {
   id: string;
   isActive: boolean;
-  avatar: string | null;
+  avatar: {
+    id: string;
+    path: string;
+    model: string;
+    mimetype: string;
+    size: number;
+    name: string;
+    created_at: string;
+  };
   firstName: string;
   lastName: string;
   fatherName: string;

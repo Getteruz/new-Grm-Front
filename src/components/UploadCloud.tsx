@@ -1,7 +1,7 @@
 "use client";
 
 import { UploadCloud } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { toast } from "sonner";
 

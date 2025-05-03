@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { BellRing, Grip, Settings } from "lucide-react";
+import { BellRing, Grip } from "lucide-react";
 import { ReactElement } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 

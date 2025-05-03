@@ -51,7 +51,7 @@ export const UploadAvatarButton = () => {
       />
       {avatar && (
         <img
-          src={minio_img_url + avatar}
+          src={ avatar}
           alt=""
           className="w-[95px] h-[117px] object-contain"
         />

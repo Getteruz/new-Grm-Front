@@ -1,6 +1,7 @@
 import {  parseAsString, useQueryState } from "nuqs";
 import ShadcnSelect from "../Select";
 import { useTranslation } from "react-i18next";
+import { Store } from "lucide-react";
 
 interface iFilterSelect {
     name:string;
@@ -10,15 +11,18 @@ interface iFilterSelect {
     classNameValue?:string;
     classNameContainer?:string;
     classNameItem?:string;
+    icons?:boolean;
     options?:{
       label:string;
       value:string;
     }[]
 }
-export default function FilterSelect({name,placeholder,className,classNameItem,defaultValue,classNameContainer,options,classNameValue}:iFilterSelect) {
+export default function FilterSelect({name,icons,placeholder,className,classNameItem,defaultValue,classNameContainer,options,classNameValue}:iFilterSelect) {
     const  [value,setValue] = useQueryState(name,parseAsString.withDefault(defaultValue || ""))
     const {t} = useTranslation()
   return (
+    <div  className={`flex items-center  ${className && className}`}>
+      {icons ?<Store/>:""}
       <ShadcnSelect
               className={` border-none  ${className && className}`}
             disabled={false}
@@ -32,5 +36,6 @@ export default function FilterSelect({name,placeholder,className,classNameItem,d
             placeholder={placeholder ? t(placeholder) : "select"}
             onChange={(e)=>setValue(e||"")}
           />
+    </div>
   )
 }

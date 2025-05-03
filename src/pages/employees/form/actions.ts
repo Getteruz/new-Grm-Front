@@ -38,8 +38,8 @@ export const useUserMutation = ({
     mutationFn: async ({ data, id }) => {
       const costomData: object = {
         ...data,
-
         position: data?.position?.value,
+        filial: data?.filial?.value,
       };
       if (id)
         return await UpdatePatchData<UserFormType>(

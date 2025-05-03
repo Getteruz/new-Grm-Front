@@ -10,7 +10,7 @@ import useData from "./queries";
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
-
+  const  [filial] = useQueryState("filial")
   const [search] = useQueryState("search");
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -19,13 +19,13 @@ export default function Page() {
         limit,
         page,
         title: search || undefined,
+        filial:filial == "all" ? undefined : filial|| undefined,
       },
     });
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
   return (
     <>
       <Filters />
-
       <DataTable
         className="m-4"
         isLoading={isLoading}

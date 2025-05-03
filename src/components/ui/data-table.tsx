@@ -72,6 +72,7 @@ export function DataTable<TData, TValue>({
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
+        onClick={(e)=>e.stopPropagation()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
       />
@@ -143,8 +144,13 @@ export function DataTable<TData, TValue>({
           <Table>
             {hasHeader ? (
               <TableHeader>
+
+           
                 {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
+                      <TableRow key={headerGroup.id}>
+                       <TableHead style={{ width: "20px" }} className=" text-center">
+                          №
+                        </TableHead>
                     {headerGroup.headers.map((header) => {
                       return (
                         <TableHead
@@ -195,6 +201,12 @@ export function DataTable<TData, TValue>({
                     }}
                     data-state={row.getIsSelected() && "selected"}
                   >
+                      <TableCell
+                    className=" text-center p-0"
+                    style={{ width: 20 + "px" }}
+                  >
+                    {Number(row.id) + 1 }
+                  </TableCell>
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
                         {flexRender(

@@ -7,18 +7,14 @@ import FormComboboxDemoInput from "@/components/forms/FormCombobox";
 import FormDatePicker from "@/components/forms/FormDateRangePicker";
 import FormTextInput from "@/components/forms/FormTextInput";
 import FormTimePicker from "@/components/forms/FormTimePicker";
-import ShadcnSelect from "@/components/Select";
 import { Button } from "@/components/ui/button";
 import { DialogFooter, DialogHeader } from "@/components/ui/dialog";
 import { UploadAvatarButton } from "@/components/UploadCloud";
-import useDataFetch from "@/pages/filial/table/queries";
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 
 export default function FormContent() {
   const { watch, setValue } = useFormContext();
-  const { data } = useDataFetch({});
-  const filial = watch("filial");
   const generateLoginId = () => {
     api
       .get(apiRoutes.userLoginGenerate)
@@ -78,33 +74,20 @@ export default function FormContent() {
           name="phone"
           placeholder="Номер телефона"
         />
-        <div>
-          <p className="font-medium text-primary text-[12px] dark:text-white mb-1">
-            Филиал
-          </p>
-          <ShadcnSelect
-            value={filial}
-            options={
-              data?.pages[0].items.map((i) => ({
-                value: i.id,
-                label: i.title,
-              })) || []
-            }
-            placeholder={"Филиал"}
-            onChange={(value) => {
-              setValue("filial", value || "");
-            }}
-            className="w-full h-[42px] bg-[#e7e7da]"
-          />{" "}
-        </div>
 
+    <FormComboboxDemoInput
+          fieldNames={{ value: "id", label: "title" }}
+          fetchUrl="/filial"
+          name="filial"
+          placeholder="Укажите Филиал"
+          label="Филиал"
+        />
         <FormTextInput
           type="number"
           label="Зарплата"
           name="salary"
           placeholder="0.00"
         />
-
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           name="bonus"

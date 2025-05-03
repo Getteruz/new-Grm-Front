@@ -61,7 +61,7 @@ export default function FormComboboxDemoInput<IData, TQuery>({
     queryFn: () =>
       getAllData<TResponse<IData>, TQuery>(fetchUrl || "", {
         search: search || undefined,
-        limit: 20,
+        limit: 30,
         page: 1,
         ...queries,
       } as TQuery),
@@ -77,6 +77,8 @@ export default function FormComboboxDemoInput<IData, TQuery>({
       meta: res.meta,
     }),
   });
+
+  console.log(data,"hre")
 
   const memoizedData = useMemo(() => {
     if (option) return option;
@@ -112,7 +114,7 @@ export default function FormComboboxDemoInput<IData, TQuery>({
                 disabled={disabled}
                 value={field?.value?.value || ""}
                 isLoading={isLoading}
-                options={memoizedData.filter((i) => i)}
+                options={memoizedData?.filter((i) => i)}
                 placeholder={placeholder ? t(placeholder) : ""}
                 onChange={field.onChange}
               />

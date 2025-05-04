@@ -1,5 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowDown, MoreHorizontal, ShoppingCart } from "lucide-react";
+import {
+  ArrowDown,
+  MessageSquareText,
+  MoreHorizontal,
+  ShoppingCart,
+} from "lucide-react";
 import { useState } from "react";
 
 import CardSort from "@/components/card-sort";
@@ -10,22 +15,26 @@ import formatPrice from "@/utils/formatPrice";
 import Filters from "../page/filter";
 import Pricecheck from "../page/price-check";
 import { useReport } from "../queries";
+import { addHours, format } from "date-fns";
 
 // Types for our data
 interface TransactionItem {
   id: number;
-  type: "income" | "expense";
+  type: string;
   amount: number;
+  tip: string;
   product: string;
   code?: string;
   size?: string;
-  price?: string;
+  price?: number;
   comment: string;
   quantity?: number;
   discount?: string;
   description?: string;
   operation: string;
   time: string;
+  title: string;
+  date: string;
 }
 
 export default function TransactionDetail() {
@@ -41,9 +50,9 @@ export default function TransactionDetail() {
         const item = row.original;
         return (
           <div
-            className={`w-12 h-12 flex items-center justify-center ${item.type === "income" ? "bg-[#89A143] text-white" : "bg-[#E38157] text-white"}`}
+            className={`w-12 h-12 flex items-center justify-center ${item.type === "Приход" ? "bg-[#89A143] text-white" : "bg-[#E38157] text-white"}`}
           >
-            {item.type === "income" ? (
+            {item.tip === "order" ? (
               <ShoppingCart className="h-6 w-6" />
             ) : (
               <ArrowDown className="h-6 w-6" />
@@ -58,10 +67,10 @@ export default function TransactionDetail() {
         const item = row.original;
         return (
           <span
-            className={`font-bold text-[16px] ${item.type === "income" ? "text-[#89A143]" : "text-[#E38157]"}`}
+            className={`font-bold text-[16px] ${item.type === "Приход" ? "text-[#89A143]" : "text-[#E38157]"}`}
           >
-            {item.type === "income" ? "+" : ""}
-            {formatPrice(item.amount)}$
+            {item.type === "Приход" ? "+" : "-"}
+            {formatPrice(item.price || 0)}$
           </span>
         );
       },
@@ -71,7 +80,8 @@ export default function TransactionDetail() {
       cell: ({ row }) => {
         const item = row.original;
         return (
-          <p className="text-[13px] text-muted-foreground">
+          <p className="text-[13px] text-muted-foreground flex gap-1">
+            {item?.comment && <MessageSquareText width={14} />}
             {item.product || item?.comment}
           </p>
         );
@@ -81,14 +91,22 @@ export default function TransactionDetail() {
       id: "code",
       cell: ({ row }) => {
         const item = row.original;
-        return <p className="text-[13px] text-muted-foreground">{item.code}</p>;
+        return (
+          <p className="text-[13px] text-muted-foreground">
+            {row.original.tip === "order" && item.code}
+          </p>
+        );
       },
     },
     {
       id: "size",
       cell: ({ row }) => {
         const item = row.original;
-        return <p className="text-[13px] text-muted-foreground">{item.size}</p>;
+        return (
+          <p className="text-[13px] text-muted-foreground">
+            {row.original.tip === "order" && item.size}
+          </p>
+        );
       },
     },
     {
@@ -96,7 +114,9 @@ export default function TransactionDetail() {
       cell: ({ row }) => {
         const item = row.original;
         return (
-          <p className="text-[13px] text-muted-foreground">{item.price}</p>
+          <p className="text-[13px] text-muted-foreground">
+            {row.original.tip === "order" && item.price}
+          </p>
         );
       },
     },
@@ -105,7 +125,9 @@ export default function TransactionDetail() {
       cell: ({ row }) => {
         const item = row.original;
         return (
-          <p className="text-[13px] text-muted-foreground">{item.quantity}x</p>
+          <p className="text-[13px] text-muted-foreground">
+            {row.original.tip === "order" && (item?.quantity || 0 + "x")}
+          </p>
         );
       },
     },
@@ -113,7 +135,11 @@ export default function TransactionDetail() {
       id: "discount",
       cell: ({ row }) => {
         const item = row.original;
-        return <p className="text-[13px] text-[#E38157]">{item.discount}</p>;
+        return (
+          <p className="text-[13px] text-[#E38157]">
+            {row.original.tip === "order" && item.discount}
+          </p>
+        );
       },
     },
     {
@@ -122,10 +148,10 @@ export default function TransactionDetail() {
         const item = row.original;
         return (
           <Button
-            className={`${item.type !== "income" ? "text-[#E38157] border-[#E38157] hover:text-[#E38157]" : "text-[#89A143] border-[#89A143] hover:text-[#89A143]"} rounded-[70px] p-[14px] h-10 `}
+            className={`${item.type !== "Приход" ? "text-[#E38157] border-[#E38157] hover:text-[#E38157]" : "text-[#89A143] border-[#89A143] hover:text-[#89A143]"} rounded-[70px] p-[14px] h-10 `}
             variant={"outline"}
           >
-            {item.type !== "income" ? "Расход" : "Продажа"}
+            {item.tip === "order" ? "Продажа" : item.title}
           </Button>
         );
       },
@@ -134,7 +160,8 @@ export default function TransactionDetail() {
       id: "time",
       cell: ({ row }) => {
         const item = row.original;
-        return <p className="text-[13px]">{item.time}</p>;
+        const updatedDate = addHours(new Date(item.date), 5); // 5 soat qo‘shish
+        return <p className="text-[13px]">{format(updatedDate, "HH:mm")}</p>;
       },
     },
     {

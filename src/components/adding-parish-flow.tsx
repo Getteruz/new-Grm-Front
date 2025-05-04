@@ -186,10 +186,8 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
       comment: comment,
       title:
         type === "parish"
-          ? "Приход: " +
-            categories.find((c) => c.id === selectedCategory)?.title
-          : "Расход: " +
-            categories.find((c) => c.id === selectedCategory)?.title,
+          ? categories.find((c) => c.id === selectedCategory)?.title
+          : categories.find((c) => c.id === selectedCategory)?.title,
       casher: meUser.id,
       kassa: kassaId,
       cashflow_type: selectedCategory,

@@ -1,13 +1,15 @@
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowDown, MoreHorizontal, ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { ShoppingCart, ArrowDown, MoreHorizontal } from "lucide-react";
+
+import CardSort from "@/components/card-sort";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
-import { ColumnDef } from "@tanstack/react-table";
 import formatPrice from "@/utils/formatPrice";
-import CardSort from "@/components/card-sort";
+
 import Filters from "../page/filter";
 import Pricecheck from "../page/price-check";
+import { useReport } from "../queries";
 
 // Types for our data
 interface TransactionItem {
@@ -18,6 +20,7 @@ interface TransactionItem {
   code?: string;
   size?: string;
   price?: string;
+  comment: string;
   quantity?: number;
   discount?: string;
   description?: string;
@@ -25,106 +28,10 @@ interface TransactionItem {
   time: string;
 }
 
-// This would come from your API in production
-const getTransactionDetail = (id: string) => {
-  return {
-    id,
-    date: "10 Март 2025",
-    totalAmount: 0,
-    items: [
-      {
-        id: 1,
-        type: "income",
-        amount: 189.0,
-        product: "Sanat Kalipso",
-        code: "A1398L",
-        size: "200x300",
-        price: "35$",
-        quantity: 1,
-        discount: "10%",
-        operation: "Продажа",
-        time: "10:37",
-      },
-      {
-        id: 2,
-        type: "expense",
-        amount: -189.0,
-        product: "Магазин расход",
-        description: "Arenda uchun fevral oyiga to'lov",
-        operation: "Расход",
-        time: "10:37",
-      },
-      {
-        id: 3,
-        type: "income",
-        amount: 189.0,
-        product: "Sanat Kalipso",
-        code: "A1398L",
-        size: "200x300",
-        price: "35$",
-        quantity: 1,
-        operation: "Продажа",
-        time: "10:37",
-      },
-      {
-        id: 4,
-        type: "income",
-        amount: 200.0,
-        product: "Sanat Kalipso",
-        code: "A1398L",
-        size: "200x300",
-        price: "35$",
-        quantity: 1,
-        discount: "10%",
-        operation: "Приход",
-        time: "10:37",
-      },
-      {
-        id: 5,
-        type: "income",
-        amount: 189.0,
-        product: "Sanat Kalipso",
-        code: "A1398L",
-        size: "200x300",
-        price: "35$",
-        quantity: 1,
-        discount: "10%",
-        operation: "Продажа",
-        time: "10:37",
-      },
-      {
-        id: 6,
-        type: "expense",
-        amount: -189.0,
-        product: "Sanat Kalipso",
-        code: "A1398L",
-        size: "200x300",
-        price: "35$",
-        quantity: 1,
-        operation: "Продажа",
-        time: "10:37",
-      },
-      {
-        id: 7,
-        type: "income",
-        amount: 189.0,
-        product: "Sanat Kalipso",
-        code: "A1398L",
-        size: "200x300",
-        price: "35$",
-        quantity: 1,
-        operation: "Продажа",
-        time: "10:37",
-      },
-    ],
-  };
-};
-
 export default function TransactionDetail() {
-  const { id } = useParams<{ id: string }>();
-  const [selectedItems, _setSelectedItems] = useState<number[]>([]);
+  const [selectedItems] = useState<number[]>([]);
 
-  const transaction = getTransactionDetail(id || "1");
+  const { data: reportData } = useReport();
 
   // Define columns for the DataTable
   const columns: ColumnDef<TransactionItem>[] = [
@@ -164,7 +71,9 @@ export default function TransactionDetail() {
       cell: ({ row }) => {
         const item = row.original;
         return (
-          <p className="text-[13px] text-muted-foreground">{item.product}</p>
+          <p className="text-[13px] text-muted-foreground">
+            {item.product || item?.comment}
+          </p>
         );
       },
     },
@@ -241,7 +150,7 @@ export default function TransactionDetail() {
 
   return (
     <>
-      <Filters countLength={selectedItems.length} />
+      <Filters countLength={selectedItems?.length} />
       <div className="flex justify-between w-full bg-[#f8f6e9]">
         <div className="flex flex-col h-screen w-full">
           <CardSort />
@@ -254,7 +163,7 @@ export default function TransactionDetail() {
           <div className="flex-1 overflow-auto p-4">
             <DataTable
               columns={columns}
-              data={transaction?.items as any}
+              data={reportData?.items || []}
               isLoading={false}
               className="border-none"
               hasHeader={false}

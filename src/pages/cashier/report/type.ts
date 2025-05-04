@@ -1,5 +1,5 @@
 export type ProductsData = {
-  id:string;
+  id: string;
   code: string;
   model: {
     id: string;
@@ -28,6 +28,7 @@ export type ProductsQuery = {
 };
 
 export type KassaReportData = {
+  items: [];
   id: string;
   startDate: string;
   endDate: string | null;
@@ -42,7 +43,7 @@ export type KassaReportData = {
   expenditureBoss: number;
   expenditureShop: number;
   internetShopSum: number;
-  status: 'open' | 'closed';
+  status: "open" | "closed";
   orders: any[];
   cashflow: any[];
   filial: {
@@ -60,7 +61,7 @@ export type KassaReportData = {
     isActive: boolean;
     hickCompleted: boolean;
     need_get_report: boolean;
-    type: 'filial';
+    type: "filial";
   };
   cashflowAndOrders: any[];
   income: number;

@@ -4,12 +4,12 @@ import TransactionDetail from "./single/transaction-detail";
 const Route = [
   {
     url: "/cashier/report",
-    Element: Page,
+    Element: TransactionDetail,
     meta: { isAuth: true, role: new Set(["admin", "3"]) },
   },
   {
     url: "/cashier/report/:id/info",
-    Element: TransactionDetail,
+    Element: Page,
     meta: { isAuth: true, role: new Set(["admin", "3"]) },
   },
 ];

@@ -110,8 +110,16 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
           title: "Аренда",
           icon: () => <Store />,
         },
-        { id: "debt", title: "Долг/Аванс", icon: () => <Receipt /> },
-        { id: "boss", title: "Бос", icon: () => <BriefcaseBusiness /> },
+        {
+          id: "5ae9b4be-e9da-46b9-9e9c-20b97d462779",
+          title: "Долг/Аванс",
+          icon: () => <Receipt />,
+        },
+        {
+          id: "39925b4e-b4a5-4ad5-afe8-af39278f47e3",
+          title: "Бос",
+          icon: () => <BriefcaseBusiness />,
+        },
       ];
     }
 

@@ -62,7 +62,7 @@ export default function CashierHeader() {
           </>
         )}
       </div>
-      <AddingParishOrFlow />
+      <AddingParishOrFlow kassaId={String(data?.id)} />
       <div className="ml-8">
         <div className="flex items-center justify-between w-full max-w-[312px] pr-3 gap-5">
           <div className="flex text-primary items-center gap-[5px]">
@@ -83,9 +83,7 @@ export default function CashierHeader() {
           </div>
           <div>
             <Avatar className="w-[50px] h-[50px]">
-              <AvatarImage
-                src={minio_img_url + meUser?.avatar?.path.slice(1)}
-              />
+              <AvatarImage src={minio_img_url + meUser?.avatar?.path} />
               <AvatarFallback className="bg-primary text-white w-[50px] flex items-center justify-center h-[50px]">
                 {meUser?.firstName?.[0]}
                 {meUser?.lastName?.[0]}

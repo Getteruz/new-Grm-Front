@@ -1,19 +1,20 @@
-import { useState } from "react";
-import { Shield, Store, Receipt, BriefcaseBusiness } from "lucide-react";
-import { JSX } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { BriefcaseBusiness, Receipt, Shield, Store } from "lucide-react";
+import { useState } from "react";
+import { JSX } from "react";
 import { toast } from "sonner";
+
+import { AddData, getAllData } from "@/service/apiHelpers";
+import { apiRoutes } from "@/service/apiRoutes";
+import { useMeStore } from "@/store/me-store";
+import { TResponse } from "@/types";
 
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { AddData, getAllData } from "@/service/apiHelpers";
-import { apiRoutes } from "@/service/apiRoutes";
-import { useMeStore } from "@/store/me-store";
-import { useQuery } from "@tanstack/react-query";
 import { Spinner } from "./ui/spinner";
-import { TResponse } from "@/types";
+import { Textarea } from "./ui/textarea";
 export interface CategoryProps {
   title: string;
   icons?: () => JSX.Element;
@@ -32,10 +33,16 @@ export type CashflowType = {
 };
 
 // Clickable category component
-const CardSelect = ({ title, icons, isSelected, onClick, type }: CategoryProps) => {
+const CardSelect = ({
+  title,
+  icons,
+  isSelected,
+  onClick,
+  type,
+}: CategoryProps) => {
   return (
-    <div 
-      className={`w-[calc(50%-2px)] bg-input flex items-center justify-center flex-col rounded-[7px] text-center cursor-pointer ${isSelected && type === "parish" ? 'ring-2 ring-[#89A143]' : isSelected && type === "flow" ? "ring-2 ring-[#E38157]" : ''}`}
+    <div
+      className={`w-[calc(50%-2px)] bg-input flex items-center justify-center flex-col rounded-[7px] text-center cursor-pointer ${isSelected && type === "parish" ? "ring-2 ring-[#89A143]" : isSelected && type === "flow" ? "ring-2 ring-[#E38157]" : ""}`}
       onClick={onClick}
     >
       {icons ? icons() : ""}
@@ -44,7 +51,7 @@ const CardSelect = ({ title, icons, isSelected, onClick, type }: CategoryProps) 
   );
 };
 
-export default function AddingParishOrFlow() {
+export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
@@ -56,16 +63,21 @@ export default function AddingParishOrFlow() {
   // Fetch cashflow types
   const { data: cashflowTypesResponse, isLoading: typesLoading } = useQuery({
     queryKey: [apiRoutes.cashflowTypes],
-    queryFn: () => getAllData<TResponse<CashflowType>, void>(apiRoutes.cashflowTypes),
+    queryFn: () =>
+      getAllData<TResponse<CashflowType>, void>(apiRoutes.cashflowTypes),
   });
-  
+
   const cashflowTypes = cashflowTypesResponse?.items;
 
   // Create mutation for adding cashflow
   const { mutate: addCashflow, isPending } = useMutation({
     mutationFn: (data: any) => AddData(apiRoutes.cashflow, data),
     onSuccess: () => {
-      toast.success(type === "parish" ? "Приход успешно добавлен" : "Расход успешно добавлен");
+      toast.success(
+        type === "parish"
+          ? "Приход успешно добавлен"
+          : "Расход успешно добавлен"
+      );
       queryClient.invalidateQueries({ queryKey: [apiRoutes.openKassa] });
       queryClient.invalidateQueries({ queryKey: [apiRoutes.cashflow] });
       setIsOpen(false);
@@ -88,39 +100,57 @@ export default function AddingParishOrFlow() {
   const getCategories = () => {
     if (cashflowTypes || Array.isArray(cashflowTypes)) {
       return [
-        { id: "inkasatsiya", title: "Инкасатсия", icon: () => <Shield /> },
-        { id: "arenda", title: "Аренда", icon: () => <Store /> },
+        {
+          id: "49f38b89-f719-452e-be2c-78d7060778b9",
+          title: "Инкассация",
+          icon: () => <Shield />,
+        },
+        {
+          id: "b4bb8ef9-3825-4047-9737-0cff30514959",
+          title: "Аренда",
+          icon: () => <Store />,
+        },
         { id: "debt", title: "Долг/Аванс", icon: () => <Receipt /> },
-        { id: "boss", title: "Бос", icon: () => <BriefcaseBusiness /> }
+        { id: "boss", title: "Бос", icon: () => <BriefcaseBusiness /> },
       ];
     }
 
     // Filter cashflow types based on current operation type (parish = "Приход", flow = "Расход")
     const operationType = type === "parish" ? "in" : "out";
-    return cashflowTypes ? cashflowTypes : [{type:"",id:"",title:"", icon:""}].filter(ct => ct.type === operationType || ct.type === "both")
-      .map(ct => ({
-        id: ct.id,
-        title: ct.title,
-        icon: () => {
-          // Try to parse the icon if it exists
-          if (ct.icon) {
-            try {
-              // Simple way to determine which icon to show based on title
-              if (ct.title.toLowerCase().includes("инкасат")) return <Shield />;
-              if (ct.title.toLowerCase().includes("аренд")) return <Store />;
-              if (ct.title.toLowerCase().includes("долг") || ct.title.toLowerCase().includes("аванс")) return <Receipt />;
-              if (ct.title.toLowerCase().includes("бос")) return <BriefcaseBusiness />;
-              
-              // Default icon (can be replaced with a more appropriate one)
+    return cashflowTypes
+      ? cashflowTypes
+      : [{ type: "", id: "", title: "", icon: "" }]
+          .filter((ct) => ct.type === operationType || ct.type === "both")
+          .map((ct) => ({
+            id: ct.id,
+            title: ct.title,
+            icon: () => {
+              // Try to parse the icon if it exists
+              if (ct.icon) {
+                try {
+                  // Simple way to determine which icon to show based on title
+                  if (ct.title.toLowerCase().includes("инкасат"))
+                    return <Shield />;
+                  if (ct.title.toLowerCase().includes("аренд"))
+                    return <Store />;
+                  if (
+                    ct.title.toLowerCase().includes("долг") ||
+                    ct.title.toLowerCase().includes("аванс")
+                  )
+                    return <Receipt />;
+                  if (ct.title.toLowerCase().includes("бос"))
+                    return <BriefcaseBusiness />;
+
+                  // Default icon (can be replaced with a more appropriate one)
+                  return <Receipt />;
+                } catch (e) {
+                  // Fallback icon
+                  return <Receipt />;
+                }
+              }
               return <Receipt />;
-            } catch (e) {
-              // Fallback icon
-              return <Receipt />;
-            }
-          }
-          return <Receipt />;
-        }
-      }));
+            },
+          }));
   };
 
   const categories = getCategories();
@@ -146,13 +176,18 @@ export default function AddingParishOrFlow() {
       price: parseFloat(amount),
       type: type === "parish" ? "Приход" : "Расход",
       comment: comment,
-      title: type === "parish" ? "Приход: " + categories.find(c => c.id === selectedCategory)?.title : "Расход: " + categories.find(c => c.id === selectedCategory)?.title,
+      title:
+        type === "parish"
+          ? "Приход: " +
+            categories.find((c) => c.id === selectedCategory)?.title
+          : "Расход: " +
+            categories.find((c) => c.id === selectedCategory)?.title,
       casher: meUser.id,
-      kassa: meUser.id,
+      kassa: kassaId,
       cashflow_type: selectedCategory,
-      tip: "cashflow"
+      tip: "cashflow",
+      // filial: meUser.filial.id,
     };
-
 
     // Send to API
     addCashflow(cashflowData);
@@ -179,14 +214,13 @@ export default function AddingParishOrFlow() {
         </DialogTrigger>
       </div>
 
-
       <DialogContent className="min-w-[494px] p-1 rounded-[10px]">
-        
-        <div className={`p-2 rounded-[7px] text-center ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}>
+        <div
+          className={`p-2 rounded-[7px] text-center ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}
+        >
           {type === "parish" ? "Добавление прихода" : "Добавление расхода"}
         </div>
 
-        
         <div className="flex gap-1">
           <div className="flex w-full max-w-[210px] flex-wrap gap-0.5">
             {typesLoading ? (
@@ -195,10 +229,10 @@ export default function AddingParishOrFlow() {
               </div>
             ) : (
               categories.map((category) => (
-                <CardSelect 
+                <CardSelect
                   key={category.id}
-                  title={category.title} 
-                  icons={category.icon} 
+                  title={category.title}
+                  icons={category.icon}
                   isSelected={selectedCategory === category.id}
                   type={type}
                   onClick={() => setSelectedCategory(category.id)}
@@ -206,7 +240,7 @@ export default function AddingParishOrFlow() {
               ))
             )}
           </div>
-          
+
           <div className="w-full">
             <div className="flex pl-2 items-center bg-input rounded-[7px] h-[90px]">
               <Input
@@ -219,7 +253,7 @@ export default function AddingParishOrFlow() {
               />
               <div className="text-4xl text-[#5D5D53] mx-4">$</div>
             </div>
-            
+
             <Textarea
               placeholder="Комментария"
               value={comment}
@@ -228,15 +262,19 @@ export default function AddingParishOrFlow() {
             />
           </div>
         </div>
-        
+
         <Button
           onClick={handleSubmit}
           disabled={isPending || !selectedCategory || !amount}
-          className={`p-5 rounded-[7px] ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white ${isPending ? 'opacity-70 cursor-not-allowed' : ''}`}
+          className={`p-5 rounded-[7px] ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white ${isPending ? "opacity-70 cursor-not-allowed" : ""}`}
         >
           {isPending ? (
             <span className="flex items-center">
-              <span className="mr-2">{type == "parish" ? "Добавляем в приход..." : "Добавляем в расход..."}</span>
+              <span className="mr-2">
+                {type == "parish"
+                  ? "Добавляем в приход..."
+                  : "Добавляем в расход..."}
+              </span>
               <Spinner className="h-4 w-4" />
             </span>
           ) : (

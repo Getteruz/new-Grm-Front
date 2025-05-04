@@ -6,6 +6,7 @@ import CarpetCashierCard from "@/components/cards/carpet-cashier-card";
 import { IData } from "../type";
 import Filters from "./filter";
 import Pricecheck from "./price-check";
+import { minio_img_url } from "@/constants";
 
 export default function Content({ orderList }: { orderList: IData[] }) {
   const [selected, setSelected] = useState<IData[]>([]);
@@ -44,7 +45,11 @@ export default function Content({ orderList }: { orderList: IData[] }) {
                       : `-${item?.discountPercentage}%`
                   }
                   id={item?.id}
-                  img="/images/image.png"
+                  img={
+                    item?.product?.bar_code?.imgUrl
+                      ? minio_img_url + item?.product?.bar_code?.imgUrl?.path
+                      : "/images/default.svg"
+                  }
                   model={item?.product?.bar_code?.model?.title}
                   size={item?.product?.bar_code?.size?.title}
                   count={item?.x + "x"}

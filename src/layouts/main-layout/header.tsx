@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { minio_img_url } from "@/constants";
 import { getAllData } from "@/service/apiHelpers";
 import { useAuthStore } from "@/store/auth-store";
 import { useMeStore } from "@/store/me-store";
@@ -72,7 +73,7 @@ export default function Header() {
       <Grip className="text-primary w-5 h-5" />
 
       <Avatar>
-        <AvatarImage src={meUser?.avatar || undefined} />
+        <AvatarImage src={minio_img_url + meUser?.avatar?.path || undefined} />
         <AvatarFallback className="bg-primary text-white  flex items-center justify-center">
           {meUser?.firstName?.[0]}
           {meUser?.lastName?.[0]}

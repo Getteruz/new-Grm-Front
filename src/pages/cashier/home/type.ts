@@ -70,7 +70,7 @@ export interface IData {
       isMetric: boolean;
       id: string;
       code: string;
-      imgUrl: string | null;
+      imgUrl: { path: string | null };
       otherImgs: string | null;
       internetInfo: string | null;
       is_active: boolean;

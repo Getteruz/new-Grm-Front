@@ -156,7 +156,7 @@ export default function TransactionDetail() {
           <CardSort />
           {/* Date heading */}
           <div className="px-10 pt-4 w-full bg-[#f8f6e9] sticky top-0">
-            <p className="text-sm font-medium">12-Mart</p>
+            <p className="text-sm font-medium">04-May</p>
           </div>
 
           {/* Transaction item list as DataTable */}

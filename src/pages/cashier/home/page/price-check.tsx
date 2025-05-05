@@ -10,9 +10,9 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { IData } from "../type";
 
 export default function Pricecheck({ selected }: { selected: IData[] }) {
-  const price = selected?.reduce((a, b) => a + b.additionalProfitSum, 0);
-  const discount = selected?.reduce(
-    (a, b) => a + Number(b.discountPercentage),
+  const price = selected?.reduce((a, b) => a + b.plasticSum + b.price , 0);
+  const discountSum = selected?.reduce(
+    (a, b) => a + b.discountSum,
     0
   );
   const queryClient = useQueryClient();
@@ -37,7 +37,7 @@ export default function Pricecheck({ selected }: { selected: IData[] }) {
         <div className="bg-background flex items-center  text-primary justify-between px-[13px] py-[14px] mb-[1px]">
           <p className="text-[14px] font-semibold ">Cкидка:</p>
           <p className="text-[22px] font-semibold">
-            - {(price * discount) / 100}$
+            - {discountSum}$
           </p>
           {/* <p className="text-[14px] font-semibold mt-2.5 text-[#E38157]">
             -{discount}%
@@ -50,7 +50,7 @@ export default function Pricecheck({ selected }: { selected: IData[] }) {
         </div>
         
         
-        <CheckList selected={selected} />
+        <CheckList price={price} discountSum={discountSum} selected={selected} />
       </div>
 
       <div className="w-full">

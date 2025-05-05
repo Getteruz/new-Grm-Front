@@ -3,11 +3,13 @@ import { useMeStore } from "@/store/me-store";
 import { format } from "date-fns";
 
 interface ICheckList{
-    selected:IData[]  
+    selected:IData[],
+    price:number,
+    discountSum:number,
+    
 }
-export default function CheckList({selected}:ICheckList) {
+export default function CheckList({selected,price,discountSum}:ICheckList) {
     const {meUser} = useMeStore() 
-    const price =selected?.reduce((a,b)=> a + b.additionalProfitSum, 0)
   return (
     <div className='w-full bg-background p-5 mb-[25px]'>
         <h3 className="text-center text-primary font-bold text-[18px]">{meUser?.filial?.name}</h3>
@@ -24,16 +26,21 @@ export default function CheckList({selected}:ICheckList) {
                 <p className="w-full">{String(item?.product?.bar_code?.collection?.title || '')}</p>
                 <p className="w-full text-end">{item?.product?.bar_code?.size?.title}</p>
                 <p className="w-full text-end">{item?.x}x</p>
-                <p className="w-full text-end">{item?.additionalProfitSum}$</p>
+                <p className="w-full text-end">{item?.netProfitSum}$</p>
             </li> 
             ))
            }
           
         </ul>
+        <div className="flex items-center text-primary text-[12px] mt-[5px] pb-2 justify-between">
+            <p>Скидка</p>
+            <p>{discountSum} $</p>
+        </div>
         <div className="flex items-center text-primary text-[14px] mt-[19px] pb-2 justify-between">
             <p>Итого</p>
             <p>{price} $</p>
         </div>
+
         <ul className="boder-border border-dashed border-y  pt-[11px] pb-[24px]">
           
             <li className="flex items-center text-primary text-[11px]  mb-[9px]">

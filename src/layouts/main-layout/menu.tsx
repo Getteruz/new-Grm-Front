@@ -19,6 +19,9 @@ export default function Menu() {
       className={`${meUser?.position?.role == 3 ? " w-[90px] " : " w-[104px] "} h-screen flex relative pb-[110px] justify-between flex-col  border-r bg-sidebar  border-border `}
     >
       <img
+      onClick={ meUser?.position?.role == 3 ?()=> {
+        window.location.replace("/cashier/home")
+      }:()=>{}}
         src="/logo1.svg"
         className={`border-b inline-block w-full ${meUser?.position.role == 3 ? "h-[90px]" : "h-[64px]"}  border-border`}
       />

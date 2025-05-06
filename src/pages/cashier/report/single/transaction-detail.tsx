@@ -1,4 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { addHours, format } from "date-fns";
 import {
   ArrowDown,
   MessageSquareText,
@@ -15,7 +16,6 @@ import formatPrice from "@/utils/formatPrice";
 import Filters from "../page/filter";
 import Pricecheck from "../page/price-check";
 import { useReport } from "../queries";
-import { addHours, format } from "date-fns";
 
 // Types for our data
 interface TransactionItem {
@@ -27,6 +27,12 @@ interface TransactionItem {
   code?: string;
   size?: string;
   price?: number;
+  order: {
+    bar_code: { model: { title: string }; collection: { title: string } };
+    x: number;
+    price: number;
+    discountPercentage: string;
+  };
   comment: string;
   quantity?: number;
   discount?: string;
@@ -82,53 +88,33 @@ export default function TransactionDetail() {
         return (
           <p className="text-[13px] text-muted-foreground flex gap-1">
             {item?.comment && <MessageSquareText width={14} />}
-            {item.product || item?.comment}
+            {item?.order?.bar_code?.collection?.title || item?.comment}
           </p>
         );
       },
     },
     {
-      id: "code",
-      cell: ({ row }) => {
-        const item = row.original;
-        return (
-          <p className="text-[13px] text-muted-foreground">
-            {row.original.tip === "order" && item.code}
-          </p>
-        );
-      },
+      accessorKey: "order.bar_code.model.title",
+      id: "order.bar_code.model.title",
     },
     {
       id: "size",
-      cell: ({ row }) => {
-        const item = row.original;
-        return (
-          <p className="text-[13px] text-muted-foreground">
-            {row.original.tip === "order" && item.size}
-          </p>
-        );
-      },
+      accessorKey: "order.bar_code.size.title",
     },
     {
       id: "price",
+      accessorKey: "order.price",
       cell: ({ row }) => {
         const item = row.original;
-        return (
-          <p className="text-[13px] text-muted-foreground">
-            {row.original.tip === "order" && item.price}
-          </p>
-        );
+        return <>{item?.order?.price}$</>;
       },
     },
     {
-      id: "quantity",
+      id: "order.x",
+      accessorKey: "order.x",
       cell: ({ row }) => {
         const item = row.original;
-        return (
-          <p className="text-[13px] text-muted-foreground">
-            {row.original.tip === "order" && (item?.quantity || 0 + "x")}
-          </p>
-        );
+        return <>{item?.order?.x}x</>;
       },
     },
     {
@@ -137,7 +123,7 @@ export default function TransactionDetail() {
         const item = row.original;
         return (
           <p className="text-[13px] text-[#E38157]">
-            {row.original.tip === "order" && item.discount}
+            {item?.order?.discountPercentage}%
           </p>
         );
       },
@@ -174,7 +160,6 @@ export default function TransactionDetail() {
       ),
     },
   ];
-
   return (
     <>
       <Filters countLength={selectedItems?.length} />
@@ -183,7 +168,9 @@ export default function TransactionDetail() {
           <CardSort />
           {/* Date heading */}
           <div className="px-10 pt-4 w-full bg-[#f8f6e9] sticky top-0">
-            <p className="text-sm font-medium">04-May</p>
+            <p className="text-sm font-medium">
+              {format(new Date(), "dd-MMMM")}
+            </p>
           </div>
 
           {/* Transaction item list as DataTable */}

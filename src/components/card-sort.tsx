@@ -149,6 +149,49 @@ export default function CardSort() {
     },
   ];
 
+  const hrColumns = [
+    {
+      title: "Пластик",
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(reportData?.income || 0)
+      ),
+    },
+    {
+      title: "Наличному",
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(reportData?.income || 0)
+      ),
+    },
+    {
+      title: "Бонус",
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(reportData?.income || 0)
+      ),
+    },
+    {
+      title: "Аванс",
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(reportData?.income || 0)
+      ),
+    },
+    {
+      title: "Премя",
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(reportData?.income || 0)
+      ),
+    },
+  ];
+
   // Helper function to format price
   function formatPrice(price: number): string {
     return Number(price).toFixed(2);
@@ -199,6 +242,8 @@ export default function CardSort() {
     }
   };
 
+  const column = meUser?.position.role === 11 ? hrColumns : columns;
+
   return (
     <>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -223,7 +268,7 @@ export default function CardSort() {
             <p className="text-[14px] font-semibold">1 шт</p>
           </div>
           <div className="grid row-start w-full gap-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {columns?.map((e) => (
+            {column?.map((e) => (
               <div
                 key={e.title}
                 onClick={() => setSortType(e.title)}

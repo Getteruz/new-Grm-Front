@@ -131,6 +131,29 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.scrollCastom{
+  overflow: scroll;
+}
+
+/* width */
+.scrollCastom::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+.scrollCastom::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.scrollCastom::-webkit-scrollbar-thumb {
+  background: #666;
+}
+
+/* Handle on hover */
+.scrollCastom::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;

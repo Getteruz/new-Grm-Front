@@ -34,5 +34,6 @@ export const apiRoutes = {
   notes: "/notes",
   qrCodes: "/qr-codes",
   kassaReport: "/kassa/report",
+  kassa:"/kassa",
   statement: "/statement",
 } as const;

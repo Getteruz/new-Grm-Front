@@ -89,7 +89,7 @@ export default function Header() {
             {currency?.items?.[0]?.uzs.toLocaleString("uz-UZ")} сум
           </p>
         </div>
-        <Currency />
+        {meUser?.position?.role === 9 && <Currency />}
       </div>
     </div>
   );

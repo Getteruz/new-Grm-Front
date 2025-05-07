@@ -42,7 +42,7 @@ function Currency() {
     <div className="relative">
       <Settings onClick={() => setActive(!active)} className="cursor-pointer" />
       {active && (
-        <div className="absolute top-14 right-3 min-w-[335px] bg-[#E6E6D9] border border-border rounded px-5 py-4">
+        <div className="absolute z-[99999999999] top-14 right-3 min-w-[335px] bg-[#E6E6D9] border border-border rounded px-5 py-4">
           <div className="flex justify-between items-center mb-[15px]">
             <p className="text-[#5D5D53] font-semibold text-sm">Курс валют</p>
             <button

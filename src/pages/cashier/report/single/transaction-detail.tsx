@@ -1,23 +1,23 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { addHours, format } from "date-fns";
+import { format } from "date-fns";
 import {
   ArrowDown,
   MessageSquareText,
   MoreHorizontal,
   ShoppingCart,
 } from "lucide-react";
+import { parseAsString, useQueryState } from "nuqs";
 import { useState } from "react";
 
 import CardSort from "@/components/card-sort";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
+import { useMeStore } from "@/store/me-store";
 import formatPrice from "@/utils/formatPrice";
 
 import Filters from "../page/filter";
 import Pricecheck from "../page/price-check";
 import { useReport } from "../queries";
-import { parseAsString, useQueryState } from "nuqs";
-import { useMeStore } from "@/store/me-store";
 
 // Types for our data
 interface TransactionItem {

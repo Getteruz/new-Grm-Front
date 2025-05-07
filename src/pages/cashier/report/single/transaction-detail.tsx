@@ -101,14 +101,7 @@ export default function TransactionDetail() {
       id: "size",
       accessorKey: "order.bar_code.size.title",
     },
-    {
-      id: "price",
-      accessorKey: "order.price",
-      cell: ({ row }) => {
-        const item = row.original;
-        return <>{item?.order?.price}$</>;
-      },
-    },
+
     {
       id: "order.x",
       accessorKey: "order.x",

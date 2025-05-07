@@ -67,3 +67,30 @@ export type KassaReportData = {
   income: number;
   expense: number;
 };
+export type ReportQuery = {
+  search: string | undefined;
+  limit: number;
+  page: number;
+};
+
+
+
+
+export interface TransactionItem {
+  id: number;
+  type: string;
+  amount: number;
+  tip: string;
+  product: string;
+  code?: string;
+  size?: string;
+  price?: number;
+  comment: string;
+  quantity?: number;
+  discount?: string;
+  description?: string;
+  operation: string;
+  time: string;
+  title: string;
+  date: string;
+}

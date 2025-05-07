@@ -18,9 +18,14 @@ export const useKassaReport = () => {
   });
 };
 
-export const useReport = () => {
+interface TQueries {
+  filial:string,status:string
+}
+export const useReport = ({queries}:{queries:TQueries}) => {
   return useQuery({
-    queryKey: [apiRoutes.cashflow],
-    queryFn: () => getAllData<KassaReportData, void>(apiRoutes.cashflow),
+    queryKey: [apiRoutes.kassa,queries],
+    queryFn: () => getAllData<KassaReportData, TQueries>(apiRoutes.kassa,
+      queries
+    ),
   });
 };

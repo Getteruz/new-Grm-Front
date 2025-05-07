@@ -19,8 +19,9 @@ import {
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
+import { useKassaReport } from "./queries";
 
-import { useKassaReport } from "../pages/cashier/report/queries";
+
 
 export default function CardSort() {
   const { meUser } = useMeStore();
@@ -149,49 +150,6 @@ export default function CardSort() {
     },
   ];
 
-  const hrColumns = [
-    {
-      title: "Пластик",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) : (
-        formatPrice(reportData?.income || 0)
-      ),
-    },
-    {
-      title: "Наличному",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) : (
-        formatPrice(reportData?.income || 0)
-      ),
-    },
-    {
-      title: "Бонус",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) : (
-        formatPrice(reportData?.income || 0)
-      ),
-    },
-    {
-      title: "Аванс",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) : (
-        formatPrice(reportData?.income || 0)
-      ),
-    },
-    {
-      title: "Премя",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) : (
-        formatPrice(reportData?.income || 0)
-      ),
-    },
-  ];
-
   // Helper function to format price
   function formatPrice(price: number): string {
     return Number(price).toFixed(2);
@@ -242,8 +200,6 @@ export default function CardSort() {
     }
   };
 
-  const column = meUser?.position.role === 11 ? hrColumns : columns;
-
   return (
     <>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -268,7 +224,7 @@ export default function CardSort() {
             <p className="text-[14px] font-semibold">1 шт</p>
           </div>
           <div className="grid row-start w-full gap-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {column?.map((e) => (
+            {columns?.map((e) => (
               <div
                 key={e.title}
                 onClick={() => setSortType(e.title)}
@@ -279,14 +235,14 @@ export default function CardSort() {
                   {meUser?.position?.role !== 6 &&
                     (meUser?.position?.role !== 10 ||
                       location.pathname === "/report-finance") &&
-                      'button' in e && (
+                    e.button && (
                       <DialogTrigger
                         onClick={(event) => {
                           event.stopPropagation();
                           setType(e.title === "Расход" ? "Расход" : "Приход");
                         }}
                       >
-                      {e.button as React.ReactNode}
+                        {e.button}
                       </DialogTrigger>
                     )}
                 </div>

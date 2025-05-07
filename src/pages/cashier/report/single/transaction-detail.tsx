@@ -16,6 +16,8 @@ import formatPrice from "@/utils/formatPrice";
 import Filters from "../page/filter";
 import Pricecheck from "../page/price-check";
 import { useReport } from "../queries";
+import { parseAsString, useQueryState } from "nuqs";
+import { useMeStore } from "@/store/me-store";
 
 // Types for our data
 interface TransactionItem {
@@ -46,8 +48,14 @@ interface TransactionItem {
 export default function TransactionDetail() {
   const [selectedItems] = useState<number[]>([]);
 
-  const { data: reportData } = useReport();
-
+  const [status] = useQueryState("sort", parseAsString.withDefault("open"));
+  const { meUser } = useMeStore();
+  const { data: reportData } = useReport({
+    queries: {
+      filial: meUser?.filial?.id || "",
+      status: status,
+    },
+  });
   // Define columns for the DataTable
   const columns: ColumnDef<TransactionItem>[] = [
     {
@@ -137,11 +145,11 @@ export default function TransactionDetail() {
     },
     {
       id: "time",
-      cell: ({ row }) => {
-        const item = row.original;
-        const updatedDate = addHours(new Date(item.date), 5); // 5 soat qo‘shish
-        return <p className="text-[13px]">{format(updatedDate, "HH:mm")}</p>;
-      },
+      // cell: ({ row }) => {
+      //   const item = row.original;
+
+      //   // return <p className="text-[13px]">{format(item.time, "HH:mm")}</p>;
+      // },
     },
     {
       id: "actions",

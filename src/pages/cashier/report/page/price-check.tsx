@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 export default function Pricecheck() {
   return (
     <div className="w-full bg-card max-w-[312px] flex flex-col justify-between h-full p-[10px] pt-0 sticky top-10">
-      <div className="w-full max-w-md bg-[#f8f6e9] text-[#5D5D53] p-5 mx-auto font-sans overflow-scroll h-[470px]">
+      <div className="w-full max-w-md bg-[#f8f6e9] text-[#5D5D53] p-5 mx-auto font-sans scrollCastom h-[470px]">
       {/* Header */}
       <h1 className="text-[18px] text-center text-[#5D5D53] mb-1">Sanat Hali</h1>
       <p className="text-center text-[#5D5D53] text-[10px] mb-6">Вс, Май 5, 2024 • 20:07:53</p>

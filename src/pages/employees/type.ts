@@ -53,5 +53,6 @@ export type TQuery = {
   title?: string;
   limit: number;
   page: number;
-  filial?:string;
+  filial?: string;
+  kassaId?: string;
 };

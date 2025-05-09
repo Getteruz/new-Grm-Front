@@ -1,10 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
+import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";
 
+import { TQuery } from "@/pages/employees/type";
 import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useMeStore } from "@/store/me-store";
+import { TResponse } from "@/types";
 
-import { KassaReportData } from "./type";
+import { KassaReportData, TransactionItem } from "./type";
 
 // Query hook to fetch kassa report
 export const useKassaReport = () => {
@@ -17,6 +19,20 @@ export const useKassaReport = () => {
     enabled: !!filialId,
   });
 };
+interface IData {
+  options?: DefinedInitialDataOptions<TResponse<TransactionItem>>;
+  queries?: TQuery;
+}
+export const useDataCashflow = ({ options, queries }: IData) =>
+  useQuery({
+    ...options,
+    queryKey: [apiRoutes.cashflow, queries],
+    queryFn: () =>
+      getAllData<TResponse<TransactionItem>, TQuery>(
+        apiRoutes.cashflow,
+        queries
+      ),
+  });
 
 interface TQueries {
   filial: string;

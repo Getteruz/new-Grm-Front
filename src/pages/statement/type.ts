@@ -11,6 +11,12 @@ export type Statement = {
   title: string;
   to_date: string;
   total: number;
+  name: string;
+  avatar: string;
+  filial: string;
+  salary: string;
+  advance: string;
+  cash: string;
 };
 
 export type Statement1 = {

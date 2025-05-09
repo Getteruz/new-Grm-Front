@@ -1,4 +1,8 @@
-import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";
+import {
+  DefinedInitialDataOptions,
+  useInfiniteQuery,
+  useQuery,
+} from "@tanstack/react-query";
 
 import { TQuery } from "@/pages/employees/type";
 import { getAllData } from "@/service/apiHelpers";
@@ -23,15 +27,23 @@ interface IData {
   options?: DefinedInitialDataOptions<TResponse<TransactionItem>>;
   queries?: TQuery;
 }
-export const useDataCashflow = ({ options, queries }: IData) =>
-  useQuery({
-    ...options,
+export const useDataCashflow = ({ queries }: IData) =>
+  useInfiniteQuery({
     queryKey: [apiRoutes.cashflow, queries],
-    queryFn: () =>
-      getAllData<TResponse<TransactionItem>, TQuery>(
-        apiRoutes.cashflow,
-        queries
-      ),
+    queryFn: ({ pageParam = 10 }) =>
+      getAllData<TResponse<TransactionItem>, TQuery>(apiRoutes.cashflow, {
+        ...queries,
+        page: pageParam as number,
+        limit: 10,
+      }),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+        return lastPage?.meta?.currentPage + 1;
+      } else {
+        return null;
+      }
+    },
+    initialPageParam: 1,
   });
 
 interface TQueries {

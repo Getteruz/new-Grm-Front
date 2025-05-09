@@ -51,8 +51,8 @@ export type TData = {
 
 export type TQuery = {
   title?: string;
-  limit: number;
-  page: number;
+  limit?: number;
+  page?: number;
   filial?: string;
   kassaId?: string;
 };

@@ -17,13 +17,15 @@ export default function Page() {
   const { meUser } = useMeStore();
   const { data: reportData } = useOpenKassa({ id: meUser?.filial?.id });
 
-  const { data } = useDataCashflow({
-    queries: {
-      kassaId: reportData?.id || "",
-      limit: 100,
-      page: 1,
-    },
-  });
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useDataCashflow({
+      queries: {
+        kassaId: reportData?.id || "",
+        limit: 10,
+        page: 1,
+      },
+    });
+  const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
     <>
@@ -40,10 +42,13 @@ export default function Page() {
           <div className="flex-1 overflow-auto p-4">
             <DataTable
               columns={ReportColumns}
-              data={data?.items || []}
-              isLoading={false}
+              data={flatData || []}
+              isLoading={isLoading}
               className="border-none"
               hasHeader={false}
+              fetchNextPage={fetchNextPage}
+              hasNextPage={hasNextPage ?? false}
+              isFetchingNextPage={isFetchingNextPage}
             />
           </div>
         </div>

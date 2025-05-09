@@ -53,7 +53,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.income || 0)
+        formatPrice(kassaId?.sale || 0)
       ),
     },
     {
@@ -69,7 +69,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.cashFlowSumBoss || 0)
+        formatPrice(kassaId?.cash_collection || 0)
       ),
       button:
         meUser?.position.role === 3 ? (
@@ -91,7 +91,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.netProfitTotalSum || 0)
+        formatPrice(kassaId?.additionalProfitTotalSum || 0)
       ),
     },
     {

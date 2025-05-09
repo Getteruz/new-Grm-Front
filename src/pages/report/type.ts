@@ -23,6 +23,7 @@ export interface TData {
   additionalProfitTotalSum: number;
   netProfitTotalSum: number;
   totalSize: number;
+  discount: string;
   plasticSum: number;
   income: number;
   cashFlowSumBoss: number;

@@ -99,7 +99,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.expenditureShop || 0)
+        formatPrice(Number(kassaId?.discount) || 0)
       ),
     },
     {

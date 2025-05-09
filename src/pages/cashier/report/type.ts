@@ -91,4 +91,24 @@ export interface TransactionItem {
   time: string;
   title: string;
   date: string;
+
+  order: {
+    bar_code: {
+       model: { title: string };
+      collection: { 
+        title: string ;
+        priceMeter:number;
+      }; 
+      color:{
+        title:string;
+      };
+      size: {
+         title: string
+         }; 
+      isMetric:boolean;
+      };
+    x: number;
+    price: number;
+    discountPercentage: string;
+  };
 }

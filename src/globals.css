@@ -137,7 +137,8 @@ input::-webkit-inner-spin-button {
 
 /* width */
 .scrollCastom::-webkit-scrollbar {
-  width: 2px;
+  width: 0;
+  display: none;
 }
 
 /* Track */

@@ -26,8 +26,9 @@ export const useKassaReport = () => {
 interface IData {
   options?: DefinedInitialDataOptions<TResponse<TransactionItem>>;
   queries?: TQuery;
+  enabled?: boolean
 }
-export const useDataCashflow = ({ queries }: IData) =>
+export const useDataCashflow = ({ queries ,enabled}: IData) =>
   useInfiniteQuery({
     queryKey: [apiRoutes.cashflow, queries],
     queryFn: ({ pageParam = 10 }) =>
@@ -43,6 +44,7 @@ export const useDataCashflow = ({ queries }: IData) =>
         return null;
       }
     },
+    enabled: enabled,
     initialPageParam: 1,
   });
 

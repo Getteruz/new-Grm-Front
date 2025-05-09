@@ -8,7 +8,7 @@ const Sort = [
         value:"open"
     },
     {
-        label:"Все закрытые кассы",
+        label:"В ожидание подтверждения",
         value:"closed_by_c"
     },
     {

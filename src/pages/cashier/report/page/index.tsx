@@ -24,6 +24,7 @@ export default function Page() {
         limit: 10,
         page: 1,
       },
+      enabled: !!reportData?.id,
     });
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 

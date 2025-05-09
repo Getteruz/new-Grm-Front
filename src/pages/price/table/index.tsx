@@ -27,11 +27,6 @@ export default function Page() {
     <>
       <Filters />
       <DataTable
-        // onSelectionChange={(e) => {
-        //   if(e?.length){
-        //    setIds({id:e?.map(items=>items?.id)});
-        //   }
-        // }}
         isLoading={isLoading}
         columns={
           me.meUser?.position.role === 8 ||

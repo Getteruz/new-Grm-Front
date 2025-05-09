@@ -33,7 +33,7 @@ export default function MainLayout() {
       <Menu />
       <SidebarInset>
         {meUser?.position?.role === 3 ? <CashierHeader /> : <Header />}
-        <div className="h-[calc(100vh-63px)] overflow-scroll">
+        <div className="h-[calc(100vh-63px)] scrollCastom">
           <Outlet />
         </div>
       </SidebarInset>

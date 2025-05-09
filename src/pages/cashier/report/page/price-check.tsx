@@ -8,7 +8,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 
 
 
-export default function Pricecheck({id}:{id:string}) {
+export default function Pricecheck({disabled,id}:{disabled?:boolean,id:string}) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: () => PatchData(apiRoutes.kassaClose, {
@@ -35,7 +35,7 @@ export default function Pricecheck({id}:{id:string}) {
         </div>
         <Button 
         onClick={()=>mutate()}
-        disabled={isPending}
+        disabled={isPending || disabled}
         className="w-full py-10.5 p-10 bg-primary mt-auto text-background text-[22px] font-semibold">
           Закрыть кассу
         </Button>

@@ -24,8 +24,8 @@ export default function Pricecheck({ selected }: { selected: IData[] }) {
       .catch(() => toast.error("что-то пошло не так"));
   };
   return (
-    <div className="w-full bg-card max-w-[312px] flex flex-col justify-between  h-[calc(100vh-90px)] pt-[23px] ">
-      <div className="w-full  h-[calc(100vh-260px)]  overflow-y-scroll px-5">
+    <div className="w-full bg-card max-w-[312px] flex flex-col justify-between  h-[calc(100vh-90px)]  pt-[23px] ">
+      <div className="w-full  h-[calc(100vh-260px)]  scrollCastom px-5">
         <div className="sticky top-0">
           <p className="text-primary text-[14px] font-medium">Итого:</p>
           <p className="text-primary font-bold text-[28px] mt-0.5 mb-[27px]">

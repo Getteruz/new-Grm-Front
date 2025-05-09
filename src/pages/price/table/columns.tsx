@@ -18,77 +18,29 @@ import { ChevronDown } from "lucide-react";
 
 export const IManagerColumns: ColumnDef<ProductsData>[] = [
   {
-    header: "collection",
-    cell: ({ row }) => {
-      return <p>{row.original?.title}</p>;
+    header: "Заголовок",
+   accessorKey:"title"
+  },
+  {
+    header: "Объём",
+    cell: ({row}) => {
+      return (
+        <p className="p-2.5 text-primary font-medium text-[14px]">{row.original?.totalKv} м²</p>
+      );
+    },
+  },
+ 
+  {
+    header: "Цена",
+    cell: ({row}) => {
+      return (
+        <p className="p-2.5 text-primary font-medium text-[14px]">
+          {row.original?.collection_prices?.[0]?.priceMeter} $
+        </p>
+      );
     },
   },
 
-  {
-    header: "Обём",
-    cell: ({ row }) => {
-      return (
-        <p>
-          {row.original?.totalKv}
-          м²
-        </p>
-      );
-    },
-  },
-  {
-    header: "Количество",
-    cell: () => {
-      return (
-        <p className="p-2.5 text-primary font-medium text-[14px]">120 шт</p>
-      );
-    },
-  },
-  {
-    header: "Акция",
-    cell: () => {
-      return (
-        <p className="p-2.5 text-primary font-medium text-[14px]">1+0.7</p>
-      );
-    },
-  },
-  {
-    header: "Бонусы",
-    cell: () => {
-      return (
-        <p className="p-2.5 text-primary font-medium text-[14px]">
-          100 м² (1 млн)
-        </p>
-      );
-    },
-  },
-  {
-    header: "Промокоды",
-    cell: () => {
-      return (
-        <p className="p-2.5 text-primary font-medium text-[14px]">i9823hf</p>
-      );
-    },
-  },
-  {
-    header: "Скидка",
-    cell: () => {
-      return (
-        <p className="p-2.5 text-[#E38157] font-medium text-[14px]">-10%</p>
-      );
-    },
-  },
-  {
-    header: "Кас-цена",
-    cell: () => {
-      return <p className="p-2.5 text-primary font-medium text-[14px]">35$</p>;
-    },
-  },
-  {
-    header: "Цена за м²",
-    cell: ({ row }) => {
-      return <>{row?.original?.collection_prices?.[0]?.priceMeter}$</>;
-    },
-  },
   {
     id: "actions",
     enableHiding: true,
@@ -100,7 +52,7 @@ export const IManagerColumns: ColumnDef<ProductsData>[] = [
           url={""}
           ShowUpdate={false}
           ShowDelete={false}
-          ShowPreview
+          ShowPreview={false}
           id={row.original?.id}
         />
       );

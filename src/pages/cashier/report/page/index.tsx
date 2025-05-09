@@ -93,7 +93,7 @@ export default function Page() {
           }
           </div>
         </div>
-      {sort === "open" ?  <Pricecheck id={reportData?.id || ""} />:""}
+      {sort === "open" ?  <Pricecheck disabled={!flatKasssaData.length} id={reportData?.id || ""} />:""}
       </div>
     </>
   );

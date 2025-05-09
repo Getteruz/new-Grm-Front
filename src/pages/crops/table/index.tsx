@@ -4,7 +4,6 @@ import { DataTable } from "@/components/ui/data-table";
 import { paymentColumns } from "./columns";
 import Filters from "./filters";
 import useCrops from "./queries";
-import CardSort from "@/components/card-sort";
 
 export default function Page() {
   const { 
@@ -20,7 +19,7 @@ export default function Page() {
   return (
     <>
       <Filters />
-      <CardSort />
+      {/* <CardSort /> */}
       <DataTable
         className="p-4"
         isLoading={isLoading}

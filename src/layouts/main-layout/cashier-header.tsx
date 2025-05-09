@@ -1,6 +1,6 @@
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { useQuery } from "@tanstack/react-query";
-import { BellRing } from "lucide-react";
+import { BellRing, ChevronLeft } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 import AddingParishOrFlow from "@/components/adding-parish-flow";
@@ -18,6 +18,7 @@ import { DataMenu } from "./menu-datas";
 import NotePage from "./note/list";
 import { CurrencyData } from "./types";
 import Weather from "./weather";
+import { useQueryState } from "nuqs";
 
 export default function CashierHeader() {
   const { meUser } = useMeStore();
@@ -42,13 +43,16 @@ export default function CashierHeader() {
   const oneMenu = DataMenu?.[
     meUser?.position?.role as keyof typeof DataMenu
   ]?.find((e) => location.pathname.includes(e?.link));
-
+  const [id,setId] = useQueryState(
+    "id"
+  );
   return (
     <header className="h-[90px] bg-sidebar border-b border-border flex ">
       <div className="flex p-[15px] mr-auto items-center">
         {location.pathname !== "/cashier/home" ? (
-          <h2 className="text-[#5D5D53] font-medium text-[22px] ml-3">
-            {oneMenu?.text}
+          
+          <h2 onClick={id ? ()=>setId(null) : ()=>{}} className="text-[#5D5D53] flex items-center gap-2 cursor-pointer font-medium text-[22px] ml-3">
+            {id  ?  <><ChevronLeft/>  Назад</> :oneMenu?.text}
           </h2>
         ) : (
           <>

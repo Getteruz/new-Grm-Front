@@ -44,4 +44,17 @@ export const useOpenKassa = ({ options, id, queries }: IProductsChecks) =>
       ),
   });
 
+  export const useKassaById = ({ options, id, queries }: IProductsChecks) =>
+    useQuery({
+      ...options,
+      queryKey: [apiRoutes.kassa, id],
+      enabled: Boolean(id),
+      queryFn: () =>
+        getByIdData<TData, ProductsChecksQuery>(
+          apiRoutes.kassa,
+          id || "",
+          queries
+        ),
+    });
+  
 export default useDataLibrary;

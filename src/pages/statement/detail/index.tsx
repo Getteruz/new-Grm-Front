@@ -3,7 +3,7 @@ import { FileOutput, PlusCircle, Send, X } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import CardSort from "@/components/card-sort";
+// import CardSort from "@/components/card-sort";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 
@@ -46,7 +46,7 @@ export default function DetailPage() {
         </div>
       </div>
       
-      <CardSort/>
+      {/* <CardSort/> */}
       
       {/* Employees Table */}
       <div className="m-4">

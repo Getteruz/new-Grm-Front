@@ -57,10 +57,13 @@ export default function Filters({ countLength }: { countLength: number }) {
         {countLength}
       </Button>
       <FilterSelect
-        options={data?.pages[0].items.map((l) => ({
-          label: l.firstName + " " + l.lastName,
-          value: l.id,
-        }))}
+        options={[
+          { label: "Все", value: "all" },
+          ...(data?.pages[0].items.map((l) => ({
+            label: l.firstName + " " + l.lastName,
+            value: l.id,
+          })) || []),
+        ]}
         className=" w-[200px]  border-l "
         placeholder="Выберите продавца "
         name="sellerId"

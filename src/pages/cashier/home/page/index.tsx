@@ -26,7 +26,7 @@ export default function Page() {
     id: kassa?.id ? kassa?.id : undefined,
     queries: {
       status: sort === "all" ? undefined : sort || undefined,
-      sellerId: sellerId || undefined,
+      sellerId: sellerId === "all" ? undefined : sellerId || undefined,
       limit: 1000,
     },
   });

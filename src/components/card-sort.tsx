@@ -20,15 +20,12 @@ import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
 
-import { useKassaReport } from "../pages/cashier/report/queries";
-
 export default function CardSort() {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
   const location = useLocation();
 
   // Fetch kassa report data
-  const { data: reportData, isLoading: isReportLoading } = useKassaReport();
 
   // State variables for form
   const [sorttype, setSortType] = useQueryState("sorttype", parseAsString);
@@ -42,7 +39,9 @@ export default function CardSort() {
 
   // Fetch necessary data
   const { data: filialData } = useDataFetch({});
-  const { data: kassaId } = useOpenKassa({ id: filial });
+  const { data: kassaId, isLoading: isReportLoading } = useOpenKassa({
+    id: meUser?.filial?.id,
+  });
   const { data: types } = useDataCashflowTypes({
     queries: { limit: 20, page: 1, search: "" },
   });
@@ -54,7 +53,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.income || 0)
+        formatPrice(kassaId?.income || 0)
       ),
     },
     {
@@ -62,7 +61,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.plasticSum || 0)
+        formatPrice(kassaId?.plasticSum || 0)
       ),
     },
     {
@@ -70,7 +69,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.cashFlowSumBoss || 0)
+        formatPrice(kassaId?.cashFlowSumBoss || 0)
       ),
       button:
         meUser?.position.role === 3 ? (
@@ -92,7 +91,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.netProfitTotalSum || 0)
+        formatPrice(kassaId?.netProfitTotalSum || 0)
       ),
     },
     {
@@ -100,7 +99,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.expenditureShop || 0)
+        formatPrice(kassaId?.expenditureShop || 0)
       ),
     },
     {
@@ -108,7 +107,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.income || 0)
+        formatPrice(kassaId?.income || 0)
       ),
       button:
         meUser?.position.role === 3 ? (
@@ -130,7 +129,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        `-${formatPrice(reportData?.expense || 0)}`
+        `-${formatPrice(kassaId?.expense || 0)}`
       ),
       button:
         meUser?.position.role === 3 ? (
@@ -155,7 +154,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.income || 0)
+        formatPrice(kassaId?.income || 0)
       ),
     },
     {
@@ -163,7 +162,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.income || 0)
+        formatPrice(kassaId?.income || 0)
       ),
     },
     {
@@ -171,7 +170,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.income || 0)
+        formatPrice(kassaId?.income || 0)
       ),
     },
     {
@@ -179,7 +178,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.income || 0)
+        formatPrice(kassaId?.income || 0)
       ),
     },
     {
@@ -187,7 +186,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(reportData?.income || 0)
+        formatPrice(kassaId?.income || 0)
       ),
     },
   ];
@@ -243,6 +242,7 @@ export default function CardSort() {
   };
 
   const column = meUser?.position.role === 11 ? hrColumns : columns;
+  console.log(kassaId);
 
   return (
     <>
@@ -257,7 +257,7 @@ export default function CardSort() {
                   <Skeleton className="h-7 w-24 mt-1" />
                 ) : (
                   <p className="text-[25px] font-bold text-foreground">
-                    {formatPrice(reportData?.totalSum || 0)}
+                    {formatPrice(kassaId?.totalSum || 0)}
                   </p>
                 )}
               </div>
@@ -279,14 +279,14 @@ export default function CardSort() {
                   {meUser?.position?.role !== 6 &&
                     (meUser?.position?.role !== 10 ||
                       location.pathname === "/report-finance") &&
-                      'button' in e && (
+                    "button" in e && (
                       <DialogTrigger
                         onClick={(event) => {
                           event.stopPropagation();
                           setType(e.title === "Расход" ? "Расход" : "Приход");
                         }}
                       >
-                      {e.button as React.ReactNode}
+                        {e.button as React.ReactNode}
                       </DialogTrigger>
                     )}
                 </div>

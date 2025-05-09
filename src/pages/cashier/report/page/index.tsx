@@ -1,26 +1,29 @@
+import { format } from "date-fns";
 import { useState } from "react";
 
 import CardSort from "@/components/card-sort";
 import { DataTable } from "@/components/ui/data-table";
+import useDataLibrary, { useOpenKassa } from "@/pages/report/table/queries";
+import { useMeStore } from "@/store/me-store";
 
 import Filters from "../page/filter";
 import Pricecheck from "../page/price-check";
-import { useReport } from "../queries";
-import { useMeStore } from "@/store/me-store";
-import { parseAsString, useQueryState } from "nuqs";
 import { ReportColumns } from "./columns";
-import { format } from "date-fns";
 
 export default function Page() {
   const [selectedItems] = useState<number[]>([]);
-  const [status] = useQueryState("sort", parseAsString.withDefault("open"));
+
   const { meUser } = useMeStore();
-  const { data: reportData } = useReport({
+  const { data: reportData } = useOpenKassa({ id: meUser?.filial?.id });
+
+  const { data } = useDataLibrary({
     queries: {
-      filial: meUser?.filial?.id || "",
-      status: status,
+      kassaId: reportData?.id || "",
+      limit: 100,
+      page: 1,
     },
   });
+  const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
     <>
@@ -37,7 +40,7 @@ export default function Page() {
           <div className="flex-1 overflow-auto p-4">
             <DataTable
               columns={ReportColumns}
-              data={reportData?.items || []}
+              data={flatData || []}
               isLoading={false}
               className="border-none"
               hasHeader={false}

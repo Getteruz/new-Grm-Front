@@ -19,13 +19,13 @@ export const useKassaReport = () => {
 };
 
 interface TQueries {
-  filial:string,status:string
+  filial: string;
+  status: string;
 }
-export const useReport = ({queries}:{queries:TQueries}) => {
+export const useReport = ({ queries }: { queries: TQueries }) => {
   return useQuery({
-    queryKey: [apiRoutes.kassa,queries],
-    queryFn: () => getAllData<KassaReportData, TQueries>(apiRoutes.kassa,
-      queries
-    ),
+    queryKey: [apiRoutes.kassa, queries],
+    queryFn: () =>
+      getAllData<KassaReportData, TQueries>(apiRoutes.kassa, queries),
   });
 };

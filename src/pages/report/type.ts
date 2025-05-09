@@ -16,6 +16,20 @@ export interface TData {
   title: string;
   icon: string;
   type: string;
+  startDate: string;
+  endDate: string | null;
+  isActive: boolean;
+  totalSum: number;
+  additionalProfitTotalSum: number;
+  netProfitTotalSum: number;
+  totalSize: number;
+  plasticSum: number;
+  cashFlowSumBoss: number;
+  cashFlowSumShop: number;
+  expenditureBoss: number;
+  expenditureShop: number;
+  internetShopSum: number;
+  status: string;
   model: {
     id: string;
     title: string;
@@ -62,7 +76,9 @@ export interface TActionData {
 }
 
 export interface TQuery {
-  search: string | undefined;
+  search?: string | undefined;
+  filialId?: string;
+  kassaId?: string;
   limit: number;
   page: number;
   id?: string;

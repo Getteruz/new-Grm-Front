@@ -39,6 +39,7 @@ export type KassaReportData = {
   totalSize: number;
   plasticSum: number;
   cashFlowSumBoss: number;
+
   cashFlowSumShop: number;
   expenditureBoss: number;
   expenditureShop: number;
@@ -72,9 +73,6 @@ export type ReportQuery = {
   limit: number;
   page: number;
 };
-
-
-
 
 export interface TransactionItem {
   id: number;

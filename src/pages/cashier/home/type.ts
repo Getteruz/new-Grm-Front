@@ -141,6 +141,8 @@ export interface IData {
     totalSize: number;
     plasticSum: number;
     cashFlowSumBoss: number;
+    income: number;
+    expense: number;
     cashFlowSumShop: number;
     expenditureBoss: number;
     expenditureShop: number;

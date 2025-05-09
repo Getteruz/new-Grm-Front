@@ -242,7 +242,6 @@ export default function CardSort() {
   };
 
   const column = meUser?.position.role === 11 ? hrColumns : columns;
-  console.log(kassaId);
 
   return (
     <>

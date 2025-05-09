@@ -18,7 +18,6 @@ import {
   ProductsCheck,
   ProductsOnSaleIcon,
   QRCodeIcon,
-  RefleshIcons,
   ReportBottom,
   SettingsIcon,
   StatementIcon,

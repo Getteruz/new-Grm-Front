@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect, useRef } from "react";
 import { Skeleton } from "./ui/skeleton";
 import { TSelectOption } from "@/types";
 import { Button } from "./ui/button";
@@ -21,6 +21,9 @@ interface ITableWrapper extends PropsWithChildren {
   isAdd?: boolean;
   isPending?: boolean;
   setValue?: UseFormSetValue<any>;
+  isFetchingNextPage?: boolean;
+  hasNextPage?: boolean;
+  fetchNextPage?: () => void;
 }
 
 export default function TableWrapper({
@@ -32,11 +35,38 @@ export default function TableWrapper({
   children,
   options,
   isloading,
+  isFetchingNextPage = false,
+  hasNextPage = false,
+  fetchNextPage,
 }: ITableWrapper) {
+  const loadMoreRef = useRef<HTMLDivElement>(null);
   const [, setidMadal] = useQueryState(
     "idMadal",
     parseAsString.withDefault("new")
   );
+  useEffect(() => {
+    if (!fetchNextPage) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentLoadMoreRef = loadMoreRef.current;
+    if (currentLoadMoreRef) {
+      observer.observe(currentLoadMoreRef);
+    }
+
+    return () => {
+      if (currentLoadMoreRef) {
+        observer.unobserve(currentLoadMoreRef);
+      }
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
   return (
     <div className={`${className && className} w-full  `}>
       <div className="w-full flex h-[64px] items-center justify-between border-border border-solid border-b p-[21.22px] bg-sidebar">
@@ -56,7 +86,7 @@ export default function TableWrapper({
         )}
       </div>
       {children}
-      <div className="p-3">
+      <div className="p-3 max-h-[calc(100vh-225px)]  scrollCastom ">
         {isloading
           ? Array.from({ length: 4 })?.map(() => (
               <Skeleton className="h-10 mb-2 rounded-none w-full" />
@@ -96,6 +126,24 @@ export default function TableWrapper({
               )}
             </p>
           ))}
+
+             {/* Loader for infinite scroll */}
+             {fetchNextPage && options && (
+            <div
+              ref={loadMoreRef}
+              className="flex justify-center items-center "
+            >
+              {isFetchingNextPage ? (
+                <Skeleton className="h-10 mb-2 rounded-none w-full" />
+              ) : hasNextPage ? (
+                <div className="h-8" />
+              ) : (
+                options?.length  > 0 && (
+                  <div className="text-sm text-muted-foreground"></div>
+                )
+              )}
+            </div>
+          )}
       </div>
     </div>
   );

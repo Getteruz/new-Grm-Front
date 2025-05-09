@@ -73,7 +73,7 @@ export default function Page() {
               columns={ReportColumns}
               data={flatData || []}
               isLoading={isLoading}
-              className="border-none"
+              className="border-none "
               hasHeader={false}
               isRowClickble={false}
               fetchNextPage={fetchNextPage}
@@ -83,7 +83,6 @@ export default function Page() {
           <DataTable
             columns={KassaColumns || []}
             data={flatKasssaData || []}
-          
             isLoading={KassaLoading}
             className="border-none"
             fetchNextPage={KassafetchNextPage}
@@ -93,7 +92,7 @@ export default function Page() {
           }
           </div>
         </div>
-      {sort === "open" ?  <Pricecheck disabled={!flatKasssaData.length} id={reportData?.id || ""} />:""}
+      {sort === "open" ?  <Pricecheck disabled={!flatData.length} id={reportData?.id || ""} />:""}
       </div>
     </>
   );

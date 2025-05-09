@@ -1,4 +1,4 @@
-import { FileOutput, MoreVertical, OctagonX } from "lucide-react";
+import { FileOutput, MessageSquareText, MoreVertical, OctagonX } from "lucide-react";
 
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
@@ -31,7 +31,9 @@ interface ICarpetCard {
   colaction: string;
   discount: string;
   tags: string[];
+  index:number;
   date: string;
+  comment:string;
   status?: string;
   onCheckedChange: (e: boolean) => void;
   seller: IData["seller"];
@@ -45,11 +47,13 @@ export default function CarpetCashierCard({
   seller,
   priceMitr,
   model,
+  index,
   size,
   price,
   plasticSum,
   discount,
   count,
+  comment,
   img,
   colaction,
   tags,
@@ -79,7 +83,9 @@ export default function CarpetCashierCard({
       .catch(() => toast.error("что-то пошло не так"));
   };
   return (
-    <label
+   <div className="flex items-center  gap-2.5">
+      <p className="text-[14]">{index + 1}</p>
+     <label
       className={`w-full flex  gap-4 relative p-1 rounded-[3px] bg-sidebar ${className && className}`}
     >
       <Checkbox
@@ -205,10 +211,15 @@ export default function CarpetCashierCard({
             )}
           </div>
         </div>
-        <div className="flex items-center justify-end gap-2 text-[10px] text-[#5D5D53]">
-          <p>{date}</p>
+        <div className="flex items-center  justify-between gap-2 mt-[30px] text-[10px] text-[#5D5D53]">
+        <p className="text-[13px] flex items-center text-muted-foreground gap-1">
+            {comment && <MessageSquareText width={14} />}
+            {comment}
+          </p>
+          <p className="text-[13px]">{date}</p>
         </div>
       </div>
     </label>
+   </div>
   );
 }

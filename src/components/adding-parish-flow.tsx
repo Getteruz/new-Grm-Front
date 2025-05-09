@@ -162,7 +162,7 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen}  onOpenChange={setIsOpen}>
       <div>
         <DialogTrigger asChild>
           <Button
@@ -182,9 +182,9 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
         </DialogTrigger>
       </div>
 
-      <DialogContent className="min-w-[494px] p-1 rounded-[10px]">
+      <DialogContent className="costomModal min-w-[494px] p-1 rounded-[10px]">
         <div
-          className={`p-2 rounded-[7px] text-center ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}
+          className={`p-1 h-[30px] pb-0 text-center mx-auto rounded-t-[7px] w-1/2 -mt-[35px]  ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}
         >
           {type === "parish" ? "Добавление прихода" : "Добавление расхода"}
         </div>

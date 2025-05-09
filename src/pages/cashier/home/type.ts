@@ -4,6 +4,7 @@ export interface IData {
   title: string;
   price: number;
   x: number;
+  comment:string;
   kv: number;
   date: string;
   additionalProfitSum: number;

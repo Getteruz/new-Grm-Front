@@ -163,3 +163,12 @@ input[type="number"] {
 body {
   overflow: hidden;
 }
+
+.costomModal .ring-offset-background{
+  background: var(--background) !important;
+  opacity: 1;
+  margin-top: -48px;
+  padding: 6px; 
+  border-radius: 1000px;
+  transform: translate(50%, 0);
+}

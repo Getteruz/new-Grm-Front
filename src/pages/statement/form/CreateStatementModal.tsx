@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 
+import FormDatePicker from "@/components/forms/FormDateRangePicker";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,8 +13,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-import { useCreateStatement } from "../table/queries";
+import { apiRoutes } from "@/service/apiRoutes";
+import api from "@/service/fetchInstance";
+import { toast } from "sonner";
+import { useQueryState } from "nuqs";
+import { useTranslation } from "react-i18next";
 
 interface CreateStatementModalProps {
   isOpen: boolean;
@@ -22,8 +25,8 @@ interface CreateStatementModalProps {
 }
 
 const formSchema = z.object({
-  name: z.string().min(1, "Название обязательно"),
-  number: z.string().min(1, "Номер обязателен"),
+  title: z.string().min(1, "Название обязательно"),
+  to_date: z.date(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -32,34 +35,27 @@ export default function CreateStatementModal({
   isOpen,
   onClose,
 }: CreateStatementModalProps) {
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  const { mutate: createStatement } = useCreateStatement();
-
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      number: "",
+      title: "",
     },
   });
+  const [id, setId] = useQueryState("id");
 
+  const queryClient = useQueryClient();
+  const { t } = useTranslation();
   const onSubmit = (data: FormValues) => {
-    createStatement({
+    const body = {
       ...data,
-      createdAt: date?.toISOString() || new Date().toISOString(),
-      premiumsTotal: 0,
-      bonusesTotal: 0,
-      salaryTotal: 0,
-      totalSum: 0,
-      status: "В процессе",
-    }, {
-      onSuccess: () => {
-        toast.success("Ведомость успешно создана");
-        form.reset();
-        onClose();
-      },
-      onError: () => {
-        toast.error("Ошибка при создании ведомости");
+    };
+    api.post(apiRoutes.payrolls, body).then(() => {
+      setId(null);
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.payrolls] });
+      if (id == "new") {
+        toast.success(t("savedSuccessfully"));
+      } else {
+        toast.success(t("updatedSuccessfully"));
       }
     });
   };
@@ -76,74 +72,73 @@ export default function CreateStatementModal({
             </DialogTitle>
           </div>
         </DialogHeader>
-        
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="p-6">
-            <div className="space-y-4">
-            <Label htmlFor="number">Данные о ведомости</Label>
-              <div className="flex mt-3">
-              <div className="mr-2">
-                <Label htmlFor="number" className="text-[#99998C] text-[12px]">Номер ведомости</Label>
-                <Input
-                  id="number"
-                  className="mt-1 w-[100px]"
-                  {...form.register("number")}
-                  placeholder="№ 235"
-                />
-                {form.formState.errors.number && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {form.formState.errors.number.message}
-                  </p>
-                )}
-              </div>
-              
-              <div>
-                <Label htmlFor="name" className="text-[#99998C] text-[12px]">Название</Label>
-                <Input
-                  id="name"
-                  className="mt-1 min-w-[448px]"
-                  {...form.register("name")}
-                  placeholder="Введите название"
-                />
-                {form.formState.errors.name && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {form.formState.errors.name.message}
-                  </p>
-                )}
-              </div>
-              </div>
-              
-              <div>
-                <Label htmlFor="date" className="text-[#99998C] text-[12px]">Дата приёма</Label>
-                <Input
-                  id="date"
-                  type="date"
-                  className="mt-1 max-w-[220px]"
-                  value={date ? date.toISOString().split('T')[0] : ''}
-                  onChange={(e) => setDate(e.target.value ? new Date(e.target.value) : undefined)}
-                />
+        <FormProvider {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="p-6">
+              <div className="space-y-4">
+                <Label htmlFor="number">Данные о ведомости</Label>
+                <div className="flex mt-3">
+                  <div className="mr-2">
+                    <Label
+                      htmlFor="number"
+                      className="text-[#99998C] text-[12px]"
+                    >
+                      Номер ведомости
+                    </Label>
+                    <Input
+                      readOnly
+                      id="number"
+                      className="mt-1 w-[100px]"
+                      placeholder="№ ---"
+                    />
+                  </div>
+
+                  <div>
+                    <Label
+                      htmlFor="name"
+                      className="text-[#99998C] text-[12px]"
+                    >
+                      Название
+                    </Label>
+                    <Input
+                      id="title"
+                      className="mt-1 min-w-[448px]"
+                      {...form.register("title")}
+                      placeholder="Введите название"
+                    />
+                  </div>
+                </div>
+
+                <div className="w-[200px]">
+                  <FormDatePicker
+                    label="Дата приёма"
+                    className="w-full"
+                    name="to_date"
+                    placeholder="Дата приёма"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          
-          {/* Footer with buttons */}
-          <div className="flex justify-start border-t p-3 bg-[#E6E6D9]">
-            <Button
-              type="submit"
-              className="rounded-none w-[220px] mx-3 h-[44px] bg-[#5D5D53]"
-            >
-              Сохранить
-            </Button>
-            <Button
-              type="button"
-              className="rounded-none w-[220px] h-[44px] bg-[#F0F0E5] border"
-              variant="outline"
-              onClick={onClose}
-            >
-              Отменить
-            </Button>
-          </div>
-        </form>
+
+            {/* Footer with buttons */}
+            <div className="flex justify-start border-t p-3 bg-[#E6E6D9]">
+              <Button
+                type="submit"
+                className="rounded-none w-[220px] mx-3 h-[44px] bg-[#5D5D53]"
+              >
+                Сохранить
+              </Button>
+              <Button
+                type="button"
+                className="rounded-none w-[220px] h-[44px] bg-[#F0F0E5] border"
+                variant="outline"
+                onClick={onClose}
+              >
+                Отменить
+              </Button>
+            </div>
+          </form>
+        </FormProvider>
       </DialogContent>
     </Dialog>
   );

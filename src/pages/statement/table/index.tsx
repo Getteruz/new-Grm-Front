@@ -11,8 +11,8 @@ export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [status] = useQueryState("status");
-  const [fromDate] = useQueryState("fromDate");
-  const [toDate] = useQueryState("toDate");
+  const [startDate] = useQueryState("startDate");
+  const [endDate] = useQueryState("endDate");
   const [search] = useQueryState("search");
   const [id, setId] = useQueryState("id");
 
@@ -22,8 +22,8 @@ export default function Page() {
         limit,
         page,
         status: status || undefined,
-        fromDate: fromDate || undefined,
-        toDate: toDate || undefined,
+        startDate: startDate || undefined,
+        endDate: endDate || undefined,
         search: search || undefined,
       },
     });
@@ -33,7 +33,7 @@ export default function Page() {
   return (
     <>
       <Filters />
-      
+
       <DataTable
         className="m-4"
         isLoading={isLoading}
@@ -44,11 +44,8 @@ export default function Page() {
         isFetchingNextPage={isFetchingNextPage}
         isRowClickble
       />
-      
-      <CreateStatementModal 
-        isOpen={id === "new"} 
-        onClose={() => setId(null)} 
-      />
+
+      <CreateStatementModal isOpen={id === "new"} onClose={() => setId(null)} />
     </>
   );
 }

@@ -32,7 +32,7 @@ interface DataTableProps<TData, TValue> {
   link?: string;
   isFetchingNextPage?: boolean;
   hasNextPage?: boolean;
-  isRowClickble?: boolean;
+  isRowClickble?: boolean | undefined;
   fetchNextPage?: () => void;
   onSelectionChange?: (selectedRows: TData[]) => void;
   hasHeader?: boolean;
@@ -44,7 +44,7 @@ export function DataTable<TData, TValue>({
   isLoading,
   className,
   link,
-  isRowClickble = false,
+  isRowClickble,
   isFetchingNextPage = false,
   hasNextPage = false,
   fetchNextPage,
@@ -72,7 +72,7 @@ export function DataTable<TData, TValue>({
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
-        onClick={(e)=>e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
       />
@@ -135,6 +135,7 @@ export function DataTable<TData, TValue>({
     }
   }, [rowSelection, data, onSelectionChange]);
   const navigate = useNavigate();
+
   return (
     <div className={className}>
       {isLoading && data.length === 0 ? (
@@ -143,12 +144,15 @@ export function DataTable<TData, TValue>({
         <>
           <Table>
             {hasHeader ? (
-              <TableHeader >
+              <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
-                      <TableRow key={headerGroup.id}>
-                       <TableHead style={{ width: "20px" }} className=" text-center">
-                          №
-                        </TableHead>
+                  <TableRow key={headerGroup.id}>
+                    <TableHead
+                      style={{ width: "20px" }}
+                      className=" text-center"
+                    >
+                      №
+                    </TableHead>
                     {headerGroup.headers.map((header) => {
                       return (
                         <TableHead
@@ -179,7 +183,7 @@ export function DataTable<TData, TValue>({
             ) : (
               ""
             )}
-          <TableBody className="">
+            <TableBody className="">
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow
@@ -193,18 +197,18 @@ export function DataTable<TData, TValue>({
                                 `?id=${(row.original as { id: string })?.id}`
                             : (row.original as { id: string })?.id + "/info"
                         );
-                      } else {
+                      } else if (isRowClickble !== false) {
                         setId((row.original as { id: string })?.id);
                       }
                     }}
                     data-state={row.getIsSelected() && "selected"}
                   >
-                      <TableCell
-                    className=" text-center p-0"
-                    style={{ width: 20 + "px" }}
-                  >
-                    {Number(row.id) + 1 }
-                  </TableCell>
+                    <TableCell
+                      className=" text-center p-0"
+                      style={{ width: 20 + "px" }}
+                    >
+                      {Number(row.id) + 1}
+                    </TableCell>
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
                         {flexRender(

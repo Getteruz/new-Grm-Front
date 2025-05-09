@@ -42,7 +42,7 @@ const CardSelect = ({
 }: CategoryProps) => {
   return (
     <div
-      className={`w-[calc(50%-2px)] bg-input flex items-center justify-center flex-col rounded-[7px] text-center cursor-pointer ${isSelected && type === "parish" ? "ring-2 ring-[#89A143]" : isSelected && type === "flow" ? "ring-2 ring-[#E38157]" : ""}`}
+      className={`w-[calc(50%-2px)] h-20 bg-input flex items-center justify-center flex-col rounded-[7px] text-center cursor-pointer ${isSelected && type === "parish" ? "ring-2 ring-[#89A143]" : isSelected && type === "flow" ? "ring-2 ring-[#E38157]" : ""}`}
       onClick={onClick}
     >
       {icons ? icons() : ""}
@@ -62,12 +62,9 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
 
   // Fetch cashflow types
   const { data: cashflowTypesResponse, isLoading: typesLoading } = useQuery({
-    queryKey: [apiRoutes.cashflowTypes],
-    queryFn: () =>
-      getAllData<TResponse<CashflowType>, void>(apiRoutes.cashflowTypes),
+    queryKey: ["/cashflow-types/for/cashier"],
+    queryFn: () => getAllData("/cashflow-types/for/cashier"),
   });
-
-  const cashflowTypes = cashflowTypesResponse?.items;
 
   // Create mutation for adding cashflow
   const { mutate: addCashflow, isPending } = useMutation({
@@ -98,67 +95,34 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
 
   // Prepare categories data with cashflow type IDs
   const getCategories = () => {
-    if (cashflowTypes || Array.isArray(cashflowTypes)) {
-      return [
-        {
-          id: "49f38b89-f719-452e-be2c-78d7060778b9",
-          title: "Инкассация",
-          icon: () => <Shield />,
-        },
-        {
-          id: "b4bb8ef9-3825-4047-9737-0cff30514959",
-          title: "Аренда",
-          icon: () => <Store />,
-        },
-        {
-          id: "5ae9b4be-e9da-46b9-9e9c-20b97d462779",
-          title: "Магазин расход",
-          icon: () => <Receipt />,
-        },
-        {
-          id: "39925b4e-b4a5-4ad5-afe8-af39278f47e3",
-          title: "Бос",
-          icon: () => <BriefcaseBusiness />,
-        },
-      ];
-    }
-
     // Filter cashflow types based on current operation type (parish = "Приход", flow = "Расход")
     const operationType = type === "parish" ? "in" : "out";
-    return cashflowTypes
-      ? cashflowTypes
-      : [{ type: "", id: "", title: "", icon: "" }]
-          .filter((ct) => ct.type === operationType || ct.type === "both")
-          .map((ct) => ({
-            id: ct.id,
-            title: ct.title,
-            icon: () => {
-              // Try to parse the icon if it exists
-              if (ct.icon) {
-                try {
-                  // Simple way to determine which icon to show based on title
-                  if (ct.title.toLowerCase().includes("инкасат"))
-                    return <Shield />;
-                  if (ct.title.toLowerCase().includes("аренд"))
-                    return <Store />;
-                  if (
-                    ct.title.toLowerCase().includes("долг") ||
-                    ct.title.toLowerCase().includes("аванс")
-                  )
-                    return <Receipt />;
-                  if (ct.title.toLowerCase().includes("бос"))
-                    return <BriefcaseBusiness />;
+    return cashflowTypesResponse
+      ?.filter((ct) => ct.type === operationType || ct.type === "both")
+      ?.map((ct) => ({
+        id: ct.id,
+        title: ct.title,
+        icon: () => {
+          if (!ct.icon) {
+            try {
+              if (ct.title.toLowerCase().includes("инкасат")) return <Shield />;
+              if (ct.title.toLowerCase().includes("аренд")) return <Store />;
+              if (
+                ct.title.toLowerCase().includes("долг") ||
+                ct.title.toLowerCase().includes("аванс")
+              )
+                return <Receipt />;
+              if (ct.title.includes("Босс")) return <BriefcaseBusiness />;
 
-                  // Default icon (can be replaced with a more appropriate one)
-                  return <Receipt />;
-                } catch (e) {
-                  // Fallback icon
-                  return <Receipt />;
-                }
-              }
               return <Receipt />;
-            },
-          }));
+            } catch (e) {
+              // Fallback icon
+              return <Receipt />;
+            }
+          }
+          return <Receipt />;
+        },
+      }));
   };
 
   const categories = getCategories();

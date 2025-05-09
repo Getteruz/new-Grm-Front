@@ -21,6 +21,7 @@ export const apiRoutes = {
   broned: "/booking",
   upload: "/media-upload/single/avatar/avatar",
   filial: "/filial",
+  payrolls: "/payrolls",
   dealer: "/filial/dealer",
   filialMakeReport: "/filial/maker-report",
   filialReport: "/filial-report",
@@ -34,6 +35,6 @@ export const apiRoutes = {
   notes: "/notes",
   qrCodes: "/qr-codes",
   kassaReport: "/kassa/report",
-  kassa:"/kassa",
+  kassa: "/kassa",
   statement: "/statement",
 } as const;

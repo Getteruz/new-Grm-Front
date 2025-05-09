@@ -1,6 +1,8 @@
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useQueryState } from "nuqs";
+import { useTranslation } from "react-i18next";
+
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -8,8 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useTranslation } from "react-i18next";
-import { useQueryState } from "nuqs";
+import { cn } from "@/lib/utils";
 
 interface DateRangePickerProps {
   fromPlaceholder?: string;
@@ -21,8 +22,12 @@ export function DateRangePicker({
   toPlaceholder,
 }: DateRangePickerProps) {
   const { t } = useTranslation();
-const [fromDate ,setFromDate] = useQueryState<Date>('fromDate', { parse: (value) => new Date(value) })
-  const [toDate,setToDate] = useQueryState<Date>('toDate', { parse: (value) => new Date(value) })
+  const [fromDate, setFromDate] = useQueryState<Date>("startDate", {
+    parse: (value) => new Date(value),
+  });
+  const [toDate, setToDate] = useQueryState<Date>("endDate", {
+    parse: (value) => new Date(value),
+  });
   return (
     <div className="flex flex-col items-center border-l  sm:flex-row gap-2">
       <div className="flex-1 ">
@@ -39,7 +44,9 @@ const [fromDate ,setFromDate] = useQueryState<Date>('fromDate', { parse: (value)
               {fromDate ? (
                 format(fromDate, "P")
               ) : (
-                <span>{fromPlaceholder ? t(fromPlaceholder) : t("From date")}</span>
+                <span>
+                  {fromPlaceholder ? t(fromPlaceholder) : t("From date")}
+                </span>
               )}
             </Button>
           </PopoverTrigger>
@@ -47,14 +54,14 @@ const [fromDate ,setFromDate] = useQueryState<Date>('fromDate', { parse: (value)
             <Calendar
               mode="single"
               selected={fromDate || undefined}
-              onSelect={(date)=>date? setFromDate(date):""}
+              onSelect={(date) => (date ? setFromDate(date) : "")}
               initialFocus
-              disabled={(date) => toDate ? date > toDate : false}
+              disabled={(date) => (toDate ? date > toDate : false)}
             />
           </PopoverContent>
         </Popover>
       </div>
-      
+
       <div className="flex-1  ">
         <Popover>
           <PopoverTrigger asChild>
@@ -76,10 +83,10 @@ const [fromDate ,setFromDate] = useQueryState<Date>('fromDate', { parse: (value)
           <PopoverContent className="w-auto p-0">
             <Calendar
               mode="single"
-              selected={toDate ||undefined}
-              onSelect={(date)=>date? setToDate(date):""}
+              selected={toDate || undefined}
+              onSelect={(date) => (date ? setToDate(date) : "")}
               initialFocus
-              disabled={(date) => fromDate ? date < fromDate : false}
+              disabled={(date) => (fromDate ? date < fromDate : false)}
             />
           </PopoverContent>
         </Popover>

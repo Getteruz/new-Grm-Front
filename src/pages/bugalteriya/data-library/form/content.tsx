@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Check } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import { useFormContext } from "react-hook-form";
@@ -26,21 +26,36 @@ export default function FormContent({ isPending }: { isPending: boolean }) {
   const { watch } = useFormContext();
   const collectionId = watch()?.collection.value;
   const title = watch()?.title;
-  const { data, isLoading } = useQuery({
-    queryKey: [type, collectionId],
-    queryFn: () =>
+
+
+const { data, isLoading, hasNextPage, fetchNextPage,isFetchingNextPage } = useInfiniteQuery({
+  queryKey: [type, collectionId],
+    queryFn: ({ pageParam = 1 }) =>
       getAllData<TResponse<TActionData>, object>(
         `/${collectionId && type == "model" ? `model/by-collection/${collectionId}` : type}`,
-        {}
+        {
+          page: pageParam as number,
+          limit: 10,
+        }
       ),
-    select: (res) => ({
-      items: res?.items.map((item) => ({
+    getNextPageParam: (lastPage) => {
+      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+        return lastPage?.meta?.currentPage + 1;
+      } else {
+        return null;
+      }
+    },
+  select: (data) => ({
+    items: data.pages.flatMap(page => 
+      page.items.map(item => ({
         value: item?.id,
         label: item?.title,
-      })),
-      meta: res?.meta,
-    }),
-  });
+      }))
+    ),
+    meta: data.pages[data.pages.length - 1]?.meta,
+  }),
+  initialPageParam: 1,
+});
 
   const { mutate } = useMutation({
     mutationFn: async (id: string) => {
@@ -51,6 +66,8 @@ export default function FormContent({ isPending }: { isPending: boolean }) {
       queryClient.invalidateQueries({ queryKey: [type] });
     },
   });
+
+
 
   return (
     <>
@@ -117,13 +134,16 @@ export default function FormContent({ isPending }: { isPending: boolean }) {
       <TableWrapper
         isAdd={true}
         isloading={isLoading}
-        className="border-r max-h-screen overflow-y-scroll  border-border"
+        className="border-r  border-border"
         title={type || ""}
         setValue={setValue}
         options={data?.items?.map((e) => ({
           onDelete: () => mutate(e?.value),
           ...e,
         }))}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage ?? false}
+        isFetchingNextPage={isFetchingNextPage}
         isPending={isPending as boolean}
       >
         {type === "model" && (

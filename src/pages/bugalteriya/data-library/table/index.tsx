@@ -33,7 +33,7 @@ export default function Page() {
           isLoading={isLoading}
           columns={Columns}
           data={flatData}
-          className={'max-h-screen overflow-y-scroll'}
+          className={' max-h-[calc(100vh-160px)]  scrollCastom'}
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage ?? false}
           isFetchingNextPage={isFetchingNextPage}

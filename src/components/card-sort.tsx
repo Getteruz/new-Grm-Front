@@ -14,13 +14,13 @@ import { Textarea } from "@/components/ui/textarea";
 import useDataFetch from "@/pages/filial/table/queries";
 import {
   useDataCashflowTypes,
-  useOpenKassa,
+  useKassaById,
 } from "@/pages/report/table/queries";
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
 
-export default function CardSort() {
+export default function CardSort({KassaId}:{KassaId:string}) {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
   const location = useLocation();
@@ -39,8 +39,8 @@ export default function CardSort() {
 
   // Fetch necessary data
   const { data: filialData } = useDataFetch({});
-  const { data: kassaId, isLoading: isReportLoading } = useOpenKassa({
-    id: meUser?.filial?.id,
+  const { data: kassaId, isLoading: isReportLoading } = useKassaById({
+    id:KassaId,
   });
   const { data: types } = useDataCashflowTypes({
     queries: { limit: 20, page: 1, search: "" },
@@ -53,7 +53,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.income || 0)
+        formatPrice(kassaId?.sale || 0)
       ),
     },
     {
@@ -69,7 +69,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.cashFlowSumBoss || 0)
+        formatPrice(kassaId?.cash_collection || 0)
       ),
       button:
         meUser?.position.role === 3 ? (
@@ -91,7 +91,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.netProfitTotalSum || 0)
+        formatPrice(kassaId?.additionalProfitTotalSum || 0)
       ),
     },
     {
@@ -99,7 +99,7 @@ export default function CardSort() {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.expenditureShop || 0)
+        formatPrice(Number(kassaId?.discount) || 0)
       ),
     },
     {

@@ -15,7 +15,7 @@ export default function Content({ orderList }: { orderList: IData[] }) {
     <div className="flex ">
       <div className="w-full">
         <Filters countLength={selected.length} />
-        <div className="my-[13px] h-[calc(100vh-160px)]  overflow-y-scroll mx-[40px]">
+        <div className="my-[13px] h-[calc(100vh-160px)]  scrollCastommx-[40px]">
           {orderList &&
             orderList?.map((item, index) => {
               return (

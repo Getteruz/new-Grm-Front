@@ -68,6 +68,8 @@ export type KassaReportData = {
   income: number;
   expense: number;
 };
+
+
 export type ReportQuery = {
   search: string | undefined;
   limit: number;
@@ -91,4 +93,46 @@ export interface TransactionItem {
   time: string;
   title: string;
   date: string;
+
+  order: {
+    bar_code: {
+       model: { title: string };
+      collection: { 
+        title: string ;
+        priceMeter:number;
+      }; 
+      color:{
+        title:string;
+      };
+      size: {
+         title: string
+         }; 
+      isMetric:boolean;
+      };
+    x: number;
+    price: number;
+    discountPercentage: string;
+  };
+}
+
+
+export interface KassaItem{
+  id: string;
+  startDate: string;
+  endDate: string;
+  isActive: boolean;
+  totalSellCount: number;
+  totalSum: number;
+  additionalProfitTotalSum: number;
+  netProfitTotalSum: number;
+  totalSize: number;
+  plasticSum: number;
+  internetShopSum: number;
+  sale: number;
+  cash_collection: number;
+  discount: number;
+  income: number;
+  expense: number;
+  status: string;
+
 }

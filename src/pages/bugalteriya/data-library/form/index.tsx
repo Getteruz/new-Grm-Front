@@ -14,7 +14,6 @@ const ActionPage = () => {
     resolver: zodResolver(CropSchema),
     defaultValues:{
       title:"",
-     
       collection: {
         value: undefined,
         label: "",

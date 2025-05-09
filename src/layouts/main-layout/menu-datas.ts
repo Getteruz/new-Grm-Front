@@ -18,7 +18,6 @@ import {
   ProductsCheck,
   ProductsOnSaleIcon,
   QRCodeIcon,
-  RefleshIcons,
   ReportBottom,
   SettingsIcon,
   StatementIcon,
@@ -126,12 +125,7 @@ export const DataMenu = {
       link: "/products",
       text: "Продукты",
     },
-    {
-      id: 4,
-      icons: () => RefleshIcons(),
-      link: "/transfers",
-      text: "Трансферы",
-    },
+ 
     {
       id: 5,
       icons: () => BrCodeIcons({ width: 28, height: 28 }),

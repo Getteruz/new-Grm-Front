@@ -10,7 +10,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { useMeStore } from "@/store/me-store";
 import { TResponse } from "@/types";
 
-import { KassaReportData, TransactionItem } from "./type";
+import { KassaItem, KassaReportData, TransactionItem } from "./type";
 
 // Query hook to fetch kassa report
 export const useKassaReport = () => {
@@ -26,8 +26,14 @@ export const useKassaReport = () => {
 interface IData {
   options?: DefinedInitialDataOptions<TResponse<TransactionItem>>;
   queries?: TQuery;
+  enabled?: boolean
 }
-export const useDataCashflow = ({ queries }: IData) =>
+interface IKassaData {
+  options?: DefinedInitialDataOptions<TResponse<KassaItem>>;
+  queries?: TQuery;
+  enabled?: boolean
+}
+export const useDataCashflow = ({ queries ,enabled}: IData) =>
   useInfiniteQuery({
     queryKey: [apiRoutes.cashflow, queries],
     queryFn: ({ pageParam = 10 }) =>
@@ -43,8 +49,30 @@ export const useDataCashflow = ({ queries }: IData) =>
         return null;
       }
     },
+    enabled: enabled,
     initialPageParam: 1,
   });
+
+export const useDataKassa = ({ queries ,enabled}: IKassaData) =>
+  useInfiniteQuery({
+    queryKey: [apiRoutes.kassa, queries],
+    queryFn: ({ pageParam = 10 }) =>
+      getAllData<TResponse<KassaItem>, TQuery>(apiRoutes.kassa, {
+        ...queries,
+        page: pageParam as number,
+        limit: 10,
+      }),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+        return lastPage?.meta?.currentPage + 1;
+      } else {
+        return null;
+      }
+    },
+    enabled: enabled,
+    initialPageParam: 1,
+  });
+  
 
 interface TQueries {
   filial: string;

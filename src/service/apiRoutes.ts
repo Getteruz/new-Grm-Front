@@ -37,5 +37,6 @@ export const apiRoutes = {
   qrCodes: "/qr-codes",
   kassaReport: "/kassa/report",
   kassa: "/kassa",
+  kassaClose:"/kassa/close-kassa",
   statement: "/statement",
 } as const;

@@ -85,7 +85,7 @@ export default function MonitoringDashboard() {
         </Button>
       </div>
       
-      <CardSort/>
+      <CardSort KassaId=""/>
       
       {/* Data Table */}
       <div className="mx-4 mb-4 flex-1">

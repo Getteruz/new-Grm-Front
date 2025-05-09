@@ -55,6 +55,15 @@ export const AddData = async <D extends object>(url: string, data: D) => {
     throw error;
   }
 };
+export const PatchData = async <D extends object>(url: string, data: D) => {
+  try {
+    const res = await api.patch(url, data);
+    return res.data;
+  } catch (error) {
+    handleError(error as iError);
+    throw error;
+  }
+};
 
 export const UpdateData = async <D extends object>(
   url: string,

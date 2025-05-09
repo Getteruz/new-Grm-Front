@@ -26,7 +26,7 @@ export default function PageFinance() {
   return (
     <>
       <Filter />
-      <CardSort />
+      <CardSort KassaId="" />
       <DataTable
         className="px-4"
         isLoading={isLoading}

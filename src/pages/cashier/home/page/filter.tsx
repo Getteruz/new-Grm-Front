@@ -1,8 +1,8 @@
+import { SquareCheckBig, Tornado } from "lucide-react";
+
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { Button } from "@/components/ui/button";
 import useData from "@/pages/employees/table/queries";
-import { useQuery } from "@tanstack/react-query";
-import { CircleX, SquareCheckBig, SquarePen, Tornado } from "lucide-react";
 const Sort = [
   {
     label: "Все",
@@ -54,10 +54,13 @@ export default function Filters({ countLength }: { countLength: number }) {
         {countLength}
       </Button>
       <FilterSelect
-        options={[]}
+        options={data?.pages[0].items.map((l) => ({
+          label: l.firstName,
+          value: l.id,
+        }))}
         className=" w-[200px]  border-l "
         placeholder="Выберите продавца "
-        name="sort"
+        name="sellerId"
       />
 
       <Button

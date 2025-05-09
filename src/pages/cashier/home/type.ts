@@ -12,7 +12,7 @@ export interface IData {
   tip: string;
   type: string;
   plasticSum: number;
-  discountSum:number;
+  discountSum: number;
   seller: {
     id: string;
     isActive: boolean;
@@ -63,7 +63,7 @@ export interface IData {
     check_count: number;
     is_deleted: boolean;
     partiya_title: string;
-  
+
     book_count: number;
     collection_price: {
       priceMeter: number;
@@ -151,6 +151,7 @@ export interface IData {
 
 export type IQuery = {
   isActive?: string | undefined;
+  sellerId?: string | undefined;
   status?: string;
   limit?: number;
   page?: number;

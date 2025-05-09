@@ -12,6 +12,7 @@ import useOrder from "./queries";
 export default function Page() {
   const { meUser } = useMeStore();
   const [sort] = useQueryState("sort");
+  const [sellerId] = useQueryState("sellerId");
   const { data: kassa } = useQuery({
     queryKey: [apiRoutes.filial],
     queryFn: () =>
@@ -25,6 +26,7 @@ export default function Page() {
     id: kassa?.id ? kassa?.id : undefined,
     queries: {
       status: sort === "all" ? undefined : sort || undefined,
+      sellerId: sellerId || undefined,
       limit: 1000,
     },
   });

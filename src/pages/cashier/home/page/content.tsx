@@ -2,11 +2,11 @@ import { format } from "date-fns";
 import { useState } from "react";
 
 import CarpetCashierCard from "@/components/cards/carpet-cashier-card";
+import { minio_img_url } from "@/constants";
 
 import { IData } from "../type";
 import Filters from "./filter";
 import Pricecheck from "./price-check";
-import { minio_img_url } from "@/constants";
 
 export default function Content({ orderList }: { orderList: IData[] }) {
   const [selected, setSelected] = useState<IData[]>([]);

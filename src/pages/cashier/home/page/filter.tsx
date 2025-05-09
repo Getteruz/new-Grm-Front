@@ -3,6 +3,7 @@ import { SquareCheckBig, Tornado } from "lucide-react";
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { Button } from "@/components/ui/button";
 import useData from "@/pages/employees/table/queries";
+import { useMeStore } from "@/store/me-store";
 const Sort = [
   {
     label: "Все",
@@ -26,10 +27,12 @@ const Sort = [
   },
 ];
 export default function Filters({ countLength }: { countLength: number }) {
+  const { meUser } = useMeStore();
   const { data } = useData({
     queries: {
       limit: 100,
       page: 1,
+      filial: meUser?.filial.id,
     },
   });
 
@@ -55,7 +58,7 @@ export default function Filters({ countLength }: { countLength: number }) {
       </Button>
       <FilterSelect
         options={data?.pages[0].items.map((l) => ({
-          label: l.firstName,
+          label: l.firstName + " " + l.lastName,
           value: l.id,
         }))}
         className=" w-[200px]  border-l "

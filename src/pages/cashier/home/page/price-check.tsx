@@ -54,6 +54,7 @@ export default function Pricecheck({ selected }: { selected: IData[] }) {
       <div className="w-full">
         <Button
           onClick={AccepedFunt}
+          disabled
           className="w-full h-[90px] p-10 bg-primary mt-auto text-background text-[22px] font-semibold "
         >
           Подтвердить продажу

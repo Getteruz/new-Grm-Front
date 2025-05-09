@@ -14,17 +14,16 @@ export type Statement = {
 };
 
 export type Statement1 = {
-  id: string,
-  number:  string,
-  name:string,
-  createdAt:string,
-  premiumsTotal: number,
-  bonusesTotal: number,
-  salaryTotal: number,
-  totalSum: number,
-  status:string
+  id: string;
+  number: string;
+  name: string;
+  createdAt: string;
+  premiumsTotal: number;
+  bonusesTotal: number;
+  salaryTotal: number;
+  totalSum: number;
+  status: string;
 };
-
 
 // Employee in statement
 export type StatementEmployee = {
@@ -44,6 +43,7 @@ export type StatementEmployee = {
 // Query parameters for statements list
 export type StatementQuery = {
   startDate?: string;
+  payrollId?: string;
   endDate?: string;
   status?: string;
   search?: string;

@@ -266,7 +266,7 @@ export default function CardSort() {
             </p>
             <p className="text-[14px] font-semibold">1 шт</p>
           </div>
-          <div className="grid row-start w-full gap-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid row-start w-full gap-1 grid-cols-4  ">
             {column?.map((e) => (
               <div
                 key={e.title}

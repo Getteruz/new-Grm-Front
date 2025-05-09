@@ -10,9 +10,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { StatementEmployee } from "../type";
+import { Statement } from "../type";
 
-export const StatementEmployeeColumns = (): ColumnDef<StatementEmployee>[] => [
+export const StatementEmployeeColumns = (): ColumnDef<Statement>[] => [
   {
     id: "employee",
     header: "Сотрудник",
@@ -20,12 +20,19 @@ export const StatementEmployeeColumns = (): ColumnDef<StatementEmployee>[] => [
       return (
         <div className="flex items-center">
           <Avatar className="h-9 w-9 mr-2">
-            <AvatarImage src={row.original.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_XRGE9j0tQkvkYFKQU5MlZw86IXuV9TbfA&s"} />
+            <AvatarImage
+              src={
+                row.original.avatar ||
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_XRGE9j0tQkvkYFKQU5MlZw86IXuV9TbfA&s"
+              }
+            />
             <AvatarFallback className="bg-primary text-white">
               {row.original.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
-          <div className="font-normal text-foreground tetx-[13px]">{row.original.name}</div>
+          <div className="font-normal text-foreground tetx-[13px]">
+            {row.original.name}
+          </div>
         </div>
       );
     },
@@ -46,7 +53,13 @@ export const StatementEmployeeColumns = (): ColumnDef<StatementEmployee>[] => [
     header: "Зарплата",
     accessorKey: "salary",
     cell: ({ row }) => {
-      return <span className="text-[#E38157] flex items-center"> <IdCardIcon className="mr-1 text-[12px]" size={18}/> {row.original.salary} $</span>;
+      return (
+        <span className="text-[#E38157] flex items-center">
+          {" "}
+          <IdCardIcon className="mr-1 text-[12px]" size={18} />{" "}
+          {row.original.salary} $
+        </span>
+      );
     },
   },
   {
@@ -54,7 +67,10 @@ export const StatementEmployeeColumns = (): ColumnDef<StatementEmployee>[] => [
     accessorKey: "bonus",
     cell: ({ row }) => {
       return row.original.bonus ? (
-        <span className="text-[#C3AD54] flex items-center"> <Gem className="mr-1 text-[12px]" size={18} /> +{row.original.bonus} $</span>
+        <span className="text-[#C3AD54] flex items-center">
+          {" "}
+          <Gem className="mr-1 text-[12px]" size={18} /> +{row.original.bonus} $
+        </span>
       ) : (
         <span>—</span>
       );
@@ -65,7 +81,10 @@ export const StatementEmployeeColumns = (): ColumnDef<StatementEmployee>[] => [
     accessorKey: "premium",
     cell: ({ row }) => {
       return row.original.premium ? (
-        <span className="text-[#94C3DC] flex items-center"><Gift className="mr-1 text-[12px]" size={18} /> +{row.original.premium} $</span>
+        <span className="text-[#94C3DC] flex items-center">
+          <Gift className="mr-1 text-[12px]" size={18} /> +
+          {row.original.premium} $
+        </span>
       ) : (
         <span>—</span>
       );
@@ -76,7 +95,11 @@ export const StatementEmployeeColumns = (): ColumnDef<StatementEmployee>[] => [
     accessorKey: "advance",
     cell: ({ row }) => {
       return row.original.advance ? (
-        <span className="text-[#E38157] flex items-center"> <IdCardIcon className="mr-1 text-[12px]" size={18}/> {row.original.advance} $</span>
+        <span className="text-[#E38157] flex items-center">
+          {" "}
+          <IdCardIcon className="mr-1 text-[12px]" size={18} />{" "}
+          {row.original.advance} $
+        </span>
       ) : (
         <span>—</span>
       );
@@ -86,21 +109,31 @@ export const StatementEmployeeColumns = (): ColumnDef<StatementEmployee>[] => [
     header: "Итого",
     accessorKey: "total",
     cell: ({ row }) => {
-      return <span className="font-medium text-[#5D5D53] text-[16px]">{row.original.total} $</span>;
+      return (
+        <span className="font-medium text-[#5D5D53] text-[16px]">
+          {row.original.total} $
+        </span>
+      );
     },
   },
   {
     header: "Пластик",
     accessorKey: "plastic",
     cell: ({ row }) => {
-      return <span className="p-2 border bg-[#F0F0E5]">{row.original.plastic} $</span>;
+      return (
+        <span className="p-2 border bg-[#F0F0E5]">
+          {row.original.plastic} $
+        </span>
+      );
     },
   },
   {
     header: "Наличные",
     accessorKey: "cash",
     cell: ({ row }) => {
-      return <span className="p-2 border bg-[#EAEADE]">{row.original.cash} $</span>;
+      return (
+        <span className="p-2 border bg-[#EAEADE]">{row.original.cash} $</span>
+      );
     },
   },
   {
@@ -115,7 +148,9 @@ export const StatementEmployeeColumns = (): ColumnDef<StatementEmployee>[] => [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem>Редактировать</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">Удалить</DropdownMenuItem>
+            <DropdownMenuItem className="text-red-600">
+              Удалить
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

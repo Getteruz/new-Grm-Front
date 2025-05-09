@@ -53,7 +53,7 @@ export default function Page() {
             />
           </div>
         </div>
-        <Pricecheck />
+        <Pricecheck id={reportData?.id || ""} />
       </div>
     </>
   );

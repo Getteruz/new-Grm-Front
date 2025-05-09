@@ -13,6 +13,19 @@ export type Statement = {
   total: number;
 };
 
+export type Statement1 = {
+  id: string,
+  number:  string,
+  name:string,
+  createdAt:string,
+  premiumsTotal: number,
+  bonusesTotal: number,
+  salaryTotal: number,
+  totalSum: number,
+  status:string
+};
+
+
 // Employee in statement
 export type StatementEmployee = {
   id: string;

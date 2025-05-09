@@ -52,7 +52,7 @@ export default function DetailPage() {
       <div className="m-4">
         <DataTable
           columns={StatementEmployeeColumns()}
-          data={statement?.employees || []}
+          data={(statement as unknown as {employees:[]})?.employees || []}
           isLoading={isLoading}
           className="mt-2"
         />

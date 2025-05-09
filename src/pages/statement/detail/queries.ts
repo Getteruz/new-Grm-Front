@@ -2,15 +2,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { getMockStatementWithEmployees, mockEmployeesList, mockFilials } from "../mock-data";
-import { Statement, StatementEmployee } from "../type";
+import {  Statement1, StatementEmployee } from "../type";
 
 // Hook for fetching a specific statement with details
 export const useDetailedStatement = ({ id }: { id?: string }) => {
   return useQuery({
     queryKey: ["statement", id],
     queryFn: () => {
-      // Simulate API delay
-      return new Promise<Statement | undefined>((resolve) => {
+      return new Promise<Statement1 | undefined>((resolve) => {
         setTimeout(() => {
           resolve(getMockStatementWithEmployees(id || ""));
         }, 500);

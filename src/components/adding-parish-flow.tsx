@@ -8,7 +8,6 @@ import { toast } from "sonner";
 import { AddData, getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useMeStore } from "@/store/me-store";
-import { TResponse } from "@/types";
 
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
@@ -97,8 +96,7 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
   const getCategories = () => {
     // Filter cashflow types based on current operation type (parish = "Приход", flow = "Расход")
     const operationType = type === "parish" ? "in" : "out";
-    return cashflowTypesResponse
-      ?.filter((ct) => ct.type === operationType || ct.type === "both")
+    return  (cashflowTypesResponse as unknown as  CashflowType[])?.filter((ct) => ct.type === operationType || ct.type === "both")
       ?.map((ct) => ({
         id: ct.id,
         title: ct.title,

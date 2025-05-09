@@ -1,5 +1,5 @@
 // mock-data.ts
-import { Statement, StatementEmployee } from "./type";
+import {  Statement1, StatementEmployee } from "./type";
 
 // Mock statement employees
 export const mockEmployees: StatementEmployee[] = [
@@ -58,7 +58,7 @@ export const mockEmployees: StatementEmployee[] = [
 ];
 
 // Mock statements
-export const mockStatements: Statement[] = [
+export const mockStatements: Statement1[] = [
   {
     id: "1",
     number: "235",
@@ -193,19 +193,17 @@ export const mockStatements: Statement[] = [
   }
 ];
 
-// Mock data for statement with employees
-export const getMockStatementWithEmployees = (id: string): Statement | undefined => {
+export const getMockStatementWithEmployees = (id: string): Statement1 | undefined => {
   const statement = mockStatements.find(s => s.id === id);
   
   if (!statement) return undefined;
   
-  // Only return statement #1 with employees to simulate one loaded statement
-  if (id === "1") {
-    return {
-      ...statement,
-      employees: mockEmployees
-    };
-  }
+  // if (id === "1") {
+  //   return {
+  //     ...statement,
+  //     employees: mockEmployees
+  //   };
+  // }
   
   return statement;
 };

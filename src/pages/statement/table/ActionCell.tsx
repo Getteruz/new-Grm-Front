@@ -24,12 +24,12 @@ export const ActionCell = ({ row }: { row: Row<Statement> }) => {
             <DropdownMenuItem onClick={() => navigate(`/statement/${row.original.id}`)}>
               Подробности
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setEditId(row.original.id)}>
+            <DropdownMenuItem onClick={() => setEditId(String(row.original.id) )}>
               Редактировать
             </DropdownMenuItem>
             <DropdownMenuItem 
               className="text-red-600"
-              onClick={() => setDeleteId(row.original.id)}
+              onClick={() => setDeleteId(String(row.original.id))}
             >
               Удалить
             </DropdownMenuItem>

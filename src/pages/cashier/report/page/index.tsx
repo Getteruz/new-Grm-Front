@@ -23,7 +23,9 @@ export default function Page() {
       page: 1,
     },
   });
-  const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
+
+  console.log(data?.items);
+  // const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
     <>
@@ -40,7 +42,7 @@ export default function Page() {
           <div className="flex-1 overflow-auto p-4">
             <DataTable
               columns={ReportColumns}
-              data={flatData || []}
+              data={[]}
               isLoading={false}
               className="border-none"
               hasHeader={false}

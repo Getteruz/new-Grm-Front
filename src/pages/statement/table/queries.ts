@@ -44,7 +44,7 @@ export const useCreateStatement = () => {
       // Mock creating a new statement
       const newStatement: Statement = {
         ...data,
-        id: Math.random().toString(36).substr(2, 9),
+        id: Number(Math.random().toString(36).substr(2, 9))
       };
 
       return Promise.resolve(newStatement);

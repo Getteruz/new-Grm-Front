@@ -16,7 +16,7 @@ import { useMeStore } from "@/store/me-store";
 import formatPrice from "@/utils/formatPrice";
 
 import Filters from "../page/filter";
-import Pricecheck from "../page/price-check";
+// import Pricecheck from "../page/price-check";
 import { useReport } from "../queries";
 
 // Types for our data
@@ -185,7 +185,7 @@ export default function TransactionDetail() {
             />
           </div>
         </div>
-        <Pricecheck />
+        {/* <Pricecheck /> */}
       </div>
     </>
   );

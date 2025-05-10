@@ -139,12 +139,12 @@ export const Columns: ColumnDef<TData>[] = [
       );
     },
   },
-  {
-    header: "price",
-    cell: ({ row }) => {
-      return <p>{row.original?.collection_price?.priceMeter}$</p>;
-    },
-  },
+  // {
+  //   header: "price",
+  //   cell: ({ row }) => {
+  //     return <p>{row.original?.collection_price?.priceMeter}$</p>;
+  //   },
+  // },
   {
     id: "actions",
     enableHiding: true,

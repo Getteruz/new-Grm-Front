@@ -52,6 +52,7 @@ export const Columns: ColumnDef<TData>[] = [
                 row.original?.count - row.original?.check_count}
               {type === "излишки" &&
                 row.original?.check_count - row.original?.count}
+                  {type === "all" && row.original?.count}
             </>
           )}
 

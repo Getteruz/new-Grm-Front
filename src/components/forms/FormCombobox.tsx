@@ -78,7 +78,6 @@ export default function FormComboboxDemoInput<IData, TQuery>({
     }),
   });
 
-  console.log(data,"hre")
 
   const memoizedData = useMemo(() => {
     if (option) return option;

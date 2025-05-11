@@ -23,7 +23,7 @@ export default function Content({ data }: { data: TData[] }) {
           >
             <p className="font-semibold text-[18px]">{item?.title}</p>
             <div className="flex justify-between">
-              <p className="mt-2.5 opacity-45 text-[12px]">
+              <p className="mt-2.5  text-[12px]">
                 {format(item?.updated_at, "dd.MM.yyyy")}
               </p>
               <TableAction ShowDelete id={item?.id} url={apiRoutes.notes} />

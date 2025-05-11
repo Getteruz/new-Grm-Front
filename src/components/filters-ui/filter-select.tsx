@@ -1,4 +1,4 @@
-import { Store } from "lucide-react";
+
 import { parseAsString, useQueryState } from "nuqs";
 import { useTranslation } from "react-i18next";
 
@@ -12,7 +12,7 @@ interface iFilterSelect {
   classNameValue?: string;
   classNameContainer?: string;
   classNameItem?: string;
-  icons?: boolean;
+  icons?: React.ReactNode;
   options?: {
     label: string;
     value: string;
@@ -36,7 +36,9 @@ export default function FilterSelect({
   const { t } = useTranslation();
   return (
     <div className={`flex items-center  ${className && className}`}>
-      {icons ? <Store /> : ""}
+    
+
+      { icons && icons}
       <ShadcnSelect
         className={` border-none  ${className && className}`}
         disabled={false}
@@ -54,7 +56,7 @@ export default function FilterSelect({
                 { label: "label", value: "value" },
               ]
         }
-        placeholder={placeholder ? t(placeholder) : "select"}
+        placeholder={placeholder ? t(placeholder) : "Выберите"}
         onChange={(e) => setValue(e || "")}
       />
     </div>

@@ -25,8 +25,9 @@ export default function Page() {
     <>
       <Filter />
       <DataTable
-        isRowClickble
+        isRowClickble={false}
         link="/report-monthly"
+     
         isLoading={isLoading}
         columns={Columns}
         data={flatData ?? []}

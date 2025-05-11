@@ -29,6 +29,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   isLoading: boolean;
   className?: string;
+  borderClass?: string;
   link?: string;
   isFetchingNextPage?: boolean;
   hasNextPage?: boolean;
@@ -43,6 +44,7 @@ export function DataTable<TData, TValue>({
   data,
   isLoading,
   className,
+  borderClass,
   link,
   isRowClickble,
   isFetchingNextPage = false,
@@ -137,14 +139,14 @@ export function DataTable<TData, TValue>({
   const navigate = useNavigate();
 
   return (
-    <div className={className}>
+    <div className={`${className}` }>
       {isLoading && data.length === 0 ? (
         <TableLoading limit={15} table={table} />
       ) : (
         <>
-          <Table>
+          <Table >
             {hasHeader ? (
-              <TableHeader>
+              <TableHeader className={`border-border  border  ${borderClass}`}>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {
@@ -177,12 +179,12 @@ export function DataTable<TData, TValue>({
             ) : (
               ""
             )}
-            <TableBody className="">
+            <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    className="px-5 cursor-pointer odd:bg-[#F0F0E5]  even:bg-[#EAEADE] hover:bg-[#E6E6D9]"
+                    className="px-5 cursor-pointer "
                     onClick={() => {
                       if (isRowClickble) {
                         navigate(

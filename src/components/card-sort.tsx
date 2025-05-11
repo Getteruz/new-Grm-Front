@@ -146,6 +146,11 @@ export default function CardSort({KassaId}:{KassaId:string}) {
           </div>
         ),
     },
+    {
+      title: "",
+      price: '',
+     
+    },
   ];
 
   const hrColumns = [
@@ -246,8 +251,8 @@ export default function CardSort({KassaId}:{KassaId:string}) {
   return (
     <>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <div className="p-4 flex gap-1">
-          <div className="bg-sidebar p-5 w-full max-w-[399px]">
+        <div className="flex ">
+          <div className="bg-sidebar/20 p-5 w-full border border-t border-r max-w-[399px]">
             <div className="flex items-center">
               <DollarSign size={54} />
               <div>
@@ -266,12 +271,12 @@ export default function CardSort({KassaId}:{KassaId:string}) {
             </p>
             <p className="text-[14px] font-semibold">1 шт</p>
           </div>
-          <div className="grid row-start w-full gap-1 grid-cols-4  ">
+          <div className="grid row-start w-full  border-border  border-b grid-cols-4  ">
             {column?.map((e) => (
               <div
                 key={e.title}
                 onClick={() => setSortType(e.title)}
-                className={`${sorttype == e.title ? "bg-primary text-background" : "bg-sidebar rounded-[3px] text-[#7E7E72]"} cursor-pointer px-4 py-5`}
+                className={`${sorttype == e.title ? "bg-primary text-background" : "bg-sidebar/20  text-primary"} border-t border-r border-border cursor-pointer px-4 py-5`}
               >
                 <div className="flex justify-between items-center">
                   <p className="text-[12px] mb-0.5 flex items">{e.title}</p>

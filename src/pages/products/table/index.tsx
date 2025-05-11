@@ -1,4 +1,4 @@
-import { parseAsInteger, useQueryState } from "nuqs";
+import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 
 import TabsFilter from "@/components/filters-ui/tabs-filter";
 import { DataTable } from "@/components/ui/data-table";
@@ -7,6 +7,7 @@ import { useMeStore } from "@/store/me-store";
 import { ProductColumns } from "./columns";
 import Filters from "./filters";
 import useDataFetch from "./queries";
+import CarpetCard from "@/components/cards/carpet-card";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -14,7 +15,10 @@ export default function Page() {
   const [filial] = useQueryState("filial");
   const [search] = useQueryState("search");
   const { meUser } = useMeStore();
-
+  const [value] = useQueryState(
+    "card",
+    parseAsString.withDefault("card")
+  );
   // const [search] = useQueryState("search");
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
@@ -46,14 +50,37 @@ export default function Page() {
             <TabsFilter />
           </div>
         ))}
-      <DataTable
-        isLoading={isLoading}
-        columns={ProductColumns}
-        data={flatData ?? []}
-        fetchNextPage={fetchNextPage}
-        hasNextPage={hasNextPage ?? false}
-        isFetchingNextPage={isFetchingNextPage}
-      />
+        {
+          value == "list" ?   <DataTable
+          isLoading={isLoading}
+          columns={ProductColumns}
+          data={flatData ?? []}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage ?? false}
+          isFetchingNextPage={isFetchingNextPage}
+        />:  <div className="px-2.5  mt-4 gap-2 grid row-start grid-cols-7  pb-[17px]">
+        {/* {flatData.map((item) => (
+          <CarpetCard
+            key={item.id}
+            id="1"
+            isBron={true}
+            carpetType="my-broned"
+            // user={{}}
+            // shape={item?.product?.bar_code?.shape?.title}
+            // discount={"5"}
+            // img={item.product.bar_code?.imgUrl}
+            // model={item?.product?.bar_code?.model?.title}
+            // size={`${item?.product?.bar_code.size.x * 100}X${item?.product?.y * 100}`}
+            // count={item?.product?.book_count || "0"}
+            // price={item?.product?.price}
+            // colaction={item?.bar_code.}
+            // color={item?.product?.bar_code?.color?.title}
+          />
+        ))} */}
+      </div>
+        }
+    
+     
     </>
   );
 }

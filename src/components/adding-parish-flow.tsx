@@ -234,7 +234,7 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
         <Button
           onClick={handleSubmit}
           disabled={isPending || !selectedCategory || !amount}
-          className={`p-5 rounded-[7px] ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white ${isPending ? "opacity-70 cursor-not-allowed" : ""}`}
+          className={`p-5 rounded-[7px] ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white ${isPending ? " cursor-not-allowed" : ""}`}
         >
           {isPending ? (
             <span className="flex items-center">

@@ -1,6 +1,5 @@
 import { parseAsInteger, useQueryState } from "nuqs";
 
-import CardSort from "@/components/card-sort";
 import { DataTable } from "@/components/ui/data-table";
 import { useMeStore } from "@/store/me-store";
 
@@ -8,6 +7,7 @@ import { ColumnsDManagerMonthly } from "../table/columns";
 import { FinanceColumns } from "./columns";
 import Filter from "./filter";
 import useDataLibrary from "./queries";
+import CardSort from "../table/card-sort";
 
 export default function PageFinance() {
   const { meUser } = useMeStore();
@@ -26,15 +26,17 @@ export default function PageFinance() {
   return (
     <>
       <Filter />
-      <CardSort KassaId="" />
+      <div className="h-[calc(100vh-140px)] scrollCastom">
+
+      <CardSort />
       <DataTable
-        className="px-4"
         isLoading={isLoading}
         columns={
           meUser?.position.role === 6 ? ColumnsDManagerMonthly : FinanceColumns
         }
         data={data?.items ?? []}
       />
+      </div>
     </>
   );
 }

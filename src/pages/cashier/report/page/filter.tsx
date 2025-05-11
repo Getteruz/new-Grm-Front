@@ -41,7 +41,7 @@ export default function Filters({countLength}:{countLength:number}) {
         "id"
       );
   return (
-    <div className='w-full sticky top-0 flex h-[40px] bg-sidebar'>
+    <div className='w-full  sticky top-0 flex h-[40px] bg-sidebar'>
        {
             id?  <FilterSelect 
             options={SortSingle}

@@ -59,21 +59,21 @@ export default function Page() {
 
   return (
     <>
-    <Filters countLength={selectedItems?.length} />
       <div className="flex justify-between w-full bg-[#f8f6e9]">
         <div className="flex flex-col h-screen w-full">
+      <Filters countLength={selectedItems?.length} />
          {sort === "open"  || Boolean(id) ?  <CardSort  KassaId={sort == "open"? reportData?.id || "" : id || "" }/>:""}
-          <div className="px-10 pt-4 w-full bg-[#f8f6e9] sticky top-0">
-            <p className="text-sm font-medium">
+          {sort === "open"  ?"":<div className="px-10 pt-2 mb-1 w-full bg-[#f8f6e9] sticky top-0">
+            <p className="text-sm font-medium ">
               {format(new Date(), "dd-MMMM")}
             </p>
-          </div>
-          <div className="flex-1 overflow-auto p-4">
+          </div>}
+          <div className="flex-1 overflow-auto ">
            {sort === "open"  || Boolean(id) ?  <DataTable
               columns={ReportColumns}
               data={flatData || []}
               isLoading={isLoading}
-              className="border-none "
+              // className="border-none "
               hasHeader={false}
               isRowClickble={false}
               fetchNextPage={fetchNextPage}
@@ -84,7 +84,7 @@ export default function Page() {
             columns={KassaColumns || []}
             data={flatKasssaData || []}
             isLoading={KassaLoading}
-            className="border-none"
+            // className="border-none"
             fetchNextPage={KassafetchNextPage}
             hasNextPage={KassafhasNextPage ?? false}
             isFetchingNextPage={KassaisFetchingNextPage}

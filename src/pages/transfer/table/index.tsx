@@ -4,9 +4,10 @@ import { DataTable } from "@/components/ui/data-table";
 import useDataFetch from "@/pages/deller/table/queries";
 import { useMeStore } from "@/store/me-store";
 
-import { paymentColumns } from "./columns";
+import { collactionColumns, paymentColumns } from "./columns";
 import Filters from "./filters";
 import useTransfers from "./queries";
+import { TransferData } from "../type";
 
 export default function Page() {
   const { meUser } = useMeStore();
@@ -43,7 +44,7 @@ export default function Page() {
     queries: {
       limit: 50,
       page: 1,
-      type: meUser?.position.role === 9 ? undefined : type || undefined,
+      type: meUser?.position.role === 9 ? undefined : type == "New" ? 'Out' :type || undefined,
       from:
         meUser?.position.role === 9 ? filial || "" : meUser?.filial?.id || "",
       to: meUser?.position.role === 9 ? filialTo : filial,
@@ -221,8 +222,8 @@ export default function Page() {
         <Filters />
         <DataTable
           isLoading={isLoading}
-          columns={paymentColumns}
-          data={flatData}
+          columns={meUser?.position.role == 6 ? collactionColumns: paymentColumns}
+          data={meUser?.position.role == 6 ? [{ id: 1 }, { id: 1 }] as unknown as  TransferData[] : flatData}
           // fetchNextPage={fetchNextPage}
           // hasNextPage={hasNextPage ?? false}
           // isFetchingNextPage={isFetchingNextPage}

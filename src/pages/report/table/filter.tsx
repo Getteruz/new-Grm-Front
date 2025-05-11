@@ -1,4 +1,4 @@
-import { FileOutput, Plus, X } from "lucide-react";
+import { FileOutput, X } from "lucide-react";
 
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { Button } from "@/components/ui/button";

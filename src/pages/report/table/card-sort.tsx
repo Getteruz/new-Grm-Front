@@ -1,7 +1,6 @@
 import { Banknote, DollarSign, Plus } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 
-import { useMeStore } from "@/store/me-store";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
@@ -11,13 +10,10 @@ import { Button } from "@/components/ui/button";
 import ShadcnSelect from "@/components/Select";
 
 export default function CardSort() {
-  const { meUser } = useMeStore();
 
   const [sorttype, setSortType] = useQueryState("sorttype", parseAsString);
   const [type, setType] = useState<string>("Приход");
   const [typePay, setTypePay] = useState<string>("cash");
-  const [price, setPrice] = useState<number>(0);
-  const [cashflow_type, setCashflow_type] = useState<string>("");
   const  isReportLoading=false;
 
   const columns = [

@@ -7,7 +7,7 @@ import { useMeStore } from "@/store/me-store";
 import { ProductColumns } from "./columns";
 import Filters from "./filters";
 import useDataFetch from "./queries";
-import CarpetCard from "@/components/cards/carpet-card";
+// import CarpetCard from "@/components/casrds/carpet-card";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));

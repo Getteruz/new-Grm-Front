@@ -1,5 +1,6 @@
-import { SquareCheckBig, Tornado } from "lucide-react";
+import { SquareCheckBig } from "lucide-react";
 
+import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { Button } from "@/components/ui/button";
 import useData from "@/pages/employees/table/queries";
@@ -68,14 +69,14 @@ export default function Filters({ countLength }: { countLength: number }) {
         placeholder="Выберите продавца "
         name="sellerId"
       />
-
-      <Button
+      <DateRangePicker toPlaceholder="до" fromPlaceholder="от" />
+      {/* <Button
         className="h-full  border-l-1 text-primary justify-center gap-1 px-4 border-y-0 border-r-0"
         variant={"outline"}
       >
         <Tornado />
         Фильтр
-      </Button>
+      </Button> */}
     </div>
   );
 }

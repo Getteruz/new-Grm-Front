@@ -157,4 +157,6 @@ export type IQuery = {
   status?: string;
   limit?: number;
   page?: number;
+  startDate?: string;
+  endDate?: string;
 };

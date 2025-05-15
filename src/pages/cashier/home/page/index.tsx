@@ -13,6 +13,8 @@ export default function Page() {
   const { meUser } = useMeStore();
   const [sort] = useQueryState("sort");
   const [sellerId] = useQueryState("sellerId");
+  const [startDate] = useQueryState("startDate");
+  const [endDate] = useQueryState("endDate");
   const { data: kassa } = useQuery({
     queryKey: [apiRoutes.filial],
     queryFn: () =>
@@ -28,6 +30,8 @@ export default function Page() {
       status: sort === "all" ? undefined : sort || undefined,
       sellerId: sellerId === "all" ? undefined : sellerId || undefined,
       limit: 1000,
+      startDate: startDate || undefined,
+      endDate: endDate || undefined,
     },
   });
 

@@ -18,7 +18,7 @@ export default function FormContent() {
   const isMetric = watch("isMetric");
 
   return (
-    <div className="w-full h-full  border-border border-r max-h-screen overflow-y-scroll">
+    <div className="w-full max-h-[calc(100vh-63px)] scrollCastom border-border border-r ">
       <Filters />
       <div className="grid row-start  px-[40px] py-[20px] gap-2 lg:grid-cols-2">
         <FormTextInput

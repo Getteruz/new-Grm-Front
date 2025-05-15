@@ -1,12 +1,12 @@
 import { parseAsInteger, useQueryState } from "nuqs";
 
-import CardSort from "@/components/card-sort";
 import { DataTable } from "@/components/ui/data-table";
 import { useMeStore } from "@/store/me-store";
 
 import { Columns, ColumnsDManager, ColumnsFManager } from "./columns";
 import Filter from "./filter";
 import useDataLibrary from "./queries";
+import CardSort from "./card-sort";
 
 export default function Page() {
   const { meUser } = useMeStore();
@@ -25,9 +25,10 @@ export default function Page() {
   return (
     <>
       <Filter />
-      <CardSort KassaId="" />
+      <div className="h-[calc(100vh-140px)] scrollCastom">
+      <CardSort />
+
       <DataTable
-        className="px-4"
         isLoading={isLoading}
         columns={
           meUser?.position?.role === 6
@@ -38,6 +39,7 @@ export default function Page() {
         }
         data={data?.items ?? []}
       />
+      </div>
     </>
   );
 }

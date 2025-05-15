@@ -1,5 +1,5 @@
-import { Plus, SquareCheckBig } from "lucide-react";
-import { useQueryState } from "nuqs";
+import { Plus } from "lucide-react";
+import { parseAsString, useQueryState } from "nuqs";
 import { useNavigate } from "react-router-dom";
 
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
@@ -7,12 +7,13 @@ import SearchInput from "@/components/filters-ui/search-input";
 import { BrCodeIcons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { useMeStore } from "@/store/me-store";
+import ShadcnSelect from "@/components/Select";
 
 export default function Filters() {
   const [type] = useQueryState("type");
+  const [collaction,setCollaction] = useQueryState("collection",parseAsString.withDefault("collection"))
   const navigate = useNavigate();
   const { meUser } = useMeStore();
-
   const [filial] = useQueryState("filial");
   const [filialTo] = useQueryState("filialTo");
 
@@ -38,7 +39,7 @@ export default function Filters() {
           fromPlaceholder="от: 12.02.2025"
           toPlaceholder="до: 12.02.2025"
         />
-        {meUser?.position.role !== 9 && type !== "Out" && (
+        {meUser?.position.role !== 9 && meUser?.position.role !== 6 && type !== "Out" && (
           <Button
             className="h-full border-l-1 justify-center gap-1 w-[68px] border-y-0  border-r-0"
             size={"icon"}
@@ -48,18 +49,18 @@ export default function Filters() {
             <Plus size={40} />
           </Button>
         )}
-        {meUser?.position.role !== 9 && (
-          <Button
-            className="h-full border-l-1 justify-center gap-1 w-[68px] border-y-0  border-r-0"
-            size={"icon"}
-            variant={"outline"}
-          >
-            <SquareCheckBig /> 0
-          </Button>
-        )}
       </div>
+      <ShadcnSelect
+                onChange={(e) => setCollaction(e || "collection")}
+
+                options={ [{ label: "Продукт", value: "product"},
+                  { label: "Коллекция", value: "collection" },]}
+                value={collaction}
+                
+                className={"w-full max-w-[150px]  ml-1 mr-auto border-y-0"}
+              />
       {meUser?.position.role !== 9 &&
-        (type !== "Out" ? (
+        (type !== "Out" && ( meUser?.position.role !== 6 || type != "New") ? (
           <Button
             className="h-full border-x-1 border-y-0 w-[140px] "
             variant={"outline"}
@@ -68,7 +69,7 @@ export default function Filters() {
             Принять
           </Button>
         ) : (
-          <Button
+         meUser?.position.role !== 6 && <Button
             onClick={() => navigate(link)}
             className="h-full border-x-1 border-y-0  "
           >

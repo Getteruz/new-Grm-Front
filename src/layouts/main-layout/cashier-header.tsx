@@ -77,7 +77,6 @@ export default function CashierHeader() {
           </div>
           <div className="relative">
             <BellRing className="text-primary w-7 h-7" />
-
             <Badge
               variant={"destructive"}
               className="absolute -top-2 -right-1 rounded-full flex align-middle justify-center items-center w-5 h-5 bg-[#E38157] border-[#E38157] text-white"

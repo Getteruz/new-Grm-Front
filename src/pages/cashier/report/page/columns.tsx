@@ -122,7 +122,7 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
     id: "time",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[13px]">{format(item?.date, "HH:mm")}</p>;
+      return <p className="text-[13px]">{format(item?.date, "dd MMM HH:mm")}</p>;
     },
   },
   {

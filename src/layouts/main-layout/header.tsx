@@ -72,13 +72,14 @@ export default function Header() {
       <BellRing className="text-primary w-5 h-5" />
       <Grip className="text-primary w-5 h-5" />
 
-      <Avatar>
+    <div className="bg-background h-[50px] w-[50px] flex items-center justify-center ">
+    <Avatar className="w-[40px] h-[40px]" > 
         <AvatarImage src={minio_img_url + meUser?.avatar?.path || undefined} />
-        <AvatarFallback className="bg-primary text-white  flex items-center justify-center">
+        <AvatarFallback  className="bg-primary text-white    flex items-center justify-center">
           {meUser?.firstName?.[0]}
-          {meUser?.lastName?.[0]}
         </AvatarFallback>
       </Avatar>
+    </div>
       <Weather />
       <div className="flex gap-2 items-center-">
         <div>

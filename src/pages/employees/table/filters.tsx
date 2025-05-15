@@ -3,7 +3,7 @@ import SearchInput from "@/components/filters-ui/search-input";
 import { Button } from "@/components/ui/button";
 import useDataFetch from "@/pages/filial/table/queries";
 import { useMeStore } from "@/store/me-store";
-import {  Archive, FileOutput, Plus, Trash2 } from "lucide-react";
+import {  Archive, FileOutput, Plus, Store, Trash2 } from "lucide-react";
 import { useQueryState } from "nuqs";
 
 export default function Filters() {
@@ -20,12 +20,11 @@ export default function Filters() {
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   const { meUser } = useMeStore();
-  console.log(meUser)
   return (
     <div className="bg-sidebar border-border border-b  px-[51px] h-[64px]   flex   ">
       <SearchInput className="w-full border border-y-0 border-l-0 border-r mr-4"/>
      {meUser?.position.role == 11 ? <FilterSelect
-        icons={true}
+        icons={<Store />}
         className="w-full max-w-[170px]"
         placeholder="Филиалы"
         name="filial"

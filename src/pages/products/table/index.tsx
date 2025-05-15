@@ -7,6 +7,8 @@ import { useMeStore } from "@/store/me-store";
 import { ProductColumns } from "./columns";
 import Filters from "./filters";
 import useDataFetch from "./queries";
+// import CarpetCard from "@/components/cards/carpet-card";
+// import CarpetCard from "@/components/casrds/carpet-card";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -14,7 +16,7 @@ export default function Page() {
   const [filial] = useQueryState("filial");
   const [search] = useQueryState("search");
   const { meUser } = useMeStore();
-
+  // const [value] = useQueryState("card", parseAsString.withDefault("card"));
   // const [search] = useQueryState("search");
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
@@ -32,8 +34,8 @@ export default function Page() {
             ? meUser?.filial?.id
             : undefined,
       },
-      role:meUser?.position.role
-    },);
+      role: meUser?.position.role,
+    });
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
@@ -46,6 +48,7 @@ export default function Page() {
             <TabsFilter />
           </div>
         ))}
+      {/* {value == "list" ? ( */}
       <DataTable
         isLoading={isLoading}
         columns={ProductColumns}
@@ -54,6 +57,26 @@ export default function Page() {
         hasNextPage={hasNextPage ?? false}
         isFetchingNextPage={isFetchingNextPage}
       />
+      {/* ) : (
+        <div className="px-2.5  mt-4 gap-2 grid row-start grid-cols-7  pb-[17px]">
+          {flatData.map((item) => (
+            <CarpetCard
+              key={item.id}
+              id="1"
+              isBron={true}
+              carpetType="my-broned"
+              shape={item?.product?.bar_code?.shape?.title}
+              discount={"5"}
+              img={item.product.bar_code?.imgUrl.path}
+              model={item?.product?.bar_code?.model?.title}
+              size={`${item?.product?.bar_code.size.x * 100}X${item?.product?.y * 100}`}
+              count={item?.product?.book_count || "0"}
+              price={item?.product?.price}
+              color={item?.product?.bar_code?.color?.title}
+            />
+          ))}
+        </div>
+      )} */}
     </>
   );
 }

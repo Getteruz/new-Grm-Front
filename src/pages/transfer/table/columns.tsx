@@ -4,6 +4,9 @@ import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { TransferData } from "../type";
+import { Input } from "@/components/ui/input";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useQueryState } from "nuqs";
 
 export const paymentColumns: ColumnDef<TransferData>[] = [
   {
@@ -90,3 +93,77 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
     },
   },
 ];
+
+export const collactionColumns: ColumnDef<TransferData>[] = [
+  {
+    accessorKey: "id",
+    header: "№",
+    size: 50,
+    cell: ({ row }) => {
+      return <p>{row.index + 1}</p>;
+    },
+  },
+
+  {
+    header: "Коллекция",
+    cell: () => {
+      return <p>Doku</p>;
+    },
+  },
+  {
+    header: "Обём",
+    cell: () => {
+      return <p>230 м²</p>;
+    },
+  },
+  {
+    header: "Cумма",
+    cell: () => {
+      return <p>980 $</p>;
+    },
+  },
+  {
+    header: "Цена",
+    cell: () => {
+      const [type] = useQueryState(
+        "type" 
+      );
+      return  type == "New" ? <Input className="w-[60px] py-0" placeholder="0$"/> : <p className="w-[60px] py-2">980 $</p>;
+    },
+  },
+  {
+    header: "Кол-во",
+    cell: () => {
+      return <p>6 шт</p>;
+    },
+  },
+  {
+    header: "Статус",
+    cell: () => {
+      return <p>~</p>;
+    },
+  },
+
+  {
+    id: "actions",
+    enableHiding: true,
+    header: () => <div className="text-right">{"actions"}</div>,
+    size: 50,
+    cell: ({ row }) => {
+      return (
+        <TableAction
+          url={apiRoutes.transfers}
+          ShowDelete={false}
+          ShowUpdate={false}
+          id={row.original?.id}
+        > 
+        <DropdownMenuItem >
+          Отменить
+        </DropdownMenuItem>
+
+        </TableAction>
+      );
+    },
+  },
+];
+

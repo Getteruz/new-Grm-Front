@@ -191,9 +191,9 @@ export const ColumnsDManagerMonthly: ColumnDef<TData>[] = [
   {
     header: "Дата",
     accessorKey: "date",
-
+   
     cell: ({ row }) => {
-      return <p>{format(row.original.date, "MMMM")} </p>;
+      return <p className="min-w-[120px]">{format(row.original.date, "MMMM")} </p>;
     },
   },
   {
@@ -211,9 +211,9 @@ export const ColumnsDManagerMonthly: ColumnDef<TData>[] = [
     },
   },
   {
-    header: "Итого задолжность",
+    header: "Итого",
     cell: () => {
-      return <p>0 $ </p>;
+      return <p>0 $</p>;
     },
   },
 
@@ -243,14 +243,14 @@ export const ColumnsDManagerMonthly: ColumnDef<TData>[] = [
     accessorKey: "casher.title",
     cell: () => {
       return (
-        <div className="flex gap-1 justify-center">
-          <Avatar>
+        <div className="flex gap-1 justify-start">
+          <Avatar className="w-10 h-10">
             <AvatarImage src={undefined} />
-            <AvatarFallback>DD</AvatarFallback>
+            <AvatarFallback>D</AvatarFallback>
           </Avatar>
-          <Avatar>
+          <Avatar  className="w-10 h-10">
             <AvatarImage src={"/images/image.png"} />
-            <AvatarFallback>DD</AvatarFallback>
+            <AvatarFallback>D</AvatarFallback>
           </Avatar>
         </div>
       );
@@ -259,12 +259,12 @@ export const ColumnsDManagerMonthly: ColumnDef<TData>[] = [
   {
     header: "Статус",
     accessorKey: "date",
-
+    size: 40,
     cell: ({ row }) => {
       return (
-        <div className="flex">
+        <div className="flex ">
           <p
-            className={`${row.original.type === "Приход" ? "border-[#89A143] text-[#89A143]" : "border-[#E38157] text-[#E38157]"} min-w-[120px] rounded-4xl px-[14px]  w-[100px] text-center py-3 border `}
+            className={`${row.original.type === "Приход" ? "border-[#89A143] text-[#89A143]" : "border-[#E38157] text-[#E38157]"}  rounded-4xl px-[14px]   text-center py-3 border `}
           >
             {row.original.tip === "order" ? "В процессе" : "Принято"}
           </p>
@@ -286,7 +286,7 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
   {
     header: "Дата",
     accessorKey: "date",
-
+  
     cell: ({ row }) => {
       return (
         <div
@@ -373,7 +373,7 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
     accessorKey: "filial.title",
     cell: () => {
       return (
-        <p className="bg-[#58A0C6] rounded-[5px] text-[#F0F0E5] font-medium text-center px-1 py-[7px]">
+        <p className="bg-[#58A0C6] inline-block rounded-[5px] text-[#F0F0E5] font-medium text-center px-4  py-1">
           Asl Gilam
         </p>
       );
@@ -384,8 +384,8 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
     accessorKey: "casher.title",
     cell: () => {
       return (
-        <div className="flex gap-1 justify-center">
-          <Avatar>
+        <div className="flex gap-1 justify-start">
+          <Avatar className="w-12 h-12">
             <AvatarImage src={undefined} />
             <AvatarFallback>DD</AvatarFallback>
           </Avatar>
@@ -401,9 +401,9 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
       return (
         <div className="flex">
           <p
-            className={`${row.original.tip === "Приход" ? "border-[#E38157] text-[#E38157]" : "border-[#21212130] text-[#21212130]"} min-w-[140px] rounded-4xl px-[14px]  w-[100px] text-center py-3 border `}
+            className={`${row.original.tip === "Приход" ? "border-[#E38157] text-[#E38157]" : "border-border text-primary"} min-w-[120px] rounded-4xl px-[14px]  w-[100px] text-center py-2 border `}
           >
-            {row.original.tip === "order" ? "Не принято" : "Принято"}
+            {row.original.tip === "order" ? "Принято" : "Не принято"}
           </p>
         </div>
       );

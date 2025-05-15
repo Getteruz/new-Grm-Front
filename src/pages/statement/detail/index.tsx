@@ -3,14 +3,13 @@ import { parseAsInteger, useQueryState } from "nuqs";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-// import CardSort from "@/components/card-sort";
+import CardSort from "@/components/card-sort";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 
 import { useStatementsDataDetail } from "../table/queries";
 import AddEmployeeModal from "./AddEmployeeModal";
 import { StatementEmployeeColumns } from "./columns";
-import CardSort from "@/pages/cashier/report/card-sort";
 
 export default function DetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -47,7 +46,7 @@ export default function DetailPage() {
         </div>
       </div>
 
-      <CardSort />
+      <CardSort  KassaId=""/>
 
       {/* Employees Table */}
       <div className="m-4">

@@ -7,7 +7,7 @@
   height: 24px;
 }
 :root {
-  --background: hsl(60, 27%, 92%);
+  --background: rgb(240, 240, 229);
   --foreground: #5d5d53;
   --card: hsl(60, 21%, 88%);
   --card-foreground: rgb(38, 38, 38);
@@ -162,4 +162,13 @@ input[type="number"] {
 
 body {
   overflow: hidden;
+}
+
+.costomModal .ring-offset-background{
+  background: var(--background) !important;
+  opacity: 1;
+  margin-top: -48px;
+  padding: 6px; 
+  border-radius: 1000px;
+  transform: translate(50%, 0);
 }

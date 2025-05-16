@@ -1,28 +1,56 @@
-export type ProductsData = {
-  id: string;
-  code: string;
-  model: {
-    id: string;
-    title: string;
+export interface ProductsData {
+  id: number;
+  count: number;
+  price: number;
+  bar_code?: {
+    code: string;
+    imgUrl: string;
     collection: {
-      id: string;
+      title: string;
+    };
+    model: {
+      title: string;
+    };
+    size: {
+      x: number;
+      y: number;
+    };
+    shape: {
+      title: string;
+    };
+    style: {
+      title: string;
+    };
+    color: {
+      title: string;
+    };
+    country: {
+      title: string;
+    };
+    factory: {
+      title: string;
+    };
+    partiya_no: {
       title: string;
     };
   };
-  bar_code: { size: { x: number } };
-  y: number;
-  priceMeter: number;
-  size: string;
-  count: string;
-  shape: string;
-  style: string;
-  color: {
-    id: string;
+  // Collection fields
+  title?: string;
+  imgUrl?: string;
+  model?: {
     title: string;
-    code: string;
   };
-  price: string;
-};
+  size?: {
+    x: number;
+    y: number;
+  };
+  shape?: {
+    title: string;
+  };
+  color?: {
+    title: string;
+  };
+}
 
 export type ProductsQuery = {
   search?: string | undefined;

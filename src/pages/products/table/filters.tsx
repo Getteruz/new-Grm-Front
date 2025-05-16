@@ -21,7 +21,7 @@ export default function Filters() {
         defaultValue="collection"
         options={[
           { label: "Продукт", value: "product"},
-          { label: "Коллекция", value: "collection" }
+          { label: "Коллекция", value: "collections" }
         ]}
         name="collection" 
         />

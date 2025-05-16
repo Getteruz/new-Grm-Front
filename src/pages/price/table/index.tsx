@@ -20,6 +20,7 @@ export default function Page() {
         page,
         search: search || undefined,
       },
+      filialId: me.meUser?.filial?.id,
     });
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 

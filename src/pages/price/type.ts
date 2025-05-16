@@ -94,4 +94,5 @@ export interface ProductsQuery {
   search?: string;
   limit: number;
   page: number;
+  filialId?: string;
 }

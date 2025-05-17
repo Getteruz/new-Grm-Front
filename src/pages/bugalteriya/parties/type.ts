@@ -2,6 +2,7 @@ export type TData = {
   id: string;
   biology_name: string;
   name: string;
+  date: string;
   volume: string;
   expense: string;
   chats: [];

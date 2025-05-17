@@ -1,4 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 
 import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
@@ -15,14 +16,14 @@ export const Columns: ColumnDef<TData>[] = [
     },
   },
   {
-    id: "factory.title",
+    id: "factory",
     accessorKey: "factory.title",
     header: "Поставщик",
   },
 
   {
     accessorKey: "partiya_no.title",
-    id: "partiya_no.title",
+    id: "partiya_no",
     header: "Партия",
   },
   {
@@ -63,6 +64,9 @@ export const Columns: ColumnDef<TData>[] = [
     id: "date",
     accessorKey: "date",
     header: "Дата создание",
+    cell: ({ row }) => {
+      return format(row.original.date, "dd.MM.yyyy");
+    },
   },
   {
     id: "partiya_status.title",

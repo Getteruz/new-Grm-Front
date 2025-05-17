@@ -7,6 +7,7 @@ export const apiRoutes = {
   products: "/product",
   productsIManager: "/product/internet-shop",
   collection: "/collection/remaining-collections",
+  collectionProducts: "/collection/remaining-products",
   collectionPrice: "/collection-prices",
   collectionMultiple: "/collection-prices/multiple",
   productscheck: "/product/check-product",

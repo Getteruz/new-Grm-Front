@@ -52,9 +52,26 @@ export interface ProductsData {
   };
 }
 
+export interface CollectionData {
+  id: string;
+  title: string;
+  totalCount: number;
+  totalKv: string;
+  collectionPrices: Array<{
+    id: string;
+    date: string;
+    type: string;
+    priceMeter: number;
+    comingPrice: number;
+    secondPrice: number;
+    collectionId: string;
+  }>;
+}
+
 export type ProductsQuery = {
   search?: string | undefined;
   filialId?: string | undefined;
+  filial?: string | undefined;
   limit: number;
   page: number;
 };

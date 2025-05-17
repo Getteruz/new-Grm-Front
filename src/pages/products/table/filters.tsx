@@ -16,23 +16,28 @@ export default function Filters() {
         <BrCodeIcons />
       </Button>
       {/* <FilterSelect placeholder="Фильтр" name="news" /> */}
-      <FilterSelect placeholder="Продукт"
-      className="border-r-1 w-[150px]"
-        defaultValue="collection"
+      <FilterSelect 
+        placeholder="Продукт"
+        className="border-r-1 w-[150px]"
+        defaultValue="collections"
         options={[
           { label: "Продукт", value: "product"},
           { label: "Коллекция", value: "collections" }
         ]}
         name="collection" 
-        />
+      />
 
     
-      <FilterSelect placeholder="Лист" className="w-[150px]" name="card"
+      <FilterSelect 
+        placeholder="Лист" 
+        className="w-[150px]" 
+        name="card"
+        defaultValue="list"
         options={[
           { label: "Лист", value: "list"},
           { label: "Карточкы", value: "card" }
         ]}
-         />
+      />
       <Statistics />
       <Button
         className="h-full border-l-0 border-y-0 w-[140px]  ml-auto"

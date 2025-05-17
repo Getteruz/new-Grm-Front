@@ -25,7 +25,13 @@ const useOrder = ({ options, queries, id }: ICrops) =>
         page: pageParam as number,
       }),
     enabled: Boolean(id),
-    getNextPageParam: (lastPage) => lastPage?.meta?.currentPage + 1 || null,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+        return lastPage?.meta?.currentPage + 1;
+      } else {
+        return null;
+      }
+    },
     initialPageParam: 1,
   });
 

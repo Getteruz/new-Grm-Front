@@ -27,7 +27,10 @@ export const useCollectionDataFetch = ({ filialId }: { filialId?: string }) =>
           limit: 10,
         }
       ),
-    getNextPageParam: () => undefined,
+    getNextPageParam: (_lastPage, allPages) => {
+      if (!_lastPage) return null;
+      return _lastPage.length === 10 ? allPages.length + 1 : null;
+    },
     initialPageParam: 1,
   });
 

@@ -57,7 +57,7 @@ export default function Page() {
   });
 
   const productsFlat = productsData?.pages?.flatMap((page) => page?.items || []) || [];
-  const collections = collectionsData?.pages?.[0] || [];
+  const collections = collectionsData?.pages?.flatMap((page) => page || []) || [];
 
   console.log('Raw collections:', collections);
 

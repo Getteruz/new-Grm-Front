@@ -55,9 +55,10 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
     header: "Кас-цена",
     accessorKey: "price",
     cell: ({ row }) => {
+      const price = row.original.collectionPrices?.[0]?.priceMeter;
       return (
         <p className="text-[14px] font-[500] text-[#E38157]">
-          {row.original.collectionPrices[0].priceMeter}$
+          {price ? `${price}$` : '-'}
         </p>
       );
     },

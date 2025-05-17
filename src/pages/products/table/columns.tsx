@@ -1,11 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
 import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
 
-import { ProductsData } from "../type";
+import { ProductsData, CollectionData } from "../type";
 
-export const CollectionColumns: ColumnDef<ProductsData>[] = [
+export const CollectionColumns: ColumnDef<CollectionData>[] = [
   {
     accessorKey: "id",
     header: "№",
@@ -15,19 +14,13 @@ export const CollectionColumns: ColumnDef<ProductsData>[] = [
     },
   },
   {
-    id: "bar_code.model.title",
-    accessorKey: "bar_code.model.title",
-    header: "Model",
+    accessorKey: "title",
+    header: "Collection",
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-2">
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Select row"
-          />
           <p className="text-[14px] font-[500]">
-            {row.original?.bar_code?.model?.title || ""}
+            {row.original.title}
           </p>
         </div>
       );
@@ -42,28 +35,35 @@ export const CollectionColumns: ColumnDef<ProductsData>[] = [
   },
   {
     header: "Объём",
+    accessorKey: "totalKv",
     cell: ({ row }) => {
       return (
         <p className="text-[14px] font-[500]">
-          {`${((row.original?.bar_code?.size?.x || 0) * (row.original?.bar_code?.size?.y || 0)).toFixed(1)}`} м²
+          {row.original.totalKv} м²
         </p>
       );
     },
   },
   {
     header: "Кол-во ковров",
+    accessorKey: "totalCount",
     cell: ({ row }) => {
-      return <p className="text-[14px] font-[500]">{row.original.count} шт</p>;
+      return <p className="text-[14px] font-[500]">{row.original.totalCount} шт</p>;
     },
   },
   {
     header: "Кас-цена",
+    accessorKey: "price",
     cell: ({ row }) => {
-      return <p className="text-[14px] font-[500] text-[#E38157]">{row.original.price} $</p>;
+      return (
+        <p className="text-[14px] font-[500] text-[#E38157]">
+          {row.original.collectionPrices[0].priceMeter}$
+        </p>
+      );
     },
   },
   {
-    id: "actions",
+    id: "actions",  
     enableHiding: true,
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
@@ -74,7 +74,7 @@ export const CollectionColumns: ColumnDef<ProductsData>[] = [
           ShowUpdate={false}
           ShowDelete={false}
           ShowPreview
-          id={row.original?.id?.toString()}
+          id={row.original.id}
         />
       );
     },
@@ -116,9 +116,13 @@ export const ProductColumns: ColumnDef<ProductsData>[] = [
   {
     header: "Обьём",
     cell: ({ row }) => {
+      const volume = (row.original?.bar_code?.size?.x || 0) * (row.original?.bar_code?.size?.y || 0);
+      const count = row.original?.count || 0;
+      const totalVolume = volume * count;
+      
       return (
-        <p>
-          {`${((row.original?.bar_code?.size?.x || 0) * (row.original?.bar_code?.size?.y || 0)).toFixed(1)}`} м²
+        <p className="text-[14px] font-[500]">
+          {`${totalVolume.toFixed(1)}`} м²
         </p>
       );
     },

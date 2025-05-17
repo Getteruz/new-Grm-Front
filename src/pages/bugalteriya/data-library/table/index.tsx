@@ -25,7 +25,8 @@ export default function Page() {
   return (
     <div className="flex w-full">
       {
-        id ? <ActionPageQrCode/>:<ActionPage/>
+        id ? <ActionPageQrCode/>:
+        <ActionPage/>
       }
       <div className="w-2/3">
         <Filter/>

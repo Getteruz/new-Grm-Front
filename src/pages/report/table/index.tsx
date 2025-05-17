@@ -6,7 +6,8 @@ import { useMeStore } from "@/store/me-store";
 import { Columns, ColumnsDManager, ColumnsFManager } from "./columns";
 import Filter from "./filter";
 import useDataLibrary from "./queries";
-import CardSort from "./card-sort";
+import CardSort from "@/components/card-sort";
+import CardSortSingle from "./card-sort";
 
 export default function Page() {
   const { meUser } = useMeStore();
@@ -26,7 +27,10 @@ export default function Page() {
     <>
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
-      <CardSort />
+      {
+        meUser?.position?.role === 6?<CardSortSingle />:<CardSort KassaId="" />
+      }
+    
 
       <DataTable
         isLoading={isLoading}

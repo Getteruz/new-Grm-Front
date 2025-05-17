@@ -300,7 +300,12 @@ export default function CardSort({KassaId}:{KassaId:string}) {
           </div>
         </div>
 
-        <DialogContent className="sm:max-w-[640px] p-1">
+        <DialogContent className="sm:max-w-[640px] costomModal p-1">
+        <div
+          className={`p-3 h-[44px] font-bold pb-0 text-center mx-auto rounded-t-[7px] w-1/2 -mt-[48px]  ${type === "Приход" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}
+        >
+          {type === "Приход" ? "Добавление прихода" : "Добавление расхода"}
+         </div>
           <div className="grid grid-cols-2 gap-1">
             <div className="w-full  grid grid-cols-3 gap-0.5">
               {types?.items

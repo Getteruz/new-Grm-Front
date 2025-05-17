@@ -35,6 +35,7 @@ const ActionPageQrCode = () => {
         value: undefined,
         label: "",
       },
+      
       color: {
         value: undefined,
         label: "",
@@ -109,6 +110,8 @@ const ActionPageQrCode = () => {
     },
   });
 
+  console.log(data)
+
   useEffect(() => {
     if (data) {
       form.reset({
@@ -116,6 +119,10 @@ const ActionPageQrCode = () => {
         country: {
           value: data?.country?.id,
           label: data?.country?.title,
+        },
+        factory:{
+          value: data?.factory?.id,
+          label: data?.factory?.title,
         },
         collection: {
           value: data?.collection?.id,
@@ -145,10 +152,7 @@ const ActionPageQrCode = () => {
           value: data?.model?.id,
           label: data?.model?.title,
         },
-        factory: {
-          value: data?.factory?.id,
-          label: data?.factory?.title,
-        },
+       
       });
     }
   }, [data]);

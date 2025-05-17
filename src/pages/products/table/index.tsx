@@ -9,7 +9,6 @@ import { ProductColumns, CollectionColumns } from "./columns";
 import Filters from "./filters";
 import useDataFetch, { useCollectionDataFetch } from "./queries";
 import CarpetCard from "@/components/cards/carpet-card";
-
 export default function Page() {
   const location = useLocation();
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));

@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { parseISO } from "date-fns";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 import { useCropById, useCropMutation } from "./actions";
@@ -13,7 +13,7 @@ const ActionPage = () => {
   const form = useForm<CropFormType>({
     resolver: zodResolver(CropSchema),
   });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { id } = useParams();
   const { data } = useCropById({
     id: id != "new" ? id : undefined,
@@ -28,10 +28,9 @@ const ActionPage = () => {
       } else {
         toast.success("updatedSuccessfully");
       }
-      navigate("/crops");
+      // navigate("/crops");
     },
   });
-  
 
   useEffect(() => {
     if (data) {

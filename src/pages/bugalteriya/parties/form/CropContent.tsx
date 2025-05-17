@@ -1,4 +1,5 @@
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { useQueryClient } from "@tanstack/react-query";
 import { useQueryState } from "nuqs";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 
@@ -18,6 +19,7 @@ import api from "@/service/fetchInstance";
 export default function FormContent() {
   const [id, setId] = useQueryState("id");
   const form = useForm();
+  const queryClient = useQueryClient();
 
   const country = useWatch({
     control: form.control,
@@ -65,6 +67,8 @@ export default function FormContent() {
       volume,
     };
     await api.post(apiRoutes.parties, data);
+    await queryClient.invalidateQueries({ queryKey: ["clients"] });
+    setId(null);
   };
 
   return (

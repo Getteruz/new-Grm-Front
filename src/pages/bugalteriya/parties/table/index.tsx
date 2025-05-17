@@ -31,6 +31,7 @@ export default function Page() {
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}
+        isRowClickble
         isFetchingNextPage={isFetchingNextPage}
       />
 

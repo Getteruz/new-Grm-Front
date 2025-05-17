@@ -267,7 +267,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
               </div>
             </div>
             <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
-              Выбранные кол-во кассы:
+              Дата:
             </p>
             <p className="text-[14px] font-semibold">1 шт</p>
           </div>

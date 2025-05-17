@@ -9,7 +9,6 @@ import { ProductColumns, CollectionColumns } from "./columns";
 import Filters from "./filters";
 import useDataFetch, { useCollectionDataFetch } from "./queries";
 import CarpetCard from "@/components/cards/carpet-card";
-import { useMemo } from "react";
 
 export default function Page() {
   const location = useLocation();

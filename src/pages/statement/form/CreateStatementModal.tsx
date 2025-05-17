@@ -2,8 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
+import { useState } from "react";
 
-import FormDatePicker from "@/components/forms/FormDateRangePicker";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -26,7 +26,6 @@ interface CreateStatementModalProps {
 
 const formSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
-  to_date: z.date(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -35,6 +34,8 @@ export default function CreateStatementModal({
   isOpen,
   onClose,
 }: CreateStatementModalProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,19 +46,27 @@ export default function CreateStatementModal({
 
   const queryClient = useQueryClient();
   const { t } = useTranslation();
-  const onSubmit = (data: FormValues) => {
-    const body = {
-      ...data,
-    };
-    api.post(apiRoutes.payrolls, body).then(() => {
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      setIsLoading(true);
+      const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+
+      const body = {
+        title: data.title,
+        to_date: today,
+      };
+
+      await api.post(apiRoutes.payrolls, body);
       setId(null);
       queryClient.invalidateQueries({ queryKey: [apiRoutes.payrolls] });
-      if (id == "new") {
-        toast.success(t("savedSuccessfully"));
-      } else {
-        toast.success(t("updatedSuccessfully"));
-      }
-    });
+      toast.success(id === "new" ? t("savedSuccessfully") : t("updatedSuccessfully"));
+      onClose();
+    } catch (error) {
+      toast.error("Ошибка при сохранении");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -88,8 +97,8 @@ export default function CreateStatementModal({
                     <Input
                       readOnly
                       id="number"
+                      placeholder='№ ---'
                       className="mt-1 w-[100px]"
-                      placeholder="№ ---"
                     />
                   </div>
 
@@ -108,15 +117,6 @@ export default function CreateStatementModal({
                     />
                   </div>
                 </div>
-
-                <div className="w-[200px]">
-                  <FormDatePicker
-                    label="Дата приёма"
-                    className="w-full"
-                    name="to_date"
-                    placeholder="Дата приёма"
-                  />
-                </div>
               </div>
             </div>
 
@@ -124,12 +124,14 @@ export default function CreateStatementModal({
             <div className="flex justify-start border-t p-3 bg-[#E6E6D9]">
               <Button
                 type="submit"
+                disabled={isLoading}
                 className="rounded-none w-[220px] mx-3 h-[44px] bg-[#5D5D53]"
               >
-                Сохранить
+                {isLoading ? "Сохранение..." : "Сохранить"}
               </Button>
               <Button
                 type="button"
+                disabled={isLoading}
                 className="rounded-none w-[220px] h-[44px] bg-[#F0F0E5] border"
                 variant="outline"
                 onClick={onClose}

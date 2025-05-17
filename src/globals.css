@@ -172,3 +172,15 @@ body {
   border-radius: 1000px;
   transform: translate(50%, 0);
 }
+@media print {
+  .print-barcode-wrapper div svg {
+    width: 600px !important;  /* or whatever size you want */
+    height: auto !important;
+  }
+  .print-barcode-wrapper div h4 {
+    font-size: 34px!important;
+  }
+  .print-barcode-wrapper div div p {
+    font-size: 24px!important;
+  }
+}

@@ -42,7 +42,7 @@ export default function BarcodeQenerat() {
           QR-код
         </Button>
       </div>
-      <div ref={printRef} className="p-[30px]">
+      <div ref={printRef} className="p-[30px] print-barcode-wrapper">
         <div className="bg-white rounded-1 px-11 py-[24px] text-center">
           <h4 className="font-bold text-[24px] ">
             {WatchValue?.collection?.label}

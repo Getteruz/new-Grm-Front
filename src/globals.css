@@ -173,14 +173,43 @@ body {
   transform: translate(50%, 0);
 }
 @media print {
-  .print-barcode-wrapper div svg {
-    width: 600px !important;  /* or whatever size you want */
-    height: auto !important;
+  body {
+    margin: 0;
+    padding: 0;
   }
-  .print-barcode-wrapper div h4 {
-    font-size: 34px!important;
+
+  .barcode-label {
+    width: 56mm;
+    height: 36mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    page-break-after: avoid;
+    page-break-inside: avoid;
   }
-  .print-barcode-wrapper div div p {
-    font-size: 24px!important;
+
+  .barcode-label * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .barcode-label svg {
+    width: 100%;
+    height: auto;
+    max-height: 20mm;
+  }
+  .barcode-label div h4 {
+    font-size: 12px;
+    color: black;
+  }
+  .barcode-label div div p {
+    font-size: 8px;
+    color: black;
+  }
+
+  /* Hide everything else during print */
+  body *:not(.barcode-label):not(.barcode-label *) {
+    display: none !important;
   }
 }

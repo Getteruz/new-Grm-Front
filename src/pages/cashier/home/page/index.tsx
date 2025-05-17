@@ -10,11 +10,13 @@ import Content from "./content";
 import useOrder from "./queries";
 
 export default function Page() {
+
   const { meUser } = useMeStore();
   const [sort] = useQueryState("sort");
   const [sellerId] = useQueryState("sellerId");
   const [startDate] = useQueryState("startDate");
   const [endDate] = useQueryState("endDate");
+
   const { data: kassa } = useQuery({
     queryKey: [apiRoutes.filial],
     queryFn: () =>
@@ -24,6 +26,7 @@ export default function Page() {
       ),
     enabled: !!meUser?.filial?.id,
   });
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useOrder({
     id: kassa?.id ? kassa?.id : undefined,
     queries: {
@@ -35,11 +38,17 @@ export default function Page() {
     },
   });
 
+
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
     <>
-      <Content fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} isFetchingNextPage={isFetchingNextPage} orderList={flatData} />
+      <Content
+       fetchNextPage={fetchNextPage}
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+       orderList={flatData} 
+       />
     </>
   );
 }

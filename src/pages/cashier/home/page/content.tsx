@@ -11,7 +11,8 @@ import { LoaderIcon } from "lucide-react";
 
 export default function Content({ orderList, isFetchingNextPage = false,
   hasNextPage = false,
-  fetchNextPage, }: {
+  fetchNextPage,
+ }: {
      orderList: IData[],
     hasNextPage?: boolean;
     isFetchingNextPage?: boolean;
@@ -42,6 +43,7 @@ export default function Content({ orderList, isFetchingNextPage = false,
       }
     };
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
   return (
     <div className="flex ">
       <div className="w-full">

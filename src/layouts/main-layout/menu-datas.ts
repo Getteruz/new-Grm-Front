@@ -125,7 +125,7 @@ export const DataMenu = {
       link: "/products",
       text: "Продукты",
     },
- 
+
     {
       id: 5,
       icons: () => BrCodeIcons({ width: 28, height: 28 }),
@@ -339,25 +339,8 @@ export const DataMenu = {
     {
       id: 1,
       icons: () => ReportBottom({}),
-      link: "/report",
-      text: "Отчеты",
-      items: [
-        {
-          id: 22,
-          link: "/report",
-          text: "Кассовый учёт",
-        },
-        {
-          id: 23,
-          link: "/report-item-2",
-          text: "Финансовый учёт",
-        },
-        {
-          id: 24,
-          link: "/report-item-3",
-          text: "Снабжение и документооборот",
-        },
-      ],
+      link: "/warehouse-report",
+      text: "Отчет об остатке",
     },
     {
       id: 2,

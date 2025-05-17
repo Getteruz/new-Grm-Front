@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import CarpetCashierCard from "@/components/cards/carpet-cashier-card";
 import { minio_img_url } from "@/constants";
@@ -7,10 +7,41 @@ import { minio_img_url } from "@/constants";
 import { IData } from "../type";
 import Filters from "./filter";
 import Pricecheck from "./price-check";
+import { LoaderIcon } from "lucide-react";
 
-export default function Content({ orderList }: { orderList: IData[] }) {
+export default function Content({ orderList, isFetchingNextPage = false,
+  hasNextPage = false,
+  fetchNextPage, }: {
+     orderList: IData[],
+    hasNextPage?: boolean;
+    isFetchingNextPage?: boolean;
+  fetchNextPage?: () => void;
+   }) {
   const [selected, setSelected] = useState<IData[]>([]);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!fetchNextPage) return;
 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentLoadMoreRef = loadMoreRef.current;
+    if (currentLoadMoreRef) {
+      observer.observe(currentLoadMoreRef);
+    }
+
+    return () => {
+      if (currentLoadMoreRef) {
+        observer.unobserve(currentLoadMoreRef);
+      }
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
   return (
     <div className="flex ">
       <div className="w-full">
@@ -71,6 +102,20 @@ export default function Content({ orderList }: { orderList: IData[] }) {
                 />
               );
             })}
+        {fetchNextPage && (
+            <div
+              ref={loadMoreRef}
+              className="flex justify-center items-center "
+            >
+              {isFetchingNextPage ? (
+                <LoaderIcon/>
+              ) : hasNextPage ? (
+                <div className="h-8" />
+              ) : (
+                  <div className="text-sm text-muted-foreground"></div>
+              )}
+            </div>
+          )}
         </div>
       </div>
       <Pricecheck selected={selected} />

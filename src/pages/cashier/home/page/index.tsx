@@ -24,12 +24,12 @@ export default function Page() {
       ),
     enabled: !!meUser?.filial?.id,
   });
-  const { data } = useOrder({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useOrder({
     id: kassa?.id ? kassa?.id : undefined,
     queries: {
       status: sort === "all" ? undefined : sort || undefined,
       sellerId: sellerId === "all" ? undefined : sellerId || undefined,
-      limit: 1000,
+      limit: 10,
       startDate: startDate || undefined,
       endDate: endDate || undefined,
     },
@@ -39,7 +39,7 @@ export default function Page() {
 
   return (
     <>
-      <Content orderList={flatData} />
+      <Content fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} isFetchingNextPage={isFetchingNextPage} orderList={flatData} />
     </>
   );
 }

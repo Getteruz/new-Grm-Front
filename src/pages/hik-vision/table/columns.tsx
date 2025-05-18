@@ -72,7 +72,7 @@ export const FilialColumns: ColumnDef<TData>[] = [
           {/* <p className="text-[#E38157]">{row?.original?.user?.from} </p>
           <p>до</p> */}
           <p className="text-[#89A143]">
-            {format(row?.original?.leave, "HH:mm")}
+            {row?.original?.leave ? format(row?.original?.leave, "HH:mm") : "~"}
           </p>
         </div>
       );
@@ -88,7 +88,17 @@ export const FilialColumns: ColumnDef<TData>[] = [
   {
     header: "Зарплата",
     cell: ({ row }) => {
-      return <p>{row?.original?.user?.salary} сум </p>;
+      const currency = Number(localStorage.getItem("currencyNow"));
+
+      return (
+        <p>
+          {(
+            (row?.original?.totalTime * row?.original?.user?.salary) /
+            currency
+          ).toFixed(2)}
+          ${" "}
+        </p>
+      );
     },
   },
 

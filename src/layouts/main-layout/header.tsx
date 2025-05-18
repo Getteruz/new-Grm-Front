@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { BellRing, Grip } from "lucide-react";
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -37,6 +37,14 @@ export default function Header() {
     queryKey: ["currency", token, meUser],
     queryFn: () => getAllData<CurrencyData, unknown>("currency"),
   });
+  useEffect(() => {
+    localStorage.setItem(
+      "currencyNow",
+      JSON.stringify(
+        currency?.items?.[0].uzs || 0 / (currency?.items?.[0].uzs || 1)
+      )
+    );
+  }, [currency]);
 
   const oneMenu = DataMenu?.[
     meUser?.position?.role as keyof typeof DataMenu
@@ -72,14 +80,16 @@ export default function Header() {
       <BellRing className="text-primary w-5 h-5" />
       <Grip className="text-primary w-5 h-5" />
 
-    <div className="bg-background h-[50px] w-[50px] flex items-center justify-center ">
-    <Avatar className="w-[40px] h-[40px]" > 
-        <AvatarImage src={minio_img_url + meUser?.avatar?.path || undefined} />
-        <AvatarFallback  className="bg-primary text-white    flex items-center justify-center">
-          {meUser?.firstName?.[0]}
-        </AvatarFallback>
-      </Avatar>
-    </div>
+      <div className="bg-background h-[50px] w-[50px] flex items-center justify-center ">
+        <Avatar className="w-[40px] h-[40px]">
+          <AvatarImage
+            src={minio_img_url + meUser?.avatar?.path || undefined}
+          />
+          <AvatarFallback className="bg-primary text-white    flex items-center justify-center">
+            {meUser?.firstName?.[0]}
+          </AvatarFallback>
+        </Avatar>
+      </div>
       <Weather />
       <div className="flex gap-2 items-center-">
         <div>

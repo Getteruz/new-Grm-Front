@@ -1,37 +1,25 @@
-import {
-  DefinedInitialDataInfiniteOptions,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";
 
+import { BronedQuery } from "@/pages/broned/type";
 import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
-import { TResponse } from "@/types";
+import { TResponseUserLog } from "@/types";
 
-import { TData, TQuery } from "../type";
+import { TData } from "../type";
 
-interface ITransfers {
-  options?: DefinedInitialDataInfiniteOptions<TResponse<TData>>;
-  queries?: TQuery;
+interface IBroned {
+  options?: DefinedInitialDataOptions<TResponseUserLog<TData>>;
+  queries?: BronedQuery;
 }
-
-const useData = ({ options, queries }: ITransfers) =>
-  useInfiniteQuery({
+const useLogTime = ({ options, queries }: IBroned) =>
+  useQuery({
     ...options,
-    queryKey: [apiRoutes.user, queries],
-    queryFn: ({ pageParam = 1 }) =>
-      getAllData<TResponse<TData>, TQuery>(apiRoutes.user, {
-        ...queries,
-        page: pageParam as number,
-        limit: 10,
-      }),
-    getNextPageParam: (lastPage) => {
-      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
-        return lastPage?.meta?.currentPage + 1;
-      } else {
-        return null;
-      }
-    },
-    initialPageParam: 1,
+    queryKey: [apiRoutes.userLog, queries],
+    queryFn: () =>
+      getAllData<TResponseUserLog<TData>, BronedQuery>(
+        apiRoutes.userLog,
+        queries
+      ),
   });
 
-export default useData;
+export default useLogTime;

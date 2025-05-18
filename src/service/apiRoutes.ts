@@ -2,6 +2,7 @@ export const apiRoutes = {
   aboutUs: "/aboutus",
   report: "/report",
   user: "/user",
+  userLog: "/user-time-log",
   userLoginGenerate: "/user/generate/login-user",
   crops: "/crops",
   products: "/product",
@@ -38,6 +39,6 @@ export const apiRoutes = {
   qrCodes: "/qr-codes",
   kassaReport: "/kassa/report",
   kassa: "/kassa",
-  kassaClose:"/kassa/close-kassa",
+  kassaClose: "/kassa/close-kassa",
   statement: "/statement",
 } as const;

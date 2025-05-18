@@ -11,6 +11,7 @@ export type TResponse<T> = {
     total: number;
   };
 };
+export type TResponseUserLog<T> = T[];
 
 export type IUserData = {
   id: string;

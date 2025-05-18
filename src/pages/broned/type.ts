@@ -57,7 +57,8 @@ export type BronedData = {
 };
 
 export type BronedQuery = {
-  search: string | undefined;
-  limit: number;
-  page: number;
+  search?: string | undefined;
+  limit?: number;
+  page?: number;
+  filial?: string;
 };

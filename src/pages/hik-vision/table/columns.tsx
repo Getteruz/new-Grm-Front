@@ -53,12 +53,16 @@ export const FilialColumns: ColumnDef<TData>[] = [
   {
     header: "Приход",
     cell: ({ row }) => {
+      const timeEnter = format(row?.original?.enter, "HH:mm");
+
+      const expected = new Date(`1970-01-01T${row.original?.user?.from}`);
+      const arrival = new Date(`1970-01-01T${timeEnter}:00`);
+      const isExpected = arrival < expected;
+
       return (
         <div className="flex items-center gap-1">
-          {/* <p className="text-[#E38157]">{row?.original?.user?.from} </p>
-          <p>до</p> */}
-          <p className="text-[#89A143]">
-            {format(row?.original?.enter, "HH:mm")}
+          <p className={`${isExpected ? "text-[#89A143]" : "text-[#E38157]"} `}>
+            {timeEnter}
           </p>
         </div>
       );
@@ -66,13 +70,17 @@ export const FilialColumns: ColumnDef<TData>[] = [
   },
   {
     header: "Уход",
+
     cell: ({ row }) => {
+      const timeEnter = format(row?.original?.leave, "HH:mm");
+
+      const expected = new Date(`1970-01-01T${row.original?.user?.to}`);
+      const arrival = new Date(`1970-01-01T${timeEnter}:00`);
+      const isExpected = arrival >= expected;
       return (
         <div className="flex items-center gap-1">
-          {/* <p className="text-[#E38157]">{row?.original?.user?.from} </p>
-          <p>до</p> */}
-          <p className="text-[#89A143]">
-            {row?.original?.leave ? format(row?.original?.leave, "HH:mm") : "~"}
+          <p className={`${isExpected ? "text-[#89A143]" : "text-[#E38157]"} `}>
+            {row?.original?.leave ? timeEnter : "~"}
           </p>
         </div>
       );
@@ -90,8 +98,8 @@ export const FilialColumns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       const currency = Number(localStorage.getItem("currencyNow"));
       const dailyHours =
-        Number(row.original.user.to.slice(0, 2)) -
-        Number(row.original.user.from.slice(0, 2));
+        Number(row.original?.user?.to?.slice(0, 2)) -
+        Number(row.original.user?.from.slice(0, 2));
 
       return (
         <p>

@@ -89,14 +89,18 @@ export const FilialColumns: ColumnDef<TData>[] = [
     header: "Зарплата",
     cell: ({ row }) => {
       const currency = Number(localStorage.getItem("currencyNow"));
+      const dailyHours =
+        Number(row.original.user.to.slice(0, 2)) -
+        Number(row.original.user.from.slice(0, 2));
 
       return (
         <p>
           {(
-            (row?.original?.totalTime * row?.original?.user?.salary) /
+            (row?.original?.totalTime *
+              (row?.original?.user?.salary / 26 / dailyHours)) /
             currency
-          ).toFixed(2)}
-          ${" "}
+          ).toFixed(2)}{" "}
+          $
         </p>
       );
     },

@@ -41,7 +41,7 @@ export default function Header() {
     localStorage.setItem(
       "currencyNow",
       JSON.stringify(
-        currency?.items?.[0].uzs || 0 / (currency?.items?.[0].uzs || 1)
+        (currency?.items?.[0].uzs || 0) / (currency?.items?.[0].usd || 1)
       )
     );
   }, [currency]);

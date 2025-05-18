@@ -58,7 +58,7 @@ export const FilialColumns: ColumnDef<TData>[] = [
           {/* <p className="text-[#E38157]">{row?.original?.user?.from} </p>
           <p>до</p> */}
           <p className="text-[#89A143]">
-            {format(row?.original?.enter, "hh:mm")}
+            {format(row?.original?.enter, "HH:mm")}
           </p>
         </div>
       );
@@ -72,7 +72,7 @@ export const FilialColumns: ColumnDef<TData>[] = [
           {/* <p className="text-[#E38157]">{row?.original?.user?.from} </p>
           <p>до</p> */}
           <p className="text-[#89A143]">
-            {format(row?.original?.leave, "hh:mm")}
+            {format(row?.original?.leave, "HH:mm")}
           </p>
         </div>
       );

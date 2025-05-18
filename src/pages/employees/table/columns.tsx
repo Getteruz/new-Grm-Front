@@ -3,11 +3,19 @@ import { format } from "date-fns";
 
 import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
-
-import { TData } from "../type";
 import { useMeStore } from "@/store/me-store";
 
+import { TData } from "../type";
+
 export const FilialColumns: ColumnDef<TData>[] = [
+  {
+    id: "id",
+    accessorKey: "id",
+    header: "№",
+    cell: ({ row }) => {
+      return <>{row.index + 1}</>;
+    },
+  },
   {
     header: "Фамилия имя",
     cell: ({ row }) => {
@@ -76,7 +84,11 @@ export const FilialColumns: ColumnDef<TData>[] = [
     size: 50,
     cell: ({ row }) => {
       const { meUser } = useMeStore();
-      return  meUser?.position.role == 11 && <TableAction url={apiRoutes.user} id={row.original?.id} />;
+      return (
+        meUser?.position.role == 11 && (
+          <TableAction url={apiRoutes.user} id={row.original?.id} />
+        )
+      );
     },
   },
 ];

@@ -2,7 +2,6 @@ import { useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
 
-import ActionPage from "../form";
 import { FilialColumns } from "./columns";
 import Filters from "./filters";
 import useLogTime from "./queries";
@@ -25,7 +24,6 @@ export default function Page() {
         columns={FilialColumns}
         data={data ?? []}
       />
-      <ActionPage />
     </>
   );
 }

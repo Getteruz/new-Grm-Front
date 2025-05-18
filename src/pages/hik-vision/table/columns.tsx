@@ -1,4 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 
 import TableAction from "@/components/table-action";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -50,17 +51,40 @@ export const FilialColumns: ColumnDef<TData>[] = [
     },
   },
   {
-    header: "Рабочая время",
+    header: "Приход",
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-1">
-          <p className="text-[#E38157]">{row?.original?.user?.from} </p>
-          <p>до</p>
-          <p className="text-[#89A143]">{row?.original?.user?.to} </p>
+          {/* <p className="text-[#E38157]">{row?.original?.user?.from} </p>
+          <p>до</p> */}
+          <p className="text-[#89A143]">
+            {format(row?.original?.enter, "hh:mm")}
+          </p>
         </div>
       );
     },
   },
+  {
+    header: "Уход",
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center gap-1">
+          {/* <p className="text-[#E38157]">{row?.original?.user?.from} </p>
+          <p>до</p> */}
+          <p className="text-[#89A143]">
+            {format(row?.original?.leave, "hh:mm")}
+          </p>
+        </div>
+      );
+    },
+  },
+  {
+    header: "Часы на работе",
+    cell: ({ row }) => {
+      return <p>{row?.original?.totalTime} ч </p>;
+    },
+  },
+
   {
     header: "Зарплата",
     cell: ({ row }) => {

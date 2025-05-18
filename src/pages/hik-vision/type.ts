@@ -1,5 +1,8 @@
 export type TData = {
   id: string;
+  enter: string;
+  leave: string;
+  totalTime: number;
   user: {
     id: string;
     isActive: boolean;

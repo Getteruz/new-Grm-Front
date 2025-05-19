@@ -51,6 +51,14 @@ export const FilialColumns: ColumnDef<TData>[] = [
     },
   },
   {
+    header: "Дата",
+    cell: ({ row }) => {
+      const timeEnter = format(row?.original?.enter, "dd-MMMM");
+
+      return <p className="">{timeEnter}</p>;
+    },
+  },
+  {
     header: "Приход",
     cell: ({ row }) => {
       const timeEnter = format(row?.original?.enter, "HH:mm");

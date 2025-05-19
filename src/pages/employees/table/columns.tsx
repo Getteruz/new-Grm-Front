@@ -2,6 +2,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 
 import TableAction from "@/components/table-action";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { minio_img_url } from "@/constants";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useMeStore } from "@/store/me-store";
 
@@ -14,6 +16,20 @@ export const FilialColumns: ColumnDef<TData>[] = [
     header: "№",
     cell: ({ row }) => {
       return <>{row.index + 1}</>;
+    },
+  },
+  {
+    header: "Фото",
+    cell: ({ row }) => {
+      return (
+        <Avatar className="w-[40px] h-[40px]">
+          <AvatarImage src={minio_img_url + row.original?.avatar?.path} />
+          <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
+            {row.original?.firstName?.[0]}
+            {row.original?.lastName?.[0]}
+          </AvatarFallback>
+        </Avatar>
+      );
     },
   },
   {

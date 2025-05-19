@@ -53,6 +53,7 @@ export type StatementQuery = {
   endDate?: string;
   status?: string;
   search?: string;
-  limit: number;
-  page: number;
+  userId?: string;
+  page?: number;
+  limit?: number;
 };

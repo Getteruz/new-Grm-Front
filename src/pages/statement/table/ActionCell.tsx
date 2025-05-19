@@ -39,18 +39,29 @@ export const ActionCell = ({ row }: { row: Row<Statement> }) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={() => navigate(`/statement/${row.original.id}`)}>
-            Подробности
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setEditId(String(row.original.id))}>
-            Редактировать
-          </DropdownMenuItem>
-          <DropdownMenuItem 
-            className="text-red-600"
-            onClick={() => setDeleteId(String(row.original.id))}
-          >
-            Удалить
-          </DropdownMenuItem>
+        <DropdownMenuItem onClick={(e) => {
+          e.stopPropagation();
+          navigate(`/statement/${row.original.id}`);
+        }}>
+          Подробности
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onClick={(e) => {
+          e.stopPropagation();
+          setEditId(String(row.original.id));
+        }}>
+          Редактировать
+        </DropdownMenuItem>
+
+        <DropdownMenuItem
+          className="text-red-600"
+          onClick={(e) => {
+            e.stopPropagation();
+            setDeleteId(String(row.original.id));
+          }}
+        >
+          Удалить
+        </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 

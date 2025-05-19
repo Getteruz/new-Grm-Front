@@ -42,6 +42,7 @@ export default function Page() {
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}
         isFetchingNextPage={isFetchingNextPage}
+        isRowClickble
       />
 
       <CreateStatementModal isOpen={id === "new"} onClose={() => setId(null)} />

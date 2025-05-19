@@ -1,21 +1,35 @@
 // detail/queries.ts
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { mockEmployeesList, mockFilials } from "../mock-data";
+import { StatementEmployee } from "../type";
 
-import { getMockStatementWithEmployees, mockEmployeesList, mockFilials } from "../mock-data";
-import {  Statement1, StatementEmployee } from "../type";
+// Helper function to get userId from localStorage
+const getUserIdFromLocalStorage = (): string | null => {
+  try {
+    const userMeStorage = localStorage.getItem("userMe-storage");
+    return userMeStorage ? JSON.parse(userMeStorage)?.state?.meUser?.id ?? null : null;
+  } catch (error) {
+    console.error("Failed to parse user ID from localStorage:", error);
+    return null;
+  }
+};
 
-// Hook for fetching a specific statement with details
-export const useDetailedStatement = ({ id }: { id?: string }) => {
+// ✅ Hook for fetching employees in a statement using API
+export const useStatementsDataDetail = ({ payrollId }: { payrollId?: string }) => {
+  const userId = getUserIdFromLocalStorage();
+
   return useQuery({
-    queryKey: ["statement", id],
-    queryFn: () => {
-      return new Promise<Statement1 | undefined>((resolve) => {
-        setTimeout(() => {
-          resolve(getMockStatementWithEmployees(id || ""));
-        }, 500);
-      });
+    queryKey: ["statement-employees", payrollId, userId],
+    queryFn: async () => {
+      const url = new URL("https://api.gilam-market.uz/payroll-items");
+      if (payrollId) url.searchParams.append("payrollId", payrollId);
+      if (userId) url.searchParams.append("userId", userId);
+
+      const response = await fetch(url.toString());
+      if (!response.ok) throw new Error("Failed to fetch payroll items");
+      return await response.json();
     },
-    enabled: !!id,
+    enabled: !!payrollId && !!userId,
   });
 };
 

@@ -42,11 +42,9 @@ export const useStatementsDataDetail = ({
   useInfiniteQuery({
     ...options,
     queryKey: [apiRoutes.payrollItems, queries],
-    queryFn: ({ pageParam = 10 }) =>
+    queryFn: () =>
       getAllData<TResponse<Statement>, StatementQuery>(apiRoutes.payrollItems, {
         ...queries,
-        page: pageParam as number,
-        limit: 50,
       }),
     getNextPageParam: (lastPage) => {
       if (lastPage.meta?.currentPage <= lastPage?.meta?.totalPages) {

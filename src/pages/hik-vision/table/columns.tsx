@@ -57,7 +57,7 @@ export const FilialColumns: ColumnDef<TData>[] = [
 
       const expected = new Date(`1970-01-01T${row.original?.user?.from}`);
       const arrival = new Date(`1970-01-01T${timeEnter}:00`);
-      const isExpected = arrival < expected;
+      const isExpected = arrival <= expected;
 
       return (
         <div className="flex items-center gap-1">

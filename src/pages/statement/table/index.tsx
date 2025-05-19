@@ -1,11 +1,24 @@
 import { parseAsInteger, useQueryState } from "nuqs";
+import { CellContext } from "@tanstack/react-table";
 
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { DataTable } from "@/components/ui/data-table";
 
 import CreateStatementModal from "../form/CreateStatementModal";
 import { StatementColumns } from "./columns";
 import Filters from "./filters";
 import useStatementsData from "./queries";
+import { useDeleteStatement } from "./mutations";
+import { ActionCell } from "./ActionCell";
+import { Statement } from "../type";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -15,6 +28,10 @@ export default function Page() {
   const [endDate] = useQueryState("endDate");
   const [search] = useQueryState("search");
   const [id, setId] = useQueryState("id");
+  const [deleteId, setDeleteId] = useQueryState("deleteId");
+  const [editId, setEditId] = useQueryState("editId");
+
+  const deleteStatement = useDeleteStatement();
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useStatementsData({
@@ -30,6 +47,21 @@ export default function Page() {
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
+  const handleDelete = async () => {
+    if (deleteId) {
+      await deleteStatement.mutateAsync(deleteId);
+      setDeleteId(null);
+    }
+  };
+
+  const handleEditClick = (id: string) => {
+    setEditId(id);
+  };
+
+  const handleDeleteClick = (id: string) => {
+    setDeleteId(id);
+  };
+
   return (
     <>
       <Filters />
@@ -37,7 +69,11 @@ export default function Page() {
       <DataTable
         className="m-4"
         isLoading={isLoading}
-        columns={StatementColumns}
+        columns={StatementColumns.map(col => 
+          col.id === 'actions' 
+            ? { ...col, cell: (props: CellContext<Statement, unknown>) => <ActionCell {...props} onEditClick={handleEditClick} onDeleteClick={handleDeleteClick} /> }
+            : col
+        )}
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}
@@ -46,6 +82,33 @@ export default function Page() {
       />
 
       <CreateStatementModal isOpen={id === "new"} onClose={() => setId(null)} />
+
+      <Dialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+        <DialogContent className="sm:max-w-[596px] p-0 bg-[#F0F0E5]">
+          <DialogHeader>
+            <DialogTitle>Удалить ведомость</DialogTitle>
+            <DialogDescription>
+              Вы уверены, что хотите удалить эту ведомость? Это действие нельзя отменить.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDeleteId(null)}
+              disabled={deleteStatement.isPending}
+            >
+              Отмена
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDelete}
+              disabled={deleteStatement.isPending}
+            >
+              {deleteStatement.isPending ? "Удаление..." : "Удалить"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

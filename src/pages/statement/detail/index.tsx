@@ -1,5 +1,4 @@
 import { FileOutput, PlusCircle, Send } from "lucide-react";
-import { parseAsInteger, useQueryState } from "nuqs";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -14,15 +13,14 @@ import { StatementEmployeeColumns } from "./columns";
 export default function DetailPage() {
   const { id } = useParams<{ id: string }>();
   const [isAddEmployeeOpen, setIsAddEmployeeOpen] = useState(false);
-  const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
-  const [page] = useQueryState("page", parseAsInteger.withDefault(1));
+
+  const userId = JSON.parse(localStorage.getItem("userMe-storage") || "{}")?.state?.meUser?.id;
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useStatementsDataDetail({
       queries: {
-        limit,
-        page,
         payrollId: id,
+        userId: userId,
       },
     });
 

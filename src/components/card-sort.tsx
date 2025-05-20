@@ -49,60 +49,6 @@ export default function CardSort({KassaId}:{KassaId:string}) {
   // Prepare column data using report data
   const columns = [
     {
-      title: "Продажа",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) : (
-        formatPrice(kassaId?.sale || 0)
-      ),
-    },
-    {
-      title: "Терминал",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) : (
-        formatPrice(kassaId?.plasticSum || 0)
-      ),
-    },
-    {
-      title: "Инкассация",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) : (
-        formatPrice(kassaId?.cash_collection || 0)
-      ),
-      button:
-        meUser?.position.role === 3 ? (
-          ""
-        ) : (
-          <div
-            onClick={() => {
-              setType("Приход");
-              setDialogOpen(true);
-            }}
-            className="bg-[#F0F0E5] p-2.5 rounded-4xl"
-          >
-            <Plus size={13} color="#5D5D5390" />
-          </div>
-        ),
-    },
-    {
-      title: "Навар",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) : (
-        formatPrice(kassaId?.additionalProfitTotalSum || 0)
-      ),
-    },
-    {
-      title: "Скидка",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) : (
-        formatPrice(Number(kassaId?.discount) || 0)
-      ),
-    },
-    {
       title: "Приход",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
@@ -123,6 +69,30 @@ export default function CardSort({KassaId}:{KassaId:string}) {
             <Plus size={13} color="#5D5D5390" />
           </div>
         ),
+    },
+    {
+      title: "Продажа",
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(kassaId?.sale || 0)
+      ),
+    },
+    {
+      title: "Терминал",
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(kassaId?.plasticSum || 0)
+      ),
+    },
+    {
+      title: "Навар",
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(kassaId?.additionalProfitTotalSum || 0)
+      ),
     },
     {
       title: "Расход",
@@ -149,6 +119,36 @@ export default function CardSort({KassaId}:{KassaId:string}) {
     {
       title: meUser?.position.role === 3 ? "Возврат сумма":'',
       price:  meUser?.position.role === 3 ? `-${formatPrice(kassaId?.return_sale || 0)}` :"",
+    },
+    {
+      title: "Инкассация",
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(kassaId?.cash_collection || 0)
+      ),
+      button:
+        meUser?.position.role === 3 ? (
+          ""
+        ) : (
+          <div
+            onClick={() => {
+              setType("Приход");
+              setDialogOpen(true);
+            }}
+            className="bg-[#F0F0E5] p-2.5 rounded-4xl"
+          >
+            <Plus size={13} color="#5D5D5390" />
+          </div>
+        ),
+    },
+    {
+      title: "Скидка",
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) : (
+        formatPrice(Number(kassaId?.discount) || 0)
+      ),
     },
   ];
 

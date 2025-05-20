@@ -148,8 +148,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
     },
     {
       title: meUser?.position.role === 3 ? "Возврат сумма":'',
-      price:  meUser?.position.role === 3 ? '9807' :"",
-     
+      price:  meUser?.position.role === 3 ? `-${formatPrice(kassaId?.return_sale || 0)}` :"",
     },
   ];
 

@@ -1,4 +1,5 @@
 export interface TData {
+  return_sale: number;
   isMetric?: boolean;
   id: string;
   is_visible: boolean;

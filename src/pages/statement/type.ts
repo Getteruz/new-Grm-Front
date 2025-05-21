@@ -1,6 +1,5 @@
 // Statement types
 export type Statement = {
-  bonus: number;
   createdAt: string;
   id: number;
   in_hand: number;
@@ -11,12 +10,22 @@ export type Statement = {
   title: string;
   to_date: string;
   total: number;
-  name: string;
-  avatar: string;
+  user: {
+    firstName: string;
+    lastName: string;
+    avatar: string;
+    salary: number;
+    filial: string;
+  };
+  payroll: {
+    bonus: number;
+    award: number;
+    total: number;
+    plastic: number;
+    prepayment: number;
+    in_hand: number;
+  };
   filial: string;
-  salary: string;
-  advance: string;
-  cash: string;
 };
 
 export type Statement1 = {

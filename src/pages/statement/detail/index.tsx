@@ -9,22 +9,30 @@ import { DataTable } from "@/components/ui/data-table";
 import { useStatementsDataDetail } from "../table/queries";
 import AddEmployeeModal from "./AddEmployeeModal";
 import { StatementEmployeeColumns } from "./columns";
+import { Statement } from "../type";
 
 export default function DetailPage() {
   const { id } = useParams<{ id: string }>();
   const [isAddEmployeeOpen, setIsAddEmployeeOpen] = useState(false);
 
-  const userId = JSON.parse(localStorage.getItem("userMe-storage") || "{}")?.state?.meUser?.id;
-
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useStatementsDataDetail({
       queries: {
         payrollId: id,
-        userId: userId,
       },
     });
 
-  const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
+  function isStatement(obj: any): obj is Statement {
+    return obj && typeof obj === 'object' && 'id' in obj && 'createdAt' in obj;
+  }
+  let flatData: Statement[] = [];
+  if (Array.isArray(data?.pages)) {
+    flatData = data.pages.flatMap((page: any) =>
+      Array.isArray(page)
+        ? page.filter(isStatement)
+        : (page.items || []).filter(isStatement)
+    );
+  }
 
   return (
     <>
@@ -50,7 +58,7 @@ export default function DetailPage() {
       <div className="m-4">
         <DataTable
           columns={StatementEmployeeColumns()}
-          data={flatData ?? []}
+          data={flatData}
           isLoading={isLoading}
           className="mt-2"
           fetchNextPage={fetchNextPage}

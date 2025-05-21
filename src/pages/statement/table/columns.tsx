@@ -34,7 +34,7 @@ export const StatementColumns: ColumnDef<Statement>[] = [
     header: "Бонусы",
     accessorKey: "bonusesTotal",
     cell: ({ row }) => {
-      return <span className="text-[#C3AD54]">{row.original.bonus} $</span>;
+      return <span className="text-[#C3AD54]">{row.original.payroll?.bonus} $</span>;
     },
   },
   {
@@ -65,6 +65,6 @@ export const StatementColumns: ColumnDef<Statement>[] = [
   {
     id: "actions",
     enableHiding: true,
-    cell: ({ row }) => <ActionCell row={row} />,
+    cell: ({ row }) => <ActionCell row={row} onDeleteClick={() => {}} onEditClick={() => {}} />,
   },
 ];

@@ -39,7 +39,7 @@ export default function Page() {
         limit,
         page,
         status: status || undefined,
-        startDate: startDate || undefined,
+        startDate: startDate || undefined,   
         endDate: endDate || undefined,
         search: search || undefined,
       },
@@ -82,6 +82,8 @@ export default function Page() {
       />
 
       <CreateStatementModal isOpen={id === "new"} onClose={() => setId(null)} />
+
+      <p className="hidden">{editId}</p>
 
       <Dialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
         <DialogContent className="sm:max-w-[596px] p-0 bg-[#F0F0E5]">

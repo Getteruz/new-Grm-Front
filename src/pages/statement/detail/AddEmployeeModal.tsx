@@ -70,7 +70,6 @@ export default function AddEmployeeModal({
 }: AddEmployeeModalProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [selectedUserId, setSelectedUserId] = useState<string>("");
-  const [selectedUserSalary, setSelectedUserSalary] = useState<number>(0);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -159,7 +158,6 @@ export default function AddEmployeeModal({
                         onValueChange={(value) => {
                           const selectedEmployee = usersData?.items?.find(emp => emp.id === value);
                           setSelectedUserId(value);
-                          setSelectedUserSalary(selectedEmployee?.salary || 0);
                           form.setValue("employeeId", value);
                           form.setValue("salary", selectedEmployee?.salary || 0);
                         }}

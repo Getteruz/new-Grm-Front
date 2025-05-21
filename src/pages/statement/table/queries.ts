@@ -18,9 +18,9 @@ interface IStatementQuery {
 const useStatementsData = ({ options, queries }: IStatementQuery) =>
   useInfiniteQuery({
     ...options,
-    queryKey: [apiRoutes.payrolls, queries],
+    queryKey: [apiRoutes.payrollItems, queries],
     queryFn: ({ pageParam = 10 }) =>
-      getAllData<TResponse<Statement>, StatementQuery>(apiRoutes.payrolls, {
+      getAllData<TResponse<Statement>, StatementQuery>(`${apiRoutes.payrolls}`, {
         ...queries,
         page: pageParam as number,
         limit: 50,
@@ -36,15 +36,13 @@ const useStatementsData = ({ options, queries }: IStatementQuery) =>
   });
 
 export const useStatementsDataDetail = ({
-  options,
   queries,
 }: IStatementQuery) =>
   useInfiniteQuery({
-    ...options,
-    queryKey: [apiRoutes.payrollItems, queries],
+    queryKey: [apiRoutes.payrollItems, queries?.payrollId],
     queryFn: () =>
-      getAllData<TResponse<Statement>, StatementQuery>(apiRoutes.payrollItems, {
-        ...queries,
+      getAllData<TResponse<Statement>, StatementQuery>(`${apiRoutes.payrollItems}`, {
+        payrollId: queries?.payrollId,
       }),
     getNextPageParam: (lastPage) => {
       if (lastPage.meta?.currentPage <= lastPage?.meta?.totalPages) {

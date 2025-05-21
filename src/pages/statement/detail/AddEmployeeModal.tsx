@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
@@ -20,8 +21,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
 import FormComboboxDemoInput from "@/components/forms/FormCombobox";
+import { AddData, getAllData } from "@/service/apiHelpers";
+import { toast } from "sonner";
 
 interface AddEmployeeModalProps {
   isOpen: boolean;
@@ -29,21 +31,34 @@ interface AddEmployeeModalProps {
   statementId: string;
 }
 
-// Sample employees data (would come from API in real implementation)
-const sampleEmployees = [
-  { id: "1", name: "Аббос Жанизаков", avatar: null },
-  { id: "2", name: "Михаил Иванов", avatar: null },
-  { id: "3", name: "Анна Петрова", avatar: null },
-  { id: "4", name: "Сергей Сидоров", avatar: null },
-  { id: "5", name: "Елена Смирнова", avatar: null },
-];
+interface Employee {
+  id: string;
+  name: string;
+  avatar: { path: string } | null;
+  firstName: string;
+  lastName: string;
+  salary: number;
+}
+
+interface PayrollItemsResponse {
+  items: Employee[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+  };
+}
 
 const formSchema = z.object({
   employeeId: z.string().min(1, "Выберите сотрудника"),
-  filial: z.string().min(1, "Выберите филиал"),
+  filial: z.object({
+    value: z.string(),
+    label: z.string()
+  }).refine((data) => data.value, "Выберите филиал"),
   month: z.string().min(1, "Выберите месяц"),
   enableBonus: z.boolean().default(false),
   enablePremium: z.boolean().default(true),
+  salary: z.number().default(0),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -53,26 +68,54 @@ export default function AddEmployeeModal({
   onClose,
   statementId,
 }: AddEmployeeModalProps) {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date()
-  );
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedUserId, setSelectedUserId] = useState<string>("");
+  const [selectedUserSalary, setSelectedUserSalary] = useState<number>(0);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       employeeId: "",
-      filial: "",
+      filial: { value: "", label: "" },
       month: "",
       enableBonus: false,
       enablePremium: true,
+      salary: 0,
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data, statementId);
+  // Fetch users from API
+  const { data: usersData } = useQuery<PayrollItemsResponse>({
+    queryKey: ["users"],
+    queryFn: () => getAllData<PayrollItemsResponse, any>("/user", {
+    }),
+    enabled: !!statementId,
+  });
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const month = parseInt(data.month.split("-")[1]); // Extract month number from YYYY-MM format
+      await AddData("/payroll-items", {
+        selectedMonth: month,
+        plastic: 0,
+        in_hand: data.salary,
+        prepayment: 0,
+        payrollId: statementId,
+        userId: data.employeeId,
+        is_premium: false,
+        is_bonus: false
+      });
+
+      toast.success("Сотрудник успешно добавлен");
+      onClose();
+    } catch (error) {
+      toast.error("Ошибка при добавлении сотрудника");
+      console.error(error);
+    }
   };
 
   if (!isOpen) return null;
+  console.log(usersData);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -85,7 +128,7 @@ export default function AddEmployeeModal({
           </div>
         </DialogHeader>
         <FormProvider {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form >
             <div className="p-6">
               <div className="space-y-6">
                 <div className="space-y-4">
@@ -113,10 +156,14 @@ export default function AddEmployeeModal({
                         Сотрудник
                       </Label>
                       <Select
-                        onValueChange={(value) =>
-                          form.setValue("employeeId", value)
-                        }
-                        value={form.watch("employeeId")}
+                        onValueChange={(value) => {
+                          const selectedEmployee = usersData?.items?.find(emp => emp.id === value);
+                          setSelectedUserId(value);
+                          setSelectedUserSalary(selectedEmployee?.salary || 0);
+                          form.setValue("employeeId", value);
+                          form.setValue("salary", selectedEmployee?.salary || 0);
+                        }}
+                        value={selectedUserId}
                       >
                         <SelectTrigger
                           id="employee"
@@ -125,21 +172,24 @@ export default function AddEmployeeModal({
                           <SelectValue placeholder="Выберите сотрудников" />
                         </SelectTrigger>
                         <SelectContent>
-                          {sampleEmployees.map((employee) => (
-                            <SelectItem key={employee.id} value={employee.id}>
-                              <div className="flex items-center">
-                                <Avatar className="h-6 w-6 mr-2">
-                                  <AvatarImage
-                                    src={employee.avatar || undefined}
-                                  />
-                                  <AvatarFallback className="bg-primary text-white text-xs">
-                                    {employee.name.charAt(0)}
-                                  </AvatarFallback>
-                                </Avatar>
-                                {employee.name}
-                              </div>
-                            </SelectItem>
-                          ))}
+                          {usersData?.items
+                            ? usersData.items.map((employee) => (
+                                <SelectItem key={employee.id} value={employee.id}>
+                                  <div className="flex items-center">
+                                    <Avatar className="h-6 w-6 mr-2">
+                                      <AvatarImage src={employee.avatar?.path || undefined} />
+                                      <AvatarFallback className="bg-primary text-white text-xs">
+                                        {employee.firstName?.charAt(0)}
+                                      </AvatarFallback>
+                                    </Avatar>
+                                    {employee.firstName} {employee.lastName}
+                                  </div>
+                                </SelectItem>
+                              ))
+                            : (
+                              <div className="p-2 text-center text-gray-500">Загрузка...</div>
+                            )
+                          }
                         </SelectContent>
                       </Select>
                       {form.formState.errors.employeeId && (
@@ -188,55 +238,7 @@ export default function AddEmployeeModal({
                             <span>{"AD"}</span>
                           </AvatarFallback>
                         </Avatar>
-                        <Avatar className="p-6 border -left-2">
-                          <AvatarFallback>
-                            <span>{"AD"}</span>
-                          </AvatarFallback>
-                        </Avatar>
-                        <Avatar className="p-6 border -left-4">
-                          <AvatarFallback>
-                            <span>{"AD"}</span>
-                          </AvatarFallback>
-                        </Avatar>
                       </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-[14px] font-medium">Дополнительные</h3>
-
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-start">
-                      <Label
-                        htmlFor="bonus-switch"
-                        className="cursor-pointer text-[12px] font-light mr-3"
-                      >
-                        Бонуса
-                      </Label>
-                      <Switch
-                        id="bonus-switch"
-                        checked={form.watch("enableBonus")}
-                        onCheckedChange={(checked) =>
-                          form.setValue("enableBonus", checked)
-                        }
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-start">
-                      <Label
-                        htmlFor="premium-switch"
-                        className="cursor-pointer text-[12px] font-light mr-3"
-                      >
-                        Премии
-                      </Label>
-                      <Switch
-                        id="premium-switch"
-                        checked={form.watch("enablePremium")}
-                        onCheckedChange={(checked) =>
-                          form.setValue("enablePremium", checked)
-                        }
-                      />
                     </div>
                   </div>
                 </div>
@@ -248,6 +250,10 @@ export default function AddEmployeeModal({
               <Button
                 type="submit"
                 className="rounded-none h-12 w-[220px] mx-3"
+                onClick={e => {
+                  e.stopPropagation();
+                  onSubmit(form.getValues());
+                }}
               >
                 Сохранить
               </Button>

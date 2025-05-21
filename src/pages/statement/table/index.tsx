@@ -83,6 +83,8 @@ export default function Page() {
 
       <CreateStatementModal isOpen={id === "new"} onClose={() => setId(null)} />
 
+      <p className="hidden">{editId}</p>
+
       <Dialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
         <DialogContent className="sm:max-w-[596px] p-0 bg-[#F0F0E5]">
           <DialogHeader>

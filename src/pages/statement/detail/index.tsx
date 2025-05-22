@@ -9,6 +9,7 @@ import { useStatementsDataDetail } from "../table/queries";
 import AddEmployeeModal from "./AddEmployeeModal";
 import { StatementEmployeeColumns } from "./columns";
 import { Statement } from "../type";
+import CardSort from "@/components/card-sort";
 
 export default function DetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -77,6 +78,8 @@ export default function DetailPage() {
           </Button>
         </div>
       </div>
+
+      <CardSort KassaId="" />
 
       {/* Employees Table */}
       <div className="m-4">

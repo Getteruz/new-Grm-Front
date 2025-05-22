@@ -25,7 +25,6 @@ export type Statement = {
     prepayment: number;
     in_hand: number;
   };
-  filial: string;
 };
 
 export type Statement1 = {
@@ -65,4 +64,5 @@ export type StatementQuery = {
   userId?: string;
   page?: number;
   limit?: number;
+  filialId?: string;
 };

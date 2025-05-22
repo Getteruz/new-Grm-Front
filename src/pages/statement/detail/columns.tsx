@@ -52,7 +52,8 @@ export const StatementEmployeeColumns = (): ColumnDef<Statement>[] => {
               </AvatarFallback>
             </Avatar>
             <div className="font-normal text-foreground tetx-[13px]">
-              {row.original.user?.firstName}
+              {row.original.user?.firstName} {` `}
+              {row.original.user?.lastName}
             </div>
           </div>
         );

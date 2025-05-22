@@ -2,7 +2,6 @@ import { FileOutput, PlusCircle, Send } from "lucide-react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import CardSort from "@/components/card-sort";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 
@@ -15,24 +14,51 @@ export default function DetailPage() {
   const { id } = useParams<{ id: string }>();
   const [isAddEmployeeOpen, setIsAddEmployeeOpen] = useState(false);
 
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useStatementsDataDetail({
-      queries: {
-        payrollId: id,
-      },
-    });
+  const { data, isLoading } = useStatementsDataDetail({
+    queries: {
+      payrollId: id,
+    },
+  });
 
   function isStatement(obj: any): obj is Statement {
-    return obj && typeof obj === 'object' && 'id' in obj && 'createdAt' in obj;
+    return obj && 
+      typeof obj === 'object' && 
+      'id' in obj && 
+      'createdAt' in obj && 
+      'user' in obj && 
+      typeof obj.user === 'object' &&
+      'payroll' in obj &&
+      typeof obj.payroll === 'object';
   }
+
   let flatData: Statement[] = [];
-  if (Array.isArray(data?.pages)) {
-    flatData = data.pages.flatMap((page: any) =>
-      Array.isArray(page)
-        ? page.filter(isStatement)
-        : (page.items || []).filter(isStatement)
-    );
+  if (data?.items) {
+    flatData = data.items.filter(isStatement).map((item: any) => {
+      // Ensure we're not passing any raw objects to React
+      const transformedItem = {
+        ...item,
+        id: String(item.id), // Ensure id is a string
+        user: {
+          firstName: String(item.user?.firstName || ''),
+          lastName: String(item.user?.lastName || ''),
+          avatar: String(item.user?.avatar || ''),
+          salary: Number(item.user?.salary || 0),
+          filial: String(item.user?.filial?.title || ''),
+        },
+        payroll: {
+          bonus: Number(item.payroll?.bonus || 0),
+          award: Number(item.payroll?.award || 0),
+          total: Number(item.payroll?.total || 0),
+          plastic: Number(item.payroll?.plastic || 0),
+          prepayment: Number(item.payroll?.prepayment || 0),
+          in_hand: Number(item.payroll?.in_hand || 0),
+        }
+      };
+      return transformedItem;
+    });
   }
+
+  console.log(flatData);
 
   return (
     <>
@@ -52,8 +78,6 @@ export default function DetailPage() {
         </div>
       </div>
 
-      <CardSort  KassaId=""/>
-
       {/* Employees Table */}
       <div className="m-4">
         <DataTable
@@ -61,9 +85,6 @@ export default function DetailPage() {
           data={flatData}
           isLoading={isLoading}
           className="mt-2"
-          fetchNextPage={fetchNextPage}
-          hasNextPage={hasNextPage ?? false}
-          isFetchingNextPage={isFetchingNextPage}
         />
       </div>
 

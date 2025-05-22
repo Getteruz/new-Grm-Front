@@ -2,6 +2,7 @@
 import {
   DefinedInitialDataInfiniteOptions,
   useInfiniteQuery,
+  useQuery,
 } from "@tanstack/react-query";
 
 import { getAllData } from "@/service/apiHelpers";
@@ -38,20 +39,13 @@ const useStatementsData = ({ options, queries }: IStatementQuery) =>
 export const useStatementsDataDetail = ({
   queries,
 }: IStatementQuery) =>
-  useInfiniteQuery({
+  useQuery({
     queryKey: [apiRoutes.payrollItems, queries?.payrollId],
     queryFn: () =>
       getAllData<TResponse<Statement>, StatementQuery>(`${apiRoutes.payrollItems}`, {
         payrollId: queries?.payrollId,
       }),
-    getNextPageParam: (lastPage) => {
-      if (lastPage.meta?.currentPage <= lastPage?.meta?.totalPages) {
-        return lastPage?.meta?.currentPage + 1;
-      } else {
-        return null;
-      }
-    },
-    initialPageParam: 1,
+    enabled: !!queries?.payrollId,
   });
 
 export default useStatementsData;

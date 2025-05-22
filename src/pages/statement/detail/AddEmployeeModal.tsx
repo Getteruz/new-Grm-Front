@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -29,6 +29,7 @@ interface AddEmployeeModalProps {
   isOpen: boolean;
   onClose: () => void;
   statementId: string;
+  selectedFilialId?: string;
 }
 
 interface Employee {
@@ -40,14 +41,7 @@ interface Employee {
   salary: number;
 }
 
-interface PayrollItemsResponse {
-  items: Employee[];
-  meta: {
-    total: number;
-    page: number;
-    limit: number;
-  };
-}
+type PayrollItemsResponse = Employee[];
 
 const formSchema = z.object({
   employeeId: z.string().min(1, "Выберите сотрудника"),
@@ -69,7 +63,7 @@ export default function AddEmployeeModal({
   statementId,
 }: AddEmployeeModalProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-  const [selectedUserId, setSelectedUserId] = useState<string>("");
+  const [filialId, setFilialId] = useState<string>("");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -83,12 +77,20 @@ export default function AddEmployeeModal({
     },
   });
 
-  // Fetch users from API
-  const { data: usersData } = useQuery<PayrollItemsResponse>({
-    queryKey: ["users"],
-    queryFn: () => getAllData<PayrollItemsResponse, any>("/user", {
-    }),
-    enabled: !!statementId,
+  // Watch for filial changes in the form
+  const selectedFilial = form.watch("filial");
+
+  // Update filialId when filial selection changes
+  useEffect(() => {
+    if (selectedFilial?.value) {
+      setFilialId(selectedFilial.value);
+    }
+  }, [selectedFilial]);
+
+  const { data: usersData, isLoading: isUsersLoading } = useQuery<PayrollItemsResponse>({
+    queryKey: ["users", filialId],
+    queryFn: () => getAllData<PayrollItemsResponse, any>(`/user/filial/${filialId}`, {}),
+    enabled: !!filialId,
   });
 
   const onSubmit = async (data: FormValues) => {
@@ -145,49 +147,51 @@ export default function AddEmployeeModal({
                         placeholder="Укажите флиал"
                         label="Флиал"
                       />
+                      {form.formState.errors.filial && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {form.formState.errors.filial.message}
+                        </p>
+                      )}
                     </div>
 
                     <div className="w-full">
-                      <Label
-                        htmlFor="employee"
-                        className="text-[12px] font-light"
-                      >
+                      <Label htmlFor="employee" className="text-[12px] font-light">
                         Сотрудник
                       </Label>
                       <Select
                         onValueChange={(value) => {
-                          const selectedEmployee = usersData?.items?.find(emp => emp.id === value);
-                          setSelectedUserId(value);
+                          const selectedEmployee = usersData?.find(emp => emp.id === value);
                           form.setValue("employeeId", value);
                           form.setValue("salary", selectedEmployee?.salary || 0);
                         }}
-                        value={selectedUserId}
+                        value={form.watch("employeeId")}
+                        disabled={!filialId || isUsersLoading}
                       >
-                        <SelectTrigger
-                          id="employee"
-                          className="w-full bg-input p-2 h-[40px]"
-                        >
-                          <SelectValue placeholder="Выберите сотрудников" />
+                        <SelectTrigger id="employee" className="w-full bg-input p-2 h-[40px]">
+                          <SelectValue placeholder={"Выберите сотрудника"} />
                         </SelectTrigger>
                         <SelectContent>
-                          {usersData?.items
-                            ? usersData.items.map((employee) => (
-                                <SelectItem key={employee.id} value={employee.id}>
-                                  <div className="flex items-center">
-                                    <Avatar className="h-6 w-6 mr-2">
-                                      <AvatarImage src={employee.avatar?.path || undefined} />
-                                      <AvatarFallback className="bg-primary text-white text-xs">
-                                        {employee.firstName?.charAt(0)}
-                                      </AvatarFallback>
-                                    </Avatar>
+                          {usersData === undefined ? (
+                            <div className="p-2 text-center text-gray-500">Загрузка...</div>
+                          ) : usersData.length === 0 ? (
+                            <div className="p-2 text-center text-gray-500">В этом филиале нет сотрудников</div>
+                          ) : (
+                            usersData.map((employee: Employee) => (
+                              <SelectItem key={employee.id} value={employee.id}>
+                                <div className="flex items-center gap-2">
+                                  <Avatar className="h-6 w-6">
+                                    <AvatarImage src={employee.avatar?.path} />
+                                    <AvatarFallback className="bg-primary text-white text-xs">
+                                      {employee.firstName?.charAt(0)}{employee.lastName?.charAt(0)}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  <span>
                                     {employee.firstName} {employee.lastName}
-                                  </div>
-                                </SelectItem>
-                              ))
-                            : (
-                              <div className="p-2 text-center text-gray-500">Загрузка...</div>
-                            )
-                          }
+                                  </span>
+                                </div>
+                              </SelectItem>
+                            ))
+                          )}
                         </SelectContent>
                       </Select>
                       {form.formState.errors.employeeId && (

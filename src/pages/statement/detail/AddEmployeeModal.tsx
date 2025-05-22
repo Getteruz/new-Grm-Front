@@ -233,14 +233,6 @@ export default function AddEmployeeModal({
                           {form.formState.errors.month.message}
                         </p>
                       )}
-
-                      <div className="avatars flex ml-5 items-center justify-start w-full">
-                        <Avatar className="p-6 border">
-                          <AvatarFallback>
-                            <span>{"AD"}</span>
-                          </AvatarFallback>
-                        </Avatar>
-                      </div>
                     </div>
                   </div>
                 </div>

@@ -82,12 +82,11 @@ export default function DetailPage() {
       <CardSort KassaId="" />
 
       {/* Employees Table */}
-      <div className="m-4">
+      <div className="">
         <DataTable
           columns={StatementEmployeeColumns()}
           data={flatData}
           isLoading={isLoading}
-          className="mt-2"
         />
       </div>
 

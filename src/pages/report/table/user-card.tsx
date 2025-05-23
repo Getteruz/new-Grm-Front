@@ -5,7 +5,7 @@ const UserCard = ({
 }: {
   data: {
     status: string;
-    closer: {
+    closer?: {
       avatar: {
         path: string;
       } | null;

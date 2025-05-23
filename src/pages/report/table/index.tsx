@@ -12,7 +12,7 @@ import CardSortSingle from "./card-sort";
 export default function Page() {
   const { meUser } = useMeStore();
 
-  const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
+  const [limit] = useQueryState("limit", parseAsInteger.withDefault(20));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [search] = useQueryState("search");
   const { data, isLoading } = useDataLibrary({
@@ -20,29 +20,31 @@ export default function Page() {
       limit,
       page,
       search: search || undefined,
+      filial: meUser?.filial?.id,
     },
   });
 
   return (
     <>
-      <Filter />
+      <Filter filterDieller={false} />
       <div className="h-[calc(100vh-140px)] scrollCastom">
-      {
-        meUser?.position?.role === 6?<CardSortSingle />:<CardSort KassaId="" />
-      }
-    
+        {meUser?.position?.role === 6 ? (
+          <CardSortSingle />
+        ) : (
+          <CardSort KassaId="" />
+        )}
 
-      <DataTable
-        isLoading={isLoading}
-        columns={
-          meUser?.position?.role === 6
-            ? ColumnsDManager
-            : meUser?.position?.role === 4
-              ? ColumnsFManager
-              : Columns
-        }
-        data={data?.items ?? []}
-      />
+        <DataTable
+          isLoading={isLoading}
+          columns={
+            meUser?.position?.role === 6
+              ? ColumnsDManager
+              : meUser?.position?.role === 4
+                ? ColumnsFManager
+                : Columns
+          }
+          data={data?.items ?? []}
+        />
       </div>
     </>
   );

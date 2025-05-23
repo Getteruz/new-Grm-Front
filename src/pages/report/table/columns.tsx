@@ -7,6 +7,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
+import { managerStatus, ManagerStatusKey } from "./constants";
+import UserCard from "./user-card";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -109,7 +111,15 @@ export const ColumnsFManager: ColumnDef<TData>[] = [
     accessorKey: "date",
 
     cell: ({ row }) => {
-      return <p>{format(row.original.date, "d-MMMM")} </p>;
+      return (
+        <p>
+          {row?.original?.endDate ? (
+            format(row.original.endDate, "d-MMMM")
+          ) : (
+            <span className="text-[#89A143]">Продалажется</span>
+          )}
+        </p>
+      );
     },
   },
   {
@@ -117,7 +127,7 @@ export const ColumnsFManager: ColumnDef<TData>[] = [
     accessorKey: "price",
 
     cell: ({ row }) => {
-      return <p className="text-[#89A143]">{row.original.price} $</p>;
+      return <p className="text-[#89A143]">{row.original.totalSum} $</p>;
     },
   },
   {
@@ -125,53 +135,78 @@ export const ColumnsFManager: ColumnDef<TData>[] = [
     accessorKey: "price",
 
     cell: ({ row }) => {
-      return <p className="text-[#58A0C6]">{row.original.price} $</p>;
+      return <p>{row.original.plasticSum} $</p>;
     },
   },
   {
     header: "Скидка",
     accessorKey: "price",
 
-    cell: () => {
-      return <p className="text-[#E38157]">0 $</p>;
+    cell: ({ row }) => {
+      return <p className="text-[#E38157]">{row.original.discount} $</p>;
     },
   },
 
   {
     header: "Навар",
-    accessorKey: "collection.title",
+    accessorKey: "additionalProfitTotalSum",
+    cell: ({ row }) => {
+      return <p>{row.original.additionalProfitTotalSum} $</p>;
+    },
   },
   {
     header: "Объём",
-    accessorKey: "model.title",
+    accessorKey: "totalSize",
   },
   {
     header: "Приход",
-    accessorKey: "size.title",
+    accessorKey: "income",
+    cell: ({ row }) => {
+      return <p>{row.original.income} $</p>;
+    },
   },
   {
     header: "Расход",
-    accessorKey: "filial.title",
+    accessorKey: "expense",
+    cell: ({ row }) => {
+      return (
+        <p className="text-[#E38157]">
+          {row.original.expense ? "-" + row.original.expense : 0} $
+        </p>
+      );
+    },
   },
   {
     header: "Инкассация",
-    accessorKey: "sller.title",
+    accessorKey: "cash_collection",
   },
   {
     header: "Кассир",
     accessorKey: "casher.title",
+    cell: ({ row }) => {
+      return (
+        <div className="d-flex">
+          <UserCard data={row.original} />
+        </div>
+      );
+    },
   },
   {
     header: "Статус",
     accessorKey: "date",
 
     cell: ({ row }) => {
+      const statusKey = row.original.status as ManagerStatusKey;
       return (
         <div className="flex">
           <p
-            className={`${row.original.type === "Приход" ? "border-[#89A143] text-[#89A143]" : "border-[#E38157] text-[#E38157]"} min-w-[120px] rounded-4xl px-[14px]  w-[100px] text-center py-3 border `}
+            className={`
+              bg-[${managerStatus[statusKey].background}]
+              text-[${managerStatus[statusKey].color}]
+              border-[${managerStatus[statusKey].color}]
+              min-w-[120px] rounded-4xl px-[14px] w-[100px] text-center py-3 border`}
           >
-            {row.original.tip === "order" ? "В процессе" : "Принято"}
+            {managerStatus[statusKey].text}
           </p>
         </div>
       );
@@ -191,9 +226,11 @@ export const ColumnsDManagerMonthly: ColumnDef<TData>[] = [
   {
     header: "Дата",
     accessorKey: "date",
-   
+
     cell: ({ row }) => {
-      return <p className="min-w-[120px]">{format(row.original.date, "MMMM")} </p>;
+      return (
+        <p className="min-w-[120px]">{format(row.original.date, "MMMM")} </p>
+      );
     },
   },
   {
@@ -248,7 +285,7 @@ export const ColumnsDManagerMonthly: ColumnDef<TData>[] = [
             <AvatarImage src={undefined} />
             <AvatarFallback>D</AvatarFallback>
           </Avatar>
-          <Avatar  className="w-10 h-10">
+          <Avatar className="w-10 h-10">
             <AvatarImage src={"/images/image.png"} />
             <AvatarFallback>D</AvatarFallback>
           </Avatar>
@@ -286,7 +323,7 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
   {
     header: "Дата",
     accessorKey: "date",
-  
+
     cell: ({ row }) => {
       return (
         <div

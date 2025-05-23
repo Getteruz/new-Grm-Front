@@ -69,6 +69,12 @@ export interface TData {
     id: string;
     title: string;
   };
+  // closer:{
+  //   id:string,
+  //   avatar:{
+
+  //   }
+  // }
 }
 
 export interface TActionData {
@@ -84,6 +90,7 @@ export interface TActionData {
 export interface TQuery {
   search?: string | undefined;
   filialId?: string;
+  filial?:string;
   kassaId?: string;
   limit: number;
   page: number;

@@ -21,7 +21,7 @@ const useDataLibrary = ({ options, queries }: IData) =>
     ...options,
     queryKey: [apiRoutes.cashflow, queries],
     queryFn: () =>
-      getAllData<TResponse<TData>, TQuery>(apiRoutes.cashflow, queries),
+      getAllData<TResponse<TData>, TQuery>(apiRoutes.kassa, queries),
   });
 
 export const useDataCashflowTypes = ({ options, queries }: IData) =>

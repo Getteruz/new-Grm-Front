@@ -52,7 +52,7 @@ export default function CardSort({ KassaId }: { KassaId: string }) {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice((kassaId?.income || 0) - (kassaId?.sale || 0) || 0)
+        formatPrice(kassaId?.income || 0)
       ),
       button:
         meUser?.position.role === 3 ? (

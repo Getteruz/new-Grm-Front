@@ -6,16 +6,13 @@ import { DataTable } from "@/components/ui/data-table";
 import { useOpenKassa } from "@/pages/report/table/queries";
 import { useMeStore } from "@/store/me-store";
 
-import Filters from "../page/filter";
-import Pricecheck from "../page/price-check";
 import { useDataCashflow, useDataKassa } from "../queries";
 import { KassaColumns, ReportColumns } from "./columns";
 import { parseAsString, useQueryState } from "nuqs";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function Page() {
   const params = useParams();
-  const [selectedItems] = useState<number[]>([]);
   const { meUser } = useMeStore();
   const [sort] = useQueryState("sort", parseAsString.withDefault("open"));
   const [sortSingle] = useQueryState(

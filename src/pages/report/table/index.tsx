@@ -6,8 +6,8 @@ import { useMeStore } from "@/store/me-store";
 import { Columns, ColumnsDManager, ColumnsFManager } from "./columns";
 import Filter from "./filter";
 import useDataLibrary from "./queries";
-import CardSort from "@/components/card-sort";
-import CardSortSingle from "./card-sort";
+// import CardSort from "@/components/card-sort";
+// import CardSortSingle from "./card-sort";
 import FManagerCardSort from "./fmanager-card-sort";
 
 export default function Page() {

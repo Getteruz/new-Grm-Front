@@ -7,8 +7,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
-import { managerStatus, ManagerStatusKey } from "./constants";
 import UserCard from "./user-card";
+import StatusAction from "./status-action";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -181,6 +181,10 @@ export const ColumnsFManager: ColumnDef<TData>[] = [
     accessorKey: "cash_collection",
   },
   {
+    header: "Возрат",
+    accessorKey: "return_sale",
+  },
+  {
     header: "Кассир",
     accessorKey: "casher.title",
     cell: ({ row }) => {
@@ -196,20 +200,7 @@ export const ColumnsFManager: ColumnDef<TData>[] = [
     accessorKey: "date",
 
     cell: ({ row }) => {
-      const statusKey = row.original.status as ManagerStatusKey;
-      return (
-        <div className="flex">
-          <p
-            className={`
-              bg-[${managerStatus[statusKey].background}]
-              text-[${managerStatus[statusKey].color}]
-              border-[${managerStatus[statusKey].color}]
-              min-w-[120px] rounded-4xl px-[14px] w-[100px] text-center py-3 border`}
-          >
-            {managerStatus[statusKey].text}
-          </p>
-        </div>
-      );
+      return <StatusAction row={row} />;
     },
   },
   {

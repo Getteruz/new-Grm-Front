@@ -8,6 +8,7 @@ import Filter from "./filter";
 import useDataLibrary from "./queries";
 import CardSort from "@/components/card-sort";
 import CardSortSingle from "./card-sort";
+import FManagerCardSort from "./fmanager-card-sort";
 
 export default function Page() {
   const { meUser } = useMeStore();
@@ -26,16 +27,18 @@ export default function Page() {
 
   return (
     <>
-      <Filter filterDieller={false} />
+      <Filter closeKassa={false} filterDieller={false} />
       <div className="h-[calc(100vh-140px)] scrollCastom">
-        {meUser?.position?.role === 6 ? (
+        {/* {meUser?.position?.role === 6 ? (
           <CardSortSingle />
         ) : (
           <CardSort KassaId="" />
-        )}
+        )} */}
+        {meUser?.position?.role === 4 && <FManagerCardSort />}
 
         <DataTable
           isLoading={isLoading}
+          // link="/report/:id"
           columns={
             meUser?.position?.role === 6
               ? ColumnsDManager
@@ -44,6 +47,7 @@ export default function Page() {
                 : Columns
           }
           data={data?.items ?? []}
+          isRowClickble
         />
       </div>
     </>

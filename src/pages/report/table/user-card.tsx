@@ -1,45 +1,75 @@
 import { minio_img_url } from "@/constants";
 
-const UserCard = ({
-  data,
-}: {
-  data: {
-    status: string;
-    closer?: {
+type UserData = {
+  status: string;
+  closer?: {
+    avatar: {
+      path: string;
+    } | null;
+  };
+  closer_m?: {
+    avatar?: {
+      path?: string;
+    } | null;
+  };
+  filial?: {
+    cashiers: {
       avatar: {
         path: string;
-      } | null;
-    };
+      };
+    }[];
   };
-}) => {
+};
+
+const UserCard = ({ data }: { data: UserData }) => {
   return (
     <>
-      {data.status != "open" && (
-        <div className="relative w-10 h-10">
-          <img
-            src={minio_img_url + data.closer?.avatar?.path || ""}
-            alt={""}
-            className={`w-10 h-10 object-cover rounded-full border-2 der-red-400 border-[]`}
-          />
-          <div className="absolute -bottom-0 -left-0 bg-white rounded-full text-xs">
-            {data.status ? (
-              <span className="text-green-500 text-sm">
-                <img
-                  src={"./images/table/check.png"}
-                  alt={"./images/table/check.png"}
-                  className={`w-[12px] h=[12px]`}
-                />
-              </span>
-            ) : (
-              <span className="text-red-400 text-sm">
-                <img
-                  src={"./images/table/uncheck.png"}
-                  alt={"./images/table/check.png"}
-                  className={`w-[12px] h=[12px]`}
-                />
-              </span>
-            )}
+      {data.status !== "open" && (
+        <div className="flex space-x-[-7px]">
+          <div className="relative w-10 h-10  ">
+            <img
+              src={
+                minio_img_url +
+                (data.closer?.avatar?.path ||
+                  data.filial?.cashiers[0]?.avatar?.path ||
+                  "")
+              }
+              alt=""
+              className="w-10 h-10 object-cover rounded-full border-2 border-[#E6E6D9]"
+            />
+            <div className="absolute -bottom-1 -left-1 bg-white rounded-full p-[2px]">
+              <img
+                src={
+                  data.status
+                    ? "./images/table/check.png"
+                    : "./images/table/uncheck.png"
+                }
+                alt="status"
+                className="w-[12px] h-[12px]"
+              />
+            </div>
           </div>
+
+          {data.closer_m && (
+            <div className="relative w-10 h-10 z-0 z-[5]">
+              <img
+                src={minio_img_url + (data.closer_m.avatar?.path || "")}
+                alt=""
+                className="w-10 h-10 object-cover rounded-full border-2 border-[#E6E6D9]"
+              />
+              <div className="absolute -bottom-1 -left-1 bg-white rounded-full p-[2px]">
+                <img
+                  src={
+                    data.status
+                      ? "./images/table/check.png"
+                      : "./images/table/uncheck.png"
+                  }
+                  alt="status"
+                  className="w-[12px] h-[12px]"
+                />
+              </div>
+            </div>
+          )}
         </div>
       )}
     </>

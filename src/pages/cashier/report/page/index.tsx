@@ -39,6 +39,7 @@ export default function Page() {
       limit: 10,
       status: sort,
       page: 1,
+      
     },
     enabled: sort != "open" && !id,
   });

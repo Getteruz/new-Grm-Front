@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { DollarSign, Plus } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { data, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 import ShadcnSelect from "@/components/Select";
@@ -42,10 +42,10 @@ export default function CardSort({KassaId}:{KassaId:string}) {
   const { data: kassaId, isLoading: isReportLoading } = useKassaById({
     id:KassaId,
   });
+  console.log(kassaId)
   const { data: types } = useDataCashflowTypes({
     queries: { limit: 20, page: 1, search: "" },
   });
-
   // Prepare column data using report data
   const columns = [
     {
@@ -117,8 +117,8 @@ export default function CardSort({KassaId}:{KassaId:string}) {
         ),
     },
     {
-      title: meUser?.position.role === 3 ? "Возврат сумма":'',
-      price:  meUser?.position.role === 3 ? `-${formatPrice(kassaId?.return_sale || 0)}` :"",
+      title: meUser?.position.role === 4 ? "Возврат сумма":'',
+      price:  meUser?.position.role === 4 ? `-${formatPrice(kassaId?.return_sale || 0)}` :"",
     },
     {
       title: "Инкассация",
@@ -268,7 +268,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
             <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
               Дата:
             </p>
-            <p className="text-[14px] font-semibold">1 шт</p>
+            <p className="text-[14px] font-semibold">{kassaId?.totalSize} шт</p>
           </div>
           <div className="grid row-start w-full  border-border  border-b grid-cols-4  ">
             {column?.map((e) => (

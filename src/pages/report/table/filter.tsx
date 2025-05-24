@@ -7,8 +7,10 @@ import { UfoBottom } from "@/components/icons";
 
 export default function Filters({
   filterDieller = true,
+  closeKassa = true,
 }: {
   filterDieller?: boolean;
+  closeKassa?: boolean;
 }) {
   const { meUser } = useMeStore();
 
@@ -36,12 +38,14 @@ export default function Filters({
       >
         <FileOutput /> Экспорт
       </Button>
-      <Button
-        className="h-full border-l-0 bg-primary hover:bg-[#525248] hover:text-accent text-accent border-y-0 w-[165px]  "
-        variant={"outline"}
-      >
-        <X /> Закрыть кассу
-      </Button>
+      {closeKassa && (
+        <Button
+          className="h-full border-l-0 bg-primary hover:bg-[#525248] hover:text-accent text-accent border-y-0 w-[165px]  "
+          variant={"outline"}
+        >
+          <X /> Закрыть кассу
+        </Button>
+      )}
     </div>
   );
 }

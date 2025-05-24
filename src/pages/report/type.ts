@@ -89,10 +89,10 @@ export interface TActionData {
 
 export interface TQuery {
   search?: string | undefined;
-  filialId?: string;
+  filialId?: string|undefined;
   filial?:string;
   kassaId?: string;
-  limit: number;
-  page: number;
+  limit?: number;
+  page?: number;
   id?: string;
 }

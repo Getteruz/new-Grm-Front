@@ -209,10 +209,23 @@ export const ColumnsFManager: ColumnDef<TData>[] = [
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
     cell: ({ row }) => {
-      return <TableAction url={apiRoutes.qrBase} id={row.original?.id} />;
+      return (
+        <>
+          {row.original.status === "closed_by_c" && (
+            <TableAction
+              url={apiRoutes.cancelKassa}
+              id={row.original?.id}
+              ShowUpdate={false}
+              ShowDelete={false}
+              RejectedKassa={true}
+            />
+          )}
+        </>
+      );
     },
   },
 ];
+
 export const ColumnsDManagerMonthly: ColumnDef<TData>[] = [
   {
     header: "Дата",

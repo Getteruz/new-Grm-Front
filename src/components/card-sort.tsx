@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { DollarSign, Plus } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import { useState } from "react";
-import {  useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 import ShadcnSelect from "@/components/Select";
@@ -20,7 +20,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
 
-export default function CardSort({KassaId}:{KassaId:string}) {
+export default function CardSort({ KassaId }: { KassaId: string }) {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
   const location = useLocation();
@@ -40,7 +40,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
   // Fetch necessary data
   const { data: filialData } = useDataFetch({});
   const { data: kassaId, isLoading: isReportLoading } = useKassaById({
-    id:KassaId,
+    id: KassaId,
   });
   const { data: types } = useDataCashflowTypes({
     queries: { limit: 20, page: 1, search: "" },
@@ -52,7 +52,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice( (kassaId?.income || 0) -(kassaId?.sale || 0)  || 0)
+        formatPrice((kassaId?.income || 0) - (kassaId?.sale || 0) || 0)
       ),
       button:
         meUser?.position.role === 3 ? (
@@ -116,8 +116,12 @@ export default function CardSort({KassaId}:{KassaId:string}) {
         ),
     },
     {
-      title: meUser?.position.role === 4 ? "Возврат сумма":'',
-      price:  meUser?.position.role === 4 ? `-${formatPrice(kassaId?.return_sale || 0)}` :"",
+      title: [3, 4].includes(meUser?.position?.role ?? -1)
+        ? "Возврат сумма"
+        : "",
+      price: [3, 4].includes(meUser?.position?.role ?? 0)
+        ? `-${formatPrice(kassaId?.return_sale || 0)}`
+        : "",
     },
     {
       title: "Инкассация",
@@ -264,9 +268,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
                 )}
               </div>
             </div>
-            <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
-              Дата:
-            </p>
+            <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">Дата:</p>
             <p className="text-[14px] font-semibold">{kassaId?.totalSize} шт</p>
           </div>
           <div className="grid row-start w-full  border-border  border-b grid-cols-4  ">
@@ -299,11 +301,11 @@ export default function CardSort({KassaId}:{KassaId:string}) {
         </div>
 
         <DialogContent className="sm:max-w-[640px] costomModal p-1">
-        <div
-          className={`p-3 h-[44px] font-bold pb-0 text-center mx-auto rounded-t-[7px] w-1/2 -mt-[48px]  ${type === "Приход" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}
-        >
-          {type === "Приход" ? "Добавление прихода" : "Добавление расхода"}
-         </div>
+          <div
+            className={`p-3 h-[44px] font-bold pb-0 text-center mx-auto rounded-t-[7px] w-1/2 -mt-[48px]  ${type === "Приход" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}
+          >
+            {type === "Приход" ? "Добавление прихода" : "Добавление расхода"}
+          </div>
           <div className="grid grid-cols-2 gap-1">
             <div className="w-full  grid grid-cols-3 gap-0.5">
               {types?.items

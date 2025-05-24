@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-import { DeleteData } from "@/service/apiHelpers";
+import { DeleteData, rejectKassa } from "@/service/apiHelpers";
 
 import { Button } from "./ui/button";
 import {
@@ -30,6 +30,7 @@ export default function TableAction({
   ShowPreview,
   ShowUpdate = true,
   ShowDelete = true,
+  RejectedKassa = false,
   refetchUrl,
   children,
   id,
@@ -38,6 +39,7 @@ export default function TableAction({
   ShowPreview?: boolean;
   ShowUpdate?: boolean;
   ShowDelete?: boolean;
+  RejectedKassa?: boolean;
   id: string;
   refetchUrl?: string;
   children?: React.ReactNode;
@@ -47,6 +49,7 @@ export default function TableAction({
   const [, setId] = useQueryState("id");
   const [open, setOpen] = useState<boolean>(false);
   const queryClient = useQueryClient();
+
   const { mutate } = useMutation({
     mutationFn: async () => {
       return await DeleteData(url, id);
@@ -54,6 +57,19 @@ export default function TableAction({
     onSuccess: () => {
       toast.success(t("deleteToast"));
       queryClient.invalidateQueries({ queryKey: [refetchUrl || url] });
+      setOpen(false);
+    },
+  });
+
+  const { mutate: rejectKassaEvent } = useMutation({
+    mutationFn: async () => {
+      return await rejectKassa(url, {
+        ids: [id],
+      });
+    },
+    onSuccess: () => {
+      toast.success(t("Успешно"));
+      queryClient.invalidateQueries({ queryKey: [url] });
       setOpen(false);
     },
   });
@@ -68,6 +84,14 @@ export default function TableAction({
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
+          {RejectedKassa ? (
+            <DropdownMenuItem onClick={() => rejectKassaEvent()}>
+              {t("Отмена")}
+            </DropdownMenuItem>
+          ) : (
+            ""
+          )}
+
           {ShowUpdate ? (
             <DropdownMenuItem onClick={() => setId(id)}>
               {t("update")}

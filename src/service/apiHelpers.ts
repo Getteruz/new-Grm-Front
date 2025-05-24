@@ -119,3 +119,18 @@ const handleError = (error: iError) => {
   }
   toast.error(error?.response?.data?.message);
 };
+
+export const rejectKassa = async (
+  url: string,
+  data: {
+    ids: string[];
+  }
+) => {
+  try {
+    const res = await api.patch(url, data);
+    return res.data;
+  } catch (error) {
+    handleError(error as iError);
+    throw error;
+  }
+};

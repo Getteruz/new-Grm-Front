@@ -39,6 +39,7 @@ export const apiRoutes = {
   qrCodes: "/qr-codes",
   kassaReport: "/kassa/report",
   kassaReportsTotal: "/kassa-reports/total",
+  cancelKassa: "/kassa/cancel-kassa",
   kassa: "/kassa",
   kassaClose: "/kassa/close-kassa",
   statement: "/statement",

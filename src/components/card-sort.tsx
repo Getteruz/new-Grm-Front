@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { DollarSign, Plus } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import { useState } from "react";
-import { data, useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 import ShadcnSelect from "@/components/Select";
@@ -42,7 +42,6 @@ export default function CardSort({KassaId}:{KassaId:string}) {
   const { data: kassaId, isLoading: isReportLoading } = useKassaById({
     id:KassaId,
   });
-  console.log(kassaId)
   const { data: types } = useDataCashflowTypes({
     queries: { limit: 20, page: 1, search: "" },
   });

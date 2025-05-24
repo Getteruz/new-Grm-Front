@@ -1,4 +1,4 @@
-import { Banknote, DollarSign, Plus } from "lucide-react";
+import { Banknote, DollarSign } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,7 +13,7 @@ import { useMeStore } from "@/store/me-store";
 
 export default function FManagerCardSort() {
   const [sorttype, setSortType] = useQueryState("sorttype", parseAsString);
-  const [type, setType] = useState<string>("Приход");
+  const [type] = useState<string>("Приход");
   const [typePay, setTypePay] = useState<string>("cash");
   const isReportLoading = false;
   const { meUser } = useMeStore();
@@ -122,7 +122,7 @@ export default function FManagerCardSort() {
             <div
               key={e.title}
               onClick={() => setSortType(e.title)}
-              className={`${sorttype == e.title ? "bg-primary   text-background" : "bg-sidebar  text-primary"} ${e.button ? "" : "border-b"} h-[78px] border-border border-r  flex justify-between items-center cursor-pointer px-4 py-5`}
+              className={`${sorttype == e.title ? "bg-primary   text-background" : "bg-sidebar  text-primary"} h-[78px] border-border border-r  flex justify-between items-center cursor-pointer px-4 py-5`}
             >
               <div className="">
                 <p className="text-[12px] mb-0.5 flex  items">{e.title}</p>

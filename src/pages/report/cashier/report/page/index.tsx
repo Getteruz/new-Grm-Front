@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import CardSort from "@/components/card-sort";
 import { DataTable } from "@/components/ui/data-table";

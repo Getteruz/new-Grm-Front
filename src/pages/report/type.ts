@@ -15,7 +15,15 @@ export interface TData {
   price: number;
   tip: string;
   title: string;
-  icon: string;
+  icon: {
+    id: string;
+    path: string;
+    model: string;
+    mimetype: string;
+    size: number;
+    name: string;
+    created_at: string;
+}
   type: string;
   startDate: string;
   endDate: string | null;
@@ -81,11 +89,30 @@ export interface TActionData {
   code: string;
 }
 
+export interface TKassareportData {
+  totalSellCount: number;
+  additionalProfitTotalSum: number;
+  netProfitTotalSum: number;
+  totalSize: number;
+  year: number;
+  month: number;
+  status: string;
+  totalPlasticSum: number;
+  totalInternetShopSum: number;
+  totalSale: number;
+  totalSaleReturn: number;
+  totalCashCollection: number;
+  totalDiscount: number;
+  totalIncome: number;
+  totalExpense: number;
+  totalSum: number;
+}
 export interface TQuery {
   search?: string | undefined;
   filialId?: string;
   kassaId?: string;
-  limit: number;
-  page: number;
+  limit?: number;
+  page?: number;
   id?: string;
+  type?:string;
 }

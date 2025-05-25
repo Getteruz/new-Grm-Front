@@ -38,6 +38,8 @@ export const apiRoutes = {
   notes: "/notes",
   qrCodes: "/qr-codes",
   kassaReport: "/kassa/report",
+  kassaReports:'/kassa-reports',
+  kassaReportTotal:'/kassa-reports/total',
   kassa: "/kassa",
   kassaClose: "/kassa/close-kassa",
   statement: "/statement",

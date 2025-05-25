@@ -134,5 +134,58 @@ export interface KassaItem{
   income: number;
   expense: number;
   status: string;
-
+closer: {
+    id: string;
+    isActive: boolean;
+    firstName: string;
+    lastName: string;
+    fatherName: string;
+    login: string;
+    hired: string;
+    from: string;
+    to: string;
+    username: string | null;
+    salary: number;
+    email: string | null;
+    phone: string;
+    password: string;
+    isUpdated: boolean;
+    createdAt: string;
+    avatar: {
+        id: string;
+        path: string;
+        model: string;
+        mimetype: string;
+        size: number;
+        name: string;
+        created_at: string;
+    };
+},
+closer_m: {
+  id: string;
+  isActive: boolean;
+  firstName: string;
+  lastName: string;
+  fatherName: string;
+  login: string;
+  hired: string;
+  from: string;
+  to: string;
+  username: string | null;
+  salary: number;
+  email: string | null;
+  phone: string;
+  password: string;
+  isUpdated: boolean;
+  createdAt: string;
+  avatar: {
+      id: string;
+      path: string;
+      model: string;
+      mimetype: string;
+      size: number;
+      name: string;
+      created_at: string;
+  };
+}
 }

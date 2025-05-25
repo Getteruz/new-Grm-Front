@@ -1,12 +1,24 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { MessageSquareText, Plus, RefreshCcw } from "lucide-react";
+import {
+  Loader2,
+  MessageSquareText,
+  MoreHorizontal,
+  Plus,
+  RefreshCcw,
+} from "lucide-react";
 
 import TableAction from "@/components/table-action";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
+import { Button } from "@/components/ui/button";
+import { KassaItem } from "@/pages/cashier/report/type";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { PatchData } from "@/service/apiHelpers";
+import { toast } from "sonner";
+import { minio_img_url } from "@/constants";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -191,9 +203,11 @@ export const ColumnsDManagerMonthly: ColumnDef<TData>[] = [
   {
     header: "Дата",
     accessorKey: "date",
-   
+
     cell: ({ row }) => {
-      return <p className="min-w-[120px]">{format(row.original.date, "MMMM")} </p>;
+      return (
+        <p className="min-w-[120px]">{format(row.original.date, "MMMM")} </p>
+      );
     },
   },
   {
@@ -248,7 +262,7 @@ export const ColumnsDManagerMonthly: ColumnDef<TData>[] = [
             <AvatarImage src={undefined} />
             <AvatarFallback>D</AvatarFallback>
           </Avatar>
-          <Avatar  className="w-10 h-10">
+          <Avatar className="w-10 h-10">
             <AvatarImage src={"/images/image.png"} />
             <AvatarFallback>D</AvatarFallback>
           </Avatar>
@@ -286,7 +300,7 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
   {
     header: "Дата",
     accessorKey: "date",
-  
+
     cell: ({ row }) => {
       return (
         <div
@@ -417,5 +431,143 @@ export const ColumnsDManager: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       return <TableAction url={apiRoutes.qrBase} id={row.original?.id} />;
     },
+  },
+];
+
+export const KassaColumns: ColumnDef<KassaItem>[] = [
+  {
+    id: "startDate",
+    header: "Дата",
+    cell: ({ row }) => {
+      const item = row.original;
+      return (
+        <p className={`${item?.endDate ? "" : "text-[#89A143]"}`}>
+          {" "}
+          {item?.endDate
+            ? format(new Date(item?.endDate), "dd MMMM yyyy")
+            : "Продалажется"}
+        </p>
+      );
+    },
+  },
+  {
+    header: "Сумма",
+    id: "totalSum",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p className="text-[#89A143]"> {item?.totalSum} $</p>;
+    },
+  },
+
+  {
+    header: "Терминал",
+    id: "plasticSum",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.plasticSum} $</p>;
+    },
+  },
+
+  {
+    header: "Скидка",
+    id: "discount",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.discount} $</p>;
+    },
+  },
+
+  {
+    header: "Навар",
+    id: "additionalProfitTotalSum",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.additionalProfitTotalSum} $</p>;
+    },
+  },
+
+  {
+    header: "Объём",
+    id: "totalSize",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.totalSize} м²</p>;
+    },
+  },
+  {
+    header: "Приход",
+    id: "income",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.income} $</p>;
+    },
+  },
+  {
+    header: "Расход",
+    id: "expense",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.expense} $</p>;
+    },
+  },
+  {
+    header: "Инкассация",
+    id: "cash_collection",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.cash_collection} $</p>;
+    },
+  },
+  {
+    header: "Кассир",
+    id: "closer",
+    cell: ({ row }) => {
+      const item = row.original;
+      return item?.status != "open"?  <div className="flex items-center">
+       {<img className="w-[40px] rounded-full border-background border h-[40px]" src={minio_img_url + item?.closer?.avatar?.path}/>}
+        {item?.status != "closed_by_c" ?  <img className="w-[40px]  border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={minio_img_url + item?.closer_m?.avatar?.path}/>:""}
+      </div>:"";
+    },
+  },
+  {
+    header: "Статус",
+    id: "status",
+    cell: ({ row }) => {
+      const queryClient = useQueryClient();
+      const item = row.original;
+      const { mutate, isPending } = useMutation({
+        mutationFn: () => PatchData(apiRoutes.kassaClose, {
+          ids:[row.original?.id]
+        }),
+        onSuccess: () => {
+          toast.success("close");
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.kassa] });
+        },
+        onError: (error) => {
+          toast.error(`Ошибка: ${error.message || "Не удалось добавить операцию"}`)
+        },
+      });
+      return (
+        <div onClick={(e) => e.stopPropagation()}>
+          {item?.status == "closed_by_c" ? (
+            <Button disabled={isPending}  onClick={()=>mutate()} className="rounded-[63px] bg-[#E38157]">{isPending? <Loader2/> :""}  Принят </Button>
+          ) : item?.status == "accepted" ? (
+            <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
+          ) : item?.status == "rejected"? (
+            <Button disabled variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]"> Отменено </Button>
+          ):  <Button disabled variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>}
+        </div>
+      );
+    },
+  },
+
+  {
+    id: "actions",
+    header: "actions",
+    cell: () => (
+      <Button onClick={(e)=>e.stopPropagation()} variant="ghost" size="icon">
+        <MoreHorizontal className="h-4 w-4" />
+      </Button>
+    ),
   },
 ];

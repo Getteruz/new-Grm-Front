@@ -1,89 +1,158 @@
+import { Button } from "@/components/ui/button";
+
 import { ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
+import { MoreHorizontal } from "lucide-react";
+import { TKassareportData } from "../type";
 
-import TableAction from "@/components/table-action";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { apiRoutes } from "@/service/apiRoutes";
-
-import { TData } from "../type";
-
-export const FinanceColumns: ColumnDef<TData>[] = [
+export const KassaColumns: ColumnDef<TKassareportData>[] = [
   {
+    id: "startDate",
     header: "Дата",
-    accessorKey: "date",
-
     cell: ({ row }) => {
-      return <p>{format(row.original.date, "MMMM")} </p>;
+      const item = row.original;
+      return (
+        <p className={`${item.status == "open" ?  "text-[#89A143]":""}`}>
+          {item.status === "open"
+            ? "Продалажется"
+            : [
+                "Январь",
+                "Февраль",
+                "Март",
+                "Апрель",
+                "Май",
+                "Июнь",
+                "Июль",
+                "Август",
+                "Сентябрь",
+                "Октябрь",
+                "Ноябрь",
+                "Декабрь",
+              ][item?.month - 1] || ""}
+        </p>
+      );
     },
   },
   {
     header: "Сумма",
-    accessorKey: "price",
-
+    id: "totalSum",
     cell: ({ row }) => {
-      return <p className="text-[#89A143]">{row.original.price} $</p>;
+      const item = row.original;
+      return <p className="text-[#89A143]"> {item?.totalSum} $</p>;
     },
   },
+
   {
-    header: "Онлайн",
-    accessorKey: "price",
-
+    header: "Терминал",
+    id: "totalSum",
     cell: ({ row }) => {
-      return <p className="text-[#58A0C6]">{row.original.price} $</p>;
+      const item = row.original;
+      return <p> {item?.totalSum} $</p>;
     },
   },
+
   {
     header: "Скидка",
-    cell: () => {
-      return <p className={` text-[#E38157] `}></p>;
+    id: "discount",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.totalDiscount} $</p>;
     },
   },
 
   {
     header: "Навар",
-    accessorKey: "model.title",
+    id: "additionalProfitTotalSum",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.additionalProfitTotalSum} $</p>;
+    },
   },
+
   {
     header: "Объём",
-    accessorKey: "size.title",
+    id: "totalSize",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.totalSize} м²</p>;
+    },
   },
   {
     header: "Приход",
-    accessorKey: "filial.title",
+    id: "income",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.totalIncome} $</p>;
+    },
   },
   {
     header: "Расход",
-    accessorKey: "sller.title",
-    cell: () => {
-      return <p className={` text-[#E38157] `}></p>;
+    id: "expense",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.totalExpense} $</p>;
     },
   },
   {
-    header: "Закрыл",
-    accessorKey: "casher.title",
+    header: "Инкассация",
+    id: "cash_collection",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.totalCashCollection} $</p>;
+    },
   },
+  // {
+  //   header: "Кассир",
+  //   id: "closer",
+  //   cell: ({ row }) => {
+  //     const item = row.original;
+  //     return item?.status != "open" ? (
+  //       <div className="flex items-center">
+  //         {
+  //           <img
+  //             className="w-[40px] rounded-full border-background border h-[40px]"
+  //             src={minio_img_url + item?.closer?.avatar?.path}
+  //           />
+  //         }
+  //         {item?.status != "closed_by_c" ? (
+  //           <img
+  //             className="w-[40px]  border-background border-[2px]  -translate-x-2 rounded-full h-[40px]"
+  //             src={minio_img_url + item?.closer_m?.avatar?.path}
+  //           />
+  //         ) : (
+  //           ""
+  //         )}
+  //       </div>
+  //     ) : (
+  //       ""
+  //     );
+  //   },
+  // },
   {
-    header: "Принял",
-    accessorKey: "casher.title",
-    cell: () => {
+    header: "Статус",
+    id: "status",
+    cell: ({ row }) => {
+      const item = row.original;
       return (
-        <Avatar className="w-[40px] h-[40px]">
-          <AvatarImage src="" />
-        </Avatar>
+        <div onClick={(e) => e.stopPropagation()}>
+          {item?.status == "closed_by_c" ? (
+            <Button   className="rounded-[63px] bg-[#E38157]">  Принят </Button>
+          ) : item?.status == "accepted" ? (
+            <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
+          ) : item?.status == "rejected"? (
+            <Button disabled variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]"> Отменено </Button>
+          ):  <Button disabled variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>}
+        </div>
       );
     },
   },
-  {
-    header: "Статус",
-    accessorKey: "",
-  },
+
   {
     id: "actions",
-    enableHiding: true,
-    header: () => <div className="text-right">{"actions"}</div>,
-    size: 50,
-    cell: ({ row }) => {
-      return <TableAction url={apiRoutes.qrBase} id={row.original?.id} />;
-    },
+    header: "actions",
+    cell: () => (
+      <Button onClick={(e) => e.stopPropagation()} variant="ghost" size="icon">
+        <MoreHorizontal className="h-4 w-4" />
+      </Button>
+    ),
   },
 ];

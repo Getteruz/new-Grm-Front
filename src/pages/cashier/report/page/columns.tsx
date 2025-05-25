@@ -231,6 +231,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
       );
     },
   },
+ 
   {
     id: "actions",
     header: "actions",

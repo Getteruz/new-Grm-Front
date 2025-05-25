@@ -5,10 +5,14 @@ import { getAllData, getByIdData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
-import { TData, TQuery } from "../type";
+import { TData, TKassareportData, TQuery } from "../type";
 
 interface IData {
   options?: DefinedInitialDataOptions<TResponse<TData>>;
+  queries?: TQuery;
+}
+interface IData1 {
+  options?: DefinedInitialDataOptions<TData[]>;
   queries?: TQuery;
 }
 interface IProductsChecks {
@@ -16,21 +20,27 @@ interface IProductsChecks {
   id: string | undefined;
   queries?: ProductsChecksQuery;
 }
-const useDataLibrary = ({ options, queries }: IData) =>
+interface IKassareport {
+  options?: DefinedInitialDataOptions<TKassareportData>;
+  queries?: TQuery;
+  enabled?: boolean;
+}
+export const useKassa= ({ options, queries }: IData) =>
   useQuery({
     ...options,
-    queryKey: [apiRoutes.cashflow, queries],
+    queryKey: [apiRoutes.kassa, queries],
     queryFn: () =>
-      getAllData<TResponse<TData>, TQuery>(apiRoutes.cashflow, queries),
+      getAllData<TResponse<TData>, TQuery>(apiRoutes.kassa, queries),
   });
 
-export const useDataCashflowTypes = ({ options, queries }: IData) =>
+export const useDataCashflowTypes = ({ options, queries }: IData1) =>
   useQuery({
     ...options,
     queryKey: [apiRoutes.cashflowTypes, queries],
     queryFn: () =>
-      getAllData<TResponse<TData>, TQuery>(apiRoutes.cashflowTypes, queries),
+      getAllData<TData[], TQuery>(apiRoutes.cashflowTypes, queries),
   });
+
 export const useOpenKassa = ({ options, id, queries }: IProductsChecks) =>
   useQuery({
     ...options,
@@ -56,5 +66,16 @@ export const useOpenKassa = ({ options, id, queries }: IProductsChecks) =>
           queries
         ),
     });
+
+    export const useKassaReportTotal= ({ options, queries,enabled }: IKassareport) =>
+      useQuery({
+        ...options,
+        queryKey: [apiRoutes.kassaReportTotal],
+        enabled,
+        queryFn: () =>
+          getAllData<TKassareportData, TQuery>(
+            apiRoutes.kassaReportTotal,
+            queries
+          ),
+      });
   
-export default useDataLibrary;

@@ -123,6 +123,7 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
       }));
   };
 
+
   const categories = getCategories();
 
   const handleSubmit = () => {
@@ -156,7 +157,6 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
       tip: "cashflow",
       // filial: meUser.filial.id,
     };
-
     // Send to API
     addCashflow(cashflowData);
   };

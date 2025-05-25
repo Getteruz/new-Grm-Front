@@ -5,22 +5,25 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
-import ShadcnSelect from "@/components/Select";
+// import ShadcnSelect from "@/components/Select";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
-import useDataFetch from "@/pages/filial/table/queries";
+
 import {
   useDataCashflowTypes,
   useKassaById,
 } from "@/pages/report/table/queries";
+
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
+import { TKassareportData } from "@/pages/report/type";
+import { minio_img_url } from "@/constants";
 
-export default function CardSort({KassaId}:{KassaId:string}) {
+export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaReport?:TKassareportData}) {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
   const location = useLocation();
@@ -33,17 +36,18 @@ export default function CardSort({KassaId}:{KassaId:string}) {
   const [cashflow_type, setCashflow_type] = useState<string>("");
   const [comment, setComment] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
-  const [filial, setFilial] = useState<string>("");
+  // const [filial, setFilial] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   // Fetch necessary data
-  const { data: filialData } = useDataFetch({});
+  // const { data: filialData } = useDataFetch({});
   const { data: kassaId, isLoading: isReportLoading } = useKassaById({
     id:KassaId,
   });
+
   const { data: types } = useDataCashflowTypes({
-    queries: { limit: 20, page: 1, search: "" },
+    queries: { limit: 20, page: 1,type: type == "Приход"? "in" : "out" },
   });
 
   // Prepare column data using report data
@@ -53,10 +57,10 @@ export default function CardSort({KassaId}:{KassaId:string}) {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.income || 0)
+        formatPrice(KassaReport?.totalIncome ||  kassaId?.income || 0)
       ),
       button:
-        meUser?.position.role === 3 ? (
+        meUser?.position.role === 3 || !kassaId ? (
           ""
         ) : (
           <div
@@ -64,9 +68,9 @@ export default function CardSort({KassaId}:{KassaId:string}) {
               setType("Приход");
               setDialogOpen(true);
             }}
-            className="bg-[#F0F0E5] p-2.5 rounded-4xl"
-          >
-            <Plus size={13} color="#5D5D5390" />
+            className="border-border   border p-4 rounded-4xl"
+            >
+              <Plus size={20} color={ sorttype == "Приход"? "#f0f0e5" :"#5D5D53"} />
           </div>
         ),
     },
@@ -75,7 +79,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.sale || 0)
+        formatPrice(KassaReport?.totalSale || kassaId?.sale || 0)
       ),
     },
     {
@@ -83,7 +87,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.plasticSum || 0)
+        formatPrice(KassaReport?.totalPlasticSum || kassaId?.plasticSum || 0)
       ),
     },
     {
@@ -91,7 +95,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.additionalProfitTotalSum || 0)
+        formatPrice(KassaReport?.additionalProfitTotalSum ||  kassaId?.additionalProfitTotalSum || 0)
       ),
     },
     {
@@ -99,10 +103,10 @@ export default function CardSort({KassaId}:{KassaId:string}) {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        `-${formatPrice(kassaId?.expense || 0)}`
+        `-${formatPrice(KassaReport?.totalExpense || kassaId?.expense || 0)}`
       ),
       button:
-        meUser?.position.role === 3 ? (
+        meUser?.position.role === 3   || !kassaId? (
           ""
         ) : (
           <div
@@ -110,44 +114,44 @@ export default function CardSort({KassaId}:{KassaId:string}) {
               setType("Расход");
               setDialogOpen(true);
             }}
-            className="bg-[#F0F0E5] p-2.5 rounded-4xl"
+            className="border-border   border p-4 rounded-4xl"
           >
-            <Plus size={13} color="#5D5D5390" />
+            <Plus  size={20} color={ sorttype == "Расход"? "#f0f0e5" :"#5D5D53"} />
           </div>
         ),
     },
     {
-      title: meUser?.position.role === 3 ? "Возврат сумма":'',
-      price:  meUser?.position.role === 3 ? `-${formatPrice(kassaId?.return_sale || 0)}` :"",
+      title: "Возврат сумма",
+      price:  `-${formatPrice(KassaReport?.totalSaleReturn || kassaId?.return_sale || 0)}` ,
     },
     {
       title: "Инкассация",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.cash_collection || 0)
+        formatPrice(KassaReport?.totalCashCollection || kassaId?.cash_collection || 0)
       ),
-      button:
-        meUser?.position.role === 3 ? (
-          ""
-        ) : (
-          <div
-            onClick={() => {
-              setType("Приход");
-              setDialogOpen(true);
-            }}
-            className="bg-[#F0F0E5] p-2.5 rounded-4xl"
-          >
-            <Plus size={13} color="#5D5D5390" />
-          </div>
-        ),
+      // button:
+      //   meUser?.position.role === 3  || !kassaId ? (
+      //     ""
+      //   ) : (
+      //     <div
+      //       onClick={() => {
+      //         setType("Инкассация");
+      //         setDialogOpen(true);
+      //       }}
+      //       className="border-border   border p-4 rounded-4xl"
+      //       >
+      //         <Plus size={20} color={ sorttype == "Инкассация"? "#f0f0e5" :"#5D5D53"} />
+      //     </div>
+      //   ),
     },
     {
       title: "Скидка",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(Number(kassaId?.discount) || 0)
+        formatPrice(Number(KassaReport?.totalDiscount || kassaId?.discount) || 0)
       ),
     },
   ];
@@ -158,7 +162,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(kassaId?.income || 0)
+        formatPrice( kassaId?.income || 0)
       ),
     },
     {
@@ -238,6 +242,9 @@ export default function CardSort({KassaId}:{KassaId:string}) {
 
       // Invalidate queries to refresh data
       queryClient.invalidateQueries({ queryKey: ["kassa-report"] });
+      queryClient.invalidateQueries({ queryKey: [  apiRoutes.cashflow] });
+      queryClient.invalidateQueries({ queryKey: [  apiRoutes.kassa] });
+   
     } catch (error) {
       toast.error(String(error));
     } finally {
@@ -260,7 +267,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
                   <Skeleton className="h-7 w-24 mt-1" />
                 ) : (
                   <p className="text-[25px] font-bold text-foreground">
-                    {formatPrice(kassaId?.totalSum || 0)}
+                    {formatPrice(KassaReport?.totalSum|| kassaId?.totalSum || 0)}
                   </p>
                 )}
               </div>
@@ -299,15 +306,15 @@ export default function CardSort({KassaId}:{KassaId:string}) {
           </div>
         </div>
 
-        <DialogContent className="sm:max-w-[640px] costomModal p-1">
+      <DialogContent className="sm:max-w-[640px] costomModal rounded-[12px] px-4 pb-4">
         <div
-          className={`p-3 h-[44px] font-bold pb-0 text-center mx-auto rounded-t-[7px] w-1/2 -mt-[48px]  ${type === "Приход" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}
+          className={`p-3 h-[44px] font-bold pb-0 text-center mx-auto rounded-t-[7px] w-1/2 -mt-[45px]  ${type === "Приход" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}
         >
           {type === "Приход" ? "Добавление прихода" : "Добавление расхода"}
          </div>
           <div className="grid grid-cols-2 gap-1">
-            <div className="w-full  grid grid-cols-3 gap-0.5">
-              {types?.items
+            <div className={`w-full  grid ${ types && types?.length < 6 ?"grid-cols-2":  'grid-cols-3'} gap-0.5`}>
+              {types
                 ?.filter((i) => i?.is_visible)
                 ?.map((item) => (
                   <div
@@ -316,7 +323,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
                     className={`${cashflow_type === item.id ? "bg-[#5D5D53] text-[white]" : "bg-input text-primary"} flex items-center justify-center flex-col pt-4 rounded-[7px] text-center cursor-pointer`}
                   >
                     <img
-                      src={`/images/icons/${item.id === "46f17d71-cc7e-4af8-99f7-097c88562cb4" ? "bank" : item?.title}.svg`}
+                      src={minio_img_url + item.icon?.path}
                       style={{
                         filter:
                           cashflow_type === item.id
@@ -332,7 +339,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
                 ))}
             </div>
             <div className="w-full">
-              <ShadcnSelect
+              {/* <ShadcnSelect
                 value={filial}
                 options={
                   filialData?.pages[0]?.items?.map((item) => ({
@@ -345,7 +352,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
                   setFilial(value || "");
                 }}
                 className="w-full text-[#5D5D53] border-none h-[90px] !bg-input !text-[22px] font-semibold rounded-[7px] px-[17px] py-[26px]"
-              />
+              /> */}
 
               <Input
                 value={price || ""}
@@ -365,7 +372,7 @@ export default function CardSort({KassaId}:{KassaId:string}) {
           <Button
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className={`p-5 rounded-[7px] ${type === "Приход" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white ${isSubmitting ? "opacity-70" : ""}`}
+            className={`p-5 py-6 rounded-[7px] ${type === "Приход" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white ${isSubmitting ? "opacity-70" : ""}`}
           >
             {isSubmitting
               ? "Добавление..."

@@ -159,7 +159,7 @@ export const DataMenu = {
         },
         {
           id: 23,
-          link: "/report-item-2",
+          link: "/report-finance",
           text: "Ежемесячный отчет",
         },
         {

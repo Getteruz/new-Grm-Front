@@ -1,21 +1,48 @@
-import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";
+import { DefinedInitialDataOptions, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 import { ProductsChecksQuery } from "@/pages/products-check/type";
 import { getAllData, getByIdData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
-import { TData, TQuery } from "../type";
+import { TData, TKassareportData, TQuery } from "../type";
 
 interface IData {
   options?: DefinedInitialDataOptions<TResponse<TData>>;
   queries?: TQuery;
+}
+
+interface IKassaReportData {
+  options?: DefinedInitialDataOptions<TResponse<TKassareportData>>;
+  queries?: TQuery;
+  enabled?: boolean
 }
 interface IProductsChecks {
   options?: DefinedInitialDataOptions<TData>;
   id: string | undefined;
   queries?: ProductsChecksQuery;
 }
+
+export const useKassaReports = ({ queries ,enabled}: IKassaReportData) =>
+  useInfiniteQuery({
+    queryKey: [apiRoutes.kassaReports, queries],
+    queryFn: ({ pageParam = 10 }) =>
+      getAllData<TResponse<TKassareportData>, TQuery>(apiRoutes.kassaReports, {
+        ...queries,
+        page: pageParam as number,
+        limit: 10,
+      }),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+        return lastPage?.meta?.currentPage + 1;
+      } else {
+        return null;
+      }
+    },
+    enabled: enabled,
+    initialPageParam: 1,
+  });
+
 const useDataLibrary = ({ options, queries }: IData) =>
   useQuery({
     ...options,

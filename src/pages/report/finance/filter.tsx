@@ -1,9 +1,7 @@
 import { FileOutput, X } from "lucide-react";
 
-import FilterSelect from "@/components/filters-ui/filter-select";
 import { Button } from "@/components/ui/button";
 import { useMeStore } from "@/store/me-store";
-import { UfoBottom } from "@/components/icons";
 
 export default function Filters() {
   const { meUser } = useMeStore();
@@ -13,10 +11,7 @@ export default function Filters() {
       {meUser?.position.role === 4 &&
         <p className="text-[#272727] text-[20px]">Касса</p>
       }
-      <FilterSelect placeholder="Выберите дилера" name="dieller" options={[{
-        label: "Все",
-        value: "all"
-      }]} icons={<UfoBottom  />}/>
+    
       <Button
         className="h-full  border-y-0 w-[140px]  ml-auto"
         variant={"outline"}

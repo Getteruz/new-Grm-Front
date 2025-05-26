@@ -20,7 +20,6 @@ export default function CardSortRemaider() {
     }
   })
   const [sorttype, setSortType] = useQueryState("sorttype", parseAsString);
-  const  isReportLoading=false;
 
   console.log(remainingColaction,"remainingColaction")
 

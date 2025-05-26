@@ -73,6 +73,8 @@ export type ProductsQuery = {
   filialId?: string | undefined;
   filial?: string | undefined;
   country?: string | undefined;
-  limit: number;
-  page: number;
+  startDate?: Date | null;
+  endDate?: Date | null;
+  limit?: number;
+  page?: number;
 };

@@ -10,6 +10,13 @@ import { parseAsString, useQueryState } from "nuqs";
 export default function PageRemaider() {
   const { meUser } = useMeStore();
   const [sorttype] = useQueryState("sorttype", parseAsString);
+  const [fromDate] = useQueryState<Date>("startDate", {
+    parse: (value) => new Date(value),
+  });
+  const [toDate] = useQueryState<Date>("endDate", {
+    parse: (value) => new Date(value),
+  });
+
 
   const { 
     data,
@@ -19,7 +26,9 @@ export default function PageRemaider() {
     isFetchingNextPage
   } = useCollectionDataFetch({
     filialId: meUser?.filial?.id,
-    country:sorttype || undefined
+    country:sorttype || undefined,
+    startDate:toDate || undefined,
+    endDate:fromDate || undefined
   });
   const collections = data?.pages?.flatMap((page) => page || []) || [];
 

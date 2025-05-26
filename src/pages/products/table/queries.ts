@@ -15,7 +15,7 @@ interface ITransfers {
   role?: number;
 }
 
-export const useCollectionDataFetch = ({ filialId,country }: { filialId?: string,country?:string }) =>
+export const useCollectionDataFetch = ({ filialId,country,endDate,startDate }:ProductsQuery) =>
   useInfiniteQuery({
     queryKey: ["remainingCollections", filialId,country],
     queryFn: ({ pageParam = 1 }) =>
@@ -25,6 +25,8 @@ export const useCollectionDataFetch = ({ filialId,country }: { filialId?: string
           filial: filialId,
           country,
           page: pageParam as number,
+          endDate,
+          startDate,
           limit: 10,
         }
       ),

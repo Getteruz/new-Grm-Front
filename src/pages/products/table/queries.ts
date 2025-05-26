@@ -17,7 +17,7 @@ interface ITransfers {
 
 export const useCollectionDataFetch = ({ filialId,country,endDate,startDate }:ProductsQuery) =>
   useInfiniteQuery({
-    queryKey: ["remainingCollections", filialId,country],
+    queryKey: ["remainingCollections", filialId,country,endDate,startDate ],
     queryFn: ({ pageParam = 1 }) =>
       getAllData<CollectionData[], ProductsQuery>(
         `${apiRoutes.collectionProducts}`,

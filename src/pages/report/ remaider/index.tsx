@@ -5,10 +5,11 @@ import { CollectionColumns } from "./columns";
 import Filter from "./filter";
 import CardSortRemaider from "./card-sort";
 import { useCollectionDataFetch } from "@/pages/products/table/queries";
+import { parseAsString, useQueryState } from "nuqs";
 
 export default function PageRemaider() {
   const { meUser } = useMeStore();
-
+  const [sorttype] = useQueryState("sorttype", parseAsString);
 
   const { 
     data,
@@ -17,7 +18,8 @@ export default function PageRemaider() {
     hasNextPage,
     isFetchingNextPage
   } = useCollectionDataFetch({
-    filialId: meUser?.filial?.id
+    filialId: meUser?.filial?.id,
+    country:sorttype || undefined
   });
   const collections = data?.pages?.flatMap((page) => page || []) || [];
 

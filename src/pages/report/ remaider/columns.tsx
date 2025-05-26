@@ -9,7 +9,6 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
   {
     accessorKey: "id",
     header: "№",
-    size: 50,
     cell: ({ row }) => {
       return <p className="text-[14px] font-[500]">{row.index + 1}</p>;
     },
@@ -17,6 +16,7 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
   {
     accessorKey: "title",
     header: "Collection",
+   
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-2">
@@ -45,7 +45,7 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-[14px] font-[500]">
-          {row.original.totalKv} м²
+          {(Number(row.original.totalKv) * row.original.collectionPrices?.[0]?.priceMeter).toFixed(2)}$
         </p>
       );
     },
@@ -54,9 +54,32 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
     header: "Кол-во ковров",
     accessorKey: "totalCount",
     cell: ({ row }) => {
-      return <p className="text-[14px] font-[500]">{row.original.totalCount} шт</p>;
+      return <p className="text-[14px] w-[200px] font-[500]">{row.original.totalCount} шт</p>;
     },
   },
+  {
+    header: "Объём продажы",
+    accessorKey: "",
+    cell: () => {
+      return (
+        <p className="text-[14px] font-[500]">
+         ~
+        </p>
+      );
+    },
+  },
+  {
+    header: "Сумма продажы",
+    accessorKey: "",
+    cell: () => {
+      return (
+        <p className="text-[14px] font-[500]">
+         ~
+        </p>
+      );
+    },
+  },
+
   {
     header: "Кас-цена",
     accessorKey: "price",

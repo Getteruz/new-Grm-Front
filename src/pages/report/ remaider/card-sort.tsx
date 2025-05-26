@@ -11,7 +11,7 @@ export default function CardSortRemaider() {
   const {data} = useProductRemainingProducts({
    queries:{
     filialId:meUser?.filial?.id
-   }
+  }
   })
 
   const {data:remainingColaction} = useProductRemainingColaction({
@@ -20,8 +20,6 @@ export default function CardSortRemaider() {
     }
   })
   const [sorttype, setSortType] = useQueryState("sorttype", parseAsString);
-
-  console.log(remainingColaction,"remainingColaction")
 
 
 
@@ -40,7 +38,7 @@ export default function CardSortRemaider() {
                   <Skeleton className="h-7 w-24 mt-1" />
                 ) : (
                   <p className="text-[25px] font-bold text-foreground">
-                   {data?.remainingSize}
+                   {formatPrice(data?.remainingSize|| 0)}
                   </p>
                 )}
               </div>
@@ -48,7 +46,7 @@ export default function CardSortRemaider() {
             <p className="text-[12px] mt-[15px] mb-1 text-[#5D5D53]">
                 Сумма объёма
             </p>
-            <p className="text-[14px] font-semibold">   {data?.remainingSum} $</p>
+            <p className="text-[14px] font-semibold">   {formatPrice(data?.remainingSum|| 0)} $</p>
           </div>
           <div className="grid row-start w-full  grid-cols-4  ">
             {remainingColaction?.map((e) => (

@@ -72,6 +72,7 @@ export type ProductsQuery = {
   search?: string | undefined;
   filialId?: string | undefined;
   filial?: string | undefined;
+  country?: string | undefined;
   limit: number;
   page: number;
 };

@@ -15,14 +15,15 @@ interface ITransfers {
   role?: number;
 }
 
-export const useCollectionDataFetch = ({ filialId }: { filialId?: string }) =>
+export const useCollectionDataFetch = ({ filialId,country }: { filialId?: string,country?:string }) =>
   useInfiniteQuery({
-    queryKey: ["remainingCollections", filialId],
+    queryKey: ["remainingCollections", filialId,country],
     queryFn: ({ pageParam = 1 }) =>
       getAllData<CollectionData[], ProductsQuery>(
         `${apiRoutes.collectionProducts}`,
         {
           filial: filialId,
+          country,
           page: pageParam as number,
           limit: 10,
         }

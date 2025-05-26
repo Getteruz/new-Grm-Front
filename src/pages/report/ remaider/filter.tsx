@@ -13,11 +13,7 @@ export default function Filters() {
         <p className="text-[#272727] text-[20px] mr-auto">Отчет об остатке</p>
       }
     
-    <DateRangePicker
-    
-          fromPlaceholder={`от: ${new Date().getDate().toString().padStart(2, '0')}.${(new Date().getMonth() + 1).toString().padStart(2, '0')}.${new Date().getFullYear()}`}
-          toPlaceholder={`до: ${new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate()}.${(new Date().getMonth() + 1).toString().padStart(2, '0')}.${new Date().getFullYear()}`}
-        />
+    <DateRangePicker/>
       <Button
         className="h-full  border-y-0 w-[140px]  "
         variant={"outline"}

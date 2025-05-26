@@ -17,7 +17,6 @@ export default function PageRemaider() {
     parse: () => undefined,
   });
 
-console.log(toDate,fromDate)
   const { 
     data,
     isLoading,
@@ -27,8 +26,8 @@ console.log(toDate,fromDate)
   } = useCollectionDataFetch({
     filialId: meUser?.filial?.id,
     country:sorttype || undefined,
-    startDate:toDate || undefined,
-    endDate:fromDate || undefined
+    startDate:fromDate  || undefined,
+    endDate:toDate || undefined
   });
 
   const collections = data?.pages?.flatMap((page) => page || []) || [];

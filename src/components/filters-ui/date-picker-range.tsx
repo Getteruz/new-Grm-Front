@@ -23,10 +23,10 @@ export function DateRangePicker({
 }: DateRangePickerProps) {
   const { t } = useTranslation();
   const [fromDate, setFromDate] = useQueryState<Date>("startDate", {
-    parse: (value) => new Date(value),
+    parse: (value) => value ? new Date(value) : new Date(new Date().getFullYear(), new Date().getMonth(), 1),
   });
   const [toDate, setToDate] = useQueryState<Date>("endDate", {
-    parse: (value) => new Date(value),
+    parse: (value) => value ? new Date(value) : new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
   });
   return (
     <div className="flex flex-col items-center border-l  sm:flex-row gap-2">

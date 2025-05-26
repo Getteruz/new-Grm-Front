@@ -1,7 +1,6 @@
 import { parseAsString, useQueryState } from "nuqs";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { DialogTrigger } from "@/components/ui/dialog";
 
 import { MIcon } from "@/components/icons";
 import useProductRemainingProducts, { useProductRemainingColaction } from "./queries";
@@ -25,24 +24,7 @@ export default function CardSortRemaider() {
 
   console.log(remainingColaction,"remainingColaction")
 
-  const columns = [
-    {
-      title: "Kartal",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) : (
-        formatPrice(0)
-      ),
-    },
-    {
-      title: "Gheteran",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) : (
-        formatPrice( 0)
-      ),
-    },
-  ];
+
 
   function formatPrice(price: number): string {
     return Number(price).toFixed(2);

@@ -451,7 +451,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     },
   },
   {
-    header: "Сумма",
+    header: "Наличие",
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
@@ -524,8 +524,8 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return item?.status != "open"?  <div className="flex items-center">
-       {<img className="w-[40px] rounded-full border-background border h-[40px]" src={minio_img_url + item?.closer?.avatar?.path}/>}
-        {item?.status != "closed_by_c" ?  <img className="w-[40px]  border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={minio_img_url + item?.closer_m?.avatar?.path}/>:""}
+       {<img  className="w-[40px] rounded-full object-cover border-background border h-[40px]" src={minio_img_url + item?.closer?.avatar?.path}/>}
+        {item?.status != "closed_by_c" ?  <img className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={minio_img_url + item?.closer_m?.avatar?.path}/>:""}
       </div>:"";
     },
   },
@@ -555,12 +555,11 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
             <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
           ) : item?.status == "rejected"? (
             <Button disabled variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]"> Отменено </Button>
-          ):  <Button disabled variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>}
+          ):  <Button variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>}
         </div>
       );
     },
   },
-
   {
     id: "actions",
     header: "actions",

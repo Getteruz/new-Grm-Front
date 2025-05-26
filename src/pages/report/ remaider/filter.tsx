@@ -2,6 +2,7 @@ import { FileOutput, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useMeStore } from "@/store/me-store";
+import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 
 export default function Filters() {
   const { meUser } = useMeStore();
@@ -9,20 +10,19 @@ export default function Filters() {
   return (
     <div className="bg-sidebar border-border border-b  px-[51px] h-[64px] items-center  flex   ">
       {meUser?.position.role === 4 &&
-        <p className="text-[#272727] text-[20px]">Ежемесячный отчет</p>
+        <p className="text-[#272727] text-[20px] mr-auto">Отчет об остатке</p>
       }
     
+    <DateRangePicker
+    
+          fromPlaceholder="от: 12.02.2025"
+          toPlaceholder="до: 12.02.2025"
+        />
       <Button
-        className="h-full  border-y-0 w-[140px]  ml-auto"
+        className="h-full  border-y-0 w-[140px]  "
         variant={"outline"}
       >
         <FileOutput /> Экспорт
-      </Button>
-      <Button
-        className="h-full border-l-0 bg-primary hover:bg-[#525248] hover:text-accent text-accent border-y-0 w-[165px]  "
-        variant={"outline"}
-      >
-        <X /> Закрыть кассу
       </Button>
     </div>
   );

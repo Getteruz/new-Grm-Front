@@ -107,6 +107,23 @@ export interface TKassareportData {
   totalExpense: number;
   totalSum: number;
 }
+
+	
+
+export interface RemainingProductData {
+  remainingSize: number;
+  remainingSum: number;
+  count: number;
+}
+export interface RemainingProductColactionData {
+    country: {
+        id: string;
+        title: string;
+    };
+    remainingSize: number;
+    remainingSum: number; 
+    count: number;
+}
 export interface TQuery {
   search?: string | undefined;
   filialId?: string;

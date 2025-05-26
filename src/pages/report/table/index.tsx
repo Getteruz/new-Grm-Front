@@ -28,7 +28,6 @@ export default function Page() {
     useDataKassa({
     queries: {
       filial: meUser?.filial?.id || "",
-      limit: 10,
       page: 1,
     },
   });

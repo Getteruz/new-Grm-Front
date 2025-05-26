@@ -56,11 +56,11 @@ export const useDataCashflow = ({ queries ,enabled}: IData) =>
 export const useDataKassa = ({ queries ,enabled}: IKassaData) =>
   useInfiniteQuery({
     queryKey: [apiRoutes.kassa, queries],
-    queryFn: ({ pageParam = 10 }) =>
+    queryFn: ({ pageParam = 1 }) =>
       getAllData<TResponse<KassaItem>, TQuery>(apiRoutes.kassa, {
         ...queries,
         page: pageParam as number,
-        limit: 10,
+        limit: 30,
       }),
     getNextPageParam: (lastPage) => {
       if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {

@@ -11,7 +11,10 @@ import ShadcnSelect from "@/components/Select";
 
 export default function Filters() {
   const [type] = useQueryState("type");
-  const [collaction,setCollaction] = useQueryState("collection",parseAsString.withDefault("collection"))
+  const [collaction, setCollaction] = useQueryState(
+    "collection",
+    parseAsString.withDefault("collection")
+  );
   const navigate = useNavigate();
   const { meUser } = useMeStore();
   const [filial] = useQueryState("filial");
@@ -39,28 +42,30 @@ export default function Filters() {
           fromPlaceholder="от: 12.02.2025"
           toPlaceholder="до: 12.02.2025"
         />
-        {meUser?.position.role !== 9 && meUser?.position.role !== 6 && type !== "Out" && (
-          <Button
-            className="h-full border-l-1 justify-center gap-1 w-[68px] border-y-0  border-r-0"
-            size={"icon"}
-            variant={"outline"}
-            onClick={() => navigate(link)}
-          >
-            <Plus size={40} />
-          </Button>
-        )}
+        {meUser?.position.role !== 9 &&
+          meUser?.position.role !== 6 &&
+          type !== "Out" && (
+            <Button
+              className="h-full border-l-1 justify-center gap-1 w-[68px] border-y-0  border-r-0"
+              size={"icon"}
+              variant={"outline"}
+              onClick={() => navigate(link)}
+            >
+              <Plus size={40} />
+            </Button>
+          )}
       </div>
       <ShadcnSelect
-                onChange={(e) => setCollaction(e || "collection")}
-
-                options={ [{ label: "Продукт", value: "product"},
-                  { label: "Коллекция", value: "collection" },]}
-                value={collaction}
-                
-                className={"w-full max-w-[150px]  ml-1 mr-auto border-y-0"}
-              />
+        onChange={(e) => setCollaction(e || "collection")}
+        options={[
+          { label: "Продукт", value: "product" },
+          { label: "Коллекция", value: "collection" },
+        ]}
+        value={collaction}
+        className={"w-full max-w-[150px]  ml-1 mr-auto border-y-0"}
+      />
       {meUser?.position.role !== 9 &&
-        (type !== "Out" && ( meUser?.position.role !== 6 || type != "New") ? (
+        (type !== "Out" && (meUser?.position.role !== 6 || type != "New") ? (
           <Button
             className="h-full border-x-1 border-y-0 w-[140px] "
             variant={"outline"}
@@ -69,12 +74,14 @@ export default function Filters() {
             Принять
           </Button>
         ) : (
-         meUser?.position.role !== 6 && <Button
-            onClick={() => navigate(link)}
-            className="h-full border-x-1 border-y-0  "
-          >
-            Добавить трансфер
-          </Button>
+          meUser?.position.role !== 6 && (
+            <Button
+              onClick={() => navigate(link)}
+              className="h-full border-x-1 border-y-0  "
+            >
+              Добавить трансфер
+            </Button>
+          )
         ))}
     </div>
   );

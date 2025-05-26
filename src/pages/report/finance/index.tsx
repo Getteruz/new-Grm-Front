@@ -42,7 +42,24 @@ export default function PageFinance() {
       }
       <DataTable
          columns={KassaColumns}
-         data={flatData || []}
+         data={flatData.length ?flatData: [{
+          totalSellCount: 0,
+          additionalProfitTotalSum: 0,
+          netProfitTotalSum: 0,
+          totalSize: 0,
+          year: 0,
+          month: 0,
+          status: "open",
+          totalPlasticSum: 0,
+          totalInternetShopSum: 0,
+          totalSale: 0,
+          totalSaleReturn: 0,
+          totalCashCollection: 0,
+          totalDiscount: 0,
+          totalIncome: 0,
+          totalExpense: 0,
+          totalSum: 0
+         }]}
          isLoading={isLoading}
          isRowClickble={false}
          fetchNextPage={fetchNextPage}

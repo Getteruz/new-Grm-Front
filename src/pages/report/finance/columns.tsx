@@ -33,7 +33,7 @@ export const KassaColumns: ColumnDef<TKassareportData>[] = [
     },
   },
   {
-    header: "Сумма",
+    header: "Наличие",
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
@@ -140,7 +140,7 @@ export const KassaColumns: ColumnDef<TKassareportData>[] = [
             <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
           ) : item?.status == "rejected"? (
             <Button disabled variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]"> Отменено </Button>
-          ):  <Button disabled variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>}
+          ):  <Button  variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>}
         </div>
       );
     },

@@ -43,4 +43,6 @@ export const apiRoutes = {
   kassa: "/kassa",
   kassaClose: "/kassa/close-kassa",
   statement: "/statement",
+  productRemaining: "/product/remaining-products",
+  productRemainingCollection:'/product/remaining-products-collection'
 } as const;

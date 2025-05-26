@@ -455,7 +455,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#89A143]"> {item?.totalSum} $</p>;
+      return <p className="text-[#89A143]"> { (item?.totalSum  - item?.plasticSum).toFixed(2)} $</p>;
     },
   },
 

@@ -15,8 +15,8 @@ export default function Filters() {
     
     <DateRangePicker
     
-          fromPlaceholder="от: 12.02.2025"
-          toPlaceholder="до: 12.02.2025"
+          fromPlaceholder={`от: ${new Date().getDate().toString().padStart(2, '0')}.${(new Date().getMonth() + 1).toString().padStart(2, '0')}.${new Date().getFullYear()}`}
+          toPlaceholder={`до: ${new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate()}.${(new Date().getMonth() + 1).toString().padStart(2, '0')}.${new Date().getFullYear()}`}
         />
       <Button
         className="h-full  border-y-0 w-[140px]  "

@@ -10,14 +10,14 @@ import { parseAsString, useQueryState } from "nuqs";
 export default function PageRemaider() {
   const { meUser } = useMeStore();
   const [sorttype] = useQueryState("sorttype", parseAsString);
-  const [fromDate] = useQueryState<Date>("startDate", {
-    parse: (value) => new Date(value),
+  const [fromDate] = useQueryState<Date | undefined>("startDate", {
+    parse: () => undefined,
   });
-  const [toDate] = useQueryState<Date>("endDate", {
-    parse: (value) => new Date(value),
+  const [toDate] = useQueryState<Date| undefined>("endDate", {
+    parse: () => undefined,
   });
 
-
+console.log(toDate,fromDate)
   const { 
     data,
     isLoading,
@@ -30,13 +30,13 @@ export default function PageRemaider() {
     startDate:toDate || undefined,
     endDate:fromDate || undefined
   });
+
   const collections = data?.pages?.flatMap((page) => page || []) || [];
 
   return (
     <>
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
-
       {
        <CardSortRemaider />
       }
@@ -48,7 +48,6 @@ export default function PageRemaider() {
          fetchNextPage={fetchNextPage}
          hasNextPage={hasNextPage ?? false}
          isFetchingNextPage={isFetchingNextPage}
-
       />
       </div>
     </>

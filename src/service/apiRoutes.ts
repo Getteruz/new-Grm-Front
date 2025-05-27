@@ -31,6 +31,7 @@ export const apiRoutes = {
   qrBase: "/qr-base",
   cashflow: "/cashflow",
   cashflowTypes: "/cashflow-types",
+  cashflowFilial :'/cashflow/for/filial-manager',
   openKassa: "/kassa/open-kassa",
   qrBaseCode: "/qr-base/find-by",
   order: "/order",
@@ -44,5 +45,6 @@ export const apiRoutes = {
   kassaClose: "/kassa/close-kassa",
   statement: "/statement",
   productRemaining: "/product/remaining-products",
-  productRemainingCollection:'/product/remaining-products-collection'
+  productRemainingCollection:'/product/remaining-products-collection',
+
 } as const;

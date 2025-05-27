@@ -1,7 +1,7 @@
 import PageFinance from "./finance";
 import MonthReportPage from "./report-monthly";
 import Page from "./table";
-import PageRemaider from "./ remaider";
+import PageRemaider from "./remaider";
 
 const Route = [
   {

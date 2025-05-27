@@ -19,12 +19,12 @@ import {
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
-import { TKassareportData } from "@/pages/report/type";
+import { TChaFlowData, TKassareportData } from "@/pages/report/type";
 import { minio_img_url } from "@/constants";
 import useDataFetch from "@/pages/filial/table/queries";
 import ShadcnSelect from "./Select";
 
-export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaReport?:TKassareportData}) {
+export default function CardSort({KassaId,KassaReport,cashflowFilial}:{KassaId?:string,cashflowFilial?:TChaFlowData | undefined,KassaReport?:TKassareportData}) {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
   const [kassaReports] = useQueryState("kassaReports");
@@ -56,10 +56,10 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(KassaReport?.totalIncome ||  kassaId?.income || 0)
+        formatPrice(KassaReport?.totalIncome ||  kassaId?.income  ||  cashflowFilial?.income|| 0)
       ),
       button:
-      kassaId || meUser?.position?.role == 10 || kassaReports  ? (
+      kassaId || meUser?.position?.role == 10 || kassaReports  || cashflowFilial ? (
           <div
             onClick={() => {
               setType("Приход");
@@ -100,10 +100,10 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        `-${formatPrice(KassaReport?.totalExpense || kassaId?.expense || 0)}`
+        `-${formatPrice(KassaReport?.totalExpense || kassaId?.expense ||  cashflowFilial?.expense|| 0)}`
       ),
       button:
-       kassaId || meUser?.position?.role == 10 || kassaReports ? (
+       kassaId || meUser?.position?.role == 10 || kassaReports || cashflowFilial ? (
           <div
             onClick={() => {
               setType("Расход");
@@ -220,7 +220,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
         comment,
         price,
         casher: meUser?.id,
-        kassa: kassaId?.id || meUser?.position?.id || undefined,
+        kassa: kassaReports ? undefined : kassaId?.id || meUser?.position?.id || undefined,
         kassaReport:kassaReports || undefined
       };
 
@@ -240,6 +240,8 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
       queryClient.invalidateQueries({ queryKey: ["kassa-report"] });
       queryClient.invalidateQueries({ queryKey: [  apiRoutes.cashflow] });
       queryClient.invalidateQueries({ queryKey: [  apiRoutes.kassa] });
+      queryClient.invalidateQueries({ queryKey: [  apiRoutes.cashflowFilial] });
+      
    
     } catch (error) {
       toast.error(String(error));
@@ -263,7 +265,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
                   <Skeleton className="h-7 w-24 mt-1" />
                 ) : (
                   <p className="text-[25px] font-bold text-foreground">
-                    {formatPrice(KassaReport?.totalSum|| kassaId?.totalSum || 0)}
+                    {formatPrice(KassaReport?.totalSum|| kassaId?.totalSum ||cashflowFilial?.income &&  (cashflowFilial?.income - cashflowFilial?.expense) || 0)}
                   </p>
                 )}
               </div>

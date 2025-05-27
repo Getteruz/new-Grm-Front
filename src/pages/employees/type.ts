@@ -59,4 +59,6 @@ export type TQuery = {
   filial?: string;
   filialId?: string;
   kassaId?: string;
+  casherId?:string;
+  kassaReport?:string;
 };

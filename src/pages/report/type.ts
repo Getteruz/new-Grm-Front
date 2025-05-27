@@ -109,7 +109,10 @@ export interface TKassareportData {
   totalSum: number;
 }
 
-	
+export interface TChaFlowData{
+  expense: number,
+  income: number
+}
 
 export interface RemainingProductData {
   remainingSize: number;

@@ -10,8 +10,7 @@ import {  UpdatePatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import { useQueryState } from "nuqs";
 
-export default function Filters({ids,setSeleted}:{ids:string[],setSeleted:(ids:string[])=>void}) {
-  console.log (ids, setSeleted)
+export default function Filters({setSeleted}:{setSeleted:(ids:string[])=>void}) {
   const { meUser } = useMeStore();
   const {data} = useDataFetch({
     queries:{type:"filial",limit:50}
@@ -44,7 +43,7 @@ const { mutate, isPending } = useMutation({
       >
         <FileOutput /> Экспорт
       </Button>
-{kassaReports &&   <Button
+    {kassaReports &&   <Button
       onClick={()=>mutate()}
         disabled={ isPending}
         className="h-full border-l-0 bg-primary hover:bg-[#525248] hover:text-accent text-accent border-y-0 w-[165px]  "

@@ -64,7 +64,7 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
           className={`${item?.type !== "Приход" ? "text-[#E38157] border-[#E38157] hover:text-[#E38157]" : "text-[#89A143] border-[#89A143] hover:text-[#89A143]"}  rounded-[70px] p-[14px] h-10 `}
           variant={"outline"}
         >
-          {item?.title == "" ||item?.title == "Продажа"  ? "Продажа" : item?.title}
+          {item?.cashflow_type?.title}
         </Button>
       </div>
       );

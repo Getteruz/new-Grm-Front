@@ -7,7 +7,7 @@ import { KassaColumnsLoc } from "./columns";
 import Filter from "./filter";
 import CardSortSingle from "../table/card-sort";
 import CardSort from "@/components/card-sort";
-import { useKassaReportSingle, useKassaReportTotal } from "../table/queries";
+import { useCashflowFilial, useKassaReportSingle, useKassaReportTotal } from "../table/queries";
 import { useKassaReports } from "./queries";
 import { useDataKassa } from "@/pages/cashier/report/queries";
 import { KassaColumns } from "../table/columns";
@@ -62,13 +62,20 @@ export default function PageFinance() {
             : meUser?.filial?.id || undefined,
       },
     });
+
+    const {data:cashflowFilial} = useCashflowFilial({
+      id:kassaReports || undefined,
+      enabled:Boolean(kassaReports)
+    })
+    
+
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
   const flatKasssaData =
     kassaData?.pages?.flatMap((page) => page?.items || []) || []
     
   return (
     <>
-      <Filter ids={seleted} setSeleted={setSeleted} />
+      <Filter  setSeleted={setSeleted} />
       <div className="h-[calc(100vh-140px)] scrollCastom">
         {meUser?.position?.role === 6 ? (
           <CardSortSingle />
@@ -81,12 +88,13 @@ export default function PageFinance() {
             data={[
               {
                 status:"Мои приходы и расходы",
-                income: 0,
-                expense: 10,
+                income: cashflowFilial?.income,
+                expense: cashflowFilial?.expense,
             }, ...flatKasssaData]}
             isLoading={KassaLoading}
-            onRowClick={(data) => data?.id &&
-              navigate(`/report?id=${data?.id}`)
+            isRowClickble={false}
+            onRowClick={(data) => data?.id ?
+              navigate(`/report?id=${data?.id}`) : navigate(`/report?Myid=myReport&kassaReports=${kassaReports}`)
             }
             fetchNextPage={KassafetchNextPage}
             hasNextPage={KassafhasNextPage ?? false}

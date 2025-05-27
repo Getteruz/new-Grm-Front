@@ -3,7 +3,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { useMeStore } from "@/store/me-store";
 
 import Filter from "./filter";
-import  {useKassaReportTotal } from "./queries";
+import  {useCashflowFilial, useKassaReportTotal } from "./queries";
 import CardSort from "@/components/card-sort";
 import CardSortSingle from "./card-sort";
 import { useDataCashflow, useDataKassa } from "@/pages/cashier/report/queries";
@@ -20,14 +20,22 @@ export default function Page() {
   const [filial] = useQueryState(
     "filial"
   );
-
-
+  const [Myid] = useQueryState(
+    "Myid"
+  );
+  const [kassaReports] = useQueryState("kassaReports");
   
+  // myReport
+
+  const {data:cashflowFilial} = useCashflowFilial({
+    enabled:Boolean(kassaReports),
+    id:kassaReports || undefined,
+  })
   const {data:KassaReport} = useKassaReportTotal({
     queries:{
       filialId: meUser?.position?.role == 10  ? filial || undefined :  meUser?.filial?.id || undefined,
     },
-    enabled: !id,
+    enabled: !id && !cashflowFilial,
 })
 
   const { data:kassaData, isLoading:KassaLoading, fetchNextPage:KassafetchNextPage, hasNextPage:KassafhasNextPage, isFetchingNextPage:KassaisFetchingNextPage } =
@@ -41,26 +49,29 @@ export default function Page() {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
   useDataCashflow({
     queries: {
-      kassaId:  id || undefined,
+      kassaId:  Myid == "myReport" ? undefined:  id || undefined,
       limit: 10,
       page: 1,
-      filialId: meUser?.position?.role == 10 ? filial || undefined :  meUser?.filial?.id || undefined,
-    },
-    enabled: Boolean(id || meUser?.position?.role ===  10),
-  });
+      filialId:  Myid == "myReport" ? undefined: meUser?.position?.role == 10 ? filial || undefined :  meUser?.filial?.id || undefined,
+      casherId: Myid =="myReport" ? meUser?.id || undefined : undefined,
+      kassaReport:kassaReports||undefined
 
+    },
+    enabled: Boolean(id || meUser?.position?.role ===  10 || Myid),
+  });
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
   const flatKasssaData = kassaData?.pages?.flatMap((page) => page?.items || []) || [];
+
   return (
     <>
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
       {
-        meUser?.position?.role === 6 ? <CardSortSingle />:<CardSort KassaReport={id ? undefined : KassaReport}  KassaId={ id || undefined }/>
+        meUser?.position?.role === 6 ? <CardSortSingle />:<CardSort cashflowFilial={kassaReports? cashflowFilial:undefined}  KassaReport={id || kassaReports ? undefined : KassaReport }  KassaId={  undefined }/>
       }
    
-        { Boolean(id) || meUser?.position?.role ===  10  ?  <DataTable
+        { Boolean(id) || meUser?.position?.role ===  10 || Myid == "myReport"   ?  <DataTable
               columns={ReportColumns}
               data={flatData || []}
               isLoading={isLoading}
@@ -68,8 +79,8 @@ export default function Page() {
               fetchNextPage={fetchNextPage}
               hasNextPage={hasNextPage ?? false}
               isFetchingNextPage={isFetchingNextPage}
-            />:
-            <DataTable
+            /> :
+            <DataTable 
             columns={KassaColumns || []}
             data={flatKasssaData || []}
             isLoading={KassaLoading}

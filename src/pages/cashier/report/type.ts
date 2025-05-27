@@ -110,6 +110,13 @@ export interface TransactionItem {
     need_get_report: boolean;
     type: "filial";
   }
+  cashflow_type:{
+    id: string;
+    title: string;
+    slug: string;
+    type: string;
+    is_visible: boolean;
+}
   casher:{
     avatar: {
       id: string;

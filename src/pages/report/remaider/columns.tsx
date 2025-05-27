@@ -80,7 +80,6 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
       );
     },
   },
-
   {
     header: "Кас-цена",
     accessorKey: "price",

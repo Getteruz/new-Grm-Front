@@ -237,7 +237,8 @@ export default function CardSort({KassaId,KassaReport,cashflowFilial}:{KassaId?:
       setDialogOpen(false);
 
       // Invalidate queries to refresh data
-      queryClient.invalidateQueries({ queryKey: ["kassa-report"] });
+      queryClient.invalidateQueries({ queryKey: ["kassa-reports"] });
+      queryClient.invalidateQueries({ queryKey: [apiRoutes?.kassaReports] });
       queryClient.invalidateQueries({ queryKey: [  apiRoutes.cashflow] });
       queryClient.invalidateQueries({ queryKey: [  apiRoutes.kassa] });
       queryClient.invalidateQueries({ queryKey: [  apiRoutes.cashflowFilial] });

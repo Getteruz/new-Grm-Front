@@ -18,11 +18,11 @@ const useDataFetch = ({ options, queries }: ITransfers) =>
   useInfiniteQuery({
     ...options,
     queryKey: [apiRoutes.filial, queries],
-    queryFn: ({ pageParam = 10 }) =>
+    queryFn: ({ pageParam = 1 }) =>
       getAllData<TResponse<TData>, TQuery>(apiRoutes.filial, {
         ...queries,
         page: pageParam as number,
-        limit: 50,
+        limit: queries?.limit || 10,
       }),
     getNextPageParam: (lastPage) => {
       if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {

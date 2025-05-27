@@ -112,8 +112,8 @@ export type FilialsQuery = {
 };
 export interface TQuery {
   search?: string;
-  limit: number;
-  page: number;
+  limit?: number;
+  page?: number;
   type?: string;
   filialId?: string;
 }

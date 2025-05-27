@@ -90,6 +90,7 @@ export interface TActionData {
 }
 
 export interface TKassareportData {
+  id: string;
   totalSellCount: number;
   additionalProfitTotalSum: number;
   netProfitTotalSum: number;

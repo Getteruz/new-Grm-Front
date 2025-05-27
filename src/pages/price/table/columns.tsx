@@ -292,12 +292,12 @@ export const AColumns: ColumnDef<ProductsData>[] = [
       return <p className="">~</p>;
     },
   },
-  {
-    header: "Зав-цена за м² ($)",
-    cell: ({ row }) => {
-      return <>{row?.original?.collection_prices?.[0]?.comingPrice}</>;
-    },
-  },
+  // {
+  //   header: "Зав-цена за м² ($)",
+  //   cell: ({ row }) => {
+  //     return <>{row?.original?.collection_prices?.[0]?.comingPrice}</>;
+  //   },
+  // },
   {
     header: "Цена за м² ($)",
     cell: ({ row }) => {

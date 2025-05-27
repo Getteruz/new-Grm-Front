@@ -36,6 +36,7 @@ interface DataTableProps<TData, TValue> {
   isRowClickble?: boolean | undefined;
   fetchNextPage?: () => void;
   onSelectionChange?: (selectedRows: TData[]) => void;
+  onRowClick?:(row: TData) => void;
   hasHeader?: boolean;
 }
 
@@ -51,6 +52,7 @@ export function DataTable<TData, TValue>({
   hasNextPage = false,
   fetchNextPage,
   onSelectionChange,
+  onRowClick,
   hasHeader = true,
 }: DataTableProps<TData, TValue>) {
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -184,8 +186,11 @@ export function DataTable<TData, TValue>({
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    className="px-5 cursor-pointer "
+                    className="px-5 cursor-pointer  "
                     onClick={() => {
+                      if(onRowClick ) {
+                        onRowClick(row.original as TData);
+                      }
                       if (isRowClickble) {
                         navigate(
                           link

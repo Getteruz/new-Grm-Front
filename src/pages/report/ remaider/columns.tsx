@@ -15,7 +15,7 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
   },
   {
     accessorKey: "title",
-    header: "Collection",
+    header: "Поставщики",
    
     cell: ({ row }) => {
       return (
@@ -60,10 +60,11 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
   {
     header: "Объём продажы",
     accessorKey: "",
-    cell: () => {
+    cell: ({row}) => {
       return (
         <p className="text-[14px] font-[500]">
-         ~
+    
+        {row.original.orderKv} м²
         </p>
       );
     },
@@ -71,10 +72,10 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
   {
     header: "Сумма продажы",
     accessorKey: "",
-    cell: () => {
+    cell: ({row}) => {
       return (
         <p className="text-[14px] font-[500]">
-         ~
+            {row.original.totalPrice} $
         </p>
       );
     },
@@ -88,6 +89,7 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
       return (
         <p className="text-[14px] font-[500] text-[#E38157]">
           {price ? `${price}$` : '-'}
+          
         </p>
       );
     },

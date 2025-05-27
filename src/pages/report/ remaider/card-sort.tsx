@@ -12,6 +12,7 @@ export default function CardSortRemaider() {
   const [fromDate] = useQueryState<Date | undefined>("startDate", {
     parse: () => undefined,
   });
+
   const [toDate] = useQueryState<Date | undefined>("endDate", {
     parse: () => undefined,
   });
@@ -31,8 +32,6 @@ export default function CardSortRemaider() {
     }
   })
   const [sorttype, setSortType] = useQueryState("sorttype", parseAsString);
-
-
 
   function formatPrice(price: number): string {
     return Number(price).toFixed(2);

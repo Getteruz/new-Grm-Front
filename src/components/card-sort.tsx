@@ -2,7 +2,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { DollarSign, Plus } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 // import ShadcnSelect from "@/components/Select";
@@ -22,12 +21,13 @@ import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
 import { TKassareportData } from "@/pages/report/type";
 import { minio_img_url } from "@/constants";
+import useDataFetch from "@/pages/filial/table/queries";
+import ShadcnSelect from "./Select";
 
 export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaReport?:TKassareportData}) {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
-  const location = useLocation();
-
+  const [kassaReports] = useQueryState("kassaReports");
   // Fetch kassa report data
 
   // State variables for form
@@ -36,12 +36,11 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
   const [cashflow_type, setCashflow_type] = useState<string>("");
   const [comment, setComment] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
-  // const [filial, setFilial] = useState<string>("");
+  const [filial, setFilial] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  // Fetch necessary data
-  // const { data: filialData } = useDataFetch({});
+  const { data: filialData } = useDataFetch({});
   const { data: kassaId, isLoading: isReportLoading } = useKassaById({
     id:KassaId,
   });
@@ -60,9 +59,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
         formatPrice(KassaReport?.totalIncome ||  kassaId?.income || 0)
       ),
       button:
-        meUser?.position.role === 3 || !kassaId ? (
-          ""
-        ) : (
+      kassaId || meUser?.position?.role == 10 || kassaReports  ? (
           <div
             onClick={() => {
               setType("Приход");
@@ -72,7 +69,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
             >
               <Plus size={20} color={ sorttype == "Приход"? "#f0f0e5" :"#5D5D53"} />
           </div>
-        ),
+        ):"",
     },
     {
       title: "Продажа",
@@ -106,9 +103,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
         `-${formatPrice(KassaReport?.totalExpense || kassaId?.expense || 0)}`
       ),
       button:
-        meUser?.position.role === 3   || !kassaId? (
-          ""
-        ) : (
+       kassaId || meUser?.position?.role == 10 || kassaReports ? (
           <div
             onClick={() => {
               setType("Расход");
@@ -118,7 +113,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
           >
             <Plus  size={20} color={ sorttype == "Расход"? "#f0f0e5" :"#5D5D53"} />
           </div>
-        ),
+        ):"",
     },
     {
       title: "Возврат сумма",
@@ -225,7 +220,8 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
         comment,
         price,
         casher: meUser?.id,
-        kassa: kassaId?.id || meUser?.position?.id,
+        kassa: kassaId?.id || meUser?.position?.id || undefined,
+        kassaReport:kassaReports || undefined
       };
 
       await api.post(apiRoutes.cashflow, body);
@@ -286,9 +282,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
               >
                 <div className="flex justify-between items-center">
                   <p className="text-[12px] mb-0.5 flex items">{e.title}</p>
-                  {meUser?.position?.role !== 6 &&
-                    (meUser?.position?.role !== 10 ||
-                      location.pathname === "/report-finance") &&
+                  {meUser?.position?.role !== 6 && meUser?.position?.role !== 10 &&
                     "button" in e && (
                       <DialogTrigger
                         onClick={(event) => {
@@ -339,7 +333,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
                 ))}
             </div>
             <div className="w-full">
-              {/* <ShadcnSelect
+            { meUser?.position?.role ==10 &&  <ShadcnSelect
                 value={filial}
                 options={
                   filialData?.pages[0]?.items?.map((item) => ({
@@ -352,7 +346,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
                   setFilial(value || "");
                 }}
                 className="w-full text-[#5D5D53] border-none h-[90px] !bg-input !text-[22px] font-semibold rounded-[7px] px-[17px] py-[26px]"
-              /> */}
+              />}
 
               <Input
                 value={price || ""}

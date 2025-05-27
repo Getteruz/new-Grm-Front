@@ -51,10 +51,7 @@ export default function FilterSelect({
         options={
           options
             ? options
-            : [
-                { label: "label", value: "value" },
-                { label: "label", value: "value" },
-              ]
+            : []
         }
         placeholder={placeholder ? t(placeholder) : "Выберите"}
         onChange={(e) => setValue(e || "")}

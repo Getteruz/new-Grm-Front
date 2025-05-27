@@ -443,7 +443,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
       return (
         <p className={`${item?.endDate ? "" : "text-[#89A143]"}`}>
           {" "}
-          {item?.endDate
+          {item?.status== "Мои приходы и расходы" ? item?.status: item?.endDate
             ? format(new Date(item?.endDate), "dd MMMM yyyy")
             : "Продалажется"}
         </p>
@@ -455,7 +455,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#89A143]"> { (item?.totalSum  - item?.plasticSum).toFixed(2)} $</p>;
+      return <p className="text-[#89A143]"> { item?.totalSum && item?.plasticSum  && (item?.totalSum  - item?.plasticSum).toFixed(2) + ' $'} </p>;
     },
   },
 
@@ -464,7 +464,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "plasticSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.plasticSum} $</p>;
+      return <p> {item?.plasticSum && item?.plasticSum + " $"} </p>;
     },
   },
 
@@ -473,7 +473,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "discount",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.discount} $</p>;
+      return <p> {item?.discount && item?.discount + "$"} </p>;
     },
   },
 
@@ -482,7 +482,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "additionalProfitTotalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.additionalProfitTotalSum} $</p>;
+      return <p>  {item?.additionalProfitTotalSum && item?.additionalProfitTotalSum +" $"} </p>;
     },
   },
 
@@ -491,7 +491,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "totalSize",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.totalSize} м²</p>;
+      return <p> {item?.totalSize &&  item?.totalSize + " м²"} </p>;
     },
   },
   {
@@ -499,7 +499,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "income",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.income} $</p>;
+      return <p> { item?.income} $</p>;
     },
   },
   {
@@ -515,7 +515,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "cash_collection",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.cash_collection} $</p>;
+      return <p> {item?.cash_collection && item?.cash_collection + " $"} </p>;
     },
   },
   {
@@ -523,7 +523,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "closer",
     cell: ({ row }) => {
       const item = row.original;
-      return item?.status != "open"?  <div className="flex items-center">
+      return item?.status != "open" && item?.status != "Мои приходы и расходы" ?  <div className="flex items-center">
        {<img  className="w-[40px] rounded-full object-cover border-background border h-[40px]" src={minio_img_url + item?.closer?.avatar?.path}/>}
         {item?.status != "closed_by_c" ?  <img className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={minio_img_url + item?.closer_m?.avatar?.path}/>:""}
       </div>:"";
@@ -555,7 +555,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
             <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
           ) : item?.status == "rejected"? (
             <Button disabled variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]"> Отменено </Button>
-          ):  <Button variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>}
+          ):   item?.status != "Мои приходы и расходы"  ?<Button variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>:""}
         </div>
       );
     },

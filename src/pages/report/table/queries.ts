@@ -25,6 +25,12 @@ interface IKassareport {
   queries?: TQuery;
   enabled?: boolean;
 }
+interface IKassareportId {
+  options?: DefinedInitialDataOptions<TKassareportData>;
+  queries?: TQuery;
+  id?:string
+  enabled: boolean;
+}
 export const useKassa= ({ options, queries }: IData) =>
   useQuery({
     ...options,
@@ -70,7 +76,7 @@ export const useOpenKassa = ({ options, id, queries }: IProductsChecks) =>
     export const useKassaReportTotal= ({ options, queries,enabled }: IKassareport) =>
       useQuery({
         ...options,
-        queryKey: [apiRoutes.kassaReportTotal],
+        queryKey: [apiRoutes.kassaReportTotal,queries],
         enabled,
         queryFn: () =>
           getAllData<TKassareportData, TQuery>(
@@ -79,3 +85,16 @@ export const useOpenKassa = ({ options, id, queries }: IProductsChecks) =>
           ),
       });
   
+      export const useKassaReportSingle= ({ options,id, queries,enabled }: IKassareportId) =>
+        useQuery({
+          ...options,
+          queryKey: [apiRoutes.kassaReports,queries],
+          enabled,
+          queryFn: () =>
+            getByIdData<TKassareportData, TQuery>(
+              apiRoutes.kassaReports,
+              id || "",
+              queries
+            ),
+        });
+    

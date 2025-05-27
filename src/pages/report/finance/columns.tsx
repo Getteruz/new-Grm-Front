@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { TKassareportData } from "../type";
 
-export const KassaColumns: ColumnDef<TKassareportData>[] = [
+export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
     id: "startDate",
     header: "Дата",
@@ -12,7 +12,7 @@ export const KassaColumns: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <p className={`${item.status == "open" ?  "text-[#89A143]":""}`}>
-          {item.status === "open"
+          { item.status === "open"
             ? "Продалажется"
             : [
                 "Январь",
@@ -134,8 +134,8 @@ export const KassaColumns: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {item?.status == "closed_by_c" ? (
-            <Button   className="rounded-[63px] bg-[#E38157]">  Принят </Button>
+          {item?.status == "closed" ? (
+            <Button   className="rounded-[63px] bg-[#E38157]"> Закрыта </Button>
           ) : item?.status == "accepted" ? (
             <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
           ) : item?.status == "rejected"? (

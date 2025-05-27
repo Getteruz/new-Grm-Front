@@ -17,9 +17,15 @@ export default function Page() {
     "id"
   );
 
+  const [filial] = useQueryState(
+    "filial"
+  );
+
+
+  
   const {data:KassaReport} = useKassaReportTotal({
     queries:{
-      filialId:meUser?.filial?.id || ""
+      filialId: meUser?.position?.role == 10  ? filial || undefined :  meUser?.filial?.id || undefined,
     },
     enabled: !id,
 })
@@ -27,7 +33,7 @@ export default function Page() {
   const { data:kassaData, isLoading:KassaLoading, fetchNextPage:KassafetchNextPage, hasNextPage:KassafhasNextPage, isFetchingNextPage:KassaisFetchingNextPage } =
     useDataKassa({
     queries: {
-      filial: meUser?.filial?.id || "",
+      filial: meUser?.position?.role == 10  ? filial || undefined :  meUser?.filial?.id || undefined,
       page: 1,
     },
   });
@@ -35,28 +41,29 @@ export default function Page() {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
   useDataCashflow({
     queries: {
-      kassaId:  id || "",
+      kassaId:  id || undefined,
       limit: 10,
       page: 1,
+      filialId: meUser?.position?.role == 10 ? filial || undefined :  meUser?.filial?.id || undefined,
     },
-    enabled: Boolean(id),
+    enabled: Boolean(id || meUser?.position?.role ===  10),
   });
+
+
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
   const flatKasssaData = kassaData?.pages?.flatMap((page) => page?.items || []) || [];
-
   return (
     <>
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
       {
-        meUser?.position?.role === 6? <CardSortSingle />:<CardSort KassaReport={id? undefined : KassaReport}  KassaId={ id || undefined }/>
+        meUser?.position?.role === 6 ? <CardSortSingle />:<CardSort KassaReport={id ? undefined : KassaReport}  KassaId={ id || undefined }/>
       }
    
-        { Boolean(id) ?  <DataTable
+        { Boolean(id) || meUser?.position?.role ===  10  ?  <DataTable
               columns={ReportColumns}
               data={flatData || []}
               isLoading={isLoading}
-              hasHeader={false}
               isRowClickble={false}
               fetchNextPage={fetchNextPage}
               hasNextPage={hasNextPage ?? false}

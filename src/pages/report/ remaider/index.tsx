@@ -17,6 +17,8 @@ export default function PageRemaider() {
     parse: () => undefined,
   });
 
+ 
+
   const { 
     data,
     isLoading,
@@ -24,6 +26,7 @@ export default function PageRemaider() {
     hasNextPage,
     isFetchingNextPage
   } = useCollectionDataFetch({
+    url:'/collection/remaining-factory',
     filialId: meUser?.filial?.id,
     country:sorttype || undefined,
     startDate:fromDate  || undefined,

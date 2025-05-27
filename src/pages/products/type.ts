@@ -57,6 +57,8 @@ export interface CollectionData {
   title: string;
   totalCount: number;
   totalKv: string;
+  totalPrice: number;
+  orderKv: string;
   collectionPrices: Array<{
     id: string;
     date: string;
@@ -70,6 +72,7 @@ export interface CollectionData {
 
 export type ProductsQuery = {
   search?: string | undefined;
+  url?: string | undefined;
   filialId?: string | undefined;
   filial?: string | undefined;
   country?: string | undefined;

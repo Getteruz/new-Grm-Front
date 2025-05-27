@@ -1,4 +1,5 @@
 import PageFinance from "./finance";
+import MonthReportPage from "./report-monthly";
 import Page from "./table";
 import PageRemaider from "./ remaider";
 
@@ -15,7 +16,7 @@ const Route = [
   },
   {
     url: "/report-monthly",
-    Element: PageFinance,
+    Element: MonthReportPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {

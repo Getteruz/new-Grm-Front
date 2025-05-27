@@ -51,10 +51,12 @@ export type TData = {
 
 export type TQuery = {
   title?: string;
+  report?:string;
   limit?: number;
   page?: number;
   status?:string;
   type?: string;
   filial?: string;
+  filialId?: string;
   kassaId?: string;
 };

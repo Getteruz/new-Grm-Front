@@ -13,10 +13,13 @@ import formatPrice from "@/utils/formatPrice";
 
 import { KassaItem, TransactionItem } from "../type";
 import { format } from "date-fns";
+import { minio_img_url } from "@/constants";
+import { useMeStore } from "@/store/me-store";
 
 export const ReportColumns: ColumnDef<TransactionItem>[] = [
   {
     id: "icon",
+  
     cell: ({ row }) => {
       const item = row.original;
       return (
@@ -36,7 +39,8 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
     },
   },
   {
-    id: "amount",
+    id: "price",
+      header:"Сумма",
     cell: ({ row }) => {
       const item = row.original;
       return (
@@ -50,7 +54,25 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
     },
   },
   {
+    id: "type",
+    header:"Тип",
+    cell: ({ row }) => {
+      const item = row.original;
+      return (
+      <div >
+          <Button
+          className={`${item?.type !== "Приход" ? "text-[#E38157] border-[#E38157] hover:text-[#E38157]" : "text-[#89A143] border-[#89A143] hover:text-[#89A143]"}  rounded-[70px] p-[14px] h-10 `}
+          variant={"outline"}
+        >
+          {item?.title == "" ||item?.title == "Продажа"  ? "Продажа" : item?.title}
+        </Button>
+      </div>
+      );
+    },
+  },
+  {
     id: "comment",
+    header:"Подробнее информации",
     cell: ({ row }) => {
       const item = row.original;
       return (
@@ -58,7 +80,7 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
       {item?.comment && <MessageSquareText width={14} />}
       {item.product || item?.comment}
     </p>:  
-    <div className="flex items gap-4">
+    <div className="flex  items gap-10 xl:gap-14">
         <p  className="text-[13px] text-muted-foreground">
             {item.order?.bar_code?.collection?.title}
         </p>
@@ -102,23 +124,45 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
       );
     },
   },
+ 
+
   {
-    id: "type",
-    cell: ({ row }) => {
+    id: "filial",
+    header:"Филиал",
+    cell: ({row}) => {
+      const { meUser } = useMeStore();
       const item = row.original;
       return (
-      <div className="w-full text-end">
+        meUser?.position?.role == 10 ? <div >
           <Button
-          className={`${item?.type !== "Приход" ? "text-[#E38157] border-[#E38157] hover:text-[#E38157]" : "text-[#89A143] border-[#89A143] hover:text-[#89A143]"}  rounded-[70px] p-[14px] h-10 `}
+          className={`bg-[#E6E6D9] border-0  rounded-[5px] p-[14px] h-10 `}
           variant={"outline"}
         >
-          {item?.title == "" ||item?.title == "Продажа"  ? "Продажа" : item?.title}
+          {item?.filial?.name}
         </Button>
-      </div>
+      </div>:""
       );
     },
   },
   {
+    header: "Продавец",
+    id: "closer",
+    cell: ({ row }) => {
+      const item = row.original;
+      return item?.order?.seller?.avatar && <img  className="w-[50px]    rounded-full object-cover border-background border h-[50px]" src={minio_img_url + item?.order?.seller?.avatar?.path}/>
+       
+    },
+  },
+  {
+    header: "Кассир",
+    id: "closer",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <img  className="w-[50px] rounded-full object-cover border-background border h-[50px]" src={minio_img_url + item?.casher?.avatar?.path}/>
+       
+    },
+  },
+    {
     id: "time",
     cell: ({ row }) => {
       const item = row.original;

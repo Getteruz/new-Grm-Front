@@ -183,7 +183,6 @@ export default function SinglePage() {
           isFetchingNextPage={isFetchingNextPage}
           onSelectionChange={(e) => {
             const newIds = e.map((item) => item.id);
-
             if (JSON.stringify(seleted) !== JSON.stringify(newIds)) {
               setSeleted(newIds);
             }

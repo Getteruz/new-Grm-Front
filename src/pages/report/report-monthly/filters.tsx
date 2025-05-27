@@ -1,12 +1,9 @@
-import { FileOutput, Plus, Trash2 } from "lucide-react";
 import { useQueryState } from "nuqs";
 
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 import FilterSelect from "@/components/filters-ui/filter-select";
-import { Button } from "@/components/ui/button";
 
 export default function Filters() {
-  const [, setId] = useQueryState("id");
 
   return (
     <div className="bg-sidebar border-border border-b px-4 h-[64px] flex items-center">

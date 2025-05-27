@@ -2,7 +2,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { DollarSign, Plus } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 // import ShadcnSelect from "@/components/Select";

@@ -3,7 +3,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { useMeStore } from "@/store/me-store";
 
 import Filter from "./filter";
-import  {useCashflowFilial, useKassaReportTotal } from "./queries";
+import  { useKassaReportSingle, useKassaReportTotal } from "./queries";
 import CardSort from "@/components/card-sort";
 import CardSortSingle from "./card-sort";
 import { useDataCashflow, useDataKassa } from "@/pages/cashier/report/queries";
@@ -27,15 +27,12 @@ export default function Page() {
   
   // myReport
 
-  const {data:cashflowFilial} = useCashflowFilial({
-    enabled:Boolean(kassaReports),
-    id:kassaReports || undefined,
-  })
+
   const {data:KassaReport} = useKassaReportTotal({
     queries:{
       filialId: meUser?.position?.role == 10  ? filial || undefined :  meUser?.filial?.id || undefined,
     },
-    enabled: !id && !cashflowFilial,
+    enabled: !id,
 })
 
   const { data:kassaData, isLoading:KassaLoading, fetchNextPage:KassafetchNextPage, hasNextPage:KassafhasNextPage, isFetchingNextPage:KassaisFetchingNextPage } =
@@ -60,6 +57,11 @@ export default function Page() {
     enabled: Boolean(id || meUser?.position?.role ===  10 || Myid),
   });
 
+  const { data: KassaReportSingle } = useKassaReportSingle({
+    id:kassaReports || undefined,
+    enabled: Boolean(kassaReports) ,
+  });
+
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
   const flatKasssaData = kassaData?.pages?.flatMap((page) => page?.items || []) || [];
 
@@ -68,7 +70,7 @@ export default function Page() {
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
       {
-        meUser?.position?.role === 6 ? <CardSortSingle />:<CardSort cashflowFilial={kassaReports? cashflowFilial:undefined}  KassaReport={id || kassaReports ? undefined : KassaReport }  KassaId={  undefined }/>
+        meUser?.position?.role === 6 ? <CardSortSingle />:<CardSort  KassaReport={ Myid == "myReport"? KassaReportSingle : id || kassaReports ? undefined : KassaReport }  KassaId={id||  undefined }/>
       }
    
         { Boolean(id) || meUser?.position?.role ===  10 || Myid == "myReport"   ?  <DataTable

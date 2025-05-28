@@ -19,12 +19,12 @@ import {
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
-import { TChaFlowData, TKassareportData } from "@/pages/report/type";
+import {  TKassareportData } from "@/pages/report/type";
 import { minio_img_url } from "@/constants";
 import useDataFetch from "@/pages/filial/table/queries";
 import ShadcnSelect from "./Select";
 
-export default function CardSort({KassaId,KassaReport,cashflowFilial}:{KassaId?:string,cashflowFilial?:TChaFlowData | undefined,KassaReport?:TKassareportData}) {
+export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaReport?:TKassareportData}) {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
   const [kassaReports] = useQueryState("kassaReports");
@@ -45,6 +45,7 @@ export default function CardSort({KassaId,KassaReport,cashflowFilial}:{KassaId?:
     id:KassaId,
   });
 
+
   const { data: types } = useDataCashflowTypes({
     queries: { limit: 20, page: 1,type: type == "Приход"? "in" : "out" },
   });
@@ -56,10 +57,10 @@ export default function CardSort({KassaId,KassaReport,cashflowFilial}:{KassaId?:
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(KassaReport?.totalIncome ||  kassaId?.income  ||  cashflowFilial?.income|| 0)
+        formatPrice(KassaReport?.totalIncome ||  kassaId?.income  || 0)
       ),
       button:
-      kassaId || meUser?.position?.role == 10 || kassaReports  || cashflowFilial ? (
+      kassaId || meUser?.position?.role == 10 || kassaReports   ? (
           <div
             onClick={() => {
               setType("Приход");
@@ -100,10 +101,10 @@ export default function CardSort({KassaId,KassaReport,cashflowFilial}:{KassaId?:
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        `-${formatPrice(KassaReport?.totalExpense || kassaId?.expense ||  cashflowFilial?.expense|| 0)}`
+        `-${formatPrice(KassaReport?.totalExpense || kassaId?.expense || 0)}`
       ),
       button:
-       kassaId || meUser?.position?.role == 10 || kassaReports || cashflowFilial ? (
+       kassaId || meUser?.position?.role == 10 || kassaReports  ? (
           <div
             onClick={() => {
               setType("Расход");
@@ -266,7 +267,7 @@ export default function CardSort({KassaId,KassaReport,cashflowFilial}:{KassaId?:
                   <Skeleton className="h-7 w-24 mt-1" />
                 ) : (
                   <p className="text-[25px] font-bold text-foreground">
-                    {formatPrice(KassaReport?.totalSum|| kassaId?.totalSum ||cashflowFilial?.income &&  (cashflowFilial?.income - cashflowFilial?.expense) || 0)}
+                    {formatPrice(KassaReport?.totalSum|| kassaId?.totalSum || 0)}
                   </p>
                 )}
               </div>

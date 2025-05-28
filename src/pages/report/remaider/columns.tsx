@@ -34,7 +34,7 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-[14px] font-[500]">
-          {row.original.totalKv} м²
+          {row.original.totalKv || 0} м²
         </p>
       );
     },
@@ -45,7 +45,7 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-[14px] font-[500]">
-          {(Number(row.original.totalKv) * row.original.collectionPrices?.[0]?.priceMeter).toFixed(2)}$
+          {(Number(row.original.totalKv) * row.original.collectionPrices?.[0]?.priceMeter).toFixed(2) || 0}$
         </p>
       );
     },
@@ -54,7 +54,7 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
     header: "Кол-во ковров",
     accessorKey: "totalCount",
     cell: ({ row }) => {
-      return <p className="text-[14px] w-[200px] font-[500]">{row.original.totalCount} шт</p>;
+      return <p className="text-[14px] w-[200px] font-[500]">{row.original.totalCount || 0} шт</p>;
     },
   },
   {
@@ -64,7 +64,7 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
       return (
         <p className="text-[14px] font-[500]">
     
-        {row.original.orderKv} м²
+        {row.original.orderKv || 0} м²
         </p>
       );
     },
@@ -75,7 +75,7 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
     cell: ({row}) => {
       return (
         <p className="text-[14px] font-[500]">
-            {row.original.totalPrice} $
+            {row.original.totalPrice || 0} $
         </p>
       );
     },

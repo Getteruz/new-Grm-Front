@@ -24,6 +24,7 @@ export const apiRoutes = {
   upload: "/media-upload/single/avatar/avatar",
   filial: "/filial",
   payrolls: "/payrolls",
+  payrollsChangeStatus: "/payrolls/change-status",
   payrollItems: "/payroll-items",
   dealer: "/filial/dealer",
   filialMakeReport: "/filial/maker-report",

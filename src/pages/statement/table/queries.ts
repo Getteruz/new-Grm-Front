@@ -5,7 +5,7 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 
-import { getAllData } from "@/service/apiHelpers";
+import { getAllData, getByIdData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
@@ -16,10 +16,11 @@ interface IStatementQuery {
   queries?: StatementQuery;
 }
 
+
 const useStatementsData = ({ options, queries }: IStatementQuery) =>
   useInfiniteQuery({
     ...options,
-    queryKey: [apiRoutes.payrollItems, queries],
+    queryKey: [apiRoutes.payrolls, queries],
     queryFn: ({ pageParam = 10 }) =>
       getAllData<TResponse<Statement>, StatementQuery>(`${apiRoutes.payrolls}`, {
         ...queries,
@@ -35,6 +36,14 @@ const useStatementsData = ({ options, queries }: IStatementQuery) =>
     },
     initialPageParam: 1,
   });
+ export const useStatementsId = ({ id }: {id?:string | undefined}) =>
+    useQuery({
+      queryKey: [apiRoutes.payrolls,id],
+      enabled:Boolean(id),
+      queryFn: () =>
+        getByIdData<Statement, StatementQuery>(`${apiRoutes.payrolls}`,id || ""),
+   
+    });
 
 export const useStatementsDataDetail = ({
   queries,

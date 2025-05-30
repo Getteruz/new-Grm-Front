@@ -16,18 +16,13 @@ export default function Filters() {
           <DateRangePicker
             toPlaceholder="до"
             fromPlaceholder="от"
-
-            // placeholder={"Выберите диапазон дат"}
-            // onChange={handleDateRangeChange}
-            // name="date-picker"
-            // className="w-64"
           />
         </div>
       </div>
       <FilterSelect
         placeholder="Фильтр"
         name="status"
-        className="border-x border-border h-full mx-4"
+        className="border-x border-border h-full mr-auto mx-4"
         defaultValue="all"
         options={[
           { label: "Все статусы", value: "all" },
@@ -38,19 +33,12 @@ export default function Filters() {
         ]}
       />
 
-      {/* <SearchInput className="ml-2 w-[250px]" /> */}
 
-      <div className="flex ml-auto">
-        <Button variant="outline" className="mr-2">
-          <FileOutput className="mr-2 h-4 w-4" /> Экспорт
-        </Button>
-        <Button variant="outline" className="mr-2">
-          <Trash2 className="h-4 w-4" />
-        </Button>
-        <Button onClick={() => setId("new")}>
-          <Plus className="mr-2 h-4 w-4" /> Добавить ведомость
-        </Button>
-      </div>
+   
+
+      <Button className="h-full  border-y-0 w-[64px]"  variant={"outline"} ><Trash2/></Button>
+      <Button className="h-full  border-y-0 w-[140px] "  variant={"outline"} ><FileOutput/> Экспорт</Button>
+      <Button onClick={() => setId("new")}  className="h-full   border-l-0   border-y-0   "  variant={"outline"} ><Plus size={24}/>  Добавить ведомость</Button>
     </div>
   );
 }

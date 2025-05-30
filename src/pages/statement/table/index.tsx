@@ -19,6 +19,8 @@ import useStatementsData from "./queries";
 import { useDeleteStatement } from "./mutations";
 import { ActionCell } from "./ActionCell";
 import { Statement } from "../type";
+import { useQueryClient } from "@tanstack/react-query";
+import { apiRoutes } from "@/service/apiRoutes";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -29,8 +31,7 @@ export default function Page() {
   const [search] = useQueryState("search");
   const [id, setId] = useQueryState("id");
   const [deleteId, setDeleteId] = useQueryState("deleteId");
-  const [editId, setEditId] = useQueryState("editId");
-
+  const queryClient = useQueryClient();
   const deleteStatement = useDeleteStatement();
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -51,11 +52,12 @@ export default function Page() {
     if (deleteId) {
       await deleteStatement.mutateAsync(deleteId);
       setDeleteId(null);
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.payrolls] });
     }
   };
 
   const handleEditClick = (id: string) => {
-    setEditId(id);
+    setId(id);
   };
 
   const handleDeleteClick = (id: string) => {
@@ -81,9 +83,8 @@ export default function Page() {
         isRowClickble
       />
 
-      <CreateStatementModal isOpen={id === "new"} onClose={() => setId(null)} />
+      <CreateStatementModal isOpen={Boolean(id) } onClose={() => setId(null)} />
 
-      <p className="hidden">{editId}</p>
 
       <Dialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
         <DialogContent className="sm:max-w-[596px] p-0 bg-[#F0F0E5]">

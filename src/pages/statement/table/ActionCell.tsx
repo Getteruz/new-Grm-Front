@@ -26,7 +26,7 @@ export const ActionCell = ({ row, onDeleteClick, onEditClick }: ActionCellProps)
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={(e) => {
           e.stopPropagation();
-          navigate(`/statement/${row.original.id}`);
+          navigate(`/statement/${row.original.id}/info`);
         }}>
           Подробности
         </DropdownMenuItem>

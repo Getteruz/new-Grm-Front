@@ -1,10 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,18 +9,27 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+const monthList = [
+  { value: "1", label: "Январь" },
+  { value: "2", label: "Февраль" },
+  { value: "3", label: "Март" },
+  { value: "4", label: "Апрель" },
+  { value: "5", label: "Май" },
+  { value: "6", label: "Июнь" },
+  { value: "7", label: "Июль" },
+  { value: "8", label: "Август" },
+  { value: "9", label: "Сентябрь" },
+  { value: "10", label: "Октябрь" },
+  { value: "11", label: "Ноябрь" },
+  { value: "12", label: "Декабрь" },
+];
+
 import FormComboboxDemoInput from "@/components/forms/FormCombobox";
-import { AddData, getAllData } from "@/service/apiHelpers";
+import { AddData } from "@/service/apiHelpers";
 import { toast } from "sonner";
+import { apiRoutes } from "@/service/apiRoutes";
+import { useQueryClient } from "@tanstack/react-query";
+import FormSelectInput from "@/components/forms/FormSelect";
 
 interface AddEmployeeModalProps {
   isOpen: boolean;
@@ -32,24 +38,17 @@ interface AddEmployeeModalProps {
   selectedFilialId?: string;
 }
 
-interface Employee {
-  id: string;
-  name: string;
-  avatar: { path: string } | null;
-  firstName: string;
-  lastName: string;
-  salary: number;
-}
-
-type PayrollItemsResponse = Employee[];
 
 const formSchema = z.object({
-  employeeId: z.string().min(1, "Выберите сотрудника"),
+  selectedMonth:z.string(),
+  employeeId:  z.object({
+    value: z.string(),
+    label: z.string()
+  }),
   filial: z.object({
     value: z.string(),
     label: z.string()
-  }).refine((data) => data.value, "Выберите филиал"),
-  month: z.string().min(1, "Выберите месяц"),
+  }),
   enableBonus: z.boolean().default(false),
   enablePremium: z.boolean().default(true),
   salary: z.number().default(0),
@@ -62,53 +61,43 @@ export default function AddEmployeeModal({
   onClose,
   statementId,
 }: AddEmployeeModalProps) {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-  const [filialId, setFilialId] = useState<string>("");
-
+  const queryClient = useQueryClient();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      employeeId: "",
-      filial: { value: "", label: "" },
-      month: "",
-      enableBonus: false,
-      enablePremium: true,
-      salary: 0,
-    },
+ 
   });
 
-  // Watch for filial changes in the form
   const selectedFilial = form.watch("filial");
 
-  // Update filialId when filial selection changes
-  useEffect(() => {
-    if (selectedFilial?.value) {
-      setFilialId(selectedFilial.value);
-    }
-  }, [selectedFilial]);
-
-  const { data: usersData, isLoading: isUsersLoading } = useQuery<PayrollItemsResponse>({
-    queryKey: ["users", filialId],
-    queryFn: () => getAllData<PayrollItemsResponse, any>(`/user/filial/${filialId}`, {}),
-    enabled: !!filialId,
-  });
+  const  CloseFunc = ()=>{
+    form.reset({
+      salary:undefined,
+      selectedMonth:undefined,
+      employeeId:undefined,
+      filial:undefined,
+      enableBonus:undefined,
+      enablePremium:undefined,
+    })
+    onClose()
+  }
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const month = parseInt(data.month.split("-")[1]); // Extract month number from YYYY-MM format
+   
       await AddData("/payroll-items", {
-        selectedMonth: month,
+        selectedMonth: Number(data?.selectedMonth),
         plastic: 0,
-        in_hand: data.salary,
+        in_hand: data?.salary,
         prepayment: 0,
         payrollId: statementId,
-        userId: data.employeeId,
+        userId: data?.employeeId?.value,
         is_premium: false,
         is_bonus: false
       });
-
+      // payrollItems
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.payrollItems] });
       toast.success("Сотрудник успешно добавлен");
-      onClose();
+      CloseFunc();
     } catch (error) {
       toast.error("Ошибка при добавлении сотрудника");
       console.error(error);
@@ -116,10 +105,9 @@ export default function AddEmployeeModal({
   };
 
   if (!isOpen) return null;
-  console.log(usersData);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={CloseFunc}>
       <DialogContent className="sm:max-w-[796px] p-0 bg-[#F0F0E5]">
         <DialogHeader className="p-4 border-b">
           <div className="flex justify-between items-center">
@@ -129,7 +117,7 @@ export default function AddEmployeeModal({
           </div>
         </DialogHeader>
         <FormProvider {...form}>
-          <form >
+          <form onSubmit={form.handleSubmit(onSubmit)} >
             <div className="p-6">
               <div className="space-y-6">
                 <div className="space-y-4">
@@ -138,116 +126,47 @@ export default function AddEmployeeModal({
                   </h3>
 
                   <div className="flex gap-4">
-                    <div className="w-[220px]">
                       <FormComboboxDemoInput
                         fieldNames={{ value: "id", label: "title" }}
                         fetchUrl="/filial"
+                        className="w-1/3"
                         classNameChild="h-[40px] p-2"
                         name="filial"
                         placeholder="Укажите флиал"
                         label="Флиал"
                       />
-                      {form.formState.errors.filial && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {form.formState.errors.filial.message}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="w-full">
-                      <Label htmlFor="employee" className="text-[12px] font-light">
-                        Сотрудник
-                      </Label>
-                      <Select
-                        onValueChange={(value) => {
-                          const selectedEmployee = usersData?.find(emp => emp.id === value);
-                          form.setValue("employeeId", value);
-                          form.setValue("salary", selectedEmployee?.salary || 0);
-                        }}
-                        value={form.watch("employeeId")}
-                        disabled={!filialId || isUsersLoading}
-                      >
-                        <SelectTrigger id="employee" className="w-full bg-input p-2 h-[40px]">
-                          <SelectValue placeholder={"Выберите сотрудника"} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {usersData === undefined ? (
-                            <div className="p-2 text-center text-gray-500">Загрузка...</div>
-                          ) : usersData.length === 0 ? (
-                            <div className="p-2 text-center text-gray-500">В этом филиале нет сотрудников</div>
-                          ) : (
-                            usersData.map((employee: Employee) => (
-                              <SelectItem key={employee.id} value={employee.id}>
-                                <div className="flex items-center gap-2">
-                                  <Avatar className="h-6 w-6">
-                                    <AvatarImage src={employee.avatar?.path} />
-                                    <AvatarFallback className="bg-primary text-white text-xs">
-                                      {employee.firstName?.charAt(0)}{employee.lastName?.charAt(0)}
-                                    </AvatarFallback>
-                                  </Avatar>
-                                  <span>
-                                    {employee.firstName} {employee.lastName}
-                                  </span>
-                                </div>
-                              </SelectItem>
-                            ))
-                          )}
-                        </SelectContent>
-                      </Select>
-                      {form.formState.errors.employeeId && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {form.formState.errors.employeeId.message}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="">
-                    <Label htmlFor="month" className="text-[12px] font-light">
-                      За какой месяц
-                    </Label>
-                    <div className="flex items-center">
-                      <Input
-                        id="month"
-                        type="month"
-                        className="mt-1 w-[220px] bg-input p-2 h-[40px]"
-                        value={
-                          selectedDate
-                            ? selectedDate
-                                .toISOString()
-                                .split("T")[0]
-                                .substring(0, 7)
-                            : ""
-                        }
-                        onChange={(e) => {
-                          setSelectedDate(
-                            e.target.value
-                              ? new Date(`${e.target.value}-01`)
-                              : undefined
-                          );
-                          form.setValue("month", e.target.value);
-                        }}
+                  
+                  <FormComboboxDemoInput
+                        fieldNames={{ value: "id", label: "firstName" }}
+                        fetchUrl={`/user` }
+                        className="w-2/3"
+                        classNameChild="h-[40px]  p-2"
+                        name="employeeId"
+                        disabled={!selectedFilial?.value}
+                        queries={{filialId: selectedFilial?.value}}
+                        placeholder="Выберите сотрудников"
+                        label="Сотрдуник"
                       />
-                      {form.formState.errors.month && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {form.formState.errors.month.message}
-                        </p>
-                      )}
-                    </div>
                   </div>
+
+                  <FormSelectInput
+                        fieldNames={{ value: "id", label: "firstName" }}
+                        option={monthList}
+                        className="w-1/3 max-w-[243px]"
+                        classNameChild="h-[40px]  p-2"
+                        name="selectedMonth"
+                        placeholder="За какой месяц"
+                        label="За какой месяц"
+                        
+                      />
                 </div>
               </div>
             </div>
 
-            {/* Footer with buttons */}
             <div className="flex border-t p-2 bg-[#E6E6D9]">
               <Button
                 type="submit"
                 className="rounded-none h-12 w-[220px] mx-3"
-                onClick={e => {
-                  e.stopPropagation();
-                  onSubmit(form.getValues());
-                }}
               >
                 Сохранить
               </Button>
@@ -255,7 +174,7 @@ export default function AddEmployeeModal({
                 type="button"
                 className="rounded-none h-12 w-[220px] border-l bg-[#F0F0E5]"
                 variant="outline"
-                onClick={onClose}
+                onClick={CloseFunc}
               >
                 Отменить
               </Button>

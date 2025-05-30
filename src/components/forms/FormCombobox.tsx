@@ -56,7 +56,7 @@ export default function FormComboboxDemoInput<IData, TQuery>({
   const [search, setSearch] = useState();
 
   const { data, isLoading } = useQuery({
-    queryKey: [fetchUrl, search],
+    queryKey: [fetchUrl, search, queries],
     enabled: open && Boolean(fetchUrl),
     queryFn: () =>
       getAllData<TResponse<IData>, TQuery>(fetchUrl || "", {

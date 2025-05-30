@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { Statement } from "../type";
 import { ActionCell } from "./ActionCell";
 import { StatusBadge } from "./StatusBadge";
+import { useStatusMutation } from "../form/action";
 
 // Status badge renderer
 
@@ -34,7 +35,9 @@ export const StatementColumns: ColumnDef<Statement>[] = [
     header: "Бонусы",
     accessorKey: "bonusesTotal",
     cell: ({ row }) => {
-      return <span className="text-[#C3AD54]">{row.original.payroll?.bonus} $</span>;
+      return (
+        <span className="text-[#C3AD54]">{row.original.payroll?.bonus} $</span>
+      );
     },
   },
   {
@@ -59,12 +62,29 @@ export const StatementColumns: ColumnDef<Statement>[] = [
     header: "Статус",
     accessorKey: "status",
     cell: ({ row }) => {
-      return <StatusBadge status={row.original.status} />;
+      const { mutate, isPending } = useStatusMutation();
+      return (
+        <StatusBadge
+          isPending={isPending}
+          onClick={(e) => {
+            if(row?.original?.status == "Sent"){
+              mutate({
+                id: String(row.original.id),
+                status: 'InProgress',
+              });
+            }
+            e.stopPropagation();
+          }}
+          status={row.original.status}
+        />
+      );
     },
   },
   {
     id: "actions",
     enableHiding: true,
-    cell: ({ row }) => <ActionCell row={row} onDeleteClick={() => {}} onEditClick={() => {}} />,
+    cell: ({ row }) => (
+      <ActionCell row={row} onDeleteClick={() => {}} onEditClick={() => {}} />
+    ),
   },
 ];

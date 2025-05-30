@@ -15,16 +15,18 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { TOption } from "./FormCombobox";
 
 interface Props<TQuery> {
   name: string;
   label?: string;
   placeholder?: string;
-  fetchUrl: string;
+  fetchUrl?: string;
   className?: string;
   disabled?: boolean;
   queries?: TQuery;
   classNameChild?: string;
+  option?: TOption[];
   fieldNames?: {
     value: string;
     label: string;
@@ -40,6 +42,7 @@ export default function FormSelectInput<IData, TQuery>({
   disabled,
   queries,
   fieldNames,
+  option,
   classNameChild,
 }: Props<TQuery>) {
   const { control } = useFormContext();
@@ -48,8 +51,8 @@ export default function FormSelectInput<IData, TQuery>({
 
   const { data, isLoading } = useQuery({
     queryKey: [fetchUrl],
-    enabled: open,
-    queryFn: () => getAllData<TResponse<IData>, TQuery>(fetchUrl, queries),
+    enabled: (open && Boolean(fetchUrl)),
+    queryFn: () => getAllData<TResponse<IData>, TQuery>(fetchUrl ||"", queries),
     select: (res) => ({
       data: res?.items.map((item) => ({
         value: fieldNames?.value
@@ -83,7 +86,7 @@ export default function FormSelectInput<IData, TQuery>({
                 disabled={disabled}
                 value={field.value}
                 isLoading={isLoading}
-                options={data?.data || []}
+                options={option|| data?.data || []}
                 placeholder={placeholder ? t(placeholder) : ""}
                 onChange={field.onChange}
                 // className="border-none"

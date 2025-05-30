@@ -13,8 +13,8 @@ export default function Filters() {
     useDataFetch({
       queries: {
         page:2,
-        limit:20,
-        type: "filial",
+        limit:50,
+        // type: "filial",
       },
     });
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];

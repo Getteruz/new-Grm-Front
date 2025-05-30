@@ -143,7 +143,7 @@ export default function AddEmployeeModal({
                         classNameChild="h-[40px]  p-2"
                         name="employeeId"
                         disabled={!selectedFilial?.value}
-                        queries={{filialId: selectedFilial?.value}}
+                        queries={{filial: selectedFilial?.value}}
                         placeholder="Выберите сотрудников"
                         label="Сотрдуник"
                       />

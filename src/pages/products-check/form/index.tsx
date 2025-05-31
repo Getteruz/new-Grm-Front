@@ -19,7 +19,6 @@ const ActionPage = () => {
       form.reset({
         name: data.id || "",
         code: data?.code || "",
-
         country: data?.country?.title,
         collection: data?.collection?.title,
         size: data?.size?.title,

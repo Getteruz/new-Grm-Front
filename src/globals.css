@@ -160,9 +160,9 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-body {
+/* body {
   overflow: hidden;
-}
+} */
 
 .costomModal .ring-offset-background{
   background: var(--background) !important;

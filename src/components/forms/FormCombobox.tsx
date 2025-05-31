@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -16,6 +16,7 @@ import {
   // FormMessage,
 } from "../ui/form";
 import { ComboboxDemo } from "./Combobox";
+import { get } from "@/utils/get";
 
 interface Props<TQuery> {
   name: string;
@@ -55,33 +56,44 @@ export default function FormComboboxDemoInput<IData, TQuery>({
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState();
 
-  const { data, isLoading } = useQuery({
-    queryKey: [fetchUrl, search, queries],
-    enabled: open && Boolean(fetchUrl),
-    queryFn: () =>
-      getAllData<TResponse<IData>, TQuery>(fetchUrl || "", {
-        search: search || undefined,
-        limit: 30,
-        page: 1,
-        ...queries,
-      } as TQuery),
-    select: (res) => ({
-      data: res?.items.map((item) => ({
-        value: fieldNames?.value
-          ? (item as Record<string, string>)[fieldNames?.value]
-          : String(item),
-        label: fieldNames?.label
-          ? (item as Record<string, string>)[fieldNames?.label]
-          : String(item),
-      })),
-      meta: res.meta,
-    }),
-  });
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [fetchUrl, search, queries],
+      enabled: open && Boolean(fetchUrl),
+      queryFn: ({ pageParam = 1 }) =>
+        getAllData<TResponse<IData>, TQuery>(fetchUrl || "", {
+          search:search,
+          limit:20,
+          page:pageParam,
+          ...queries,
+        } as TQuery),
+      select: (res) => ({
+        data: res.pages.flatMap((page) =>
+          page.items.map((item) => ({
+            value: fieldNames?.value
+              ? (item as Record<string, string>)[fieldNames.value]
+              : String(item),
+            label: fieldNames?.label
+              ? get(item as Record<string, string>, fieldNames.label)
+              : String(item),
+          }))
+        ),
+        meta: res.pages[res.pages.length - 1].meta,
+      }),
+      getNextPageParam: (lastPage) => {
+        if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+          return lastPage?.meta?.currentPage + 1;
+        } else {
+          return null;
+        }
+      },
+      initialPageParam: 1,
+    });
 
+    console.log(open,fetchUrl)
 
   const memoizedData = useMemo(() => {
     if (option) return option;
-
     const value = watch(name);
 
     if (!data?.data) return [value];
@@ -90,6 +102,7 @@ export default function FormComboboxDemoInput<IData, TQuery>({
     );
     return containsValue ? data?.data : [value, ...data?.data];
   }, [data, fieldNames, watch(name), option]);
+
 
   return (
     <FormField
@@ -108,14 +121,20 @@ export default function FormComboboxDemoInput<IData, TQuery>({
             <FormControl className="w-full">
               <ComboboxDemo
                 className={cn("w-full h-[42px]", classNameChild)}
-                onOpenChange={() => setOpen(true)}
+                onOpenChange={(isopen) => {
+                  setOpen(isopen)
+                  setSearch(undefined);
+                }}
                 onFilter={debounce((e) => setSearch(e.target.value), 500)}
                 disabled={disabled}
                 value={field?.value?.value || ""}
                 isLoading={isLoading}
-                options={memoizedData?.filter((i) => i)}
+                options={memoizedData}
                 placeholder={placeholder ? t(placeholder) : ""}
                 onChange={field.onChange}
+                fetchNextPage={fetchNextPage}
+                hasNextPage={hasNextPage ?? false}
+                isFetchingNextPage={isFetchingNextPage}
               />
             </FormControl>
             {/* <FormMessage className="text-sm text-red-500" /> */}

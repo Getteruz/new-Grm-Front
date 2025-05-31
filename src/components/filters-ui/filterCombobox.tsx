@@ -63,16 +63,9 @@ export default function FilterComboboxDemoInput<IData, TQuery>({
       enabled: open && Boolean(fetchUrl),
       queryFn: ({ pageParam = 1 }) =>
         getAllData<TResponse<IData>, TQuery>(fetchUrl || "", {
-          // sort: `${fieldNames?.label}:desc`,
-          // filters: {
-          //   [fieldNames?.label || "name"]: {
-          //     $containsi: search || undefined,
-          //   },
-          // },
           search:search,
           limit:10,
           page:pageParam,
-          // pagination: { pageSize: 30, page: pageParam },
           ...queries,
         } as TQuery),
       select: (res) => ({
@@ -96,11 +89,10 @@ export default function FilterComboboxDemoInput<IData, TQuery>({
         }
       },
       initialPageParam: 1,
-    });
+    })
 
   const memoizedData = useMemo(() => {
     if (option) return option;
-
     if (!data?.data) return value ? [value] : [];
     const containsValue = data.data.some(
       (item) => item?.value === value?.value

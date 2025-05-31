@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
+import { toast } from "sonner";
 
 export default function FormContent() {
   const [id, setId] = useQueryState("id");
@@ -67,7 +68,13 @@ export default function FormContent() {
       volume,
     };
     await api.post(apiRoutes.parties, data);
+    if (id == "new") {
+      toast.success("savedSuccessfully");
+    } else {
+      toast.success("updatedSuccessfully");
+    }
     await queryClient.invalidateQueries({ queryKey: ["clients"] });
+    queryClient.invalidateQueries({ queryKey: [apiRoutes.parties] });
     setId(null);
   };
 
@@ -158,13 +165,11 @@ export default function FormContent() {
                 label="Склад"
               />
               <FormComboboxDemoInput
-                option={[
-                  {
-                    label: "Alisher",
-                    value: "d53fcfc7-5615-4896-bf8b-500a43ff47a7",
-                  },
-                ]}
+                fetchUrl="/user"
+                fieldNames={{ value: "id", label: "firstName" }}
                 name="user"
+                disabled={!warehouse}
+                queries={{filial:warehouse?.value}}
                 placeholder="Ответсвенный лицо"
                 label="Ответсвенный лицо"
               />
@@ -181,6 +186,6 @@ export default function FormContent() {
           </DialogFooter>
         </DialogContent>
       </FormProvider>
-    </Dialog>
+     </Dialog>
   );
 }

@@ -26,8 +26,7 @@ export default function Page() {
       },
     });
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
-    console.log(country,factory,partiyaNumber)
-  // retur
+
   return (
     <>
       <Filters />

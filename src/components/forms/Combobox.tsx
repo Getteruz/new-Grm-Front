@@ -65,8 +65,9 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
   } = props;
 
   React.useEffect(() => {
-      onOpenChange?.(open);
+    if (onOpenChange) onOpenChange(open);
   }, [open]);
+
   React.useEffect(() => {
     if (!fetchNextPage) return;
 

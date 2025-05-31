@@ -8,10 +8,15 @@ import { toast } from "sonner";
 import { useCropById, useCropMutation } from "./actions";
 import FormContent from "./CropContent";
 import { CropFormType, CropSchema } from "./schema";
+import { useQueryClient } from "@tanstack/react-query";
+import { apiRoutes } from "@/service/apiRoutes";
 
 const ActionPage = () => {
   const form = useForm<CropFormType>({
     resolver: zodResolver(CropSchema),
+    defaultValues: {
+      // date: new Date(),
+    },
   });
   // const navigate = useNavigate();
   const { id } = useParams();
@@ -21,13 +26,16 @@ const ActionPage = () => {
       populate: "*",
     },
   });
+  const queryClient= useQueryClient()
   const { mutate } = useCropMutation({
     onSuccess: () => {
+      // apiRoutes.parties
       if (id == "new") {
         toast.success("savedSuccessfully");
       } else {
         toast.success("updatedSuccessfully");
       }
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.parties] });
       // navigate("/crops");
     },
   });

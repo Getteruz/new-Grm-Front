@@ -1,57 +1,31 @@
-import { EditIcon, FileOutput, Trash2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-
+import { FileOutput } from "lucide-react";
 import FilterSelect from "@/components/filters-ui/filter-select";
 import SearchInput from "@/components/filters-ui/search-input";
 import { Button } from "@/components/ui/button";
-import { UpdatePatchData } from "@/service/apiHelpers";
-import { useMeStore } from "@/store/me-store";
+import FileExelUpload from "@/components/file-upload";
+import { useParams } from "react-router-dom";
+
 
 export default function Filters() {
-  const { meUser } = useMeStore();
-  const navigate = useNavigate();
+  const {id} = useParams()
+
   return (
     <div className="bg-sidebar border-border border-b  px-[51px] h-[64px]   flex  ">
       <SearchInput className="border-border border-r" />
       <FilterSelect
-        className="border-border border-r"
+        className="border-border max-w-[150px] w-full border-r"
         options={[
-          { label: "Переучёт", value: "переучет" },
-          { label: "Недостатки", value: "дефицит" },
-          { label: "Личные", value: "излишки" },
-          { label: "Остатки", value: "all" },
+          { label: "Накладной", value: "переучет" },
+          { label: "Оприходован", value: "дефицит" },
+          { label: "Розница", value: "излишки" },
         ]}
         placeholder="Переучёт"
         name="type"
       />
-      <Button
-        className="h-full border-l-1  ml-auto justify-center font-[16px] gap-1  border-y-0  border-r-0"
-        variant={"outline"}
-      >
-        <EditIcon />
-      </Button>
-      <Button
-        className="h-full border-l-1  justify-center font-[16px] gap-1  border-y-0  border-r-0"
-        variant={"outline"}
-      >
-        <Trash2 />
-      </Button>
-      <Button
-        onClick={() => {
-          if (meUser?.filial?.id) {
-            UpdatePatchData("/product/accept-report", meUser?.filial?.id, {})
-              .then(() => {
-                toast.success("Переучёт отправлен");
-                navigate("/monitoring");
-              })
-              .catch(() => toast.error("что-то пошло не так"));
-          }
-        }}
-        className="h-full border-l-0 border-y-0 w-[140px]"
-        variant={"outline"}
-      >
-        <FileOutput /> Сохранить
+      <FileExelUpload partiyaId={id ||""}/>
+    
+      <Button className="h-full  border-y-0  " variant={"outline"}>
+        <FileOutput /> Отправить на приходование 
       </Button>
     </div>
   );

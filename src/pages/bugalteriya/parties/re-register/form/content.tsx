@@ -115,6 +115,7 @@ export default function FormContent() {
           disabled={true}
           label="style"
         />
+     
       </div>
       <div className="bg-sidebar border-y text-primary border-border  h-[44px]  flex  items-center justify-end  ">
         <Switch onCheckedChange={setAuto} checked={auto} />

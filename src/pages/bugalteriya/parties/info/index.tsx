@@ -1,14 +1,13 @@
 
-import Action from "./action";
-import List from "./list";
+import ActionPageQrCode from "./form-qr-code";
 
 export default function SinglePage() {
   return (
-    <div className="w-full">
-      <div className="flex  items-start gap-[10px] p-[5px]">
-        <Action />
-        <List />
-      </div>
+    <div className="flex w-full">
+   <ActionPageQrCode/>:
+    <div className="w-2/3">
+    
     </div>
+  </div>
   );
 }

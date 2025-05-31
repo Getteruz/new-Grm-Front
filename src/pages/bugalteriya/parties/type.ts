@@ -18,6 +18,9 @@ export type TData = {
   main_image: {
     aws_path: string;
   };
+  partiya_status:{
+    title: string,
+},
   planting_time_end: string;
   planting_time_start: string;
   reels: [];

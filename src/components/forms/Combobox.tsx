@@ -1,5 +1,5 @@
 import { CommandLoading } from "cmdk";
-import { Check, ChevronsUpDown, Loader2Icon, Search } from "lucide-react";
+import { Check, ChevronsUpDown, Loader, Loader2Icon, Search } from "lucide-react";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
@@ -38,12 +38,16 @@ type ComboboxDemoProps = {
   disabled?: boolean;
   onFilter?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  onOpenChange?: () => void;
+  onOpenChange?: (isopen:boolean) => void;
+  isFetchingNextPage?: boolean;
+  hasNextPage?: boolean;
+  fetchNextPage?: () => void;
 };
 
 export function ComboboxDemo(props: ComboboxDemoProps) {
   const [open, setOpen] = React.useState(false);
   const { t } = useTranslation();
+  const loadMoreRef = React.useRef<HTMLDivElement>(null);
 
   const {
     value,
@@ -55,13 +59,37 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
     className,
     onFilter,
     disabled,
+    isFetchingNextPage = false,
+    hasNextPage = false,
+    fetchNextPage,
   } = props;
 
   React.useEffect(() => {
-    if (open) {
-      onOpenChange?.();
-    }
+      onOpenChange?.(open);
   }, [open]);
+  React.useEffect(() => {
+    if (!fetchNextPage) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentLoadMoreRef = loadMoreRef.current;
+    if (currentLoadMoreRef) {
+      observer.observe(currentLoadMoreRef);
+    }
+
+    return () => {
+      if (currentLoadMoreRef) {
+        observer.unobserve(currentLoadMoreRef);
+      }
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -134,6 +162,14 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
                   ))}
                 </CommandGroup>
               </>
+            )}
+               {hasNextPage && (
+              <div
+                className="text-center w-full  h-10 flex items-center justify-center"
+                ref={loadMoreRef}
+              >
+                <Loader className="animate-spin" />
+              </div>
             )}
           </CommandList>
         </Command>

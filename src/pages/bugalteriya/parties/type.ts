@@ -30,6 +30,9 @@ export type TQuery = {
   search?: string | undefined;
   limit: number;
   page: number;
+  country?: string | undefined,
+  partiya_no?: string | undefined,
+  factory?: string | undefined,
 };
 
 export type TCropCategory = {

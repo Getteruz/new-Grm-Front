@@ -10,24 +10,30 @@ import useDataFetch from "./queries";
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [country] = useQueryState("country");
+  const [factory] = useQueryState("factory");
+  const [partiyaNumber] = useQueryState("partiya-number");
   const [search] = useQueryState("search");
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
       queries: {
         limit,
         page,
+        country: country || undefined,
+        partiya_no: partiyaNumber || undefined,
+        factory: factory || undefined,
         search: search || undefined,
       },
     });
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
-
+    console.log(country,factory,partiyaNumber)
+  // retur
   return (
     <>
       <Filters />
       <DataTable
         isLoading={isLoading}
         columns={Columns}
-        className={"p-4"}
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}

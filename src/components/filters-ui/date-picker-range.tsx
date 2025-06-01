@@ -28,8 +28,9 @@ export function DateRangePicker({
   const [toDate, setToDate] = useQueryState<Date>("endDate", {
     parse: (value) => value ? new Date(value) : new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
   });
+  console.log(toDate,fromDate)
   return (
-    <div className="flex flex-col items-center border-l  sm:flex-row gap-2">
+    <div className="flex flex-col items-center border-l  w-[280px] sm:flex-row gap-2">
       <div className="flex-1 ">
         <Popover>
           <PopoverTrigger asChild>

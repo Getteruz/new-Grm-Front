@@ -27,7 +27,7 @@ export default function FileExelUpload({partiyaId}:{partiyaId:string}) {
         }
       };
   return (
-    <label className='flex w-full cursor-pointer max-w-[180px] items-center p-3 gap-2'>
+    <label className='flex w-full cursor-pointer border-border  max-w-[180px] justify-center items-center p-3 gap-2'>
     {/* <Button className="h-full  border-y-0 " variant={"outline"}> */}
         {loadingFile ? <Loader size={16}/>: <FileOutput size={16} /> }  Импорт файл
             <input

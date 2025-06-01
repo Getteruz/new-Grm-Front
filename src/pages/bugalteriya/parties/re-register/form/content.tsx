@@ -4,18 +4,17 @@ import BarcodeQenerat from "@/components/barcode-generat";
 import FormComboboxDemoInput from "@/components/forms/FormCombobox";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { parseAsBoolean, useQueryState } from "nuqs";
-import { Switch } from "@/components/ui/switch";
 import { useFormContext } from "react-hook-form";
+import { parseAsString, useQueryState } from "nuqs";
+import { useMeStore } from "@/store/me-store";
 
 export default function FormContent() {
   const [editble] = useState<boolean>(true);
-  const [auto, setAuto] = useQueryState(
-    "auto",
-    parseAsBoolean.withDefault(false)
-  );
+  const [barcode,setBarCode] = useQueryState("barcode");
   const { watch } = useFormContext();
   const isMetric = watch("isMetric");
+  const [tip] = useQueryState("tip",parseAsString.withDefault("new"));
+  const { meUser } = useMeStore();
 
   return (
     <div className="w-full max-h-[calc(100vh-63px)] scrollCastom border-border border-r ">
@@ -25,9 +24,12 @@ export default function FormContent() {
           classNameInput="h-[28px] p-2"
           name="code"
           placeholder="code"
-          // disabled={true}
+          localChange={() => {
+            setBarCode('new')
+          }}
           label="code"
         />
+        
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/country"
@@ -117,15 +119,22 @@ export default function FormContent() {
         />
      
       </div>
-      <div className="bg-sidebar border-y text-primary border-border  h-[44px]  flex  items-center justify-end  ">
-        <Switch onCheckedChange={setAuto} checked={auto} />
+     {(meUser?.position.role == 9 && tip == "new" ) ||  meUser?.position.role === 5   || (meUser?.position.role == 7 && tip == "переучет" ) ? <div className="bg-sidebar border-y text-primary border-border  h-[44px]  flex  items-center justify-end  ">
+        <Button
+          className="h-full w-1/3 border-y-0 text-primary justify-center font-[16px] gap-1.5  "
+          variant={"outline"}
+          disabled={barcode == "new" || barcode == undefined}
+        >
+          Изменить
+        </Button>
         <Button
           className="h-full w-1/3 text-primary justify-center font-[16px] gap-1.5  border-none"
           variant={"outline"}
+          disabled={barcode != "new" && barcode != undefined}
         >
           Добавить
         </Button>
-      </div>
+      </div>:""}
       <BarcodeQenerat />
     </div>
   );

@@ -25,7 +25,7 @@ export default function BarcodeQenerat() {
   });
   // return null;
   return (
-    <div className="w-full">
+    <div className="w-full max-w-[444px]">
       <div className="bg-sidebar border-y border-border  h-[64px]   flex   ">
         <Button
           type="button"

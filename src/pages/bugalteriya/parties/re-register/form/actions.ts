@@ -5,7 +5,7 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 
-import { AddData, getByIdData } from "@/service/apiHelpers";
+import { AddData, getByIdData, UpdateData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import {  TData, TQuery } from "../type";
@@ -18,9 +18,12 @@ interface IData {
 
 interface IMuteCheck {
   data: {
-    bar_code:string,
-    y:number
+    code:string,
+    y:number,
+    tip:string| undefined,
   }
+  isUpdate:boolean,
+  partiyaId:string
 }
 
 export const useProdcutCheck = ({
@@ -28,8 +31,12 @@ export const useProdcutCheck = ({
 }: UseMutationOptions<object, Error, IMuteCheck, unknown>) =>
   useMutation({
     ...options,
-    mutationFn: async ({ data }) => {
-      return await AddData(apiRoutes.productscheck, data);
+    mutationFn: async ({ partiyaId, data, isUpdate }) => {
+      if(isUpdate){
+        return await UpdateData(apiRoutes.excelProduct, partiyaId, data);
+      }else{
+        return await AddData(apiRoutes.excelProduct + "/" + partiyaId, data);
+      }
     },
   });
 

@@ -5,6 +5,7 @@ import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
+import { Input } from "@/components/ui/input";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -38,7 +39,7 @@ export const Columns: ColumnDef<TData>[] = [
     header: "count",
     cell: ({ row }) => {
       const [type] = useQueryState(
-        "type",
+        "tip",
         parseAsString.withDefault("переучет")
       );
       return (
@@ -52,7 +53,7 @@ export const Columns: ColumnDef<TData>[] = [
                 row.original?.count - row.original?.check_count}
               {type === "излишки" &&
                 row.original?.check_count - row.original?.count}
-                  {type === "all" && row.original?.count}
+                {type === "new" && row.original?.count}
             </>
           )}
 
@@ -127,24 +128,107 @@ export const Columns: ColumnDef<TData>[] = [
   //     return <p>{row.original?.factory?.title }</p>;
   //   },
   // },
-  {
-    header: "Партия",
-    cell: ({ row }) => {
-      return (
-        <p>
-          {row.original?.partiya
-            ? row.original?.partiya?.title
-            : row.original?.partiya_title}
-        </p>
-      );
-    },
-  },
+
   // {
   //   header: "price",
   //   cell: ({ row }) => {
   //     return <p>{row.original?.collection_price?.priceMeter}$</p>;
   //   },
   // },
+  {
+    id: "actions",
+    enableHiding: true,
+    header: () => <div className="text-right">{"actions"}</div>,
+    size: 50,
+    cell: ({ row }) => {
+      return (
+        <TableAction
+          url={apiRoutes.products}
+          ShowPreview={false}
+          ShowUpdate={false}
+          id={row.original?.id}
+          refetchUrl={apiRoutes.productReport}
+        />
+      );
+    },
+  },
+];
+
+export const ColumnsColaction: ColumnDef<TData>[] = [
+  {
+    header: "collection",
+    cell: ({ row }) => {
+      return <p>{row.original?.bar_code?.collection?.title}</p>;
+    },
+  },
+
+
+  {
+    header: "Обём",
+    cell: ({ row }) => {
+      return (
+        <>
+          {row.original?.bar_code?.isMetric && (
+            <p>
+              {(
+                (Number(row.original?.bar_code?.size?.x) *
+                  Number(
+                    row.original?.bar_code?.isMetric
+                      ? row.original?.check_count
+                      : row.original?.bar_code?.size?.y
+                  )) /
+                100
+              ).toFixed(2)}
+              м²
+            </p>
+          )}
+          {!row.original?.bar_code?.isMetric && (
+            <p>
+              {Math.ceil(
+                Number(row.original?.bar_code?.size?.x) *
+                  Number(
+                    row.original?.bar_code?.isMetric
+                      ? row.original?.check_count
+                      : row.original?.bar_code?.size?.y
+                  )
+              )}
+              м²
+            </p>
+          )}
+        </>
+      );
+    },
+  },
+  {
+    header: "Колво",
+    cell: ({ row }) => {
+      return <p>{row.original?.count || 0}</p>;
+    },
+  },
+  {
+    header: "Сумма",
+    cell: () => {
+      return <p>{0}</p>;
+    },
+  },
+  {
+    header: "Расход",
+    cell: ({ row }) => {
+      return <p>{row.original?.expence}</p>;
+    },
+  },
+  {
+    header: "Зав.цена",
+    cell: ({ row }) => {
+      return <Input defaultValue={row?.original?.commingPrice} className="w-[120px]" placeholder="0" type="number"/>;
+    },
+  },
+  {
+    header: "Касса за м²",
+    cell: ({ row }) => {
+      return <p>{row?.original?.collection_price?.priceMeter} $</p>;
+    },
+  },
   {
     id: "actions",
     enableHiding: true,

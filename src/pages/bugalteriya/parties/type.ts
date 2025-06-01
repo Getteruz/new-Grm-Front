@@ -1,3 +1,8 @@
+enum PartiyaStatusEnum {
+  NEW = 'new',
+  PENDING = 'pending',
+  CLOSED = 'closed',
+}
 export type TData = {
   id: string;
   biology_name: string;
@@ -18,9 +23,7 @@ export type TData = {
   main_image: {
     aws_path: string;
   };
-  partiya_status:{
-    title: string,
-},
+  partiya_status: PartiyaStatusEnum;
   planting_time_end: string;
   planting_time_start: string;
   reels: [];

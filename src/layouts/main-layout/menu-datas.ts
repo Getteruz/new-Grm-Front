@@ -267,6 +267,12 @@ export const DataMenu = {
     },
     {
       id: 3,
+      icons: () => PartiesIcons(),
+      link: "/parties",
+      text: "Партии",
+    },
+    {
+      id: 3,
       icons: () => BronedIcons(),
       link: "/broned",
       text: "broned",
@@ -533,7 +539,7 @@ export const DataMenu = {
       text: "Бронированные",
     },
     {
-      id: 3,
+      id: 33,
       icons: () => PartiesIcons(),
       link: "/parties",
       text: "Партии",

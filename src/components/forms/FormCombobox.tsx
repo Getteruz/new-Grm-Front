@@ -90,7 +90,6 @@ export default function FormComboboxDemoInput<IData, TQuery>({
       initialPageParam: 1,
     });
 
-    console.log(open,fetchUrl)
 
   const memoizedData = useMemo(() => {
     if (option) return option;

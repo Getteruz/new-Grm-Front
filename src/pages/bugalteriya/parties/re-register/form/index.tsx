@@ -8,7 +8,8 @@ import FormContent from "./content";
 import { CropFormType, CropSchema } from "./schema";
 import { useQueryClient } from "@tanstack/react-query";
 import { apiRoutes } from "@/service/apiRoutes";
-import { parseAsBoolean, useQueryState } from "nuqs";
+import {  parseAsString, useQueryState } from "nuqs";
+import { useParams } from "react-router-dom";
 
 const ActionPageQrCode = () => {
   const form = useForm<CropFormType>({
@@ -48,8 +49,57 @@ const ActionPageQrCode = () => {
       },
     },
   });
-  const [id, setId] = useQueryState("id");
-  const [auto, setAuto] = useQueryState("auto", parseAsBoolean);
+  const [tip] = useQueryState("tip",parseAsString.withDefault("new"));
+  const [idLoc, setId] = useQueryState("id");
+  const { id } = useParams();
+  const [barcode,setBarcode] = useQueryState("barcode");
+  // const [auto, setAuto] = useQueryState("auto", parseAsBoolean);
+  const resetForm = () => {
+    form.reset({
+      code: "",
+      isMetric: "",
+      count: undefined,
+      country: {
+        value: "",
+        label: "",
+      },
+      collection: {
+        value: "",
+        label: "",
+      },
+      size: {
+        value: "",
+        label: "",
+      },
+      shape: {
+        value: "",
+        label: "",
+      },
+      style: {
+        value: "",
+        label: "",
+      },
+      color: {
+        value: "",
+        label: "",
+      },
+      model: {
+        value: "",
+        label: "",
+      },
+    });
+  }
+
+  useEffect(() => {
+    if (barcode && barcode !== "new") {
+      form.setValue("code", barcode);
+    }
+  }, [barcode]);
+
+  useEffect(() => {
+    resetForm()
+    setBarcode("new")
+  }, [tip]);
 
   const brcode = form.watch("code");
 
@@ -60,45 +110,13 @@ const ActionPageQrCode = () => {
 
   const { mutate } = useProdcutCheck({
     onSuccess: () => {
-      form.reset({
-        code: "",
-        isMetric: "",
-        count: undefined,
-        country: {
-          value: "",
-          label: "",
-        },
-        collection: {
-          value: "",
-          label: "",
-        },
-        size: {
-          value: "",
-          label: "",
-        },
-        shape: {
-          value: "",
-          label: "",
-        },
-        style: {
-          value: "",
-          label: "",
-        },
-        color: {
-          value: "",
-          label: "",
-        },
-        model: {
-          value: "",
-          label: "",
-        },
-      });
+      resetForm()
       const codeInput = document.querySelector('input[name="code"]');
       if (codeInput) {
         (codeInput as HTMLInputElement).select();
       }
-      queryClient.invalidateQueries({ queryKey: [apiRoutes.productReport] });
-      if (id == "new") {
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.excelProduct] });
+      if (idLoc == "new") {
         setId("new");
         toast.success("Продукт добавлено успешно");
       } else {
@@ -108,9 +126,6 @@ const ActionPageQrCode = () => {
   });
   useEffect(() => {
     if (qrBaseOne) {
-      if (qrBaseOne?.isMetric) {
-        setAuto(false);
-      }
       form.reset({
         code: qrBaseOne?.code || "",
         isMetric: qrBaseOne?.isMetric ? "Метражный" : "Штучный",
@@ -148,11 +163,6 @@ const ActionPageQrCode = () => {
           label: qrBaseOne?.factory?.title,
         },
       });
-      if (auto && !qrBaseOne?.isMetric) {
-        mutate({
-          data: { bar_code: qrBaseOne?.id || "", y: qrBaseOne?.count || 1 },
-        });
-      }
     }
   }, [qrBaseOne]);
 
@@ -164,7 +174,11 @@ const ActionPageQrCode = () => {
           if (e.key === "Enter") e.preventDefault();
         }}
         onSubmit={form.handleSubmit((data) => {
-          mutate({ data: { bar_code: qrBaseOne?.id || "", y: data?.count } });
+          mutate({
+            partiyaId: id || "",
+            isUpdate: barcode == "new" ? false : true,
+            data: { code: qrBaseOne?.code || "" , tip: tip != "new" ? tip : undefined, y: data?.count },
+          });
         })}
       >
         <FormContent />

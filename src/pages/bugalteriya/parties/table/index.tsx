@@ -25,6 +25,7 @@ export default function Page() {
         search: search || undefined,
       },
     });
+    
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
@@ -34,6 +35,7 @@ export default function Page() {
         isLoading={isLoading}
         columns={Columns}
         data={flatData ?? []}
+        className="h-full"
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}
         isRowClickble

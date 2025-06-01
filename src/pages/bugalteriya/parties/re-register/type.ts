@@ -105,6 +105,8 @@ partiya:{
     id:string;
     title:string;
 };
+commingPrice:number;
+expence:string;
 partiya_title:string;
 filial:{
     id:string;
@@ -116,6 +118,7 @@ filial:{
     limit?:number,
     page?:number
     type?:string;
-    filialId?:string
+    partiyaId?:string
+    tip?:string;
   };
   

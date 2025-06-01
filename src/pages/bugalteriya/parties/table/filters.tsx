@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { FileOutput, Plus } from "lucide-react";
 import { useQueryState } from "nuqs";
 
@@ -20,11 +19,11 @@ export default function Filters() {
   return (
     <div className="bg-sidebar w-full border-border border-b  px-[51px] h-[64px]   flex   ">
       <DateRangePicker
-        fromPlaceholder={`от: ${format(new Date(), "dd.MM.yyyy")}`}
-        toPlaceholder={`до: ${format(new Date(), "dd.MM.yyyy")}`}
+        fromPlaceholder={`от`}
+        toPlaceholder={`до`}
       />
       <FilterComboboxDemoInput
-        className="w-full max-w-[170px] h-[63px] border-l border-r"
+        className="w-full max-w-[170px] h-[63px] border-0 border-l border-r"
         placeholder="Страна" 
         fetchUrl="/country"
          name="country"
@@ -33,7 +32,7 @@ export default function Filters() {
         fieldNames={{label:"title",value:"id"}}
       />
        <FilterComboboxDemoInput
-        className="w-full max-w-[170px] h-[63px] border-l border-r"
+        className="w-full max-w-[170px] h-[63px] border-0 border-l border-r"
         placeholder="Поставщик" 
         fetchUrl="/factory"
         name="factory"
@@ -42,7 +41,7 @@ export default function Filters() {
         fieldNames={{label:"title",value:"id"}}
       />
        <FilterComboboxDemoInput
-        className="w-full max-w-[170px] h-[63px] border-l border-r"
+        className="w-full max-w-[170px] h-[63px] border-0 border-l border-r"
         placeholder="Партия" 
           name="partiya-number"
         fetchUrl="/partiya-number"
@@ -56,7 +55,7 @@ export default function Filters() {
       >
         <FileOutput /> Экспорт
       </Button>
-      {meUser?.position.role === 9 && (
+      {meUser?.position.role === 9  || meUser?.position.role === 5  && (
         <Button onClick={() => setId("new")} className="h-full    ">
           <Plus size={24} /> Добавить Партия
         </Button>

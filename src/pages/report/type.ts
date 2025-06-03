@@ -95,6 +95,7 @@ export interface TKassareportData {
   additionalProfitTotalSum: number;
   netProfitTotalSum: number;
   totalSize: number;
+  kassaReportStatus:number;
   year: number;
   month: number;
   status: string;

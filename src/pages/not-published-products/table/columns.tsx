@@ -35,7 +35,7 @@ export const NotPublishedProductColumns: ColumnDef<ProductsData>[] = [
     header: "size",
     cell: ({ row }) => {
       return (
-        <p>{`${row.original?.bar_code.size.x * 100}X${(row.original?.y * 100).toFixed()}`}</p>
+        <p>{`${row.original?.bar_code.size.x * 100}X${(row.original?.y * 100).toFixed(2)}`}</p>
       );
     },
   },
@@ -46,7 +46,7 @@ export const NotPublishedProductColumns: ColumnDef<ProductsData>[] = [
     cell: ({ row }) => {
       return (
         <p>
-          {`${(row.original?.bar_code.size.x * row.original?.y).toFixed(1)}`} м²
+          {`${(row.original?.bar_code.size.x * row.original?.y).toFixed(2)}`} м²
         </p>
       );
     },

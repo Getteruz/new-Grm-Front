@@ -29,18 +29,19 @@ export default function PageFinance() {
   } = useDataKassa({
     queries: {
       filial:
-        meUser?.position?.role == 10
+        meUser?.position?.role == 10 ||meUser?.position?.role == 9
           ? filial || undefined
           : meUser?.filial?.id || undefined,
       page: 1,
       report: kassaReports || undefined,
     },
+    // enabled:  meUser?.position?.role == 9
   });
 
   const { data: KassaReport } = useKassaReportTotal({
     queries: {
       filialId:
-        meUser?.position?.role == 10
+        meUser?.position?.role == 10||meUser?.position?.role == 9
           ? filial || undefined
           : meUser?.filial?.id || undefined,
     },
@@ -49,7 +50,7 @@ export default function PageFinance() {
 
   const { data: KassaReportSingle } = useKassaReportSingle({
     id:kassaReports || undefined,
-    enabled: Boolean(kassaReports) ,
+    enabled: Boolean(kassaReports),
   });
 
   
@@ -57,7 +58,7 @@ export default function PageFinance() {
     useKassaReports({
       queries: {
         filialId:
-          meUser?.position?.role == 10
+          meUser?.position?.role == 10 ||  meUser?.position?.role == 9
             ? filial || undefined
             : meUser?.filial?.id || undefined,
       },
@@ -65,7 +66,7 @@ export default function PageFinance() {
 
     const {data:cashflowFilial} = useCashflowFilial({
       id:kassaReports || undefined,
-      enabled:Boolean(kassaReports)
+      enabled:Boolean(kassaReports) 
     })
     
 
@@ -114,6 +115,7 @@ export default function PageFinance() {
                       netProfitTotalSum: 0,
                       totalSize: 0,
                       year: 0,
+                      kassaReportStatus:0,
                       month: 0,
                       status: "open",
                       totalPlasticSum: 0,

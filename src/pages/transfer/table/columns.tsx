@@ -7,6 +7,9 @@ import { TransferData } from "../type";
 import { Input } from "@/components/ui/input";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useQueryState } from "nuqs";
+import { minio_img_url } from "@/constants";
+import { Avatar,AvatarFallback,AvatarImage, } from "@/components/ui/avatar";
+// import { useTranslation } from "react-i18next";
 
 export const paymentColumns: ColumnDef<TransferData>[] = [
   {
@@ -17,6 +20,19 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
       return <p>{row.index + 1}</p>;
     },
   },
+  {
+    header: "courier",
+    cell: ({ row }) => {
+      return  <Avatar className="w-[40px] h-[40px]">
+      <AvatarImage src={minio_img_url + row?.original?.courier?.avatar?.path} />
+      <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
+        {row.original?.courier?.firstName?.[0]}
+        {row.original?.courier?.lastName?.[0]}
+      </AvatarFallback>
+    </Avatar>
+    },
+  },
+
 
   {
     header: "collection",
@@ -30,11 +46,8 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
   },
   {
     header: "size",
-    cell: ({ row }) => {
-      return (
-        <p>{`${row.original?.product.bar_code.size.x * 100}X${(row.original?.product.y * 100).toFixed()}`}</p>
-      );
-    },
+    id: "product.bar_code.size.title",
+    accessorKey: "product.bar_code.size.title",
   },
   {
     header: "Обьём",
@@ -43,7 +56,7 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
     cell: ({ row }) => {
       return (
         <p>
-          {`${(row.original?.product.bar_code.size.x * row.original?.product.y).toFixed(1)}`}{" "}
+          {`${(row.original?.product.bar_code.size.x * (row.original.product?.bar_code?.isMetric ? +row.original.count / 100 : +row.original.count)).toFixed(2)}`}{" "}
           м²
         </p>
       );
@@ -77,6 +90,14 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
       return <p>{row.original.count} x</p>;
     },
   },
+
+  // {
+  //   header: "Статус",
+  //   cell: ({ row }) => {
+  //     const {t} = useTranslation()
+  //     return <p className="inline-block border border-border px-[12px] py-[6px] rounded-[80px]">{t(row.original?.progres)}</p>;
+  //   },
+  // },
   {
     id: "actions",
     enableHiding: true,

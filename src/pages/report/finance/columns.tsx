@@ -10,9 +10,10 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     header: "Дата",
     cell: ({ row }) => {
       const item = row.original;
+      const isTrue =item?.kassaReportStatus == 2
       return (
-        <p className={`${item.status == "open" ?  "text-[#89A143]":""}`}>
-          { item.status === "open"
+        <p className={`${isTrue?  "text-[#89A143]":""}`}>
+          { isTrue
             ? "Продалажется"
             : [
                 "Январь",

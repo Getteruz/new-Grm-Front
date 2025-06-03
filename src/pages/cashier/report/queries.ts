@@ -53,7 +53,7 @@ export const useDataCashflow = ({ queries ,enabled}: IData) =>
     initialPageParam: 1,
   });
 
-export const useDataKassa = ({ queries ,enabled}: IKassaData) =>
+export const useDataKassa = ({ queries ,enabled =true}: IKassaData) =>
   useInfiniteQuery({
     queryKey: [apiRoutes.kassa, queries],
     queryFn: ({ pageParam = 1 }) =>

@@ -30,7 +30,7 @@ export default function Page() {
 
   const {data:KassaReport} = useKassaReportTotal({
     queries:{
-      filialId: meUser?.position?.role == 10  ? filial || undefined :  meUser?.filial?.id || undefined,
+      filialId:meUser?.position?.role == 10 || meUser?.position?.role == 9  ? filial || undefined :  meUser?.filial?.id || undefined,
     },
     enabled: !id,
 })
@@ -38,7 +38,7 @@ export default function Page() {
   const { data:kassaData, isLoading:KassaLoading, fetchNextPage:KassafetchNextPage, hasNextPage:KassafhasNextPage, isFetchingNextPage:KassaisFetchingNextPage } =
     useDataKassa({
     queries: {
-      filial: meUser?.position?.role == 10  ? filial || undefined :  meUser?.filial?.id || undefined,
+      filial: meUser?.position?.role == 10 || meUser?.position?.role == 9 ? filial || undefined :  meUser?.filial?.id || undefined,
       page: 1,
     },
   });

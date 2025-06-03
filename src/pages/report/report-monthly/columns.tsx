@@ -64,11 +64,13 @@ export const StatementColumns: ColumnDef<Statement>[] = [
       const stateStatement = useStateStatement();
       return (
         <Button
-          onClick={() =>
-            row?.original?.status == "Sent" ?  stateStatement.mutateAsync({
+          onClick={row?.original?.status == "Sent" ? (e) =>{
+            e.stopPropagation()
+             stateStatement.mutateAsync({
               id: String(row.original.id),
               data: { status: "Accepted" },
-            }):{}
+            })
+          }: ()=>{}
           }
           disabled={row?.original?.status != "Sent"}
           className="rounded-[63px] bg-[#89A143]"

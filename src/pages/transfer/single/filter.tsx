@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import SearchInput from "@/components/filters-ui/search-input";
 import { BrCodeIcons } from "@/components/icons";
@@ -10,30 +10,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ProductData } from "@/pages/filial/type";
+
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 
 interface FiltersProps {
-  setTransferData: React.Dispatch<React.SetStateAction<ProductData[]>>;
-  selectedData: ProductData[]; // yoki TransferItem[] bo‘lishi mumkin, aniqlashtirsang yaxshi bo'ladi
-  transferData: ProductData[]; // yoki TransferItem[] bo‘lishi mumkin, aniqlashtirsang yaxshi bo'ladi
+  seleted:string[] // yoki TransferItem[] bo‘lishi mumkin, aniqlashtirsang yaxshi bo'ladi
 }
 const Filter: React.FC<FiltersProps> = ({
-  setTransferData,
-  selectedData,
-  transferData,
+  seleted
 }) => {
   const navigate = useNavigate();
+  const { id,uuid } = useParams();
   const sendTransfer = async () => {
-    const body = transferData.map((i) => ({
-      to: i.to,
-      from: i.from,
-      count: i.count,
-      product: i.id,
-    }));
-    await api.post(apiRoutes.transfers, body);
+    const body ={
+      to: uuid,
+      from: id
+    };
+    await api.post(apiRoutes.transferBasket, body);
     navigate("/transfers");
+  };
+  const sendOrderTransfer = async () => {
+    await api.post(apiRoutes.orderBusketMultiple, seleted);
   };
   return (
     <div className="bg-sidebar grid grid-cols-2  border-border border-b     ">
@@ -76,7 +74,7 @@ const Filter: React.FC<FiltersProps> = ({
           </div>
 
           <Button
-            onClick={() => setTransferData(selectedData)}
+            onClick={() => sendOrderTransfer()}
             className="h-full border-l-1  justify-center gap-1  border-y-0  border-r-0"
           >
             Трансфер

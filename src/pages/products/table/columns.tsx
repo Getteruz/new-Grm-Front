@@ -110,7 +110,7 @@ export const ProductColumns: ColumnDef<ProductsData>[] = [
     header: "size",
     cell: ({ row }) => {
       return (
-        <p>{`${(row.original?.bar_code?.size?.x || 0) * 100}X${((row.original?.bar_code?.size?.y || 0) * 100).toFixed()}`}</p>
+        <p>{`${(row.original?.bar_code?.size?.x || 0) * 100}X${((row.original?.bar_code?.size?.y || 0) * 100).toFixed(2)}`}</p>
       );
     },
   },
@@ -123,7 +123,7 @@ export const ProductColumns: ColumnDef<ProductsData>[] = [
       
       return (
         <p className="text-[14px] font-[500]">
-          {`${totalVolume.toFixed(1)}`} м²
+          {`${totalVolume.toFixed(2)}`} м²
         </p>
       );
     },

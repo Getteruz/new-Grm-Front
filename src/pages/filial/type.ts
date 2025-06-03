@@ -116,4 +116,5 @@ export interface TQuery {
   page?: number;
   type?: string;
   filialId?: string;
+  is_transfer?:boolean;
 }

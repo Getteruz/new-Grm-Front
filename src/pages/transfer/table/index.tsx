@@ -39,15 +39,14 @@ export default function Page() {
   const [type, setType] = useQueryState(
     "type",
     parseAsString.withDefault("In")
-  );
+  )
+
   const { data, isLoading } = useTransfers({
     queries: {
       limit: 50,
       page: 1,
-      type: meUser?.position.role === 9 ? undefined : type == "New" ? 'Out' :type || undefined,
-      from:
-        meUser?.position.role === 9 ? filial || "" : meUser?.filial?.id || "",
-      to: meUser?.position.role === 9 ? filialTo : filial,
+      from: meUser?.position.role === 9 ? filial : type=="In" ? filial : meUser?.filial?.id ,
+      to: meUser?.position.role === 9 ? filialTo : type=="In" ? meUser?.filial?.id : filial ,
     },
   });
 
@@ -203,7 +202,7 @@ export default function Page() {
               {[
                 { id: "In", name: "Входящие" },
                 { id: "Out", name: "Отправленные" },
-                { id: "New", name: "Новые" },
+                // { id: "New", name: "Новые" },
               ].map((e) => (
                 <button
                   key={e?.id}

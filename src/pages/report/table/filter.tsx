@@ -21,7 +21,7 @@ export default function Filters() {
       {meUser?.position.role === 4 &&
         <p className="text-[#272727] text-[20px]">Касса магазина</p>
       }
-           {meUser?.position?.role == 10 && !id && <FilterSelect placeholder="все" options={data?.pages[0]?.items?.map(e=>  ({label:e?.name, value:e?.id})) || []} name="filial" icons={<><Store/></>}/>}
+           {meUser?.position?.role == 10 || meUser?.position?.role == 9 &&!id && <FilterSelect placeholder="все" options={data?.pages[0]?.items?.map(e=>  ({label:e?.name, value:e?.id})) || []} name="filial" icons={<><Store/></>}/>}
       <Button
         className="h-full  border-y-0 w-[140px]  ml-auto"
         variant={"outline"}

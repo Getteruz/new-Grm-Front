@@ -33,4 +33,24 @@ const useDataFetch = ({ options, queries }: ITransfers) =>
     initialPageParam: 1,
   });
 
+  export const useDataOrderFetch = ({ options, queries }: ITransfers) =>
+    useInfiniteQuery({
+      ...options,
+      queryKey: [apiRoutes.orderBusket, queries],
+      queryFn: ({ pageParam = 10 }) =>
+        getAllData<TResponse<ProductData>, TQuery>(apiRoutes.orderBusket, {
+          ...queries,
+          page: pageParam as number,
+          limit: 10,
+        }),
+      getNextPageParam: (lastPage) => {
+        if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+          return lastPage?.meta?.currentPage + 1;
+        } else {
+          return null;
+        }
+      },
+      initialPageParam: 1,
+    });
+
 export default useDataFetch;

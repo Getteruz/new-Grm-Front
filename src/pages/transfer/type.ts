@@ -1,4 +1,16 @@
+enum progresEnum {
+  book = "Booked",
+  progress = "Processing",
+  reject = "Rejected",
+  accept = "Accepted",
+  other = "other",
+}
+
 export type TransferData = {
+  courier: {
+    firstName:string;
+    lastName:string;
+     avatar: { path: string } };
   biology_name: string;
   name: string;
   chats: [];
@@ -17,6 +29,7 @@ export type TransferData = {
       size: {
         x: number;
       };
+      isMetric: boolean;
     };
     y: number;
   };
@@ -24,6 +37,7 @@ export type TransferData = {
   main_image: {
     aws_path: string;
   };
+  progres: progresEnum;
   planting_time_end: string;
   planting_time_start: string;
   reels: [];

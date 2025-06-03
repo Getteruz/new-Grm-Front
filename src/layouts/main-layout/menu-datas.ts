@@ -509,7 +509,7 @@ export const DataMenu = {
         },
         {
           id: 24,
-          link: "/report/item-3",
+          link: "/report-item-3",
           text: "Снабжение и документооборот",
         },
       ],

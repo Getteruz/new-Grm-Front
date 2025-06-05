@@ -117,5 +117,6 @@ const handleError = (error: iError) => {
   if (error.status == 401) {
     removeToken();
   }
+  
   toast.error(error?.response?.data?.message);
 };

@@ -17,9 +17,6 @@ export default function Pricecheck({disabled,id}:{disabled?:boolean,id:string}) 
     onSuccess: () => {
       toast.success("close");
     },
-    onError: (error) => {
-      toast.error(`Ошибка: ${error.message || "Не удалось добавить операцию"}`)
-    },
   });
   return (
     <div className="w-full border-border border-l bg-card max-w-[312px] h-[calc(100vh-90px)] flex flex-col justify-between  p-[10px] pt-0 sticky top-0">

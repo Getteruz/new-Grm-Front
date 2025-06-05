@@ -135,13 +135,17 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {item?.status == "closed" ? (
-            <Button   className="rounded-[63px] bg-[#E38157]"> Закрыта </Button>
-          ) : item?.status == "accepted" ? (
-            <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
-          ) : item?.status == "rejected"? (
-            <Button disabled variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]"> Отменено </Button>
-          ):  <Button  variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>}
+          {
+            item?.kassaReportStatus == 2  ?(
+              <Button  variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> Продалажется</Button>
+            ):item?.status == "closed" ? (
+              <Button   className="rounded-[63px] bg-[#E38157]"> Закрыта </Button>
+            ) : item?.status == "accepted" ? (
+              <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
+            ) : item?.status == "rejected"? (
+              <Button disabled variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]"> Отменено </Button>
+            ):  item?.status == "open"?  <Button  variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]">  Открыто </Button>: <Button  variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>
+          }
         </div>
       );
     },

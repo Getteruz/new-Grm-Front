@@ -8,11 +8,26 @@ import CardSort from "@/components/card-sort";
 import CardSortSingle from "./card-sort";
 import { useDataCashflow, useDataKassa } from "@/pages/cashier/report/queries";
 import {  ReportColumns } from "@/pages/cashier/report/page/columns";
-import { useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 import { KassaColumns } from "./columns";
 
 export default function Page() {
   const { meUser } = useMeStore();
+
+  const tipFilter = {
+    income:"cashflow",
+    expense:"cashflow",
+    sale:"order",
+    return:"order",
+  }
+
+  const typeFilter = {
+    income:"Приход",
+    expense:"Расход",
+    sale:"Приход",
+    return:"Расход",
+  }
+
   const [id] = useQueryState(
     "id"
   );
@@ -20,13 +35,20 @@ export default function Page() {
   const [filial] = useQueryState(
     "filial"
   );
+
+  const [tip] = useQueryState(
+    "tip",parseAsString
+  );
   const [Myid] = useQueryState(
     "Myid"
   );
+
+  const [startDate] = useQueryState("startDate");
+  const [endDate] = useQueryState("endDate");
+
+
   const [kassaReports] = useQueryState("kassaReports");
   
-  // myReport
-
 
   const {data:KassaReport} = useKassaReportTotal({
     queries:{
@@ -49,12 +71,19 @@ export default function Page() {
       kassaId:  Myid == "myReport" ? undefined:  id || undefined,
       limit: 10,
       page: 1,
-      filialId:  Myid == "myReport" ? undefined: meUser?.position?.role == 10 ? filial || undefined :  meUser?.filial?.id || undefined,
+      filialId:  Myid == "myReport" ? undefined: meUser?.position?.role == 10||meUser?.position?.role ===  9   ? filial || undefined :  meUser?.filial?.id || undefined,
       casherId: Myid =="myReport" ? meUser?.id || undefined : undefined,
-      kassaReport:kassaReports||undefined
+      kassaReport:kassaReports||undefined,
+      // @ts-ignore
+      type: typeFilter[tip as string],
+      // @ts-ignore
+      tip: tipFilter[tip],
+      fromDate: startDate || undefined,
+      toDate: endDate || undefined,
+      cashflowSlug:tip =="collection" ? "Инкассация":undefined
 
     },
-    enabled: Boolean(id || meUser?.position?.role ===  10 || Myid),
+    enabled: Boolean(id || meUser?.position?.role ===  10 ||meUser?.position?.role ===  9  || Myid),
   });
 
   const { data: KassaReportSingle } = useKassaReportSingle({
@@ -73,7 +102,7 @@ export default function Page() {
         meUser?.position?.role === 6 ? <CardSortSingle />:<CardSort  KassaReport={ Myid == "myReport"? KassaReportSingle : id || kassaReports ? undefined : KassaReport }  KassaId={id||  undefined }/>
       }
    
-        { Boolean(id) || meUser?.position?.role ===  10 || Myid == "myReport"   ?  <DataTable
+        { Boolean(id) || meUser?.position?.role ===  10 || meUser?.position?.role ===  9 || Myid == "myReport"   ?  <DataTable
               columns={ReportColumns}
               data={flatData || []}
               isLoading={isLoading}

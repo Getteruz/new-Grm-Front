@@ -3,6 +3,7 @@ import { parseAsString, useQueryState } from "nuqs";
 import { useTranslation } from "react-i18next";
 
 import ShadcnSelect from "../Select";
+import { useEffect } from "react";
 
 interface iFilterSelect {
   name: string;
@@ -15,7 +16,7 @@ interface iFilterSelect {
   icons?: React.ReactNode;
   options?: {
     label: string;
-    value: string;
+    value: string | undefined;
   }[];
 }
 export default function FilterSelect({
@@ -33,16 +34,20 @@ export default function FilterSelect({
     name,
     parseAsString.withDefault(defaultValue || "")
   );
+
+  useEffect(()=>{
+    if(defaultValue)  setValue(defaultValue)
+  },[defaultValue])
+
   const { t } = useTranslation();
+  
   return (
     <div className={`flex items-center  ${className && className}`}>
-    
-
       { icons && icons}
       <ShadcnSelect
         className={` border-none  ${className && className}`}
         disabled={false}
-        value={value || undefined}
+        value={value?.length ? value : undefined}
         defaultValue={defaultValue && defaultValue}
         classNameContainer={classNameContainer && classNameContainer}
         classNameValue={classNameValue && classNameValue}
@@ -54,7 +59,13 @@ export default function FilterSelect({
             : []
         }
         placeholder={placeholder ? t(placeholder) : "Выберите"}
-        onChange={(e) => setValue(e || "")}
+        onChange={(e) => {
+          if(e== "clear"){
+            setValue(null)
+          }else{
+            setValue(e || "")
+          }
+        }}
       />
     </div>
   );

@@ -543,9 +543,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
           toast.success("close");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassa] });
         },
-        onError: (error) => {
-          toast.error(`Ошибка: ${error.message || "Не удалось добавить операцию"}`)
-        },
+      
       });
       return (
         <div onClick={(e) => e.stopPropagation()}>

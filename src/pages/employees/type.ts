@@ -61,4 +61,8 @@ export type TQuery = {
   kassaId?: string;
   casherId?:string;
   kassaReport?:string;
+  tip?:string;
+  cashflowSlug?:string;
+  fromDate?:string,
+  toDate?:string
 };

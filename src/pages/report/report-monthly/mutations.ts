@@ -14,9 +14,7 @@ export const useDeleteStatement = () => {
       queryClient.invalidateQueries({ queryKey: [apiRoutes.payrolls] });
       toast.success("Ведомость успешно удалена");
     },
-    onError: () => {
-      toast.error("Ошибка при удалении ведомости");
-    },
+ 
   });
 }; 
 export const useStateStatement = () => {
@@ -30,8 +28,6 @@ export const useStateStatement = () => {
       queryClient.invalidateQueries({ queryKey: [apiRoutes.payrolls] });
       toast.success("Ведомость успешно обновлена");
     },
-    onError: () => {
-      toast.error("Ошибка при обновлении ведомости");
-    },
+   
   });
 }; 

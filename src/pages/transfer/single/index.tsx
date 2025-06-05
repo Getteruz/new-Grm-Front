@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { DataTable } from "@/components/ui/data-table";
-import { ProductData } from "@/pages/filial/type";
 
 import { Columns, TransferColumns } from "./columns";
 import Filter from "./filter";

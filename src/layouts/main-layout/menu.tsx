@@ -7,13 +7,14 @@ import { useMeStore } from "@/store/me-store";
 import { Filemeneger, HomeIcons } from "../../components/icons";
 import { DataMenu } from "./menu-datas";
 import OpenAI from "./openAI/list";
+import { parseAsBoolean, useQueryState } from "nuqs";
 
 export default function Menu() {
   const navigate = useNavigate();
   const { meUser, removeUserMe } = useMeStore();
   const { removeToken } = useAuthStore();
   const pathName = useLocation();
-
+  const [isBack] = useQueryState("isBack",parseAsBoolean.withDefault(false));
   return (
     <div
       className={`${meUser?.position?.role == 3 ? " w-[90px] " : " w-[104px] "} h-screen flex relative pb-[110px] justify-between flex-col  border-r bg-sidebar  border-border `}
@@ -27,8 +28,21 @@ export default function Menu() {
       />
       <div className="h-[100%] overflow-y-auto">
         {meUser?.position?.role !== 3 ? (
-          pathName.pathname.split("/").length < 3 ? (
+          pathName.pathname.split("/").length > 3 || isBack ? (
             <div
+              onClick={() => {
+                if(isBack){
+                  window.location.replace(pathName.pathname)
+                }else{
+                  navigate(-1)
+                }
+              }}
+              className={` hover:bg-sidebar-accent cursor-pointer border-b border-border text-center flex items-center justify-center p-[12px]`}
+            >
+              {<ChevronLeft />}
+            </div>
+          ) : (
+              <div
               onClick={() => {
                 navigate("/dashboard");
               }}
@@ -38,13 +52,6 @@ export default function Menu() {
               <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-[#F0F0E5] border-[#CBCBC1] border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
                 Dashboard
               </span>
-            </div>
-          ) : (
-            <div
-              onClick={() => navigate(-1)}
-              className={` hover:bg-sidebar-accent cursor-pointer border-b border-border text-center flex items-center justify-center p-[12px]`}
-            >
-              {<ChevronLeft />}
             </div>
           )
         ) : (

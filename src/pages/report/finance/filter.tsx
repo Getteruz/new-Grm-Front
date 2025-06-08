@@ -9,6 +9,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { UpdatePatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import { useQueryState } from "nuqs";
+import { useEffect } from "react";
 
 export default function Filters({
   setSeleted,
@@ -21,6 +22,7 @@ export default function Filters({
   });
 
   const [kassaReports] = useQueryState("kassaReports");
+  const [,setFilial] = useQueryState("filial");
 
   const { mutate, isPending } = useMutation({
     mutationFn: () =>
@@ -33,7 +35,11 @@ export default function Filters({
       toast.error(error?.message);
       setSeleted([]);
     },
-  });
+  })
+
+  useEffect(()=>{
+  setFilial(data?.pages?.[0]?.items?.[0]?.id || "" )
+  },[data])
 
   return (
     <div className="bg-sidebar border-border border-b  px-[51px] h-[64px] items-center  flex   ">
@@ -51,8 +57,6 @@ export default function Filters({
                 value: e?.id,
               })) || []
             }
-
-            defaultValue={data?.pages[0]?.items[0]?.id}
             name="filial"
             icons={
               <>

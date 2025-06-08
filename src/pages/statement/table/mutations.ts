@@ -14,8 +14,6 @@ export const useDeleteStatement = () => {
       queryClient.invalidateQueries({ queryKey: [apiRoutes.payrolls] });
       toast.success("Ведомость успешно удалена");
     },
-    onError: () => {
-      toast.error("Ошибка при удалении ведомости");
-    },
+  
   });
 }; 

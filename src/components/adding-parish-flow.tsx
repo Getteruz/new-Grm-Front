@@ -78,9 +78,6 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
       queryClient.invalidateQueries({ queryKey: [apiRoutes.cashflow] });
       setIsOpen(false);
     },
-    onError: (error) => {
-      toast.error(`Ошибка: ${error.message || "Не удалось добавить операцию"}`);
-    },
   });
 
   const openDialog = (flowType: string) => {

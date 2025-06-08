@@ -7,6 +7,8 @@ import { DataTable } from "@/components/ui/data-table";
 import { Columns, TransferColumns } from "./columns";
 import Filter from "./filter";
 import useDataFetch, { useDataOrderFetch } from "./queries";
+import { orderProduct } from "../type";
+
 
 export default function SinglePage() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -15,7 +17,7 @@ export default function SinglePage() {
   const [search] = useQueryState("search");
   const { id } = useParams();
 
-  const [seleted, setSeleted] = useState<string[]>([]);
+  const [seleted, setSeleted] = useState<orderProduct[]>([]);
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
@@ -58,7 +60,14 @@ export default function SinglePage() {
           hasNextPage={hasNextPage ?? false}
           isFetchingNextPage={isFetchingNextPage}
           onSelectionChange={(e) => {
-            const newIds = e.map((item) => item.id);
+            const newIds = e.map((item) => {
+              return {
+                product: item.id,
+                x:item.count || 1,
+                isMetric: item?.bar_code?.isMetric,
+                is_transfer: true,
+              }
+            });
             if (JSON.stringify(seleted) !== JSON.stringify(newIds)) {
               setSeleted(newIds);
             }

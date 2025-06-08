@@ -37,6 +37,13 @@ export interface FilialReportData {
   filial: {};
 }
 
+export interface ProductDataOrder {
+  id: string;
+  x: number;
+  isMetric: boolean;
+  product: ProductData;
+}
+
 export interface ProductData {
   id: string;
   to?: string;
@@ -116,5 +123,5 @@ export interface TQuery {
   page?: number;
   type?: string;
   filialId?: string;
-  is_transfer?:boolean;
+  is_transfer?: boolean;
 }

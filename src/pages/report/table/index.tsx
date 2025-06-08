@@ -5,7 +5,6 @@ import { useMeStore } from "@/store/me-store";
 import Filter from "./filter";
 import  { useKassaReportSingle, useKassaReportTotal } from "./queries";
 import CardSort from "@/components/card-sort";
-import CardSortSingle from "./card-sort";
 import { useDataCashflow, useDataKassa } from "@/pages/cashier/report/queries";
 import {  ReportColumns } from "@/pages/cashier/report/page/columns";
 import { parseAsString, useQueryState } from "nuqs";
@@ -99,7 +98,7 @@ export default function Page() {
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
       {
-        meUser?.position?.role === 6 ? <CardSortSingle />:<CardSort  KassaReport={ Myid == "myReport"? KassaReportSingle : id || kassaReports ? undefined : KassaReport }  KassaId={id||  undefined }/>
+       <CardSort  KassaReport={ Myid == "myReport"? KassaReportSingle : id || kassaReports ? undefined : KassaReport }  KassaId={id||  undefined }/>
       }
    
         { Boolean(id) || meUser?.position?.role ===  10 || meUser?.position?.role ===  9 || Myid == "myReport"   ?  <DataTable

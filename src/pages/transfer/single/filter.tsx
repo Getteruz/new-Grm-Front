@@ -3,29 +3,28 @@ import { useNavigate, useParams } from "react-router-dom";
 import SearchInput from "@/components/filters-ui/search-input";
 import { BrCodeIcons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
+import { orderProduct } from "../type";
+import FilterComboboxDemoInput from "@/components/filters-ui/filterCombobox";
+import { useState } from "react";
+import { TSelectOption } from "@/types";
 
 interface FiltersProps {
-  seleted:string[] // yoki TransferItem[] bo‘lishi mumkin, aniqlashtirsang yaxshi bo'ladi
+  seleted: orderProduct[]; // yoki TransferItem[] bo‘lishi mumkin, aniqlashtirsang yaxshi bo'ladi
 }
-const Filter: React.FC<FiltersProps> = ({
-  seleted
-}) => {
+const Filter: React.FC<FiltersProps> = ({ seleted }) => {
   const navigate = useNavigate();
-  const { id,uuid } = useParams();
+  const { id, uuid } = useParams();
+  const [courier, setCourier] = useState<TSelectOption | undefined>();
+
   const sendTransfer = async () => {
-    const body ={
+    const body = {
       to: uuid,
-      from: id
+      from: id,
+      courier: courier?.value,
     };
     await api.post(apiRoutes.transferBasket, body);
     navigate("/transfers");
@@ -49,28 +48,6 @@ const Filter: React.FC<FiltersProps> = ({
             </Button>
 
             <SearchInput className="border-l-1 border " />
-            <Select
-              defaultValue={"product"}
-              // value={`${table.getState().pagination.pageSize}`}
-              // onValueChange={(value) => {
-              //   table.setPageSize(Number(value));
-              //   setPage(1);
-              // }}
-            >
-              <SelectTrigger className="h-full w-[140px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent side="top">
-                {[
-                  { label: "Продукт", value: "product" },
-                  { label: "Коллекция", value: "collection" },
-                ].map((pageSize) => (
-                  <SelectItem key={pageSize.value} value={`${pageSize.value}`}>
-                    {pageSize.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
           </div>
 
           <Button
@@ -90,29 +67,19 @@ const Filter: React.FC<FiltersProps> = ({
         </div>
         <div className="h-[35px]  border-r flex justify-between">
           <div className="flex">
-            <SearchInput className="border-l-1 border " />
-            <Select
-              defaultValue={"product"}
-              // value={`${table.getState().pagination.pageSize}`}
-              // onValueChange={(value) => {
-              //   table.setPageSize(Number(value));
-              //   setPage(1);
-              // }}
-            >
-              <SelectTrigger className="h-full w-[140px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent side="top">
-                {[
-                  { label: "Продукт", value: "product" },
-                  { label: "Коллекция", value: "collection" },
-                ].map((pageSize) => (
-                  <SelectItem key={pageSize.value} value={`${pageSize.value}`}>
-                    {pageSize.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <SearchInput className="border-l-1 border-b-0 border  min-w-[150px]" />
+            <FilterComboboxDemoInput
+              queries={{
+                filial: uuid,
+              }}
+              className="max-w-[100px]"
+              placeholder="Курьер"
+              fieldNames={{ label: "firstName", value: "id" }}
+              setValue={setCourier}
+              value={courier || null}
+              fetchUrl="user"
+              name="courier"
+            />
           </div>
 
           <Button

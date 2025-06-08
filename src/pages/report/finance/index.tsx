@@ -1,11 +1,10 @@
-import { useQueryState } from "nuqs";
+import { parseAsBoolean, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
 import { useMeStore } from "@/store/me-store";
 
 import { KassaColumnsLoc } from "./columns";
 import Filter from "./filter";
-import CardSortSingle from "../table/card-sort";
 import CardSort from "@/components/card-sort";
 import { useCashflowFilial, useKassaReportSingle, useKassaReportTotal } from "../table/queries";
 import { useKassaReports } from "./queries";
@@ -18,6 +17,7 @@ export default function PageFinance() {
   const { meUser } = useMeStore();
   const [filial] = useQueryState("filial");
   const [kassaReports,setKassaReports] = useQueryState("kassaReports");
+  const [,setIsBack] = useQueryState("isBack",parseAsBoolean.withDefault(false));
   const navigate = useNavigate();
   const [seleted, setSeleted] = useState<string[]>([]);
   const {
@@ -45,7 +45,7 @@ export default function PageFinance() {
           ? filial || undefined
           : meUser?.filial?.id || undefined,
     },
-    enabled:!kassaReports ,
+    enabled: !kassaReports ,
   });
 
   const { data: KassaReportSingle } = useKassaReportSingle({
@@ -78,11 +78,8 @@ export default function PageFinance() {
     <>
       <Filter  setSeleted={setSeleted} />
       <div className="h-[calc(100vh-140px)] scrollCastom">
-        {meUser?.position?.role === 6 ? (
-          <CardSortSingle />
-        ) : (
+    
           <CardSort KassaReport={kassaReports? KassaReportSingle: KassaReport} />
-        )}
         {kassaReports ? (
           <DataTable
             columns={KassaColumns || []}
@@ -135,6 +132,7 @@ export default function PageFinance() {
             onRowClick={(data) =>{ 
               if(data?.id){
                 setKassaReports(data?.id)
+                setIsBack(true)
               }
             }
             }

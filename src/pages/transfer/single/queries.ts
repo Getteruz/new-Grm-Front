@@ -3,13 +3,18 @@ import {
   useInfiniteQuery,
 } from "@tanstack/react-query";
 
-import { ProductData, TQuery } from "@/pages/filial/type";
+import { ProductData, ProductDataOrder, TQuery } from "@/pages/filial/type";
 import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
 interface ITransfers {
   options?: DefinedInitialDataInfiniteOptions<TResponse<ProductData>>;
+  queries?: TQuery;
+}
+
+interface ITransfersOrder {
+  options?: DefinedInitialDataInfiniteOptions<TResponse<ProductDataOrder>>;
   queries?: TQuery;
 }
 
@@ -33,12 +38,12 @@ const useDataFetch = ({ options, queries }: ITransfers) =>
     initialPageParam: 1,
   });
 
-  export const useDataOrderFetch = ({ options, queries }: ITransfers) =>
+  export const useDataOrderFetch = ({ options, queries }: ITransfersOrder) =>
     useInfiniteQuery({
       ...options,
       queryKey: [apiRoutes.orderBusket, queries],
       queryFn: ({ pageParam = 10 }) =>
-        getAllData<TResponse<ProductData>, TQuery>(apiRoutes.orderBusket, {
+        getAllData<TResponse<ProductDataOrder>, TQuery>(apiRoutes.orderBusket, {
           ...queries,
           page: pageParam as number,
           limit: 10,

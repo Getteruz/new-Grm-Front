@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 
-import { ProductData } from "@/pages/filial/type";
+import { ProductData, ProductDataOrder } from "@/pages/filial/type";
 import { MinusSquare, PlusSquare } from "lucide-react";
 
 export const Columns: ColumnDef<ProductData>[] = [
@@ -66,7 +66,7 @@ export const Columns: ColumnDef<ProductData>[] = [
   },
 ];
 
-export const TransferColumns :ColumnDef<ProductData>[]  = [
+export const TransferColumns :ColumnDef<ProductDataOrder>[]  = [
   {
     header: "№",
     cell: ({ row }) => {
@@ -77,20 +77,20 @@ export const TransferColumns :ColumnDef<ProductData>[]  = [
   {
     header: "collection",
     cell: ({ row }) => {
-      return <p>{row.original?.bar_code?.collection?.title}</p>;
+      return <p>{row.original?.product?.bar_code?.collection?.title}</p>;
     },
   },
 
   {
     header: "model",
     cell: ({ row }) => {
-      return <p>{row.original?.bar_code?.model?.title}</p>;
+      return <p>{row.original?.product?.bar_code?.model?.title}</p>;
     },
   },
   {
     header: "size",
     cell: ({ row }) => {
-      return <p>{row.original?.bar_code?.size?.title}</p>;
+      return <p>{row.original?.product?.bar_code?.size?.title}</p>;
     },
   },
 
@@ -100,8 +100,8 @@ export const TransferColumns :ColumnDef<ProductData>[]  = [
       return (
         <p>
           {(
-            Number(row.original?.bar_code?.size?.x) *
-            Number(row.original?.bar_code?.size?.y)
+            Number(row.original?.product?.bar_code?.size?.x) *
+            Number(row.original?.product?.bar_code?.size?.y)
           ).toFixed(2)}
           м²
         </p>
@@ -111,14 +111,14 @@ export const TransferColumns :ColumnDef<ProductData>[]  = [
   {
     header: "color",
     cell: ({ row }) => {
-      return <p>{row.original?.bar_code?.color?.title}</p>;
+      return <p>{row.original?.product?.bar_code?.color?.title}</p>;
     },
   },
 
   {
     header: "country",
     cell: ({ row }) => {
-      return <p>{row.original?.bar_code?.country?.title}</p>;
+      return <p>{row.original?.product?.bar_code?.country?.title}</p>;
     },
   },
   {
@@ -126,12 +126,12 @@ export const TransferColumns :ColumnDef<ProductData>[]  = [
     cell: ({ row }) => {
       return (
         <>
-          {row.original.bar_code.isMetric ? (
+          {row.original?.product?.bar_code?.isMetric ? (
             <input
               type="number"
               min={0}
-              max={row.original?.y}
-              value={row.original?.quantity}
+              max={row.original?.product?.y}
+              value={row.original?.product?.quantity}
               className="w-16 h-4 border rounded p-2.5 outline-none"
               // onChange={(e) => {
               //   const value = Number(e.target.value);
@@ -147,7 +147,7 @@ export const TransferColumns :ColumnDef<ProductData>[]  = [
           ) : (
             <div className="flex items-center">
               <button
-                disabled={row.original.quantity === 1}
+                disabled={row.original?.product?.quantity === 1}
                 // onClick={() => {
                 //   setTransferData((prevData) => {
                 //     return prevData.map((item) => {
@@ -165,7 +165,7 @@ export const TransferColumns :ColumnDef<ProductData>[]  = [
               </button>
 
               <p className="  rounded font-medium w-8 h-[22px] flex justify-center items-center text-center border border-[#21212180] ">
-                {row.original?.quantity}
+                {row.original?.product?.quantity}
               </p>
               <button
                 // disabled={

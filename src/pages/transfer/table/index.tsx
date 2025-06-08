@@ -8,6 +8,7 @@ import { collactionColumns, paymentColumns } from "./columns";
 import Filters from "./filters";
 import useTransfers from "./queries";
 import { TransferData } from "../type";
+import { TData } from "@/pages/deller/type";
 
 export default function Page() {
   const { meUser } = useMeStore();
@@ -52,6 +53,9 @@ export default function Page() {
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
+ const onSelectFilial = (data:TData)=>{
+  setFilial(data?.id)
+ }
   return (
     <div className="grid grid-cols-12 h-full">
       <div className="col-span-4 flex">
@@ -70,7 +74,7 @@ export default function Page() {
                   <button
                     key={e?.id}
                     disabled={filialTo === e.id}
-                    onClick={() => setFilial(e?.id)}
+                    onClick={() => onSelectFilial(e)}
                     className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                   >
                     {e.title}
@@ -86,7 +90,7 @@ export default function Page() {
                   <button
                     key={e?.id}
                     disabled={filialTo === e.id}
-                    onClick={() => setFilial(e?.id)}
+                    onClick={() => onSelectFilial(e)}
                     className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                   >
                     {e.title}
@@ -103,7 +107,7 @@ export default function Page() {
                 <button
                   key={e?.id}
                   disabled={filialTo === e.id}
-                  onClick={() => setFilial(e?.id)}
+                  onClick={() => onSelectFilial(e)}
                   className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                 >
                   {e.title}
@@ -118,7 +122,7 @@ export default function Page() {
                   <button
                     key={e?.id}
                     disabled={filialTo === e.id}
-                    onClick={() => setFilial(e?.id)}
+                    onClick={() => onSelectFilial(e)}
                     className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                   >
                     {e.title}

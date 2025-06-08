@@ -63,3 +63,11 @@ export type TTransferCategory = {
 export type TransferIdQuery = {
   populate: string;
 };
+
+
+export type orderProduct  ={
+  product:string;
+  x:number;
+  isMetric:boolean;
+  is_transfer:boolean;
+}

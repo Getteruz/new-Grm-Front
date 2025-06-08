@@ -54,8 +54,7 @@ export default function Filters() {
               fromPlaceholder={`от`}
               toPlaceholder={`до`}
             />
-        </>
-        
+        </>   
       ) : (
         ""
       )}

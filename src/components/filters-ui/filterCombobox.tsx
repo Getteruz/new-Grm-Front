@@ -20,8 +20,8 @@ interface Props<TQuery> {
   queries?: TQuery;
   option?: TOption[];
   defaultValue?: string;
-  value: TSelectOption | null;
-  setValue: (value: TSelectOption) => void;
+  value?: TSelectOption | null;
+  setValue?: (value: TSelectOption) => void;
   onLocalChange?: (value: TSelectOption) => void;
   fieldNames?: {
     value: string;
@@ -122,7 +122,7 @@ export default function FilterComboboxDemoInput<IData, TQuery>({
         options={memoizedData}
         placeholder={placeholder ? t(placeholder) : ""}
         onChange={(event) => {
-          setValue(event);
+         if(setValue)  setValue(event);
           setQValue(event?.value || "")
         }}
         fetchNextPage={fetchNextPage}

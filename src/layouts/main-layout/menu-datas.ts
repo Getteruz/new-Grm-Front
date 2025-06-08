@@ -319,12 +319,12 @@ export const DataMenu = {
     {
       id: 2,
       icons: () => ReportBottom({}),
-      link: "/report",
+      link: "/d-report",
       text: "Отчеты",
       items: [
         {
           id: 22,
-          link: "/report",
+          link: "/d-report",
           text: "Отчёт",
         },
         {

@@ -2,11 +2,17 @@ import PageFinance from "./finance";
 import MonthReportPage from "./report-monthly";
 import Page from "./table";
 import PageRemaider from "./remaider";
+import DPage from "./d-table";
 
 const Route = [
   {
     url: "/report",
     Element: Page,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/d-report",
+    Element: DPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {

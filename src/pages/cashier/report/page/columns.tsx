@@ -104,7 +104,7 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
       const item = row.original;
       return (
         <p className="text-[13px] text-muted-foreground">
-          {row.original?.tip === "order" ?
+          {row.original?.tip === "order" && item?.order?.x ?
           ` ${ item?.order?.x } ${ item?.order?.bar_code?.isMetric  ?  ""  :"x"}`
           :
           "" }

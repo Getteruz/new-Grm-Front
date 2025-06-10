@@ -99,7 +99,7 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
         "type",
         parseAsString.withDefault("In")
       )
-      return <Button className={`${type == "In" ?"bg-[#89A143]": "border-[#E38157]  bg-transparent text-[#E38157] hover:bg-transparent"} inline-block border border-border px-[12px] py-[6px] rounded-[80px]`}> {type =="In"?  row?.original?.progres  == 'Accepted' ? "Принито": "Принять":"В ожидание"}  </Button>;
+      return <Button disabled={row?.original?.progres  == 'Accepted'} className={`${type == "In" ?"bg-[#89A143]": "border-[#E38157]  bg-transparent text-[#E38157] hover:bg-transparent"} inline-block border border-border px-[12px] py-[6px] rounded-[80px]`}> {type =="In"?  row?.original?.progres  == 'Accepted' ? "Принито": "Принять":"В ожидание"}  </Button>;
     },
   },
   {
@@ -108,12 +108,19 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
     cell: ({ row }) => {
+         const [type] = useQueryState(
+        "type",
+        parseAsString.withDefault("In")
+      )
       return (
         <TableAction
           url={apiRoutes.transfers}
-          ShowPreview
           id={row.original?.id}
-        />
+          ShowDelete={false}
+          ShowUpdate={false}
+        >
+         {type !="In" && <p>Отменить</p>}
+        </TableAction>
       );
     },
   },

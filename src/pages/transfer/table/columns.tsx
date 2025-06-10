@@ -6,9 +6,10 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { TransferData } from "../type";
 import { Input } from "@/components/ui/input";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 import { minio_img_url } from "@/constants";
 import { Avatar,AvatarFallback,AvatarImage, } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 // import { useTranslation } from "react-i18next";
 
 export const paymentColumns: ColumnDef<TransferData>[] = [
@@ -56,7 +57,7 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
     cell: ({ row }) => {
       return (
         <p>
-          {`${(row.original?.product.bar_code.size.x * (row.original.product?.bar_code?.isMetric ? +row.original.count / 100 : +row.original.count)).toFixed(2)}`}{" "}
+          {`${(row.original?.product.bar_code.size.x * (row.original.product?.bar_code?.isMetric ? +row.original.count / 100 : +row.original.count*+row.original?.product?.y)).toFixed(2)}`}
           м²
         </p>
       );
@@ -91,13 +92,16 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
     },
   },
 
-  // {
-  //   header: "Статус",
-  //   cell: ({ row }) => {
-  //     const {t} = useTranslation()
-  //     return <p className="inline-block border border-border px-[12px] py-[6px] rounded-[80px]">{t(row.original?.progres)}</p>;
-  //   },
-  // },
+  {
+    header: "Статус",
+    cell: ({row}) => {
+         const [type] = useQueryState(
+        "type",
+        parseAsString.withDefault("In")
+      )
+      return <Button className={`${type == "In" ?"bg-[#89A143]": "border-[#E38157]  bg-transparent text-[#E38157] hover:bg-transparent"} inline-block border border-border px-[12px] py-[6px] rounded-[80px]`}> {type =="In"?  row?.original?.progres  == 'Accepted' ? "Принито": "Принять":"В ожидание"}  </Button>;
+    },
+  },
   {
     id: "actions",
     enableHiding: true,

@@ -47,8 +47,7 @@ export default function Filters({
         <p className="text-[#272727] text-[20px]">Ежемесячный отчет</p>
       )}
 
-      {meUser?.position?.role == 10 ||
-        (meUser?.position?.role == 9 && (
+      {meUser?.position?.role == 10 || meUser?.position?.role == 9 ? (
           <FilterSelect
             placeholder="все"
             options={
@@ -64,7 +63,7 @@ export default function Filters({
               </>
             }
           />
-        ))}
+        ):""}
       <Button
         className="h-full  border-y-0 w-[140px]  ml-auto"
         variant={"outline"}

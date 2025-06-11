@@ -99,6 +99,7 @@ export interface TKassareportData {
   year: number;
   month: number;
   status: string;
+  reportStatus:number;
   totalPlasticSum: number;
   totalInternetShopSum: number;
   totalSale: number;

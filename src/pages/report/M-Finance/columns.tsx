@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { TKassareportData } from "../type";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
@@ -102,33 +103,42 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       return <p> {item?.totalCashCollection} $</p>;
     },
   },
-  // {
-  //   header: "Кассир",
-  //   id: "closer",
-  //   cell: ({ row }) => {
-  //     const item = row.original;
-  //     return item?.status != "open" ? (
-  //       <div className="flex items-center">
-  //         {
-  //           <img
-  //             className="w-[40px] rounded-full border-background border h-[40px]"
-  //             src={minio_img_url + item?.closer?.avatar?.path}
-  //           />
-  //         }
-  //         {item?.status != "closed_by_c" ? (
-  //           <img
-  //             className="w-[40px]  border-background border-[2px]  -translate-x-2 rounded-full h-[40px]"
-  //             src={minio_img_url + item?.closer_m?.avatar?.path}
-  //           />
-  //         ) : (
-  //           ""
-  //         )}
-  //       </div>
-  //     ) : (
-  //       ""
-  //     );
-  //   },
-  // },
+  {
+    header: "Принял",
+    id: "closer",
+    cell: () => {
+      return (
+        <div className="flex gap-2 items-center">
+             <Avatar className="w-[40px] h-[40px]">
+                {/* <AvatarImag src={minio_img_url + seller?.avatar?.path}/> */}
+                <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
+                  MM
+                </AvatarFallback>
+              </Avatar>
+              <Avatar className="w-[40px] h-[40px]">
+                {/* <AvatarImag src={minio_img_url + seller?.avatar?.path}/> */}
+                <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
+                  AA
+                </AvatarFallback>
+              </Avatar>
+          {/* {
+            <img
+              className="w-[40px] rounded-full border-background border h-[40px]"
+              src={minio_img_url + item?.closer?.avatar?.path}
+            />
+          } */}
+          {/* {item?.status != "closed_by_c" ? (
+            <img
+              className="w-[40px]  border-background border-[2px]  -translate-x-2 rounded-full h-[40px]"
+              src={minio_img_url + item?.closer_m?.avatar?.path}
+            />
+          ) : (
+            ""
+          )} */}
+        </div>
+      ) 
+    },
+  },
   {
     header: "Статус",
     id: "status",
@@ -136,17 +146,15 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <div onClick={(e) => e.stopPropagation()}>
+
           {
-            item?.kassaReportStatus == 2  ?(
-              <Button  variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> Продалажется</Button>
-            ):item?.status == "closed" ? (
-              <Button   className="rounded-[63px] bg-[#E38157]"> Закрыта </Button>
-            ) : item?.status == "accepted" ? (
-              <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
-            ) : item?.status == "rejected"? (
-              <Button disabled variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]"> Отменено </Button>
-            ):  item?.status == "open"?  <Button  variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]">  Открыто </Button>: <Button  variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>
+            item?.reportStatus ==1 &&  <Button variant={"outline"}   className="rounded-[63px] text-primary/40"> Принято </Button>
+         
           }
+          {
+               item?.reportStatus ==2 &&  <Button  variant={"outline"} className="rounded-[63px] text-[#89A143] border-none"> Продалажется</Button>
+          }
+          
         </div>
       );
     },

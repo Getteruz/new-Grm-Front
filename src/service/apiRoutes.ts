@@ -51,5 +51,6 @@ export const apiRoutes = {
   productRemaining: "/product/remaining-products",
   productRemainingCollection:'/product/remaining-products-collection',
   excelProducts:'/excel/products',
-  excelProduct:'/excel/product'
+  excelProduct:'/excel/product',
+  reports:"/reports"
 } as const;

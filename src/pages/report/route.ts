@@ -3,6 +3,7 @@ import MonthReportPage from "./report-monthly";
 import Page from "./table";
 import PageRemaider from "./remaider";
 import DPage from "./d-table";
+import PageMFinance from "./M-Finance";
 
 const Route = [
   {
@@ -30,6 +31,12 @@ const Route = [
     Element: PageRemaider,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+  {
+    url: "/report-finance-m",
+    Element: PageMFinance,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  
   {
     url: "/report/:id",
     Element: Page,

@@ -504,7 +504,7 @@ export const DataMenu = {
         },
         {
           id: 23,
-          link: "/report-finance",
+          link: "/report-finance-m",
           text: "Финансовый учёт",
         },
         {
@@ -595,7 +595,7 @@ export const DataMenu = {
         },
         {
           id: 23,
-          link: "/report-finance",
+          link: "/report-finance-m",
           text: "Финансовый учёт",
         },
         {

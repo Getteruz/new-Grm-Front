@@ -19,7 +19,6 @@ import { useMeStore } from "@/store/me-store";
 export const ReportColumns: ColumnDef<TransactionItem>[] = [
   {
     id: "icon",
-  
     cell: ({ row }) => {
       const item = row.original;
       return (
@@ -40,7 +39,7 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
   },
   {
     id: "price",
-      header:"Сумма",
+    header:"Сумма",
     cell: ({ row }) => {
       const item = row.original;
       return (

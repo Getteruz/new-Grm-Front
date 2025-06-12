@@ -4,6 +4,7 @@ import CardSort from "@/components/card-sort";
 import { useReports } from "./queries";
 import { KassaColumnsLoc } from "./columns";
 
+
 export default function PageMFinance() {
 
   const {
@@ -29,9 +30,9 @@ export default function PageMFinance() {
             columns={KassaColumnsLoc || []}
             data={flatKasssaData}
             isLoading={KassaLoading}
-            isRowClickble={false}
-            // onRowClick={(data) => data?.id ?
-            //   navigate(`/report?id=${data?.id}`) : navigate(`/report?Myid=myReport&kassaReports=${kassaReports}`)
+            isRowClickble={true}
+            // onRowClick={(data) => 
+            //   navigate(`/report-finance-m?id=${data?.id}`)
             // }
             fetchNextPage={KassafetchNextPage}
             hasNextPage={KassafhasNextPage ?? false}

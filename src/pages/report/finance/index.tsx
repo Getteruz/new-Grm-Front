@@ -73,7 +73,6 @@ export default function PageFinance() {
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
   const flatKasssaData =
     kassaData?.pages?.flatMap((page) => page?.items || []) || []
-    
   return (
     <>
       <Filter  setSeleted={setSeleted} />

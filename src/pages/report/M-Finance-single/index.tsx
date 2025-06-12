@@ -24,7 +24,7 @@ export default function PageMFinanceSingle() {
 
   // const flatKasssaData =
   //   kassaData?.pages?.flatMap((page) => page?.items || []) || []
-    
+      console.log(kassaData?.kassaReport )
   return (
     <>
       <div className="h-[calc(100vh-140px)] scrollCastom">

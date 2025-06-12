@@ -99,6 +99,10 @@ export interface TKassareportData {
   year: number;
   month: number;
   status: string;
+  filial?: {
+    id: string;
+    title: string;
+  };
   kassaReport?:TKassareportData[];
   reportStatus?:number;
   totalPlasticSum: number;

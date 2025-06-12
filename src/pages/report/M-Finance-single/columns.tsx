@@ -8,31 +8,9 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
     id: "startDate",
-    header: "Дата",
+    header: "Филиалы",
     cell: ({ row }) => {
-      const month =[
-        "Январь",
-        "Февраль",
-        "Март",
-        "Апрель",
-        "Май",
-        "Июнь",
-        "Июль",
-        "Август",
-        "Сентябрь",
-        "Октябрь",
-        "Ноябрь",
-        "Декабрь",
-      ]
-      const item = row.original;
-      const isTrue =item?.kassaReportStatus == 2
-      return (
-        <p className={`${isTrue?  "text-[#89A143]":""}`}>
-          { isTrue
-            ? month[item?.month - 1] +  "-Продалажется"
-            : month[item?.month - 1] || ""}
-        </p>
-      );
+     return <p>{row?.original?.filial?.title}</p>
     },
   },
   {

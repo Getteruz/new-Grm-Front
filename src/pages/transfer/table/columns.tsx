@@ -57,7 +57,7 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
     cell: ({ row }) => {
       return (
         <p>
-          {`${(row.original?.product.bar_code.size.x * (row.original.product?.bar_code?.isMetric ? +row.original.count / 100 : +row.original.count*+row.original?.product?.y)).toFixed(2)}`}
+          {`${(row.original?.product?.bar_code?.size?.x * (row.original.product?.bar_code?.isMetric ? +row.original.count / 100 : +row.original.count*+row.original?.product?.y)).toFixed(2)}`}
           м²
         </p>
       );

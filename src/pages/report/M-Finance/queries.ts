@@ -6,13 +6,11 @@ import { TResponse } from "@/types";
 
 import {  TKassareportData, TQuery } from "../type";
 
-
 interface IKassaReportData {
   options?: DefinedInitialDataOptions<TResponse<TKassareportData>>;
   queries?: TQuery;
   enabled?: boolean
 }
-
 
 export const useReports = ({ queries ,enabled}: IKassaReportData) =>
   useInfiniteQuery({

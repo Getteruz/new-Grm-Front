@@ -56,7 +56,7 @@ export default function Header() {
           (oneMenu as Tmenu)?.items.map((e) => (
             <Link
               key={e?.id}
-              className={e?.link == location.pathname ? "" : "opacity-60"}
+              className={ location.pathname.includes(e?.link) ? "" : "opacity-60"}
               to={e?.link}
             >
               {e.text}

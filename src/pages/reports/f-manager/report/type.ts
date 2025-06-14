@@ -77,16 +77,60 @@ export interface TData {
     id: string;
     title: string;
   };
-}
-
-export interface TActionData {
-  title: string;
-  id: string;
-  collection: {
+  closer?: {
     id: string;
-    title: string;
+    isActive: boolean;
+    firstName: string;
+    lastName: string;
+    fatherName: string;
+    login: string;
+    hired: string;
+    from: string;
+    to: string;
+    username: string | null;
+    salary: number;
+    email: string | null;
+    phone: string;
+    password: string;
+    isUpdated: boolean;
+    createdAt: string;
+    avatar: {
+        id: string;
+        path: string;
+        model: string;
+        mimetype: string;
+        size: number;
+        name: string;
+        created_at: string;
+    };
+},
+closer_m?: {
+  id: string;
+  isActive: boolean;
+  firstName: string;
+  lastName: string;
+  fatherName: string;
+  login: string;
+  hired: string;
+  from: string;
+  to: string;
+  username: string | null;
+  salary: number;
+  email: string | null;
+  phone: string;
+  password: string;
+  isUpdated: boolean;
+  createdAt: string;
+  avatar: {
+      id: string;
+      path: string;
+      model: string;
+      mimetype: string;
+      size: number;
+      name: string;
+      created_at: string;
   };
-  code: string;
+}
 }
 
 export interface TKassareportData {
@@ -115,34 +159,17 @@ export interface TKassareportData {
   totalExpense: number;
   totalSum: number;
 }
-
-export interface TChaFlowData{
-  expense: number,
-  income: number
-}
-
-export interface RemainingProductData {
-  remainingSize: number;
-  remainingSum: number;
-  count: number;
-}
-export interface RemainingProductColactionData {
-    country: {
-        id: string;
-        title: string;
-    };
-    remainingSize: number;
-    remainingSum: number; 
-    count: number;
-}
 export interface TQuery {
   search?: string | undefined;
-  filialId?: string;
-  kassaId?: string;
-  limit?: number;
-  page?: number;
-  id?: string;
+  filial?: string;
+  limit: number;
+  report?: string;
+  page: number;
   startDate?: Date | null;
   endDate?: Date | null;
-  type?:string;
+}
+
+export interface TKassaReportQuery {
+  filialId?: string;
+
 }

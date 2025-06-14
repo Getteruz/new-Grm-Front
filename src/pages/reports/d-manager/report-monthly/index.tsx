@@ -3,7 +3,7 @@ import Filter from "./filter";
 import { useDataKassa } from "./queries";
 import { DataTable } from "@/components/ui/data-table";
 import { Columns } from "./columns";
-import CardSort from "../report/card-sort";
+// import CardSort from "../report/card-sort";
 
 export default function ReportMonthlyPage() {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -14,7 +14,7 @@ export default function ReportMonthlyPage() {
     <>
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
-        {<CardSort />}
+        {/* {<CardSort />} */}
         <DataTable
           columns={Columns || []}
           data={flatData || []}

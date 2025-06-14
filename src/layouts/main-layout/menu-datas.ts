@@ -149,27 +149,27 @@ export const DataMenu = {
     {
       id: 2,
       icons: () => ReportBottom({}),
-      link: "/report",
+      link: "/f-manager",
       text: "Отчеты",
       items: [
         {
           id: 22,
-          link: "/report",
+          link: "/f-manager/reports",
           text: "Касса магазина",
         },
         {
           id: 23,
-          link: "/report-finance",
+          link: "/f-manager/report-finance",
           text: "Ежемесячный отчет",
         },
         {
           id: 24,
-          link: "/report-remaider",
+          link: "/f-manager/report-remaider",
           text: "Отчет об остатке",
         },
         {
           id: 25,
-          link: "/report-item-4",
+          link: "/f-manager/report-item-4",
           text: "Отчёт по сотрудикам",
         },
       ],
@@ -319,17 +319,17 @@ export const DataMenu = {
     {
       id: 2,
       icons: () => ReportBottom({}),
-      link: "/d-report",
+      link: "/d-manager",
       text: "Отчеты",
       items: [
         {
           id: 22,
-          link: "/d-report",
+          link: "/d-manager/reports",
           text: "Отчёт",
         },
         {
           id: 23,
-          link: "/report-monthly",
+          link: "/d-manager/report-monthly",
           text: "Ежемесячный отчет",
         },
       ],
@@ -494,17 +494,17 @@ export const DataMenu = {
     {
       id: 2,
       icons: () => ReportBottom({}),
-      link: "/report",
+      link: "/m-manager",
       text: "Отчеты",
       items: [
         {
           id: 22,
-          link: "/report",
+          link: "/m-manager/reports",
           text: "Кассовый учёт",
         },
         {
           id: 23,
-          link: "/report-finance-m",
+          link: "/m-manager/report-finance",
           text: "Финансовый учёт",
         },
         {
@@ -585,17 +585,17 @@ export const DataMenu = {
     {
       id: 1,
       icons: () => ReportBottom({}),
-      link: "/report",
+      link: "/m-manager",
       text: "Отчеты",
       items: [
         {
           id: 22,
-          link: "/report",
+          link: "/m-manager/reports",
           text: "Кассовый учёт",
         },
         {
           id: 23,
-          link: "/report-finance-m",
+          link: "/m-manager/report-finance",
           text: "Финансовый учёт",
         },
         {

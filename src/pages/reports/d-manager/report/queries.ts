@@ -4,7 +4,7 @@ import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
-import {  TData, TQuery } from "./type";
+import {  TData, TQuery } from "../type";
 
 
 interface IKassaReportData {
@@ -16,9 +16,9 @@ interface IKassaReportData {
 
 export const useDataKassa = ({ queries ,enabled}: IKassaReportData) =>
   useInfiniteQuery({
-    queryKey: [apiRoutes.kassa, queries],
+    queryKey: [apiRoutes.kassaReports, queries],
     queryFn: ({ pageParam = 10 }) =>
-      getAllData<TResponse<TData>, TQuery>(apiRoutes.kassa, {
+      getAllData<TResponse<TData>, TQuery>(apiRoutes.kassaReports, {
         ...queries,
         page: pageParam as number,
         limit: 10,

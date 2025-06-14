@@ -46,8 +46,9 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
   });
 
 
-  const { data: types } = useDataCashflowTypes({
+  const { data: types, } = useDataCashflowTypes({
     queries: { limit: 20, page: 1,type: type == "Приход"? "in" : "out" },
+    enabled: Boolean(dialogOpen),
   });
 
   // Prepare column data using report data

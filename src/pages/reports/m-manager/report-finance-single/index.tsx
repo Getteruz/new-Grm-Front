@@ -3,11 +3,10 @@ import { DataTable } from "@/components/ui/data-table";
 import CardSort from "@/components/card-sort";
 import { KassaColumnsLoc } from "./columns";
 import { useReportsSingle } from "./queries";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 
-export default function PageMFinanceSingle() {
+export default function PageFinanceSingle() {
   const {id} = useParams()
-  const navigate = useNavigate()
   const {
     data: kassaData,
     isLoading: KassaLoading,
@@ -32,10 +31,10 @@ export default function PageMFinanceSingle() {
             columns={KassaColumnsLoc || []}
             data={kassaData?.kassaReport || []}
             isLoading={KassaLoading}
-            isRowClickble={false}
-            onRowClick={(data) => 
-               navigate(`/report-finance?kassaReports=${data?.id}`)
-            }
+            isRowClickble={true}
+            // onRowClick={(data) => 
+            //    navigate(`/report-finance?kassaReports=${data?.id}`)
+            // }
             // fetchNextPage={KassafetchNextPage}
             // hasNextPage={KassafhasNextPage ?? false}
             // isFetchingNextPage={KassaisFetchingNextPage}

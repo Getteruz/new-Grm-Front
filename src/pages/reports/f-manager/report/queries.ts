@@ -1,117 +1,51 @@
-import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";
+import { DefinedInitialDataOptions, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
-import { ProductsChecksQuery } from "@/pages/products-check/type";
-import { getAllData, getByIdData } from "@/service/apiHelpers";
+import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
-import { TChaFlowData, TData, TKassareportData, TQuery } from "../type";
+import {  TData, TKassareportData, TQuery, TKassaReportQuery } from "./type";
 
-interface IData {
+interface IKassaData {
   options?: DefinedInitialDataOptions<TResponse<TData>>;
   queries?: TQuery;
+  enabled?: boolean
 }
-interface IData1 {
-  options?: DefinedInitialDataOptions<TData[]>;
-  queries?: TQuery;
-}
-interface IProductsChecks {
-  options?: DefinedInitialDataOptions<TData>;
-  id: string | undefined;
-  queries?: ProductsChecksQuery;
-}
+
 interface IKassareport {
   options?: DefinedInitialDataOptions<TKassareportData>;
-  queries?: TQuery;
+  queries?: TKassaReportQuery;
   enabled?: boolean;
 }
-interface IKassareportId {
-  options?: DefinedInitialDataOptions<TKassareportData>;
-  queries?: TQuery;
-  id?:string
-  enabled: boolean;
-}
 
-interface ICashflowFilial{
-  enabled: boolean;
-  id:string | undefined
-}
-export const useKassa= ({ options, queries }: IData) =>
-  useQuery({
-    ...options,
+export const useDataKassa = ({ queries ,enabled}: IKassaData) =>
+  useInfiniteQuery({
     queryKey: [apiRoutes.kassa, queries],
-    queryFn: () =>
-      getAllData<TResponse<TData>, TQuery>(apiRoutes.kassa, queries),
+    queryFn: ({ pageParam = 10 }) =>
+      getAllData<TResponse<TData>, TQuery>(apiRoutes.kassa, {
+        ...queries,
+        page: pageParam as number,
+        limit: 10,
+      }),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+        return lastPage?.meta?.currentPage + 1;
+      } else {
+        return null;
+      }
+    },
+    enabled: enabled,
+    initialPageParam: 1,
   });
 
-export const useDataCashflowTypes = ({ options, queries }: IData1) =>
-  useQuery({
-    ...options,
-    queryKey: [apiRoutes.cashflowTypes, queries],
-    queryFn: () =>
-      getAllData<TData[], TQuery>(apiRoutes.cashflowTypes, queries),
-  });
-
-export const useOpenKassa = ({ options, id, queries }: IProductsChecks) =>
-  useQuery({
-    ...options,
-    queryKey: [apiRoutes.openKassa, id],
-    enabled: Boolean(id),
-    queryFn: () =>
-      getByIdData<TData, ProductsChecksQuery>(
-        apiRoutes.openKassa,
-        id || "",
-        queries
-      ),
-  });
-
-  export const useKassaById = ({ options, id, queries }: IProductsChecks) =>
+  export const useKassaReportTotal= ({ options, queries,enabled }: IKassareport) =>
     useQuery({
       ...options,
-      queryKey: [apiRoutes.kassa, id],
-      enabled: Boolean(id),
+      queryKey: [apiRoutes.kassaReportTotal,queries],
+      enabled,
       queryFn: () =>
-        getByIdData<TData, ProductsChecksQuery>(
-          apiRoutes.kassa,
-          id || "",
+        getAllData<TKassareportData, TKassaReportQuery>(
+          apiRoutes.kassaReportTotal,
           queries
         ),
     });
-
-    export const useKassaReportTotal= ({ options, queries,enabled }: IKassareport) =>
-      useQuery({
-        ...options,
-        queryKey: [apiRoutes.kassaReportTotal,queries],
-        enabled,
-        queryFn: () =>
-          getAllData<TKassareportData, TQuery>(
-            apiRoutes.kassaReportTotal,
-            queries
-          ),
-      });
-  
-      export const useKassaReportSingle= ({ options,id, queries,enabled }: IKassareportId) =>
-        useQuery({
-          ...options,
-          queryKey: [apiRoutes.kassaReports,queries],
-          enabled,
-          queryFn: () =>
-            getByIdData<TKassareportData, TQuery>(
-              apiRoutes.kassaReports,
-              id || "",
-              queries
-            ),
-        });
-    
-
-        export const useCashflowFilial= ({ enabled,id }: ICashflowFilial) =>
-          useQuery({
-            queryKey: [apiRoutes.cashflowFilial],
-            enabled,
-            queryFn: () =>
-              getByIdData<TChaFlowData, TQuery>(
-                apiRoutes.cashflowFilial,
-                id || "",
-              ),
-          });
-      

@@ -14,6 +14,7 @@ interface IData {
 interface IData1 {
   options?: DefinedInitialDataOptions<TData[]>;
   queries?: TQuery;
+  enabled?: boolean;
 }
 interface IProductsChecks {
   options?: DefinedInitialDataOptions<TData>;
@@ -44,9 +45,10 @@ export const useKassa= ({ options, queries }: IData) =>
       getAllData<TResponse<TData>, TQuery>(apiRoutes.kassa, queries),
   });
 
-export const useDataCashflowTypes = ({ options, queries }: IData1) =>
+export const useDataCashflowTypes = ({ options, queries,enabled }: IData1) =>
   useQuery({
     ...options,
+    enabled,
     queryKey: [apiRoutes.cashflowTypes, queries],
     queryFn: () =>
       getAllData<TData[], TQuery>(apiRoutes.cashflowTypes, queries),

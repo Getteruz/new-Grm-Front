@@ -44,11 +44,8 @@ export default function Page() {
 
   const [startDate] = useQueryState("startDate");
   const [endDate] = useQueryState("endDate");
-
-
   const [kassaReports] = useQueryState("kassaReports");
   
-
   const {data:KassaReport} = useKassaReportTotal({
     queries:{
       filialId:meUser?.position?.role == 10 || meUser?.position?.role == 9  ? filial || undefined :  meUser?.filial?.id || undefined,
@@ -98,7 +95,7 @@ export default function Page() {
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
       {
-       <CardSort  KassaReport={ Myid == "myReport"? KassaReportSingle : id || kassaReports ? undefined : KassaReport }  KassaId={id||  undefined }/>
+       <CardSort  KassaReport={ Myid == "myReport" ? KassaReportSingle : id || kassaReports ? undefined : KassaReport }  KassaId={id||  undefined }/>
       }
    
         { Boolean(id) || meUser?.position?.role ===  10 || meUser?.position?.role ===  9 || Myid == "myReport"   ?  <DataTable

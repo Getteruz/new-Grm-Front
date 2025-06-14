@@ -12,7 +12,7 @@ import TableAction from "@/components/table-action";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { apiRoutes } from "@/service/apiRoutes";
 
-import { TData } from "./type";
+import { TData } from "../type";
 import { Button } from "@/components/ui/button";
 import { KassaItem } from "@/pages/cashier/report/type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

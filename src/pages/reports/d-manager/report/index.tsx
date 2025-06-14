@@ -14,6 +14,7 @@ export default function ReportPage() {
     isFetchingNextPage,
   } = useDataKassa({
  
+    // enabled:  meUser?.position?.role == 9
   });
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];

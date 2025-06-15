@@ -26,7 +26,7 @@ export default function SinglePage() {
         filialId: report ? undefined: meUser?.filial?.id || undefined,
         fromDate: startDate || undefined,
         toDate: endDate || undefined,
-        kassaReport:report||undefined
+        kassaReport: id=="my" ?report ||undefined: undefined
       },
       enabled: Boolean(id),
     });

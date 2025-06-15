@@ -15,7 +15,7 @@ export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(50));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
 
-  const { data: filialData } = useDataFetch({
+  const { data: filialData ,fetchNextPage, hasNextPage, isFetchingNextPage} = useDataFetch({
     queries: {
       limit,
       page,
@@ -227,9 +227,9 @@ export default function Page() {
           isLoading={isLoading}
           columns={meUser?.position.role == 6 ? collactionColumns: paymentColumns}
           data={meUser?.position.role == 6 ? [{ id: 1 }, { id: 1 }] as unknown as  TransferData[] : flatData}
-          // fetchNextPage={fetchNextPage}
-          // hasNextPage={hasNextPage ?? false}
-          // isFetchingNextPage={isFetchingNextPage}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage ?? false}
+          isFetchingNextPage={isFetchingNextPage}
         />
       </div>
     </div>

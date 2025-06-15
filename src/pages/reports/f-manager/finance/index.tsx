@@ -72,13 +72,6 @@ export default function PageFinance() {
             }
             isLoading={isLoading}
             isRowClickble={true}
-            onRowClick={(data) =>{ 
-              // if(data?.id){
-              //   setKassaReports(data?.id)
-              //   setIsBack(true)
-              // }
-            }
-            }
             onSelectionChange={(e) => {
               const newIds = e.map((item) => item.id);
                 if (JSON.stringify(seleted) != JSON.stringify(newIds)) {

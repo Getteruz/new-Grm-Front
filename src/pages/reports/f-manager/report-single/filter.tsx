@@ -1,4 +1,4 @@
-import { FileOutput, Store } from "lucide-react";
+import { FileOutput } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 

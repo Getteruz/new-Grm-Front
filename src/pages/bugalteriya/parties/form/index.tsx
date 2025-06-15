@@ -15,7 +15,7 @@ const ActionPage = () => {
   const form = useForm<CropFormType>({
     resolver: zodResolver(CropSchema),
     defaultValues: {
-      date: new Date(),
+      // date: new Date(),
     },
   });
   // const navigate = useNavigate();

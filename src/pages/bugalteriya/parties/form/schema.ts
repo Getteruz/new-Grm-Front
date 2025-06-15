@@ -20,7 +20,7 @@ export const CropSchema = z.object({
     .optional(),
   planting_time_start: z.date(),
   planting_time_end: z.date(),
-  date: z.date().optional()
+  // date: z.date().optional()
 });
 
 export type CropFormType = z.infer<typeof CropSchema>;

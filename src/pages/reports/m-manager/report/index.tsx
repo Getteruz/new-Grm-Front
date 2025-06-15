@@ -3,13 +3,14 @@ import { DataTable } from "@/components/ui/data-table";
 
 import Filter from "./filter";
 import CardSort from "@/components/card-sort";
-import { parseAsIsoDate, parseAsString, useQueryState } from "nuqs";
+import { parseAsBoolean, parseAsIsoDate, parseAsString, useQueryState } from "nuqs";
 import { useKassaReportTotal } from "../../f-manager/report/queries";
 import { useDataCashflow } from "./queries";
 import { Columns } from "./columns";
 import { useParams } from "react-router-dom";
 import { useMeStore } from "@/store/me-store";
 import { useKassaReportSingle } from "../filial-report-finance/queries";
+import { useReportsSingle } from "../report-finance-single/queries";
 
 export default function ReportPage() {
   const tipFilter = {
@@ -28,6 +29,7 @@ export default function ReportPage() {
 
   const {id,kassaReportId} = useParams()
 
+  const [myCashFlow] = useQueryState("myCashFlow",parseAsBoolean.withDefault(false))
   const {meUser}= useMeStore()
   const [filial] = useQueryState(
     "filial"
@@ -53,7 +55,7 @@ export default function ReportPage() {
       limit: 10,
       page: 1,
       filialId:filial || undefined,
-      kassaId: id === "undefined" || !id  ? undefined : id,
+      kassaId: id === "undefined" || !id  || myCashFlow  ? undefined : id,
       casherId: id === "undefined" ? meUser?.id : undefined,
       // @ts-ignore
       type: typeFilter[tip as string],
@@ -61,16 +63,21 @@ export default function ReportPage() {
       tip: tipFilter[tip],
       fromDate: startDate || undefined,
       toDate: endDate || undefined,
-      cashflowSlug:tip =="collection" ? "Инкассация":undefined
-
+      cashflowSlug:tip =="collection" ? "Инкассация":undefined,
+      report:myCashFlow ? id:undefined
     },
     enabled: true,
   });
 
   const { data: KassaReportSingle } = useKassaReportSingle({
     id:kassaReportId || undefined,
-    enabled: Boolean(kassaReportId) ,
+    enabled: Boolean(kassaReportId),
   });
+
+  const {data:myCashFlowReports} = useReportsSingle({
+    id:id || undefined,
+    enabled: Boolean(myCashFlow && id),
+  })
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
@@ -79,7 +86,7 @@ export default function ReportPage() {
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
       {
-       <CardSort  KassaReport={  id === "undefined"  ? KassaReportSingle:KassaReport }  KassaId={ id === "undefined" || !id  ? undefined : id} />
+       <CardSort  isAddible={myCashFlow} reportId={myCashFlow? id :undefined}  KassaReport={id === "undefined"  ? KassaReportSingle : myCashFlow?myCashFlowReports: KassaReport }  KassaId={ id === "undefined" || !id  ? undefined : id} />
       }
        <DataTable
           columns={Columns}

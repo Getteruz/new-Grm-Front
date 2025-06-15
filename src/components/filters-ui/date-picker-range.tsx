@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon, X } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useTranslation } from "react-i18next";
 
@@ -40,9 +40,9 @@ export function DateRangePicker({
                 !fromDate && "text-muted-foreground"
               )}
             >
-              <CalendarIcon className="mr-0 h-3 w-3" />
+              {<CalendarIcon className="mr-0 h-3 w-3" />}
               {fromDate ? (
-                format(fromDate, "P")
+                format(fromDate, "dd, LLL, y")
               ) : (
                 <span>
                   {fromPlaceholder ? t(fromPlaceholder) : t("From date")}
@@ -73,9 +73,9 @@ export function DateRangePicker({
               )}
             >
               
-              <CalendarIcon className="mr-0 h-3 w-3" />
+              {<CalendarIcon className="mr-0 h-3 w-3" />}
               {toDate ? (
-                format(toDate, "P")
+                format(toDate, "dd, LLL, y")
               ) : (
                 <span>{toPlaceholder ? t(toPlaceholder) : t("To date")}</span>
               )}
@@ -92,6 +92,12 @@ export function DateRangePicker({
           </PopoverContent>
         </Popover>
       </div>
+      {toDate || fromDate ? <div onClick={()=>{
+          setToDate(null)
+          setFromDate(null)
+        }} className="rounded-full p-2 cursor-pointer  bg-background">
+        <X className="w-[16px]  h-[16px] "/>
+        </div>:""}
     </div>
   );
 }

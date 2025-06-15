@@ -5,7 +5,7 @@ import PageFinanceSingle from "./report-finance-single";
 
 const Route = [
   {
-    url: "/m-manager",
+    url: "/m-manager/report",
     Element: ReportPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
@@ -22,6 +22,11 @@ const Route = [
   {
     url: "/m-manager/report-finance/:id/info",
     Element: PageFinanceSingle,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/m-manager/report-finance/:id/info/my",
+    Element: ReportPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {

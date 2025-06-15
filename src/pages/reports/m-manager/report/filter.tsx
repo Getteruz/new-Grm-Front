@@ -1,6 +1,5 @@
-import { FileOutput, Store } from "lucide-react";
+import {  Store } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import FilterSelect from "@/components/filters-ui/filter-select";
 import useDataFetch from "@/pages/filial/table/queries";
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
@@ -48,12 +47,12 @@ export default function Filters() {
           <DateRangePicker fromPlaceholder={`от`} toPlaceholder={`до`} />
         </>
       )}
-      <Button
+      {/* <Button
         className="h-full  border-y-0 w-[140px]  ml-auto"
         variant={"outline"}
       >
         <FileOutput /> Экспорт
-      </Button>
+      </Button> */}
       {/* <Button
         className="h-full border-l-0 bg-primary hover:bg-[#525248] hover:text-accent text-accent border-y-0 w-[165px]  "
         variant={"outline"}

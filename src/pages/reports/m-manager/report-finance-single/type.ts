@@ -7,6 +7,7 @@ export interface TKassareportData {
   kassaReportStatus:number;
   year: number;
   month: number;
+  
   status: string;
   filial?: {
     id: string;

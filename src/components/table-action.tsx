@@ -34,11 +34,11 @@ export default function TableAction({
   children,
   id,
 }: {
-  url: string;
+  url?: string;
   ShowPreview?: boolean;
   ShowUpdate?: boolean;
   ShowDelete?: boolean;
-  id: string;
+  id?: string;
   refetchUrl?: string;
   children?: React.ReactNode;
 }) {
@@ -49,7 +49,9 @@ export default function TableAction({
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: async () => {
-      return await DeleteData(url, id);
+      if(url && id){
+        return await DeleteData(url, id);
+      }
     },
     onSuccess: () => {
       toast.success(t("deleteToast"));
@@ -69,7 +71,7 @@ export default function TableAction({
 
         <DropdownMenuContent align="end">
           {ShowUpdate ? (
-            <DropdownMenuItem onClick={() => setId(id)}>
+            <DropdownMenuItem onClick={() => setId(id||'')}>
               {t("update")}
             </DropdownMenuItem>
           ) : (

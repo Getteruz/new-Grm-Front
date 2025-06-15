@@ -24,14 +24,12 @@ import { minio_img_url } from "@/constants";
 import useDataFetch from "@/pages/filial/table/queries";
 import ShadcnSelect from "./Select";
 
-export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaReport?:TKassareportData}) {
+export default function CardSort({KassaId,reportId,isAddible,kassaReportId,KassaReport}:{KassaId?:string,reportId?:string|undefined,isAddible?:boolean,KassaReport?:TKassareportData,kassaReportId?:string|undefined}) {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
   const [kassaReports] = useQueryState("kassaReports");
-  // Fetch kassa report data
 
-  // State variables for form
-  const [sorttype, setSortType] = useQueryState("sorttype", parseAsString);
+  const [sorttype, setSortType] = useQueryState("tip", parseAsString);
   const [type, setType] = useState<string>("Приход");
   const [cashflow_type, setCashflow_type] = useState<string>("");
   const [comment, setComment] = useState<string>("");
@@ -45,23 +43,29 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
     id:KassaId,
   });
 
-
-  const { data: types, } = useDataCashflowTypes({
+  const { data: types } = useDataCashflowTypes({
     queries: { limit: 20, page: 1,type: type == "Приход"? "in" : "out" },
     enabled: Boolean(dialogOpen),
   });
 
-  // Prepare column data using report data
+ 
+interface TColumns {
+  title: string;
+  value: string;
+  price: React.ReactNode;
+  button?: React.ReactNode;
+}
   const columns = [
     {
       title: "Приход",
+      value:"income",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
         formatPrice(KassaReport?.totalIncome ||  kassaId?.income  || 0)
       ),
       button:
-      kassaId || meUser?.position?.role == 10 || kassaReports   ? (
+     isAddible   ? (
           <div
             onClick={() => {
               setType("Приход");
@@ -74,6 +78,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
         ):"",
     },
     {
+      value:"sale",
       title: "Продажа",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
@@ -82,6 +87,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
       ),
     },
     {
+      value:"terminal",
       title: "Терминал",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
@@ -91,6 +97,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
     },
     {
       title: "Навар",
+      value:"terminal",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
@@ -99,13 +106,14 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
     },
     {
       title: "Расход",
+      value:"expense",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
         `-${formatPrice(KassaReport?.totalExpense || kassaId?.expense || 0)}`
       ),
       button:
-       kassaId || meUser?.position?.role == 10 || kassaReports  ? (
+      isAddible ? (
           <div
             onClick={() => {
               setType("Расход");
@@ -119,10 +127,12 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
     },
     {
       title: "Возврат сумма",
+      value:"return",
       price:  `-${formatPrice(KassaReport?.totalSaleReturn || kassaId?.return_sale || 0)}` ,
     },
     {
       title: "Инкассация",
+      value:"collection",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
@@ -145,6 +155,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
     },
     {
       title: "Скидка",
+      value:"discount",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
@@ -222,8 +233,9 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
         comment,
         price,
         casher: meUser?.id,
-        kassa: kassaReports ? undefined : kassaId?.id || meUser?.position?.id || undefined,
-        kassaReport:kassaReports || undefined
+        kassa: kassaReports ? undefined : kassaId?.id|| undefined,
+        kassaReport:kassaReportId || kassaReports || undefined,
+        report:reportId || undefined,
       };
 
       await api.post(apiRoutes.cashflow, body);
@@ -240,12 +252,14 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
 
       // Invalidate queries to refresh data
       queryClient.invalidateQueries({ queryKey: ["kassa-reports"] });
+      queryClient.invalidateQueries({ queryKey: ["kassa-reports/total"] });
       queryClient.invalidateQueries({ queryKey: [apiRoutes?.kassaReports] });
       queryClient.invalidateQueries({ queryKey: [  apiRoutes.cashflow] });
       queryClient.invalidateQueries({ queryKey: [  apiRoutes.kassa] });
       queryClient.invalidateQueries({ queryKey: [  apiRoutes.cashflowFilial] });
+      queryClient.invalidateQueries({ queryKey: [  apiRoutes.reports] });
       
-   
+      
     } catch (error) {
       toast.error(String(error));
     } finally {
@@ -279,11 +293,11 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
             <p className="text-[14px] font-semibold">1 шт</p>
           </div>
           <div className="grid row-start w-full  border-border  border-b grid-cols-4  ">
-            {column?.map((e) => (
+            {(column as unknown as TColumns[] )?.map((e) => (
               <div
                 key={e.title}
-                onClick={() => setSortType(e.title)}
-                className={`${sorttype == e.title ? "bg-primary text-background" : "bg-sidebar/20  text-primary"} border-t border-r border-border cursor-pointer px-4 py-5`}
+                onClick={() => setSortType(e.value)}
+                className={`${sorttype == e.value ? "bg-primary text-background" : "bg-sidebar/20  text-primary"} border-t border-r border-border cursor-pointer px-4 py-5`}
               >
                 <div className="flex justify-between items-center">
                   <p className="text-[12px] mb-0.5 flex items">{e.title}</p>
@@ -305,7 +319,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
           </div>
         </div>
 
-      <DialogContent className="sm:max-w-[640px] costomModal rounded-[12px] px-4 pb-4">
+      <DialogContent className="sm:max-w-[640px]  costomModal rounded-[12px] px-4 pb-4">
         <div
           className={`p-3 h-[44px] font-bold pb-0 text-center mx-auto rounded-t-[7px] w-1/2 -mt-[45px]  ${type === "Приход" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}
         >
@@ -338,7 +352,7 @@ export default function CardSort({KassaId,KassaReport}:{KassaId?:string,KassaRep
                 ))}
             </div>
             <div className="w-full">
-            { meUser?.position?.role ==10 &&  <ShadcnSelect
+            { meUser?.position?.role == 10 &&  <ShadcnSelect
                 value={filial}
                 options={
                   filialData?.pages[0]?.items?.map((item) => ({

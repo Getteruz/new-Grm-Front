@@ -42,7 +42,7 @@ export default function PageFinanceFilial() {
             columns={KassaColumns || []}
             data={[
               {
-                status:"Мои приходы и расходы",
+                status:"Филиал приходы и расходы",
                 income: cashflowFilial?.income,
                 expense: cashflowFilial?.expense,
             }, ...flatKasssaData]}

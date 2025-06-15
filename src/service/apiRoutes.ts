@@ -32,6 +32,7 @@ export const apiRoutes = {
   filialReport: "/filial-report",
   qrBase: "/qr-base",
   cashflow: "/cashflow",
+  cashflowForMainManager:'/cashflow/for/main-manager',
   cashflowTypes: "/cashflow-types",
   cashflowFilial :'/cashflow/for/filial-manager',
   openKassa: "/kassa/open-kassa",
@@ -52,5 +53,6 @@ export const apiRoutes = {
   productRemainingCollection:'/product/remaining-products-collection',
   excelProducts:'/excel/products',
   excelProduct:'/excel/product',
-  reports:"/reports"
+  reports:"/reports",
+  
 } as const;

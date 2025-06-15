@@ -4,8 +4,13 @@ import ReportPage from "./report";
 import SinglePage from "./report-single";
 const Route = [
   {
-    url: "/f-manager",
+    url: "/f-manager/report",
     Element: ReportPage,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/f-manager/report/:id/info",
+    Element: SinglePage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {

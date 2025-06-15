@@ -149,7 +149,7 @@ export const DataMenu = {
     {
       id: 2,
       icons: () => ReportBottom({}),
-      link: "/f-manager",
+      link: "/f-manager/report",
       text: "Отчеты",
       items: [
         {
@@ -494,7 +494,7 @@ export const DataMenu = {
     {
       id: 2,
       icons: () => ReportBottom({}),
-      link: "/m-manager",
+      link: "/m-manager/report",
       text: "Отчеты",
       items: [
         {

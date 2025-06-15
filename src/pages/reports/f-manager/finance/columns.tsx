@@ -9,7 +9,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "startDate",
     header: "Дата",
     cell: ({ row }) => {
-      const month =[
+      const month = [
         "Январь",
         "Февраль",
         "Март",
@@ -39,7 +39,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#89A143]"> {item?.totalSum} $</p>;
+      return <p className="text-[#89A143]"> { item?.totalSum && item?.totalPlasticSum  && (item?.totalSum  - item?.totalPlasticSum).toFixed(2) + ' $'} $</p>;
     },
   },
 
@@ -48,7 +48,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.totalSum} $</p>;
+      return <p> {item?.totalPlasticSum} $</p>;
     },
   },
 

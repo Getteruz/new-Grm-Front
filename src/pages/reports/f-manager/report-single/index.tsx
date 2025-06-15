@@ -7,11 +7,12 @@ import {  parseAsIsoDate, useQueryState } from "nuqs";
 import { useParams } from "react-router-dom";
 import { Columns } from "./columns";
 import { useDataCashflow } from "./queries";
+import { useKassaReportSingle } from "../../m-manager/filial-report-finance/queries";
 
 export default function SinglePage() {
   const { meUser } = useMeStore();
 
-  const { id } = useParams();
+  const { id,report } = useParams();
 
   const [startDate] = useQueryState("startDate",parseAsIsoDate);
   const [endDate] = useQueryState("endDate",parseAsIsoDate);
@@ -19,14 +20,19 @@ export default function SinglePage() {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataCashflow({
       queries: {
-        kassaId: id,
+        kassaId: id != "my" ?id :undefined,
         limit: 10,
         page: 1,
-        filialId: meUser?.filial?.id || undefined,
+        filialId: report ? undefined: meUser?.filial?.id || undefined,
         fromDate: startDate || undefined,
         toDate: endDate || undefined,
+        kassaReport:report||undefined
       },
-      enabled: Boolean( id),
+      enabled: Boolean(id),
+    });
+    const { data: KassaReportSingle } = useKassaReportSingle({
+      id:report || undefined,
+      enabled: Boolean(report),
     });
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
@@ -35,7 +41,7 @@ export default function SinglePage() {
     <>
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
-        <CardSort KassaId={id || undefined} />
+        <CardSort isAddible={Boolean(report)} KassaId={id != 'my'? id : undefined} kassaReportId={report} KassaReport={KassaReportSingle}/>
         <DataTable
           columns={Columns}
           data={flatData || []}

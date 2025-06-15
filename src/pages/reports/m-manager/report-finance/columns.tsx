@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+// import { MoreHorizontal } from "lucide-react";
 import { TKassareportData } from "./type";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
@@ -157,13 +157,13 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     },
   },
 
-  {
-    id: "actions",
-    header: "actions",
-    cell: () => (
-      <Button onClick={(e) => e.stopPropagation()} variant="ghost" size="icon">
-        <MoreHorizontal className="h-4 w-4" />
-      </Button>
-    ),
-  },
+  // {
+  //   id: "actions",
+  //   header: "actions",
+  //   cell: () => (
+  //     <Button onClick={(e) => e.stopPropagation()} variant="ghost" size="icon">
+  //       <MoreHorizontal className="h-4 w-4" />
+  //     </Button>
+  //   ),
+  // },
 ];

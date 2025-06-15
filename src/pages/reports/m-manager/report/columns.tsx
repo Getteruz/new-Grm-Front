@@ -10,11 +10,9 @@ import {
 
 import { Button } from "@/components/ui/button";
 import formatPrice from "@/utils/formatPrice";
-
 import { format } from "date-fns";
-import { minio_img_url } from "@/constants";
-import { useMeStore } from "@/store/me-store";
 import { TData } from "./type";
+import TebleAvatar from "@/components/teble-avatar";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -39,7 +37,7 @@ export const Columns: ColumnDef<TData>[] = [
   },
   {
     id: "price",
-    header:"Сумма",
+    header:"Наличие",
     cell: ({ row }) => {
       const item = row.original;
       return (
@@ -47,8 +45,23 @@ export const Columns: ColumnDef<TData>[] = [
           className={`font-bold text-[16px] ${item.type === "Приход" ? "text-[#89A143]" : "text-[#E38157]"}`}
         >
           {item?.type === "Приход" ? "+" : "-"}
-          {formatPrice(item?.price || 0)}$
+          {item?.tip =="order" ? formatPrice(item?.order?.price || 0) :formatPrice(item?.price || 0) }$
         </span>
+      );
+    },
+  },
+  {
+    id: "terminal",
+    header:"Терминал",
+    cell: ({ row }) => {
+      const item = row.original;
+      return (
+        item.type === "Приход"?
+        <span
+          className={`font-bold text-[16px]  text-[#58A0C6]`}
+        >
+          { formatPrice(item?.order?.plasticSum || 0)}$
+        </span>:""
       );
     },
   },
@@ -118,7 +131,7 @@ export const Columns: ColumnDef<TData>[] = [
       const item = row.original;
       return (
         <p className="text-[13px] text-[#E38157]">
-          {item?.tip === "order" && item?.order?.discountPercentage &&  item?.order?.discountPercentage!= "0" &&   `-${item?.order?.discountPercentage}%`} 
+          {item?.tip === "order" && item?.order?.discountPercentage &&  item?.order?.discountPercentage!= "0" &&   `-${item?.order?.discountSum} $`} 
         </p>
       );
     },
@@ -129,17 +142,16 @@ export const Columns: ColumnDef<TData>[] = [
     id: "filial",
     header:"Филиал",
     cell: ({row}) => {
-      const { meUser } = useMeStore();
       const item = row.original;
       return (
-        meUser?.position?.role == 10  ||  meUser?.position?.role == 9? <div >
+        item?.filial?.name ? 
           <Button
           className={`bg-[#E6E6D9] border-0  rounded-[5px] p-[14px] h-10 `}
           variant={"outline"}
         >
           {item?.filial?.name}
         </Button>
-      </div>:""
+    :""
       );
     },
   },
@@ -148,8 +160,8 @@ export const Columns: ColumnDef<TData>[] = [
     id: "closer",
     cell: ({ row }) => {
       const item = row.original;
-      return item?.order?.seller?.avatar && <img  className="w-[50px]    rounded-full object-cover border-background border h-[50px]" src={minio_img_url + item?.order?.seller?.avatar?.path}/>
        
+      return item?.order?.seller && < TebleAvatar name={ item?.order?.seller?.fatherName} url={ item?.order?.seller?.avatar?.path}/>
     },
   },
   {
@@ -157,7 +169,7 @@ export const Columns: ColumnDef<TData>[] = [
     id: "closer",
     cell: ({ row }) => {
       const item = row.original;
-      return <img  className="w-[50px] rounded-full object-cover border-background border h-[50px]" src={minio_img_url + item?.casher?.avatar?.path}/>
+      return <TebleAvatar name={item?.casher?.fatherName} url={ item?.casher?.avatar?.path}/>
        
     },
   },

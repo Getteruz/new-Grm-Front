@@ -17,8 +17,6 @@ export default function PageRemaider() {
     parse: () => undefined,
   });
 
- 
-
   const { 
     data,
     isLoading,

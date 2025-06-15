@@ -1,16 +1,23 @@
 import { Button } from "@/components/ui/button";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { Loader } from "lucide-react";
 import { TKassareportData } from "./type";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import TableAction from "@/components/table-action";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRoutes } from "@/service/apiRoutes";
+import {  UpdatePatchData } from "@/service/apiHelpers";
+import { toast } from "sonner";
+import TebleAvatar from "@/components/teble-avatar";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
     id: "startDate",
     header: "Филиалы",
     cell: ({ row }) => {
-     return <p>{row?.original?.filial?.title}</p>
+      const isMy = row?.original?.status == "my";
+     return <p className={isMy ? "text-[#89A143]":""}>{ isMy ?"Мои приходы и расходы":  row?.original?.filial?.title}</p>
     },
   },
   {
@@ -18,7 +25,8 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#89A143]"> {item?.totalSum} $</p>;
+      const isMy = row?.original?.status == "my";
+      return <p className="text-[#89A143]">   {  isMy ?"": (item?.totalSum || 0) - (item?.totalPlasticSum||0)} { item?.totalSum?"$":""}</p>;
     },
   },
 
@@ -27,7 +35,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#58A0C6]"> {item?.totalSum} $</p>;
+      return <p className="text-[#58A0C6]"> {item?.totalPlasticSum} {item?.totalPlasticSum?"$":""}</p>;
     },
   },
 
@@ -36,7 +44,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "discount",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className={ item?.totalDiscount !=  0? 'text-[#E38157]' :""}> {item?.totalDiscount} $</p>;
+      return <p className={ item?.totalDiscount !=  0? 'text-[#E38157]' :""}> {item?.totalDiscount} {item?.totalDiscount?"$":""}</p>;
     },
   },
 
@@ -45,7 +53,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "additionalProfitTotalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.additionalProfitTotalSum} $</p>;
+      return <p> {item?.additionalProfitTotalSum} {item?.additionalProfitTotalSum?"$":""}</p>;
     },
   },
 
@@ -54,7 +62,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSize",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.totalSize} м²</p>;
+      return <p> {item?.totalSize}  {item?.totalSize?"м²":""} </p>;
     },
   },
   {
@@ -62,7 +70,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "income",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.totalIncome} $</p>;
+      return <p> {item?.totalIncome} {item?.totalIncome?"$":""}</p>;
     },
   },
   {
@@ -70,7 +78,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "expense",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#E38157]"> {item?.totalExpense} $</p>;
+      return <p className="text-[#E38157]"> {item?.totalExpense} {item?.totalExpense?"$":""}</p>;
     },
   },
   {
@@ -78,7 +86,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "cash_collection",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.totalCashCollection} $</p>;
+      return <p> {item?.totalCashCollection} {item?.totalCashCollection?"$":""}</p>;
     },
   },
   {
@@ -87,18 +95,9 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     cell: () => {
       return (
         <div className="flex gap-2 items-center">
-             <Avatar className="w-[40px] h-[40px]">
-                {/* <AvatarImag src={minio_img_url + seller?.avatar?.path}/> */}
-                <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
-                  MM
-                </AvatarFallback>
-              </Avatar>
-              <Avatar className="w-[40px] h-[40px]">
-                {/* <AvatarImag src={minio_img_url + seller?.avatar?.path}/> */}
-                <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
-                  AA
-                </AvatarFallback>
-              </Avatar>
+          <TebleAvatar url={''} name='A'/>
+          <TebleAvatar url={''} name='A'/>
+            
         </div>
       ) 
     },
@@ -111,10 +110,10 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       return (
         <div onClick={(e) => e.stopPropagation()}>
           {
-            item?.reportStatus ==1 &&  <Button variant={"outline"}   className="rounded-[63px] text-primary/40"> Принято </Button>
+            item?.kassaReportStatus ==1 &&  <Button variant={"outline"}   className="rounded-[63px] text-primary"> {item?.status}</Button>
           }
           {
-            item?.reportStatus ==2 &&  <Button  variant={"outline"} className="rounded-[63px] text-[#89A143] border-none"> Продалажется</Button>
+            item?.kassaReportStatus ==2 &&  <Button  variant={"outline"} className="rounded-[63px] text-[#89A143] border-none"> Продалажется</Button>
           }
         </div>
       );
@@ -124,10 +123,26 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
     id: "actions",
     header: "actions",
-    cell: () => (
-      <Button onClick={(e) => e.stopPropagation()} variant="ghost" size="icon">
-        <MoreHorizontal className="h-4 w-4" />
-      </Button>
-    ),
+    cell: ({row}) =>{
+      const queryClient = useQueryClient();
+      const { mutate,isPending } = useMutation({
+        mutationFn: async () => {
+            return await UpdatePatchData(apiRoutes.kassaReports+'/reject', row?.original?.id,{});
+        },
+        onSuccess: () => {
+          toast.success("Status changed successfully");
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
+        },
+      });
+      return(
+          <Button onClick={(e) => e.stopPropagation()} variant="ghost" size="icon">
+            <TableAction  ShowDelete={false} ShowPreview={false} ShowUpdate={false}>
+              <DropdownMenuItem disabled={isPending} onClick={()=>mutate()} >
+                  {isPending ? <Loader/>:""} Отменить
+                </DropdownMenuItem>
+            </TableAction>
+          </Button>
+      )
+    },
   },
 ];

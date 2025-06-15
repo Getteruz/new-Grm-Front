@@ -188,18 +188,19 @@ export function DataTable<TData, TValue>({
                     key={row.id}
                     className="px-5 cursor-pointer  "
                     onClick={() => {
+                      const id = (row.original as { id: string })?.id
                       if(onRowClick ) {
                         onRowClick(row.original as TData);
                       }
-                      if (isRowClickble) {
+                      if (isRowClickble && id) {
                         navigate(
                           link
                             ? link +
-                                `?id=${(row.original as { id: string })?.id}`
-                            : (row.original as { id: string })?.id + "/info"
+                                `?id=${id}`
+                            : id + "/info"
                         );
-                      } else if (isRowClickble !== false) {
-                        setId((row.original as { id: string })?.id);
+                      } else if (isRowClickble !== false && id) {
+                        setId(id);
                       }
                     }}
                     data-state={row.getIsSelected() && "selected"}

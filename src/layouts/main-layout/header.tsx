@@ -49,6 +49,7 @@ export default function Header() {
   const oneMenu = DataMenu?.[
     meUser?.position?.role as keyof typeof DataMenu
   ]?.find((e) => location.pathname.includes(e?.link));
+
   return (
     <div className="flex items-center gap-5 w-full h-[64px] pl-4 px-[51px] py-[23px] bg-sidebar border-b border-border">
       <p className="flex mr-[auto]  items-center gap-4 text-[14px] leading-[16px] text-foreground">
@@ -56,7 +57,7 @@ export default function Header() {
           (oneMenu as Tmenu)?.items.map((e) => (
             <Link
               key={e?.id}
-              className={ location.pathname.includes(e?.link) ? "" : "opacity-60"}
+              className={ location.pathname.includes(e?.link) || location.pathname+ "s" == e?.link ?  "" : "opacity-60"}
               to={e?.link}
             >
               {e.text}

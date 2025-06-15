@@ -26,7 +26,7 @@ export const KassaColumns: ColumnDef<TData>[] = [
       return (
         <p className={`${item?.endDate ? "" : "text-[#89A143]"}`}>
           {" "}
-          {item?.status== "Мои приходы и расходы" ? item?.status: item?.endDate
+          {item?.status== "Филиал приходы и расходы" ? item?.status: item?.endDate
             ? format(new Date(item?.endDate), "dd MMMM yyyy")
             : "Продалажется"}
         </p>
@@ -107,8 +107,8 @@ export const KassaColumns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return item?.status != "open" && item?.status != "Мои приходы и расходы" ?  <div className="flex items-center">
-       {<img  className="w-[40px] rounded-full object-cover border-background border h-[40px]" src={minio_img_url + item?.closer?.avatar?.path}/>}
-        {item?.status != "closed_by_c" ?  <img className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={minio_img_url + item?.closer_m?.avatar?.path}/>:""}
+       { item?.closer?.avatar &&<img  className="w-[40px] rounded-full object-cover border-background border h-[40px]" src={minio_img_url + item?.closer?.avatar?.path}/>}
+        {item?.status != "closed_by_c" && item?.closer_m?.avatar ?  <img className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={minio_img_url + item?.closer_m?.avatar?.path}/>:""}
       </div>:"";
     },
   },

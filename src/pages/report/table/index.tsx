@@ -97,7 +97,6 @@ export default function Page() {
       {
        <CardSort  KassaReport={ Myid == "myReport" ? KassaReportSingle : id || kassaReports ? undefined : KassaReport }  KassaId={id||  undefined }/>
       }
-   
         { Boolean(id) || meUser?.position?.role ===  10 || meUser?.position?.role ===  9 || Myid == "myReport"   ?  <DataTable
               columns={ReportColumns}
               data={flatData || []}

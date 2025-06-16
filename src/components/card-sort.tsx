@@ -97,7 +97,7 @@ interface TColumns {
     },
     {
       title: "Навар",
-      value:"terminal",
+      value:"navar",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
@@ -237,7 +237,7 @@ interface TColumns {
         kassaReport:kassaReportId || kassaReports || undefined,
         report:reportId || undefined,
       };
-
+    
       await api.post(apiRoutes.cashflow, body);
 
       toast.success(`${type} успешно добавлен`);

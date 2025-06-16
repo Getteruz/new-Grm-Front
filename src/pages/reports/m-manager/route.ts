@@ -39,6 +39,11 @@ const Route = [
     Element: ReportPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+  {
+    url: "/m-manager/report-finance/:reportId/info/:kassaReportId/info/f-managers",
+    Element: ReportPage,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
 ];
 
 

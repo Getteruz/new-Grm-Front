@@ -4,11 +4,13 @@ import { DataTable } from "@/components/ui/data-table";
 import CardSort from "@/components/card-sort";
 import { useCashflowFilial, useDataKassa, useKassaReportSingle } from "./queries";
 import { KassaColumns } from "./columns";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { parseAsBoolean, useQueryState } from "nuqs";
 
 export default function PageFinanceFilial() {
   const {id}  =useParams()
-  
+  const navigate = useNavigate();
+  const [,setFManagerCashFlow] = useQueryState("FManagerCashFlow",parseAsBoolean)
   const { data:kassaData, isLoading:KassaLoading, fetchNextPage:KassafetchNextPage, hasNextPage:KassafhasNextPage, isFetchingNextPage:KassaisFetchingNextPage } =
   useDataKassa({
     queries: {
@@ -51,6 +53,14 @@ export default function PageFinanceFilial() {
             // onRowClick={(data) => data?.id ?
             //   navigate(`/report?id=${data?.id}`) : navigate(`/report?Myid=myReport&kassaReports=${kassaReports}`)
             // }
+            onRowClick={(item) => {
+              if(item?.status == "Филиал приходы и расходы"){
+                navigate('f-managers' )
+                setFManagerCashFlow(true)
+              }else{
+                setFManagerCashFlow(false)
+              }
+            }}
             fetchNextPage={KassafetchNextPage}
             hasNextPage={KassafhasNextPage ?? false}
             isFetchingNextPage={KassaisFetchingNextPage}

@@ -54,6 +54,8 @@ export default function PageFinanceSingle() {
             if(item?.status == "my"){
               navigate(item?.status )
               setMyCashFlow(true)
+            }else{
+              setMyCashFlow(false)
             }
           }}
 

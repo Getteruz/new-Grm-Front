@@ -18,7 +18,7 @@ const useDataFetch = ({ options, queries }: ITransfers) =>
   useInfiniteQuery({
     ...options,
     queryKey: [apiRoutes.transfers, queries],
-    queryFn: ({ pageParam = 10 }) =>
+    queryFn: ({ pageParam = 1}) =>
       getAllData<TResponse<TransferData>, TransferQuery>(apiRoutes.transfers, {
         ...queries,
         page: pageParam as number,

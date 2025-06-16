@@ -15,7 +15,7 @@ export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(50));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
 
-  const { data: filialData ,fetchNextPage, hasNextPage, isFetchingNextPage} = useDataFetch({
+  const { data: filialData } = useDataFetch({
     queries: {
       limit,
       page,
@@ -42,9 +42,9 @@ export default function Page() {
     parseAsString.withDefault("In")
   )
 
-  const { data, isLoading } = useTransfers({
+  const { data, isLoading ,fetchNextPage, hasNextPage, isFetchingNextPage} = useTransfers({
     queries: {
-      limit: 50,
+      limit: 10,
       page: 1,
       from: meUser?.position.role === 9 ? filial : type=="In" ? filial : meUser?.filial?.id ,
       to: meUser?.position.role === 9 ? filialTo : type=="In" ? meUser?.filial?.id : filial ,

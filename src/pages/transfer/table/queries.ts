@@ -8,7 +8,6 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
 import { TransferData, TransferQuery } from "../type";
-
 interface ITransfers {
   options?: DefinedInitialDataInfiniteOptions<TResponse<TransferData>>;
   queries?: TransferQuery;

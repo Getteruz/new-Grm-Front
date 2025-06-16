@@ -41,7 +41,7 @@ export default function SinglePage() {
     <>
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
-        <CardSort isAddible={Boolean(report)} KassaId={id != 'my'? id : undefined} kassaReportId={report} KassaReport={KassaReportSingle}/>
+        <CardSort isAddible={Boolean(report && id == 'my')} KassaId={id != 'my'? id : undefined} kassaReportId={report} KassaReport={KassaReportSingle}/>
         <DataTable
           columns={Columns}
           data={flatData || []}

@@ -22,9 +22,9 @@ export default function ReportPage() {
     expense: "cashflow",
     sale: "order",
     return: "order",
-    // terminal:"Терминал",
-    // discount:"Скидка",
-    // navar:"Навар",
+    terminal:"Терминал",
+    discount:"Скидка",
+    navar:"Навар",
   };
 
   const typeFilter = {

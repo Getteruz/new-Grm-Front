@@ -237,7 +237,6 @@ interface TColumns {
         kassaReport:kassaReportId || kassaReports || undefined,
         report:reportId || undefined,
       };
-    
       await api.post(apiRoutes.cashflow, body);
 
       toast.success(`${type} успешно добавлен`);

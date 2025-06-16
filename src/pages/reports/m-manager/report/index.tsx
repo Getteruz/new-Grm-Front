@@ -95,6 +95,8 @@ export default function ReportPage() {
     enabled: Boolean(myCashFlow && id),
   });
 
+
+  console.log(id,FManagerCashFlow,myCashFlowReports)
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
@@ -107,13 +109,13 @@ export default function ReportPage() {
             kassaReportId={FManagerCashFlow ? kassaReportId : undefined}
             reportId={myCashFlow && !FManagerCashFlow ? id : undefined}
             KassaReport={
-              id === "undefined" || FManagerCashFlow
+             ( id === "undefined" || FManagerCashFlow)
                 ? KassaReportSingle
                 : myCashFlow
                   ? myCashFlowReports
-                  : KassaReport
+                  :  !id ?  KassaReport : undefined
             }
-            KassaId={id === "undefined" || !id ? undefined : id}
+            KassaId={(id === "undefined" || !id) ? undefined : id}
           />
         }
         <DataTable

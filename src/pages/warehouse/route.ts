@@ -1,5 +1,5 @@
 import SinglePage from "../filial/single";
-import PageReport from "./report";
+import PageRemaider from "./remaider";
 import Page from "./table";
 
 const Route = [
@@ -10,7 +10,7 @@ const Route = [
   },
   {
     url: "/warehouse-report",
-    Element: PageReport,
+    Element: PageRemaider,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {

@@ -81,7 +81,7 @@ export const FilialColumns: ColumnDef<TData>[] = [
     header: "Зарплата",
     cell: ({ row }) => {
       return (
-        <p>{Number(row?.original?.salary).toLocaleString("uz-UZ")} сум </p>
+        <p>{Number(row?.original?.salary).toLocaleString("uz-UZ")} $ </p>
       );
     },
   },

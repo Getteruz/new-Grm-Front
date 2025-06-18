@@ -13,8 +13,8 @@ import formatPrice from "@/utils/formatPrice";
 
 import { KassaItem, TransactionItem } from "../type";
 import { format } from "date-fns";
-import { minio_img_url } from "@/constants";
 import { useMeStore } from "@/store/me-store";
+import TebleAvatar from "@/components/teble-avatar";
 
 export const ReportColumns: ColumnDef<TransactionItem>[] = [
   {
@@ -118,7 +118,7 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
       const item = row.original;
       return (
         <p className="text-[13px] text-[#E38157]">
-          {item?.tip === "order" && item?.order?.discountPercentage &&  item?.order?.discountPercentage!= "0" &&   `-${item?.order?.discountPercentage}%`} 
+          {item?.tip === "order" && item?.order?.discountSum ?    `-${item?.order?.discountSum}$`:''} 
         </p>
       );
     },
@@ -148,7 +148,7 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
     id: "closer",
     cell: ({ row }) => {
       const item = row.original;
-      return item?.order?.seller?.avatar && <img  className="w-[50px]    rounded-full object-cover border-background border h-[50px]" src={minio_img_url + item?.order?.seller?.avatar?.path}/>
+      return item?.order?.seller?.avatar && <TebleAvatar name={ item?.order?.seller?.firstName} url={item?.order?.seller?.avatar?.path} />
        
     },
   },
@@ -157,7 +157,9 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
     id: "closer",
     cell: ({ row }) => {
       const item = row.original;
-      return <img  className="w-[50px] rounded-full object-cover border-background border h-[50px]" src={minio_img_url + item?.casher?.avatar?.path}/>
+      return    <TebleAvatar name={ item?.casher?.firstName} url={item?.casher?.avatar?.path} />
+
+   
        
     },
   },

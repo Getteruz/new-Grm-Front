@@ -76,9 +76,9 @@ export default function ReportPage() {
         type: typeFilter[tip as string],
         // @ts-ignore
         tip: tipFilter[tip],
+        cashflowSlug: tip == "collection" ? "Инкассация" : undefined,
         fromDate: startDate || undefined,
         toDate: endDate || undefined,
-        cashflowSlug: tip == "collection" ? "Инкассация" : undefined,
         report: myCashFlow && !FManagerCashFlow ? id : undefined,
         kassaReport: FManagerCashFlow ? kassaReportId || undefined : undefined,
       },

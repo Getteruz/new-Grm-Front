@@ -75,9 +75,9 @@ export default function Content({ orderList, isFetchingNextPage = false,
                   ]}
                   comment={item?.comment}
                   discount={
-                    item?.discountPercentage === null
+                    item?.discountSum === null
                       ? "~"
-                      : `-${item?.discountPercentage}%`
+                      : `-${item?.discountSum}$`
                   }
                   id={item?.id}
                   img={

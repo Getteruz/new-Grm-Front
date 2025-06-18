@@ -1,6 +1,3 @@
-import { FileOutput } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 
 export default function Filters() {
@@ -13,12 +10,12 @@ export default function Filters() {
           fromPlaceholder={`от`}
           toPlaceholder={`до`}
         />
-      <Button
+      {/* <Button
         className="h-full  border-y-0 w-[140px] "
         variant={"outline"}
       >
         <FileOutput /> Экспорт
-      </Button>
+      </Button> */}
       {/* <Button
         className="h-full border-l-0 bg-primary hover:bg-[#525248] hover:text-accent text-accent border-y-0 w-[165px]  "
         variant={"outline"}

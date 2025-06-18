@@ -15,9 +15,12 @@ export default function Page() {
   const { meUser } = useMeStore();
   const {id} = useParams()
 
+  
+
   const [startDate] = useQueryState("startDate",parseAsIsoDate);
   const [endDate] = useQueryState("endDate",parseAsIsoDate);
 
+  
   const {data:KassaReport} = useKassaReportTotal({
     queries:{
       filialId:meUser?.filial?.id || '',
@@ -46,7 +49,8 @@ const { data: KassaReportSingle } = useKassaReportSingle({
 
   const {data:cashflowFilial} = useCashflowFilial({
     id:id || undefined,
-    enabled:Boolean(id) 
+    enabled:Boolean(id) ,
+    
   })
   
   return (

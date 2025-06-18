@@ -118,7 +118,7 @@ export const Columns: ColumnDef<TData>[] = [
       const item = row.original;
       return (
         <p className="text-[13px] text-[#E38157]">
-          {item?.tip === "order" && item?.order?.discountPercentage &&  item?.order?.discountPercentage!= "0" &&   `-${item?.order?.discountPercentage}%`} 
+          {item?.tip === "order" && item?.order?.discountSum  ?   `-${item?.order?.discountSum}$`:''} 
         </p>
       );
     },

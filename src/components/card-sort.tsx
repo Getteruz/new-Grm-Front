@@ -272,7 +272,7 @@ interface TColumns {
     <>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <div className="flex ">
-          <div className="bg-sidebar/20 p-5 w-full border border-t border-r max-w-[399px]">
+          <div onClick={()=>setSortType(null)} className=" bg-sidebar/20 cursor-pointer p-5 w-full border border-t border-r max-w-[399px]">
             <div className="flex items-center">
               <DollarSign size={54} />
               <div>

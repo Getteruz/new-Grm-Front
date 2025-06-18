@@ -143,7 +143,7 @@ export default function CarpetCashierCard({
             )}
             {status != "progress" && meUser && (
               <Avatar className="w-[40px] h-[40px]">
-                <AvatarImage src={minio_img_url + meUser?.avatar?.path.slice(1)}/>
+                <AvatarImage src={minio_img_url + meUser?.avatar?.path}/>
                 <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
                   {meUser?.firstName?.[0]}
                   {meUser?.lastName?.[0]}

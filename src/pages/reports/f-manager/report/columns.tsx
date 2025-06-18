@@ -37,7 +37,7 @@ export const KassaColumns: ColumnDef<TData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#89A143]"> { item?.totalSum && item?.plasticSum  && (item?.totalSum  - item?.plasticSum).toFixed(2) + ' $'} </p>;
+      return <p className="text-[#89A143]"> { item?.totalSum  && (item?.totalSum  - item?.plasticSum).toFixed(2) + ' $'} </p>;
     },
   },
 

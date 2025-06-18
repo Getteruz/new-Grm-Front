@@ -130,7 +130,7 @@ export const Columns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <p className="text-[13px] text-[#E38157]">
+        <p className="text-[13px] min-w-[60px] text-[#E38157]">
           {item?.tip === "order" && item?.order?.discountPercentage &&  item?.order?.discountPercentage!= "0" &&   `-${item?.order?.discountSum} $`} 
         </p>
       );
@@ -177,7 +177,7 @@ export const Columns: ColumnDef<TData>[] = [
     id: "time",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[13px]">{format(item?.date, "dd MMM HH:mm")}</p>;
+      return <p className="text-[13px] min-w-[80px]">{format(item?.date, "dd MMM HH:mm")}</p>;
     },
   },
   {

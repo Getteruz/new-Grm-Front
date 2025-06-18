@@ -3,12 +3,28 @@ import { useMeStore } from "@/store/me-store";
 
 import Filter from "./filter";
 import CardSort from "@/components/card-sort";
-import {  parseAsIsoDate, useQueryState } from "nuqs";
+import {  parseAsIsoDate, parseAsString, useQueryState } from "nuqs";
 import { useParams } from "react-router-dom";
 import { Columns } from "./columns";
 import { useDataCashflow } from "./queries";
 import { useKassaReportSingle } from "../../m-manager/filial-report-finance/queries";
 
+const tipFilter = {
+  income: "cashflow",
+  expense: "cashflow",
+  sale: "order",
+  return: "order",
+  terminal:"Терминал",
+  discount:"Скидка",
+  navar:"Навар",
+};
+
+const typeFilter = {
+  income: "Приход",
+  expense: "Расход",
+  sale: "Приход",
+  return: "Расход",
+};
 export default function SinglePage() {
   const { meUser } = useMeStore();
 
@@ -16,7 +32,7 @@ export default function SinglePage() {
 
   const [startDate] = useQueryState("startDate",parseAsIsoDate);
   const [endDate] = useQueryState("endDate",parseAsIsoDate);
-
+  const [tip] = useQueryState("tip", parseAsString);
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataCashflow({
       queries: {
@@ -26,7 +42,12 @@ export default function SinglePage() {
         filialId: report ? undefined: meUser?.filial?.id || undefined,
         fromDate: startDate || undefined,
         toDate: endDate || undefined,
-        kassaReport: id=="my" ?report ||undefined: undefined
+        kassaReport: id=="my" ?report ||undefined: undefined,
+           // @ts-ignore
+       type: typeFilter[tip as string],
+       // @ts-ignore
+       tip: tipFilter[tip],
+       cashflowSlug: tip == "collection" ? "Инкассация" : undefined,
       },
       enabled: Boolean(id),
     });

@@ -1,4 +1,4 @@
-import { Building2, Factory, FileOutput, Layers2, Store } from "lucide-react";
+import {  Factory, FileOutput, Layers2, Store } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";

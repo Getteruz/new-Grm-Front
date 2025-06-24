@@ -13,11 +13,13 @@ interface ITransfers {
   options?: DefinedInitialDataInfiniteOptions<TResponse<ProductsData>>;
   queries?: ProductsQuery;
   filialId?: string;
+  enabled?: boolean;
 }
 
-const useDataFetch = ({ options, queries, filialId }: ITransfers) =>
+const useDataFetch = ({ options, queries, filialId,enabled=true }: ITransfers) =>
   useInfiniteQuery({
     ...options,
+    enabled: enabled,
     queryKey: [apiRoutes.collection, queries, filialId],
     queryFn: ({ pageParam = 10 }) =>
       getAllData<TResponse<ProductsData>, ProductsQuery>(apiRoutes.collection, {
@@ -26,6 +28,7 @@ const useDataFetch = ({ options, queries, filialId }: ITransfers) =>
         limit: 10,
         filialId: filialId,
       }),
+      
     getNextPageParam: (lastPage) => {
       if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
         return lastPage?.meta?.currentPage + 1;

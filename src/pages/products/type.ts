@@ -80,4 +80,5 @@ export type ProductsQuery = {
   endDate?: Date | null;
   limit?: number;
   page?: number;
+  enabled?: boolean;
 };

@@ -31,11 +31,7 @@ export default function Filters() {
             className="w-[200px] h-[65px] border-border border-r"
             options={[{ value: "clear", label: "все" }, ...filialOption]}
             name="filial"
-            icons={
-              <>
-                <Store />
-              </>
-            }
+            icons={ <Store /> }
           />
           <FilterSelect
               className="w-[200px]  h-[65px] ml-2  border-border border-r"

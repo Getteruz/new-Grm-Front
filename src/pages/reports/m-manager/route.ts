@@ -1,4 +1,5 @@
 import PageFinanceFilial from "./filial-report-finance";
+import PageRemaider from "./remaider";
 import ReportPage from "./report";
 import PageFinance from "./report-finance";
 import PageFinanceSingle from "./report-finance-single";
@@ -19,6 +20,12 @@ const Route = [
     Element: PageFinance,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+  {
+    url: "/m-manager/report-remaider",
+    Element: PageRemaider,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+
   {
     url: "/m-manager/report-finance/:id/info",
     Element: PageFinanceSingle,

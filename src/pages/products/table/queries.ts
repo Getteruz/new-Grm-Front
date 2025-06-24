@@ -13,11 +13,12 @@ interface ITransfers {
   options?: DefinedInitialDataInfiniteOptions<TResponse<ProductsData>>;
   queries?: ProductsQuery;
   role?: number;
+  
 }
 
-export const useCollectionDataFetch = ({url, filialId,country,endDate,startDate }:ProductsQuery) =>
+export const useCollectionDataFetch = ({url, filialId,country,endDate,startDate,enabled=true }:ProductsQuery) =>
   useInfiniteQuery({
-    queryKey: ["remainingCollections", filialId,country,endDate,startDate ],
+    queryKey: [url, filialId,country,endDate,startDate ],
     queryFn: ({ pageParam = 1 }) =>
       getAllData<CollectionData[], ProductsQuery>(
         `${url? url: apiRoutes.collectionProducts}`,
@@ -27,9 +28,10 @@ export const useCollectionDataFetch = ({url, filialId,country,endDate,startDate 
           page: pageParam as number,
           endDate,
           startDate,
-          limit: 10,
+          limit: 50,
         }
       ),
+    enabled:enabled,
     getNextPageParam: (_lastPage, allPages) => {
       if (!_lastPage) return null;
       return _lastPage.length === 10 ? allPages.length + 1 : null;

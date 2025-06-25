@@ -15,8 +15,6 @@ export default function Page() {
   const { meUser } = useMeStore();
   const {id} = useParams()
 
-  
-
   const [startDate] = useQueryState("startDate",parseAsIsoDate);
   const [endDate] = useQueryState("endDate",parseAsIsoDate);
 

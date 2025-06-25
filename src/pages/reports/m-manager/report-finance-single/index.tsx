@@ -44,7 +44,6 @@ export default function PageFinanceSingle() {
     <>
       <div className="h-[calc(100vh-140px)] scrollCastom">
         <CardSort reportId={id} isAddible={true} KassaReport={kassaData} />
-
         <DataTable
           columns={KassaColumnsLoc || []}
           data={ReportSingleData || []}

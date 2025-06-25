@@ -300,8 +300,8 @@ interface TColumns {
               >
                 <div className="flex justify-between items-center">
                   <p className="text-[12px] mb-0.5 flex items">{e.title}</p>
-                  {meUser?.position?.role !== 6 && meUser?.position?.role !== 10 &&
-                    "button" in e && (
+                  {/* {meUser?.position?.role !== 6 && meUser?.position?.role !== 10 &&
+                    "button" in e && ( */}
                       <DialogTrigger
                         onClick={(event) => {
                           event.stopPropagation();
@@ -310,7 +310,7 @@ interface TColumns {
                       >
                         {e.button as React.ReactNode}
                       </DialogTrigger>
-                    )}
+                    {/* )} */}
                 </div>
                 <p className="text-[15px] font-medium">{e.price}</p>
               </div>

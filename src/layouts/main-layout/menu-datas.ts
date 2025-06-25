@@ -319,20 +319,20 @@ export const DataMenu = {
     {
       id: 2,
       icons: () => ReportBottom({}),
-      link: "/d-manager",
+      link: "/d-manager/report-monthly",
       text: "Отчеты",
-      items: [
-        {
-          id: 22,
-          link: "/d-manager/reports",
-          text: "Отчёт",
-        },
-        {
-          id: 23,
-          link: "/d-manager/report-monthly",
-          text: "Ежемесячный отчет",
-        },
-      ],
+      // items: [
+        // {
+        //   id: 22,
+        //   link: "/d-manager/reports",
+        //   text: "Отчёт",
+        // },
+        // {
+        //   id: 23,
+        //   link: "/d-manager/report-monthly",
+        //   text: "Ежемесячный отчет",
+        // },
+      // ],
     },
     {
       id: 14,
@@ -583,9 +583,9 @@ export const DataMenu = {
   ],
   10: [
     {
-      id: 1,
+      id: 2,
       icons: () => ReportBottom({}),
-      link: "/m-manager",
+      link: "/m-manager/report",
       text: "Отчеты",
       items: [
         {
@@ -600,8 +600,8 @@ export const DataMenu = {
         },
         {
           id: 24,
-          link: "/report-monthly",
-          text: "Зарплатный проект",
+          link: "/m-manager/report-remaider",
+          text: "Отчёт по сотрудикам",
         },
       ],
     },

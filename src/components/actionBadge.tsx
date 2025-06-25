@@ -33,7 +33,7 @@ const statusObj = {
   new: "Новое",
   open:"Открыто",
   completed: "Завершено",
-  closed:"Закрыто",
+  closed:"Принято",
   inProgress: "В процессе",
 };
 export default function ActionBadge({ childen, status }: IActionBadgeProps) {

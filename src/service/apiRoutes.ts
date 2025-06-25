@@ -48,6 +48,7 @@ export const apiRoutes = {
   kassaReportTotal:'/kassa-reports/total',
   kassa: "/kassa",
   kassaClose: "/kassa/close-kassa",
+  kassaCancel: "/kassa/cancel-kassa",
   statement: "/statement",
   productRemaining: "/product/remaining-products",
   productRemainingCollection:'/product/remaining-products-collection',

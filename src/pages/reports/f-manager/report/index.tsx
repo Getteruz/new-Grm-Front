@@ -53,7 +53,7 @@ const { data: KassaReportSingle } = useKassaReportSingle({
   
   return (
     <>
-      <Filter />
+      <Filter status={KassaReportSingle?.status || ""}/>
       <div className="h-[calc(100vh-140px)] scrollCastom">
      <CardSort isAddible={Boolean(id)} kassaReportId={id}  KassaReport={id ? KassaReportSingle: KassaReport }/>
       <DataTable 

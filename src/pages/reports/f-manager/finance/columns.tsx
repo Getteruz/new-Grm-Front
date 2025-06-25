@@ -4,6 +4,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { TKassareportData } from "./type";
 import ActionBadge from "@/components/actionBadge";
+import ActionButton from "@/components/actionButton";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRoutes } from "@/service/apiRoutes";
+import { PatchData } from "@/service/apiHelpers";
+import { toast } from "sonner";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
@@ -23,13 +28,13 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         "Октябрь",
         "Ноябрь",
         "Декабрь",
-      ]
+      ];
       const item = row.original;
-      const isTrue =item?.kassaReportStatus == 2
+      const isTrue = item?.kassaReportStatus == 2;
       return (
-        <p className={`${isTrue?  "text-[#89A143]":""}`}>
-          { isTrue
-            ? month[item?.month - 1] +  "-Продалажется"
+        <p className={`${isTrue ? "text-[#89A143]" : ""}`}>
+          {isTrue
+            ? month[item?.month - 1] + "-Продалажется"
             : month[item?.month - 1] || ""}
         </p>
       );
@@ -40,7 +45,15 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#89A143]"> { item?.totalSum && item?.totalPlasticSum  && (item?.totalSum  - item?.totalPlasticSum).toFixed(2) + ' $'} $</p>;
+      return (
+        <p className="text-[#89A143]">
+          {" "}
+          {item?.totalSum &&
+            item?.totalPlasticSum &&
+            (item?.totalSum - item?.totalPlasticSum).toFixed(2) + " $"}{" "}
+          $
+        </p>
+      );
     },
   },
 
@@ -135,18 +148,28 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "status",
     cell: ({ row }) => {
       const item = row.original;
+      const queryClient = useQueryClient();
+      const { mutate, isPending } = useMutation({
+        mutationFn: () =>
+          PatchData(apiRoutes.kassaReports +"/" +row?.original?.id , { }),
+        onSuccess: () => {
+          toast.success("Closed");
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
+        },
+      });
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {
-            item?.kassaReportStatus == 2 ? (
-               <ActionBadge status={'willSell'} />
-            ): <ActionBadge status={item?.status} />
-          }
+          {item?.kassaReportStatus == 2 ? (
+            <ActionBadge status={"willSell"} />
+          ) : item?.status == "open" ? (
+            <ActionButton onClick={()=>mutate()} isLoading={isPending} btnText={"Закрыт"} status="accept"></ActionButton>
+          ) : (
+            <ActionBadge status={item?.status} />
+          )}
         </div>
       );
     },
   },
-
   {
     id: "actions",
     header: "actions",

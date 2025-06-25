@@ -3,8 +3,9 @@ import { format } from "date-fns";
 
 import { Statement } from "../type";
 import { ActionCell } from "./ActionCell";
-import { StatusBadge } from "./StatusBadge";
 import { useStatusMutation } from "../form/action";
+import ActionBadge from "@/components/actionBadge";
+import ActionButton from "@/components/actionButton";
 
 // Status badge renderer
 
@@ -62,21 +63,32 @@ export const StatementColumns: ColumnDef<Statement>[] = [
     header: "Статус",
     accessorKey: "status",
     cell: ({ row }) => {
+      const status = {
+        Rejected: "rejected",
+        InProgress: "inProgress",
+        Accepted: "accepted",
+      };
       const { mutate, isPending } = useStatusMutation();
       return (
-        <StatusBadge
-          isPending={isPending}
-          onClick={(e) => {
-            if(row?.original?.status == "Sent"){
-              mutate({
-                id: String(row.original.id),
-                status: 'InProgress',
-              });
-            }
-            e.stopPropagation();
-          }}
-          status={row.original.status}
-        />
+        row.original.status == "Sent" ? (
+          <ActionButton
+            onClick={(e) => {
+              if (row?.original?.status == "Sent") {
+                mutate({
+                  id: String(row.original.id),
+                  status: "InProgress",
+                });
+              }
+              e.stopPropagation();
+            }}
+            isLoading={isPending}
+            status="accept"
+          />
+        ) : (
+          <ActionBadge
+            status={status?.[row.original.status as keyof typeof status]}
+          />
+        )
       );
     },
   },

@@ -4,14 +4,15 @@ import { FormProvider, useForm } from "react-hook-form";
 
 import { useProductsCheckById } from "./actions";
 import ProductsCheckFormContent from "./content";
+import useDebounce from "@/hooks/useDebounce";
 
 const ActionPage = () => {
   const form = useForm();
-  const [id] = useQueryState("id");
   const [barcode] = useQueryState("barcode");
 
+  const LocId = useDebounce(form.watch("code"), 1000);
   const { data } = useProductsCheckById({
-    id: id || undefined,
+    id: LocId || undefined,
   });
 
   useEffect(() => {

@@ -1,9 +1,8 @@
-import { Button } from "@/components/ui/button";
 
 import { ColumnDef } from "@tanstack/react-table";
-// import { MoreHorizontal } from "lucide-react";
 import { TKassareportData } from "./type";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import ActionBadge from "@/components/actionBadge";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
@@ -43,7 +42,6 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       return <p className="text-[#89A143]"> {item?.totalSum} $</p>;
     },
   },
-
   {
     header: "Терминал",
     id: "totalSum",
@@ -52,7 +50,6 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       return <p className="text-[#58A0C6]"> {item?.totalSum} $</p>;
     },
   },
-
   {
     header: "Скидка",
     id: "discount",
@@ -61,7 +58,6 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       return <p className={ item?.totalDiscount !=  0? 'text-[#E38157]' :""}> {item?.totalDiscount} $</p>;
     },
   },
-
   {
     header: "Навар",
     id: "additionalProfitTotalSum",
@@ -70,7 +66,6 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       return <p> {item?.additionalProfitTotalSum} $</p>;
     },
   },
-
   {
     header: "Объём",
     id: "totalSize",
@@ -146,17 +141,11 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {
-            item?.reportStatus ==1 &&  <Button variant={"outline"}   className="rounded-[63px] text-primary/40"> Принято </Button>
-          }
-          {
-            item?.reportStatus ==2 &&  <Button  variant={"outline"} className="rounded-[63px] text-[#89A143] border-none"> Продалажется</Button>
-          }
+          <ActionBadge status={ item?.reportStatus ==1 ? "accepted":"willSell"}/>
         </div>
       );
     },
   },
-
   // {
   //   id: "actions",
   //   header: "actions",

@@ -10,6 +10,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 import {  UpdatePatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import TebleAvatar from "@/components/teble-avatar";
+import ActionBadge from "@/components/actionBadge";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
@@ -109,12 +110,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {
-            item?.kassaReportStatus ==1 &&  <Button variant={"outline"}   className="rounded-[63px] text-primary"> {item?.status}</Button>
-          }
-          {
-            item?.kassaReportStatus ==2 &&  <Button  variant={"outline"} className="rounded-[63px] text-[#89A143] border-none"> Продалажется</Button>
-          }
+           <ActionBadge status={ item?.kassaReportStatus ==1 ? "accepted":"willSell"}/>
         </div>
       );
     },

@@ -1,4 +1,3 @@
-import { useQueryState } from "nuqs";
 
 import BarcodeQenerat from "@/components/barcode-generat";
 import FormTextInput from "@/components/forms/FormTextInput";
@@ -7,7 +6,6 @@ import Teminal from "@/components/teminal";
 import Filters from "./filters";
 
 export default function ProductsCheckFormContent() {
-  const [, setId] = useQueryState("id");
   return (
     <div className="w-full flex ">
       <div className="w-full">
@@ -18,7 +16,6 @@ export default function ProductsCheckFormContent() {
             name="code"
             placeholder="Штрих-код"
             label="Штрих-код"
-            onChange={(e) => setId(e.target.value)}
           />
           <FormTextInput
             classNameInput="h-[28px] p-2"

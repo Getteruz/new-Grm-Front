@@ -5,11 +5,9 @@ import { toast } from "sonner";
 
 export const useStatusMutation = () => {
     const queryClient = useQueryClient();
-    
     return useMutation({
       mutationFn: async ({id,status}:{id:string,status:string}) => {
         return  UpdatePatchData(apiRoutes.payrollsChangeStatus, id + "/" +  status,{
-           
         });
       },
       onSuccess: () => {

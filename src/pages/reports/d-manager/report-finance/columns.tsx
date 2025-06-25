@@ -1,9 +1,8 @@
-import { Button } from "@/components/ui/button";
-
 import { ColumnDef } from "@tanstack/react-table";
 // import { MoreHorizontal } from "lucide-react";
 import { TKassareportData } from "./type";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import ActionBadge from "@/components/actionBadge";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
@@ -146,12 +145,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {
-            item?.reportStatus ==1 &&  <Button variant={"outline"}   className="rounded-[63px] text-primary/40"> Принято </Button>
-          }
-          {
-            item?.reportStatus ==2 &&  <Button  variant={"outline"} className="rounded-[63px] text-[#89A143] border-none"> Продалажется</Button>
-          }
+          <ActionBadge status={ item?.reportStatus ==1 ? "accepted":"willSell"}/>
         </div>
       );
     },

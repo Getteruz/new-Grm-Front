@@ -105,7 +105,7 @@ export const CollectionDealerColumns: ColumnDef<CollectionData>[] = [
           url={apiRoutes.products}
           ShowUpdate={false}
           ShowDelete={false}
-          ShowPreview
+          ShowPreview={false}
           id={row.original.id}
         />
       );

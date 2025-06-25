@@ -45,8 +45,8 @@ export const Columns: ColumnDef<ProductData>[] = [
     cell: ({ row }) => {
       return (
         <p>
-          {Number(row.original?.bar_code?.size?.x) *
-            Number(row.original?.bar_code?.size?.y)}
+          {(Number(row.original?.bar_code?.size?.x) *
+            Number(row.original?.bar_code?.size?.y)).toFixed(2)}
           м²
         </p>
       );

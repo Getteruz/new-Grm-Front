@@ -1,10 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import {
-  Loader2,
-  MoreHorizontal,
-} from "lucide-react";
-
+import {  MoreHorizontal } from "lucide-react";
 
 import { apiRoutes } from "@/service/apiRoutes";
 
@@ -14,8 +10,8 @@ import { PatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import { minio_img_url } from "@/constants";
 import { TData } from "./type";
-
-
+import ActionButton from "@/components/actionButton";
+import ActionBadge from "@/components/actionBadge";
 
 export const KassaColumns: ColumnDef<TData>[] = [
   {
@@ -26,9 +22,11 @@ export const KassaColumns: ColumnDef<TData>[] = [
       return (
         <p className={`${item?.endDate ? "" : "text-[#89A143]"}`}>
           {" "}
-          {item?.status== "Филиал приходы и расходы" ? item?.status: item?.endDate
-            ? format(new Date(item?.endDate), "dd MMMM yyyy")
-            : "Продалажется"}
+          {item?.status == "Филиал приходы и расходы"
+            ? item?.status
+            : item?.endDate
+              ? format(new Date(item?.endDate), "dd MMMM yyyy")
+              : "Продалажется"}
         </p>
       );
     },
@@ -38,7 +36,13 @@ export const KassaColumns: ColumnDef<TData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#89A143]"> { item?.totalSum   && (item?.totalSum  - (item?.plasticSum||0)).toFixed(2) + ' $'} </p>;
+      return (
+        <p className="text-[#89A143]">
+          {" "}
+          {item?.totalSum &&
+            (item?.totalSum - (item?.plasticSum || 0)).toFixed(2) + " $"}{" "}
+        </p>
+      );
     },
   },
 
@@ -65,7 +69,13 @@ export const KassaColumns: ColumnDef<TData>[] = [
     id: "additionalProfitTotalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p>  {item?.additionalProfitTotalSum && item?.additionalProfitTotalSum +" $"} </p>;
+      return (
+        <p>
+          {" "}
+          {item?.additionalProfitTotalSum &&
+            item?.additionalProfitTotalSum + " $"}{" "}
+        </p>
+      );
     },
   },
 
@@ -74,7 +84,7 @@ export const KassaColumns: ColumnDef<TData>[] = [
     id: "totalSize",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.totalSize &&  item?.totalSize + " м²"} </p>;
+      return <p> {item?.totalSize && item?.totalSize + " м²"} </p>;
     },
   },
   {
@@ -82,7 +92,7 @@ export const KassaColumns: ColumnDef<TData>[] = [
     id: "income",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> { item?.income} $</p>;
+      return <p> {item?.income} $</p>;
     },
   },
   {
@@ -106,10 +116,27 @@ export const KassaColumns: ColumnDef<TData>[] = [
     id: "closer",
     cell: ({ row }) => {
       const item = row.original;
-      return item?.status != "open" && item?.status != "Мои приходы и расходы" ?  <div className="flex items-center">
-       { item?.closer?.avatar &&<img  className="w-[40px] rounded-full object-cover border-background border h-[40px]" src={minio_img_url + item?.closer?.avatar?.path}/>}
-        {item?.status != "closed_by_c" && item?.closer_m?.avatar ?  <img className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={minio_img_url + item?.closer_m?.avatar?.path}/>:""}
-      </div>:"";
+      return item?.status != "open" &&
+        item?.status != "Мои приходы и расходы" ? (
+        <div className="flex items-center">
+          {item?.closer?.avatar && (
+            <img
+              className="w-[40px] rounded-full object-cover border-background border h-[40px]"
+              src={minio_img_url + item?.closer?.avatar?.path}
+            />
+          )}
+          {item?.status != "closed_by_c" && item?.closer_m?.avatar ? (
+            <img
+              className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]"
+              src={minio_img_url + item?.closer_m?.avatar?.path}
+            />
+          ) : (
+            ""
+          )}
+        </div>
+      ) : (
+        ""
+      );
     },
   },
   {
@@ -119,24 +146,39 @@ export const KassaColumns: ColumnDef<TData>[] = [
       const queryClient = useQueryClient();
       const item = row.original;
       const { mutate, isPending } = useMutation({
-        mutationFn: () => PatchData(apiRoutes.kassaClose, {
-          ids:[row.original?.id]
-        }),
+        mutationFn: () =>
+          PatchData(apiRoutes.kassaClose, {
+            ids: [row.original?.id],
+          }),
         onSuccess: () => {
           toast.success("close");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassa] });
         },
-      
       });
+      const statusOject = {
+        open: "inProgress",
+      };
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {item?.status == "closed_by_c" ? (
-            <Button disabled={isPending}  onClick={()=>mutate()} className="rounded-[63px] bg-[#E38157]">{isPending? <Loader2/> :""}  Принят </Button>
-          ) : item?.status == "accepted" ? (
-            <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
-          ) : item?.status == "rejected"? (
-            <Button disabled variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]"> Отменено </Button>
-          ):   item?.status != "Мои приходы и расходы"  ?<Button variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>:""}
+          {item?.status != "Филиал приходы и расходы" ? (
+            item?.status == "closed_by_c" ? (
+              <ActionButton
+                onClick={() => mutate()}
+                isLoading={isPending}
+                status="accept"
+              />
+            ) : (
+              <ActionBadge
+                status={
+                  statusOject?.[item?.status as keyof typeof statusOject] ||
+                  item?.status ||
+                  "inProgress"
+                }
+              />
+            )
+          ) : (
+            ""
+          )}
         </div>
       );
     },
@@ -145,7 +187,7 @@ export const KassaColumns: ColumnDef<TData>[] = [
     id: "actions",
     header: "actions",
     cell: () => (
-      <Button onClick={(e)=>e.stopPropagation()} variant="ghost" size="icon">
+      <Button onClick={(e) => e.stopPropagation()} variant="ghost" size="icon">
         <MoreHorizontal className="h-4 w-4" />
       </Button>
     ),

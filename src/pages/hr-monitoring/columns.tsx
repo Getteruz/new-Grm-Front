@@ -5,9 +5,9 @@ import { GiftIcon, Wallet } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 import { MonitoringItem } from "./types";
+import ActionBadge from "@/components/actionBadge";
 
 export const MonitoringColumns = (): ColumnDef<MonitoringItem>[] => [
   {
@@ -82,7 +82,7 @@ export const MonitoringColumns = (): ColumnDef<MonitoringItem>[] => [
               </AvatarFallback>
             </Avatar>
           </div>
-          {getStatusButton(row.original)}
+          <ActionBadge status={"accepted"}/>
         </div>
       );
     },
@@ -162,24 +162,4 @@ const getTypeLabel = (type: string) => {
   }
 };
 
-const getStatusButton = (item: MonitoringItem) => {
-  switch (item.status) {
-    case "Принять":
-      return (
-        <Button className="bg-[#CBB26A] hover:bg-[#b39e5c] text-white rounded-full px-6">
-          Принять
-        </Button>
-      );
-    case "Принято":
-      return (
-        <Badge
-          variant="outline"
-          className="border-[#CBCBC1] text-[#CBCBC1] rounded-full py-3 px-6 "
-        >
-          Принято
-        </Badge>
-      );
-    default:
-      return null;
-  }
-};
+

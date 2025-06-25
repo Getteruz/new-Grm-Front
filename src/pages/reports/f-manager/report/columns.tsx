@@ -1,7 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import {
-  Loader2,
   MoreHorizontal,
 } from "lucide-react";
 
@@ -14,6 +13,8 @@ import { PatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import { minio_img_url } from "@/constants";
 import { TData } from "./type";
+import ActionButton from "@/components/actionButton";
+import ActionBadge from "@/components/actionBadge";
 
 
 
@@ -127,15 +128,27 @@ export const KassaColumns: ColumnDef<TData>[] = [
         },
       
       });
+      const statusOject = {
+        open: "inProgress",
+      };
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {item?.status == "closed_by_c" ? (
-            <Button disabled={isPending}  onClick={()=>mutate()} className="rounded-[63px] bg-[#E38157]">{isPending? <Loader2/> :""}  Принят </Button>
-          ) : item?.status == "accepted" ? (
-            <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
-          ) : item?.status == "rejected"? (
-            <Button disabled variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]"> Отменено </Button>
-          ):   item?.status != "Мои приходы и расходы"  ?<Button variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>:""}
+            {item?.status  != "Мои приходы и расходы" ? item?.status == "closed_by_c" ? (
+              <ActionButton
+                onClick={() => mutate()}
+                isLoading={isPending}
+                status="accept"
+              />
+            ) : (
+              <ActionBadge
+                status={
+                  statusOject?.[item?.status as keyof typeof statusOject] ||
+                  item?.status ||
+                  "inProgress"
+                }
+              />
+            )
+          :""}
         </div>
       );
     },

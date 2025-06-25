@@ -10,6 +10,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { apiRoutes } from "@/service/apiRoutes";
 import {  parseAsString, useQueryState } from "nuqs";
 import { useParams } from "react-router-dom";
+import useDebounce from "@/hooks/useDebounce";
 
 const ActionPageQrCode = () => {
   const form = useForm<CropFormType>({
@@ -101,7 +102,7 @@ const ActionPageQrCode = () => {
     setBarcode("new")
   }, [tip]);
 
-  const brcode = form.watch("code");
+  const brcode = useDebounce(form.watch("code"),500);
 
   const { data: qrBaseOne } = useBarCodeById({
     id: brcode || undefined,

@@ -21,7 +21,7 @@ export default function Filters() {
 
   const { meUser } = useMeStore();
   return (
-    <div className="bg-sidebar border-border border-b  px-[51px] h-[64px]   flex   ">
+    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px]   flex   ">
       <SearchInput className="w-full border border-y-0 border-l-0 border-r mr-4"/>
      {meUser?.position.role == 11 ? <FilterSelect
         icons={<Store />}

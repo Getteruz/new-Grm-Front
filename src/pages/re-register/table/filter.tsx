@@ -12,7 +12,7 @@ export default function Filters() {
   const { meUser } = useMeStore();
   const navigate = useNavigate();
   return (
-    <div className="bg-sidebar border-border border-b  px-[51px] h-[64px]   flex  ">
+    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px]   flex  ">
       <SearchInput className="border-border border-r" />
       <FilterSelect
         className="border-border border-r"

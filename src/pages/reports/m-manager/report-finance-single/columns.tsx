@@ -27,7 +27,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       const isMy = row?.original?.status == "my";
-      return <p className="text-[#89A143]">   {  isMy ?"": (item?.totalSum || 0) - (item?.totalPlasticSum||0)} { item?.totalSum?"$":""}</p>;
+      return <p className="text-[#89A143]">   {  isMy ?"": ((item?.totalSum || 0) - (item?.totalPlasticSum||0)).toFixed(2)} { item?.totalSum?"$":""}</p>;
     },
   },
 
@@ -36,7 +36,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#58A0C6]"> {item?.totalPlasticSum} {item?.totalPlasticSum?"$":""}</p>;
+      return <p className="text-[#58A0C6]"> {item?.totalPlasticSum?.toFixed(2)} {item?.totalPlasticSum?"$":""}</p>;
     },
   },
 
@@ -45,7 +45,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "discount",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className={ item?.totalDiscount !=  0? 'text-[#E38157]' :""}> {item?.totalDiscount} {item?.totalDiscount?"$":""}</p>;
+      return <p className={ item?.totalDiscount !=  0? 'text-[#E38157]' :""}> {item?.totalDiscount?.toFixed(2)} {item?.totalDiscount?"$":""}</p>;
     },
   },
 
@@ -54,7 +54,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "additionalProfitTotalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.additionalProfitTotalSum} {item?.additionalProfitTotalSum?"$":""}</p>;
+      return <p> {item?.additionalProfitTotalSum?.toFixed(2)} {item?.additionalProfitTotalSum?"$":""}</p>;
     },
   },
 
@@ -87,17 +87,17 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "cash_collection",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.totalCashCollection} {item?.totalCashCollection?"$":""}</p>;
+      return <p> {item?.totalCashCollection?.toFixed(2)} {item?.totalCashCollection?"$":""}</p>;
     },
   },
   {
     header: "Принял",
     id: "closer",
-    cell: () => {
+    cell: ({row}) => {
       return (
         <div className="flex gap-2 items-center">
           <TebleAvatar url={''} name='A'/>
-          <TebleAvatar url={''} name='A'/>
+          { row?.original?.status !="my"  ?<TebleAvatar url={''} name='A'/>:""}
             
         </div>
       ) 
@@ -110,7 +110,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <div onClick={(e) => e.stopPropagation()}>
-           <ActionBadge status={ item?.kassaReportStatus ==1 ? "accepted":"willSell"}/>
+          {item?.status !="my"  && <ActionBadge status={ item?.kassaReportStatus ==1 ? "accepted":"willSell"}/>}
         </div>
       );
     },
@@ -131,13 +131,13 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         },
       });
       return(
-          <Button onClick={(e) => e.stopPropagation()} variant="ghost" size="icon">
+        row?.original?.status !="my"  ?<Button onClick={(e) => e.stopPropagation()} variant="ghost" size="icon">
             <TableAction  ShowDelete={false} ShowPreview={false} ShowUpdate={false}>
               <DropdownMenuItem disabled={isPending} onClick={()=>mutate()} >
                   {isPending ? <Loader/>:""} Отменить
                 </DropdownMenuItem>
             </TableAction>
-          </Button>
+          </Button>:""
       )
     },
   },

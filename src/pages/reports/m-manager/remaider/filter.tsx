@@ -3,14 +3,14 @@ import {  Factory, FileOutput, Layers2, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 import FilterSelect from "@/components/filters-ui/filter-select";
-import useDataFetch from "@/pages/filial/table/queries";
 import { parseAsString, useQueryState } from "nuqs";
+import { usefilialWarehouseFetch } from "./queries";
 
 export default function Filters() {
 
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
-  const { data } = useDataFetch({
-    queries: { type: "filial", limit: 50 },
+  const { data } = usefilialWarehouseFetch({
+    queries: {  limit: 50 },
   });
   const filialOption =
     data?.pages[0]?.items?.map((e) => ({
@@ -18,7 +18,7 @@ export default function Filters() {
       value: e?.id,
     })) || [];
   return (
-    <div className="bg-sidebar border-border border-b  px-[51px] h-[64px] items-center  flex   ">
+    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px] items-center  flex   ">
         <FilterSelect
             placeholder="все"
             className="w-[200px] pl-2 h-[65px] border-border border-r"
@@ -32,7 +32,7 @@ export default function Filters() {
           />
        <FilterSelect
             placeholder="Поставщики"
-            className="w-[200px] pl-2 mr-auto h-[65px] border-border border-r"
+            className="w-[200px] px-3 mr-auto h-[65px] border-border border-r"
             options={[{ value: "delears", label: "Поставщики" },{value: "collaction", label: "Коллекция"}]}
             name="sort"
             icons={

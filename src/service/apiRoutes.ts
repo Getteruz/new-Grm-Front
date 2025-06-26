@@ -24,6 +24,7 @@ export const apiRoutes = {
   broned: "/booking",
   upload: "/media-upload/single/avatar/avatar",
   filial: "/filial",
+  filialWarehouse: "/filial/warehouse-and-filial",
   payrolls: "/payrolls",
   payrollsChangeStatus: "/payrolls/change-status",
   payrollItems: "/payroll-items",
@@ -55,5 +56,5 @@ export const apiRoutes = {
   excelProducts:'/excel/products',
   excelProduct:'/excel/product',
   reports:"/reports",
-  
+  sellerReports:'/seller-reports',
 } as const;

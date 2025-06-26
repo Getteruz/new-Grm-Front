@@ -169,7 +169,7 @@ export const DataMenu = {
         },
         {
           id: 25,
-          link: "/f-manager/report-item-4",
+          link: "/f-manager/report-seller",
           text: "Отчёт по сотрудикам",
         },
       ],
@@ -510,7 +510,7 @@ export const DataMenu = {
         {
           id: 24,
           link: "/m-manager/report-remaider",
-          text: "Отчёт по сотрудикам",
+          text: "Отчет об остатке",
         },
       ],
     },
@@ -601,7 +601,7 @@ export const DataMenu = {
         {
           id: 24,
           link: "/m-manager/report-remaider",
-          text: "Отчёт по сотрудикам",
+          text: "Отчет об остатке",
         },
       ],
     },

@@ -17,7 +17,7 @@ export default function Filters() {
   
   // const [factory,setCactory]= useQueryState("factory");
   return (
-    <div className="bg-sidebar w-full border-border border-b  px-[51px] h-[64px]   flex   ">
+    <div className="bg-sidebar w-full border-border border-b  px-[20px] h-[64px]   flex   ">
       <DateRangePicker
         fromPlaceholder={`от`}
         toPlaceholder={`до`}

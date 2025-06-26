@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 export default function Filters() {
   const [, setId] = useQueryState("id");
   return (
-    <div className="bg-sidebar border-border border-b  px-[51px] h-[64px]   flex   ">
+    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px]   flex   ">
       <SearchInput className="mr-auto w-full" />
       <Statistics />
       <Button className="h-full  border-y-0 w-[64px]" variant={"outline"}>

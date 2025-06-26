@@ -18,7 +18,7 @@ export default function Filters() {
 const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
-    <div className="bg-sidebar border-border border-b  px-[51px] h-[64px] items-center  flex   ">
+    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px] items-center  flex   ">
       <div className="w-full max-w-[150px]">
       <FilterSelect
             options={flatData?.map(e=>{

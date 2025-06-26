@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Filters() {
   return (
-    <div className="bg-sidebar border-border border-b  px-[51px] h-[64px]   flex   ">
+    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px]   flex   ">
       <SearchInput />
       <Button
         className="h-full border-l-1  justify-center font-[16px] gap-1  border-y-0  border-r-0"

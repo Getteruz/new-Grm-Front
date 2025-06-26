@@ -9,7 +9,7 @@ export default function Filters() {
   //   },
   // });
   return (
-    <div className="bg-sidebar border-border border-b  px-[51px] h-[64px]   flex   ">
+    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px]   flex   ">
       <FilterSelect
         options={[]}
         // options={[

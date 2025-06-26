@@ -22,7 +22,7 @@ export default function Filters() {
     }
   };
   return (
-    <div className="bg-sidebar border-border border-b  flex justify-between px-[51px] h-[64px]     ">
+    <div className="bg-sidebar border-border border-b  flex justify-between px-[20px] h-[64px]     ">
       <div className="flex  ">
         <Button className="h-full px-[50px] w-full max-w-[160px]">
           <Tag />

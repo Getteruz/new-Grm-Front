@@ -5,12 +5,15 @@ import { Loader } from "lucide-react";
 import { TKassareportData } from "./type";
 import TableAction from "@/components/table-action";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRoutes } from "@/service/apiRoutes";
-import {  UpdatePatchData } from "@/service/apiHelpers";
+import { getAllData, PatchData, UpdatePatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import TebleAvatar from "@/components/teble-avatar";
 import ActionBadge from "@/components/actionBadge";
+import ActionButton from "@/components/actionButton";
+import { useMeStore } from "@/store/me-store";
+import { IUserData, TResponse } from "@/types";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
@@ -18,7 +21,12 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     header: "Филиалы",
     cell: ({ row }) => {
       const isMy = row?.original?.status == "my";
-     return <p className={isMy ? "text-[#89A143]":""}>{ isMy ?"Мои приходы и расходы":  row?.original?.filial?.title}</p>
+      const isDealer = row?.original?.status == "Dealer-manager";
+      return (
+        <p className={isMy ? "text-[#89A143]" : ""}>
+          {isMy ? "Мои приходы и расходы" : isDealer?  row?.original?.status: row?.original?.filial?.title}
+        </p>
+      );
     },
   },
   {
@@ -27,7 +35,17 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       const isMy = row?.original?.status == "my";
-      return <p className="text-[#89A143]">   {  isMy ?"": ((item?.totalSum || 0) - (item?.totalPlasticSum||0)).toFixed(2)} { item?.totalSum?"$":""}</p>;
+      return (
+        <p className="text-[#89A143]">
+          {" "}
+          {isMy
+            ? ""
+            : ((item?.totalSum || 0) - (item?.totalPlasticSum || 0)).toFixed(
+                2
+              )}
+          {item?.totalSum ? "$" : ""}
+        </p>
+      );
     },
   },
 
@@ -36,7 +54,13 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#58A0C6]"> {item?.totalPlasticSum?.toFixed(2)} {item?.totalPlasticSum?"$":""}</p>;
+
+      return (
+        <p className="text-[#58A0C6]">
+          {" "}
+          {item?.totalPlasticSum?.toFixed(2)} {item?.totalPlasticSum ? "$" : ""}
+        </p>
+      );
     },
   },
 
@@ -45,7 +69,11 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "discount",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className={ item?.totalDiscount !=  0? 'text-[#E38157]' :""}> {item?.totalDiscount?.toFixed(2)} {item?.totalDiscount?"$":""}</p>;
+      return (
+          <p className={item?.totalDiscount != 0 ? "text-[#E38157]" : ""}>
+            {item?.totalDiscount?.toFixed(2)} {item?.totalDiscount ? "$" : ""}
+          </p>
+      );
     },
   },
 
@@ -54,7 +82,13 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "additionalProfitTotalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.additionalProfitTotalSum?.toFixed(2)} {item?.additionalProfitTotalSum?"$":""}</p>;
+      return (
+        <p>
+          {" "}
+          {item?.additionalProfitTotalSum?.toFixed(2)}{" "}
+          {item?.additionalProfitTotalSum ? "$" : ""}
+        </p>
+      );
     },
   },
 
@@ -63,7 +97,12 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSize",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.totalSize}  {item?.totalSize?"м²":""} </p>;
+      return (
+        <p>
+          {" "}
+          {item?.totalSize} {item?.totalSize ? "м²" : ""}{" "}
+        </p>
+      );
     },
   },
   {
@@ -71,7 +110,12 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "income",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.totalIncome} {item?.totalIncome?"$":""}</p>;
+      return (
+        <p>
+          {" "}
+          {item?.totalIncome} {item?.totalIncome ? "$" : ""}
+        </p>
+      );
     },
   },
   {
@@ -79,7 +123,12 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "expense",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#E38157]"> {item?.totalExpense} {item?.totalExpense?"$":""}</p>;
+      return (
+        <p className="text-[#E38157]">
+          {" "}
+          {item?.totalExpense} {item?.totalExpense ? "$" : ""}
+        </p>
+      );
     },
   },
   {
@@ -87,58 +136,138 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "cash_collection",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.totalCashCollection?.toFixed(2)} {item?.totalCashCollection?"$":""}</p>;
+      return (
+        <p>
+          {" "}
+          {item?.totalCashCollection?.toFixed(2)}{" "}
+          {item?.totalCashCollection ? "$" : ""}
+        </p>
+      );
     },
   },
   {
     header: "Принял",
     id: "closer",
-    cell: ({row}) => {
+    cell: ({ row }) => {
+      const { data } = useQuery({
+        queryKey: [apiRoutes.reports],
+        queryFn: () =>
+          getAllData<TResponse<IUserData>, object>(
+            apiRoutes.userManagersAccountants,
+            {}
+          ),
+      });
       return (
         <div className="flex gap-2 items-center">
-          <TebleAvatar url={''} name='A'/>
-          { row?.original?.status !="my"  ?<TebleAvatar url={''} name='A'/>:""}
-            
+          {row?.original?.status != "my" && data?.items?.length
+            ? data?.items?.map((item) => (
+                <TebleAvatar
+                  key={item?.id}
+                  status={
+                    row?.original?.status ==
+                      (item?.position.role == 10
+                        ? "m_manager_confirmed"
+                        : "accountant_confirmed") ||
+                    row?.original?.status == "accepted"
+                      ? "success"
+                      : row?.original?.status == "rejected"
+                        ? "fail"
+                        : "panding"
+                  }
+                  url={item?.avatar?.path}
+                  name={item?.firstName}
+                />
+              ))
+            : ""}
         </div>
-      ) 
+      );
     },
   },
   {
     header: "Статус",
     id: "status",
     cell: ({ row }) => {
+      const { meUser } = useMeStore();
       const item = row.original;
+      const queryClient = useQueryClient();
+      const { mutate, isPending } = useMutation({
+        mutationFn: () =>
+          PatchData(apiRoutes.kassaReports + "/" + row?.original?.id, {}),
+        onSuccess: () => {
+          toast.success("Closed");
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
+        },
+      });
+      
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {item?.status !="my"  && <ActionBadge status={ item?.kassaReportStatus ==1 ? "accepted":"willSell"}/>}
+          {item?.status == "my" ? (
+            ""
+          ) : item?.status == "closed" ||
+            (meUser?.position?.role == 10 &&
+              item?.status == "m_manager_confirmed") ||
+            (meUser?.position?.role == 9 &&
+              item?.status == "accountant_confirmed") ? (
+            <ActionButton
+              onClick={() => mutate()}
+              isLoading={isPending}
+              status="accept"
+            ></ActionButton>
+          ) : (
+            <ActionBadge
+              status={
+                item?.status == "open" || item?.kassaReportStatus == 2
+                  ? "inProgress"
+                  : item?.status == "accountant_confirmed" ||
+                      item?.status == "m_manager_confirmed"
+                    ? "pending"
+                    : item?.status
+              }
+            />
+          )}
         </div>
       );
     },
   },
-
   {
     id: "actions",
     header: "actions",
-    cell: ({row}) =>{
+    cell: ({ row }) => {
       const queryClient = useQueryClient();
-      const { mutate,isPending } = useMutation({
+      const { mutate, isPending } = useMutation({
         mutationFn: async () => {
-            return await UpdatePatchData(apiRoutes.kassaReports+'/reject', row?.original?.id,{});
+          return await UpdatePatchData(
+            apiRoutes.kassaReports + "/reject",
+            row?.original?.id,
+            {}
+          );
         },
         onSuccess: () => {
           toast.success("Status changed successfully");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
         },
       });
-      return(
-        row?.original?.status !="my"  ?<Button onClick={(e) => e.stopPropagation()} variant="ghost" size="icon">
-            <TableAction  ShowDelete={false} ShowPreview={false} ShowUpdate={false}>
-              <DropdownMenuItem disabled={isPending} onClick={()=>mutate()} >
-                  {isPending ? <Loader/>:""} Отменить
-                </DropdownMenuItem>
-            </TableAction>
-          </Button>:""
-      )
+      return row?.original?.status != "my" ? (
+        <Button
+          onClick={(e) => e.stopPropagation()}
+          variant="ghost"
+          size="icon"
+        >
+          <TableAction
+            ShowDelete={false}
+            ShowPreview={false}
+            ShowUpdate={false}
+          >
+            <DropdownMenuItem disabled={isPending} onClick={() => mutate()}>
+              {isPending ? <Loader /> : ""} Отменить
+            </DropdownMenuItem>
+          </TableAction>
+        </Button>
+      ) : (
+        ""
+      );
     },
   },
 ];

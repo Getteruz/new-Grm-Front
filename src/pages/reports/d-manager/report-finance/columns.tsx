@@ -3,6 +3,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import { TKassareportData } from "./type";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import ActionBadge from "@/components/actionBadge";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRoutes } from "@/service/apiRoutes";
+import { PatchData } from "@/service/apiHelpers";
+import { toast } from "sonner";
+import ActionButton from "@/components/actionButton";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
@@ -138,14 +143,31 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       ) 
     },
   },
+
   {
     header: "Статус",
     id: "status",
     cell: ({ row }) => {
       const item = row.original;
+      const queryClient = useQueryClient();
+      const { mutate, isPending } = useMutation({
+        mutationFn: () =>
+          PatchData(apiRoutes.reports +"/" +row?.original?.id+"/close-dealer" , { }),
+        onSuccess: () => {
+          toast.success("Closed");
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
+        },
+      });
+      
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          <ActionBadge status={ item?.reportStatus ==1 ? "accepted":"willSell"}/>
+          {item?.reportStatus == 2 ? (
+            <ActionBadge status={"willSell"} />
+          ) : item?.status == "open" || item?.status == "cancelled" ? (
+            <ActionButton onClick={()=>mutate()} isLoading={isPending} btnText="Закрыть"  status="accept"></ActionButton>
+          ) : (
+            <ActionBadge status={item?.status=="closed_by_d" ? "pending"  :item?.status} />
+          )}
         </div>
       );
     },

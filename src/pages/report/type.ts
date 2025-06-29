@@ -139,6 +139,7 @@ export interface TQuery {
   search?: string | undefined;
   filialId?: string;
   kassaId?: string;
+  report?:string;
   limit?: number;
   page?: number;
   id?: string;

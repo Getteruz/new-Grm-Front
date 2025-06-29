@@ -1,15 +1,21 @@
-
 import { ColumnDef } from "@tanstack/react-table";
 import { TKassareportData } from "./type";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import ActionBadge from "@/components/actionBadge";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiRoutes } from "@/service/apiRoutes";
+import { getAllData, PatchData } from "@/service/apiHelpers";
+import { IUserData, TResponse } from "@/types";
+import TebleAvatar from "@/components/teble-avatar";
+import { useMeStore } from "@/store/me-store";
+import { toast } from "sonner";
+import ActionButton from "@/components/actionButton";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
     id: "startDate",
     header: "Дата",
     cell: ({ row }) => {
-      const month =[
+      const month = [
         "Январь",
         "Февраль",
         "Март",
@@ -22,13 +28,13 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         "Октябрь",
         "Ноябрь",
         "Декабрь",
-      ]
+      ];
       const item = row.original;
-      const isTrue =item?.kassaReportStatus == 2
+      const isTrue = item?.kassaReportStatus == 2;
       return (
-        <p className={`${isTrue?  "text-[#89A143]":""}`}>
-          { isTrue
-            ? month[item?.month - 1] +  "-Продалажется"
+        <p className={`${isTrue ? "text-[#89A143]" : ""}`}>
+          {isTrue
+            ? month[item?.month - 1] + "-Продалажется"
             : month[item?.month - 1] || ""}
         </p>
       );
@@ -39,7 +45,12 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#89A143]"> {item?.totalSum} $</p>;
+      return (
+        <p className="text-[#89A143]">
+          {" "}
+          {(item?.totalSum - item?.totalPlasticSum).toFixed(2)} $
+        </p>
+      );
     },
   },
   {
@@ -47,7 +58,12 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#58A0C6]"> {item?.totalSum} $</p>;
+      return (
+        <p className="text-[#58A0C6]">
+          {" "}
+          {(item?.totalPlasticSum).toFixed(2)} $
+        </p>
+      );
     },
   },
   {
@@ -55,7 +71,12 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "discount",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className={ item?.totalDiscount !=  0? 'text-[#E38157]' :""}> {item?.totalDiscount} $</p>;
+      return (
+        <p className={item?.totalDiscount != 0 ? "text-[#E38157]" : ""}>
+          {" "}
+          {item?.totalDiscount} $
+        </p>
+      );
     },
   },
   {
@@ -101,47 +122,72 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
     header: "Принял",
     id: "closer",
-    cell: () => {
+    cell: ({ row }) => {
+      const { data } = useQuery({
+        queryKey: [apiRoutes.reports],
+        queryFn: () =>
+          getAllData<TResponse<IUserData>, object>(
+            apiRoutes.userManagersAccountants,
+            {}
+          ),
+      });
       return (
         <div className="flex gap-2 items-center">
-             <Avatar className="w-[40px] h-[40px]">
-                {/* <AvatarImag src={minio_img_url + seller?.avatar?.path}/> */}
-                <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
-                  MM
-                </AvatarFallback>
-              </Avatar>
-              <Avatar className="w-[40px] h-[40px]">
-                {/* <AvatarImag src={minio_img_url + seller?.avatar?.path}/> */}
-                <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
-                  AA
-                </AvatarFallback>
-              </Avatar>
-          {/* {
-            <img
-              className="w-[40px] rounded-full border-background border h-[40px]"
-              src={minio_img_url + item?.closer?.avatar?.path}
-            />
-          } */}
-          {/* {item?.status != "closed_by_c" ? (
-            <img
-              className="w-[40px]  border-background border-[2px]  -translate-x-2 rounded-full h-[40px]"
-              src={minio_img_url + item?.closer_m?.avatar?.path}
-            />
-          ) : (
-            ""
-          )} */}
+          {row?.original?.status != "my" && data?.items?.length
+            ? data?.items?.map((item) => (
+                <TebleAvatar
+                  key={item?.id}
+                  status={
+                    row?.original?.status ==
+                      (item?.position.role == 10
+                        ? "m_manager_confirmed"
+                        : "accountant_confirmed") ||
+                    row?.original?.status == "accepted"
+                      ? "success"
+                      : row?.original?.status == "rejected"
+                        ? "fail"
+                        : "panding"
+                  }
+                  url={item?.avatar?.path}
+                  name={item?.firstName}
+                />
+              ))
+            : ""}
         </div>
-      ) 
+      );
     },
   },
+
   {
     header: "Статус",
     id: "status",
     cell: ({ row }) => {
+      const { meUser } = useMeStore();
       const item = row.original;
+      const queryClient = useQueryClient();
+      const { mutate, isPending } = useMutation({
+        mutationFn: () =>
+          PatchData(apiRoutes.reports + "/" + row?.original?.id + '/close', {}),
+        onSuccess: () => {
+          toast.success("Closed");
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
+        },
+      });
+
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          <ActionBadge status={ item?.reportStatus ==1 ? "accepted":"willSell"}/>
+          {item?.reportStatus == 2 ? (
+            <ActionBadge status={"willSell"} />
+          ) : item?.status == "open" && ((meUser?.position?.role == 10 && !item?.isAccountantConfirmed ) || (meUser?.position?.role == 9 && !item?.isMManagerConfirmed ) )  ? (
+            <ActionButton
+            btnText="Закрыть"
+              onClick={() => mutate()}
+              isLoading={isPending}
+              status="accept"
+            ></ActionButton>
+          ) : (
+            <ActionBadge status={ item?.status =="accepted" ?"closed": "inProgress"} />
+          )}
         </div>
       );
     },

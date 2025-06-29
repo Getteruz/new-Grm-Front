@@ -96,7 +96,6 @@ export default function ReportPage() {
   });
 
 
-  console.log(id,FManagerCashFlow,myCashFlowReports)
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (

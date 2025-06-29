@@ -1,9 +1,10 @@
 import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";
 
-import {  getByIdData } from "@/service/apiHelpers";
+import {  getAllData, getByIdData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
-import {  TKassareportData, TQuery } from "./type";
+import {  TKassareportData, TQuery ,TDealearQuery } from "./type";
+import { TResponse } from "@/types";
 
 
 interface IKassaReportData {
@@ -13,6 +14,11 @@ interface IKassaReportData {
   id:string | undefined;
 }
 
+interface IReportDealerData {
+  options?: DefinedInitialDataOptions<TKassareportData>;
+  queries?: TDealearQuery;
+  enabled?: boolean;
+}
 
 export const useReportsSingle = ({ queries,id ,enabled}: IKassaReportData) =>
   useQuery({
@@ -34,3 +40,10 @@ export const useReportsSingle = ({ queries,id ,enabled}: IKassaReportData) =>
     // initialPageParam: 1,
   });
 
+  export const useReportDealer = ({ queries,enabled}: IReportDealerData) =>
+    useQuery({
+      queryKey: [apiRoutes.reportsDealer, queries],
+      queryFn: () =>
+        getAllData<TResponse<TKassareportData>, TDealearQuery>(apiRoutes.reportsDealer || "" ,queries),
+      enabled: enabled,
+    });

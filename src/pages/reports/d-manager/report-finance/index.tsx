@@ -28,7 +28,8 @@ export default function PageFinance() {
             columns={KassaColumnsLoc || []}
             data={flatKasssaData}
             isLoading={KassaLoading}
-            // isRowClickble={true}
+            isRowClickble={true}
+            
             fetchNextPage={KassafetchNextPage}
             hasNextPage={KassafhasNextPage ?? false}
             isFetchingNextPage={KassaisFetchingNextPage}

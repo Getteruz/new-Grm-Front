@@ -2,6 +2,7 @@ export const apiRoutes = {
   aboutUs: "/aboutus",
   report: "/report",
   user: "/user",
+  userManagersAccountants: "/user/managers-accountants",
   userLog: "/user-time-log",
   userLoginGenerate: "/user/generate/login-user",
   crops: "/crops",
@@ -56,5 +57,6 @@ export const apiRoutes = {
   excelProducts:'/excel/products',
   excelProduct:'/excel/product',
   reports:"/reports",
+  reportsDealer:'/reports/dealer-closed-by-d',
   sellerReports:'/seller-reports',
 } as const;

@@ -1,21 +1,46 @@
 export interface TData {
-    return_sale: number;
-    isMetric?: boolean;
+  id: number;
+  type: string;
+  amount: number;
+  tip: string;
+  product: string;
+  code?: string;
+  size?: string;
+  price?: number;
+  comment: string;
+  quantity?: number;
+  discount?: string;
+  description?: string;
+  operation: string;
+  time: string;
+  title: string;
+  date: string;
+  filial:{
     id: string;
-    is_visible: boolean;
-    cashflow_type: { title: string };
-    code: string;
-    comment: string;
-    imgUrl: string | null;
-    otherImgs: string[] | null;
-    internetInfo: string | null;
-    is_active: boolean;
-    date: string;
-    is_online: boolean;
-    price: number;
-    tip: string;
     title: string;
-    icon: {
+    name: string;
+    telegram: string;
+    address: string;
+    startWorkTime: string;
+    endWorkTime: string;
+    addressLink: string;
+    landmark: string;
+    phone1: string;
+    phone2: string;
+    isActive: boolean;
+    hickCompleted: boolean;
+    need_get_report: boolean;
+    type: "filial";
+  }
+  cashflow_type:{
+    id: string;
+    title: string;
+    slug: string;
+    type: string;
+    is_visible: boolean;
+}
+  casher:{
+    avatar: {
       id: string;
       path: string;
       model: string;
@@ -24,69 +49,108 @@ export interface TData {
       name: string;
       created_at: string;
   }
-    type: string;
-    startDate: string;
-    endDate: string | null;
+    id: string;
     isActive: boolean;
-    totalSum: number;
-    additionalProfitTotalSum: number;
-    netProfitTotalSum: number;
-    totalSize: number;
-    discount: string;
-    sale:number;
-    cash_collection:number;
-    plasticSum: number;
-    income: number;
-    cashFlowSumBoss: number;
-    expense: number;
-    cashFlowSumShop: number;
-    expenditureBoss: number;
-    expenditureShop: number;
-    internetShopSum: number;
-    status: string;
+    firstName: string;
+    lastName: string;
+    fatherName: string;
+    login: string;
+    hired: string;
+    from: string;
+    to: string;
+    username: string | null;
+    salary: number;
+    email: string | null;
+    phone: string;
+    password: string;
+    isUpdated: boolean;
+    createdAt: string;
+}
+order: {
+  id: string;
+  status: "canceled" | "pending" | "completed";
+  comment: string | null;
+  price: number;
+  x: number;
+  kv: number;
+  date: string;
+  additionalProfitSum: number;
+  netProfitSum: number;
+  discountSum: number;
+  discountPercentage: string;
+  tip: string;
+  plasticSum: number;
+  seller: {
+    id: string;
+    isActive: boolean;
+    firstName: string;
+    lastName: string;
+    fatherName: string;
+    login: string;
+    hired: string;
+    from: string;
+    to: string;
+    username: string | null;
+    salary: number;
+    email: string | null;
+    phone: string;
+    password: string;
+    isUpdated: boolean;
+    createdAt: string;
+   avatar: {
+      id: string;
+      path: string;
+      model: string;
+      mimetype: string;
+      size: number;
+      name: string;
+      created_at: string;
+  }
+  };
+  bar_code: {
+    isMetric: boolean;
+    id: string;
+    code: string;
+    imgUrl: string | null;
+    otherImgs: string | null;
+    internetInfo: string | null;
+    is_active: boolean;
+    is_accepted: boolean;
+    date: string;
+    collection: {
+      id: string;
+      title: string;
+      secondPrice: number;
+      priceMeter: number;
+      comingPrice: number;
+    };
+    color:{
+      title:string
+    }
+    size: {
+      id: string;
+      title: string;
+      x: number;
+      y: number;
+      kv: number;
+    };
     model: {
       id: string;
       title: string;
     };
-    color: {
-      id: string;
-      title: string;
-      code: string;
-    };
-    collection: {
-      id: string;
-      title: string;
-    };
-    size: {
-      id: string;
-      title: string;
-      x: number | null;
-      y: number | null;
-      kv: number | null;
-    };
-    shape: {
-      id: string;
-      title: string;
-      meter: boolean;
-    };
-    style: {
-      id: string;
-      title: string;
-    };
-    country: {
-      id: string;
-      title: string;
-    };
-  }
-  export interface TQuery {
-    search?: string | undefined;
-    filialId?: string;
-    kassaId?: string;
-    limit?: number;
-    page?: number;
-    id?: string;
-    startDate?: Date | null;
-    endDate?: Date | null;
-    type?:string;
-  }
-  
+  };
+}
+}
+export interface TQuery {
+  search?: string | undefined;
+  kassaId?: string | undefined;
+  casherId?: string | undefined;
+  filialId?: string;
+  kassaReport?:string | undefined;
+  limit: number;
+  page: number;
+  fromDate?: Date | null;
+  toDate?: Date | null;
+}
+
+

@@ -1,3 +1,4 @@
+
 export interface TKassareportData {
   id: string;
   totalSellCount: number;
@@ -5,8 +6,6 @@ export interface TKassareportData {
   netProfitTotalSum: number;
   totalSize: number;
   kassaReportStatus:number;
-  isAccountantConfirmed:boolean;
-  isMManagerConfirmed:boolean;
   year: number;
   month: number;
   status: string;
@@ -27,29 +26,11 @@ export interface TKassareportData {
   totalSum: number;
 }
 
-export interface TChaFlowData{
-  expense: number,
-  income: number
-}
-
-export interface RemainingProductData {
-  remainingSize: number;
-  remainingSum: number;
-  count: number;
-}
-export interface RemainingProductColactionData {
-    country: {
-        id: string;
-        title: string;
-    };
-    remainingSize: number;
-    remainingSum: number; 
-    count: number;
-}
 export interface TQuery {
   search?: string | undefined;
   filialId?: string;
   kassaId?: string;
+  reportId?:string;
   limit?: number;
   page?: number;
   id?: string;

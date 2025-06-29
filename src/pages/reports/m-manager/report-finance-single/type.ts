@@ -56,3 +56,7 @@ export interface TQuery {
   endDate?: Date | null;
   type?:string;
 }
+export interface TDealearQuery {
+ month?:number;
+ year?:number;
+}

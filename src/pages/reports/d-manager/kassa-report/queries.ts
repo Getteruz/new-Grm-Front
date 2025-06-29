@@ -1,24 +1,23 @@
-import {
-  DefinedInitialDataOptions,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { DefinedInitialDataOptions, useInfiniteQuery } from "@tanstack/react-query";
 
 import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
-import { TData, TQuery} from "./type";
 
-interface IData {
-  options?: DefinedInitialDataOptions<TResponse<TData>>;
+import {  TKassareportData, TQuery } from "./type";
+
+
+interface IKassaReportData {
+  options?: DefinedInitialDataOptions<TResponse<TKassareportData>>;
   queries?: TQuery;
   enabled?: boolean
 }
 
-export const useDataCashflow = ({ queries ,enabled}: IData) =>
+export const useKassaReports = ({ queries ,enabled}: IKassaReportData) =>
   useInfiniteQuery({
-    queryKey: [apiRoutes.cashflow, queries],
+    queryKey: [apiRoutes.kassaReports, queries],
     queryFn: ({ pageParam = 10 }) =>
-      getAllData<TResponse<TData>, TQuery>(apiRoutes.cashflow, {
+      getAllData<TResponse<TKassareportData>, TQuery>(apiRoutes.kassaReports, {
         ...queries,
         page: pageParam as number,
         limit: 10,

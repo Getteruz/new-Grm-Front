@@ -19,12 +19,29 @@ import {
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
-import {  TKassareportData } from "@/pages/report/type";
+import { TKassareportData } from "@/pages/report/type";
 import { minio_img_url } from "@/constants";
 import useDataFetch from "@/pages/filial/table/queries";
 import ShadcnSelect from "./Select";
 
-export default function CardSort({KassaId,reportId,isAddible,kassaReportId,KassaReport}:{KassaId?:string,reportId?:string|undefined,isAddible?:boolean,KassaReport?:TKassareportData,kassaReportId?:string|undefined}) {
+export default function CardSort({
+  KassaId,
+  reportId,
+  isAddible,
+  kassaReportId,
+  KassaReport,
+  isOnlyCash,
+  isOnlyTerminal,
+}: {
+  KassaId?: string;
+  reportId?: string | undefined;
+  isAddible?: boolean;
+  KassaReport?: TKassareportData;
+  kassaReportId?: string | undefined;
+  isOnlyCash?: boolean | undefined;
+  isOnlyTerminal?: boolean | undefined;
+}) {
+
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
   const [kassaReports] = useQueryState("kassaReports");
@@ -40,45 +57,48 @@ export default function CardSort({KassaId,reportId,isAddible,kassaReportId,Kassa
 
   const { data: filialData } = useDataFetch({});
   const { data: kassaId, isLoading: isReportLoading } = useKassaById({
-    id:KassaId,
+    id: KassaId,
   });
 
   const { data: types } = useDataCashflowTypes({
-    queries: { limit: 20, page: 1,type: type == "Приход"? "in" : "out" },
+    queries: { limit: 20, page: 1, type: type == "Приход" ? "in" : "out" },
     enabled: Boolean(dialogOpen),
   });
 
- 
-interface TColumns {
-  title: string;
-  value: string;
-  price: React.ReactNode;
-  button?: React.ReactNode;
-}
+  interface TColumns {
+    title: string;
+    value: string;
+    price: React.ReactNode;
+    button?: React.ReactNode;
+  }
   const columns = [
     {
       title: "Приход",
-      value:"income",
+      value: "income",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(KassaReport?.totalIncome ||  kassaId?.income  || 0)
+        formatPrice(KassaReport?.totalIncome || kassaId?.income || 0)
       ),
-      button:
-     isAddible   ? (
-          <div
-            onClick={() => {
-              setType("Приход");
-              setDialogOpen(true);
-            }}
-            className="border-border   border p-4 rounded-4xl"
-            >
-              <Plus size={20} color={ sorttype == "Приход"? "#f0f0e5" :"#5D5D53"} />
-          </div>
-        ):"",
+      button: isAddible ? (
+        <div
+          onClick={() => {
+            setType("Приход");
+            setDialogOpen(true);
+          }}
+          className="border-border   border p-4 rounded-4xl"
+        >
+          <Plus
+            size={20}
+            color={sorttype == "Приход" ? "#f0f0e5" : "#5D5D53"}
+          />
+        </div>
+      ) : (
+        ""
+      ),
     },
     {
-      value:"sale",
+      value: "sale",
       title: "Продажа",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
@@ -87,7 +107,7 @@ interface TColumns {
       ),
     },
     {
-      value:"terminal",
+      value: "terminal",
       title: "Терминал",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
@@ -97,46 +117,56 @@ interface TColumns {
     },
     {
       title: "Навар",
-      value:"navar",
+      value: "navar",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(KassaReport?.additionalProfitTotalSum ||  kassaId?.additionalProfitTotalSum || 0)
+        formatPrice(
+          KassaReport?.additionalProfitTotalSum ||
+            kassaId?.additionalProfitTotalSum ||
+            0
+        )
       ),
     },
     {
       title: "Расход",
-      value:"expense",
+      value: "expense",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
         `-${formatPrice(KassaReport?.totalExpense || kassaId?.expense || 0)}`
       ),
-      button:
-      isAddible ? (
-          <div
-            onClick={() => {
-              setType("Расход");
-              setDialogOpen(true);
-            }}
-            className="border-border   border p-4 rounded-4xl"
-          >
-            <Plus  size={20} color={ sorttype == "Расход"? "#f0f0e5" :"#5D5D53"} />
-          </div>
-        ):"",
+      button: isAddible ? (
+        <div
+          onClick={() => {
+            setType("Расход");
+            setDialogOpen(true);
+          }}
+          className="border-border   border p-4 rounded-4xl"
+        >
+          <Plus
+            size={20}
+            color={sorttype == "Расход" ? "#f0f0e5" : "#5D5D53"}
+          />
+        </div>
+      ) : (
+        ""
+      ),
     },
     {
       title: "Возврат сумма",
-      value:"return",
-      price:  `-${formatPrice(KassaReport?.totalSaleReturn || kassaId?.return_sale || 0)}` ,
+      value: "return",
+      price: `-${formatPrice(KassaReport?.totalSaleReturn || kassaId?.return_sale || 0)}`,
     },
     {
       title: "Инкассация",
-      value:"collection",
+      value: "collection",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(KassaReport?.totalCashCollection || kassaId?.cash_collection || 0)
+        formatPrice(
+          KassaReport?.totalCashCollection || kassaId?.cash_collection || 0
+        )
       ),
       // button:
       //   meUser?.position.role === 3  || !kassaId ? (
@@ -155,11 +185,13 @@ interface TColumns {
     },
     {
       title: "Скидка",
-      value:"discount",
+      value: "discount",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(Number(KassaReport?.totalDiscount || kassaId?.discount) || 0)
+        formatPrice(
+          Number(KassaReport?.totalDiscount || kassaId?.discount) || 0
+        )
       ),
     },
   ];
@@ -170,7 +202,7 @@ interface TColumns {
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice( kassaId?.income || 0)
+        formatPrice(kassaId?.income || 0)
       ),
     },
     {
@@ -233,9 +265,9 @@ interface TColumns {
         comment,
         price,
         casher: meUser?.id,
-        kassa: kassaReports ? undefined : kassaId?.id|| undefined,
-        kassaReport:kassaReportId || kassaReports || undefined,
-        report:reportId || undefined,
+        kassa: kassaReports ? undefined : kassaId?.id || undefined,
+        kassaReport: kassaReportId || kassaReports || undefined,
+        report: reportId || undefined,
       };
       await api.post(apiRoutes.cashflow, body);
 
@@ -253,12 +285,10 @@ interface TColumns {
       queryClient.invalidateQueries({ queryKey: ["kassa-reports"] });
       queryClient.invalidateQueries({ queryKey: ["kassa-reports/total"] });
       queryClient.invalidateQueries({ queryKey: [apiRoutes?.kassaReports] });
-      queryClient.invalidateQueries({ queryKey: [  apiRoutes.cashflow] });
-      queryClient.invalidateQueries({ queryKey: [  apiRoutes.kassa] });
-      queryClient.invalidateQueries({ queryKey: [  apiRoutes.cashflowFilial] });
-      queryClient.invalidateQueries({ queryKey: [  apiRoutes.reports] });
-      
-      
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.cashflow] });
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.kassa] });
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.cashflowFilial] });
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
     } catch (error) {
       toast.error(String(error));
     } finally {
@@ -272,7 +302,10 @@ interface TColumns {
     <>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <div className="flex ">
-          <div onClick={()=>setSortType(null)} className=" bg-sidebar/20 cursor-pointer p-5 w-full border border-t border-r max-w-[399px]">
+          <div
+            onClick={() => setSortType(null)}
+            className=" bg-sidebar/20 cursor-pointer p-5 w-full border border-t border-r max-w-[399px]"
+          >
             <div className="flex items-center">
               <DollarSign size={54} />
               <div>
@@ -281,18 +314,22 @@ interface TColumns {
                   <Skeleton className="h-7 w-24 mt-1" />
                 ) : (
                   <p className="text-[25px] font-bold text-foreground">
-                    {formatPrice(KassaReport?.totalSum|| kassaId?.totalSum || 0)}
+                    {formatPrice(
+                     isOnlyCash
+                     ? (KassaReport?.totalSum || 0) -
+                         (KassaReport?.totalPlasticSum || 0): 
+                         isOnlyTerminal ?(KassaReport?.totalPlasticSum || 0) +
+                         (KassaReport?.totalCashCollection || 0) : KassaReport?.totalSum || kassaId?.totalSum || 0
+                    )}
                   </p>
                 )}
               </div>
             </div>
-            <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
-              Дата:
-            </p>
+            <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">Дата:</p>
             <p className="text-[14px] font-semibold">1 шт</p>
           </div>
           <div className="grid row-start w-full  border-border  border-b grid-cols-4  ">
-            {(column as unknown as TColumns[] )?.map((e) => (
+            {(column as unknown as TColumns[])?.map((e) => (
               <div
                 key={e.title}
                 onClick={() => setSortType(e.value)}
@@ -302,15 +339,15 @@ interface TColumns {
                   <p className="text-[12px] mb-0.5 flex items">{e.title}</p>
                   {/* {meUser?.position?.role !== 6 && meUser?.position?.role !== 10 &&
                     "button" in e && ( */}
-                      <DialogTrigger
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          setType(e.title === "Расход" ? "Расход" : "Приход");
-                        }}
-                      >
-                        {e.button as React.ReactNode}
-                      </DialogTrigger>
-                    {/* )} */}
+                  <DialogTrigger
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setType(e.title === "Расход" ? "Расход" : "Приход");
+                    }}
+                  >
+                    {e.button as React.ReactNode}
+                  </DialogTrigger>
+                  {/* )} */}
                 </div>
                 <p className="text-[15px] font-medium">{e.price}</p>
               </div>
@@ -318,14 +355,16 @@ interface TColumns {
           </div>
         </div>
 
-      <DialogContent className="sm:max-w-[640px]  costomModal rounded-[12px] px-4 pb-4">
-        <div
-          className={`p-3 h-[44px] font-bold pb-0 text-center mx-auto rounded-t-[7px] w-1/2 -mt-[45px]  ${type === "Приход" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}
-        >
-          {type === "Приход" ? "Добавление прихода" : "Добавление расхода"}
-         </div>
+        <DialogContent className="sm:max-w-[640px]  costomModal rounded-[12px] px-4 pb-4">
+          <div
+            className={`p-3 h-[44px] font-bold pb-0 text-center mx-auto rounded-t-[7px] w-1/2 -mt-[45px]  ${type === "Приход" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}
+          >
+            {type === "Приход" ? "Добавление прихода" : "Добавление расхода"}
+          </div>
           <div className="grid grid-cols-2 gap-1">
-            <div className={`w-full  grid ${ types && types?.length < 6 ?"grid-cols-2":  'grid-cols-3'} gap-0.5`}>
+            <div
+              className={`w-full  grid ${types && types?.length < 6 ? "grid-cols-2" : "grid-cols-3"} gap-0.5`}
+            >
               {types
                 ?.filter((i) => i?.is_visible)
                 ?.map((item) => (
@@ -351,20 +390,22 @@ interface TColumns {
                 ))}
             </div>
             <div className="w-full">
-            { meUser?.position?.role == 10 &&  <ShadcnSelect
-                value={filial}
-                options={
-                  filialData?.pages[0]?.items?.map((item) => ({
-                    value: item.id,
-                    label: item.title,
-                  })) || []
-                }
-                placeholder={"Организации"}
-                onChange={(value) => {
-                  setFilial(value || "");
-                }}
-                className="w-full text-[#5D5D53] border-none h-[90px] !bg-input !text-[22px] font-semibold rounded-[7px] px-[17px] py-[26px]"
-              />}
+              {meUser?.position?.role == 10 && (
+                <ShadcnSelect
+                  value={filial}
+                  options={
+                    filialData?.pages[0]?.items?.map((item) => ({
+                      value: item.id,
+                      label: item.title,
+                    })) || []
+                  }
+                  placeholder={"Организации"}
+                  onChange={(value) => {
+                    setFilial(value || "");
+                  }}
+                  className="w-full text-[#5D5D53] border-none h-[90px] !bg-input !text-[22px] font-semibold rounded-[7px] px-[17px] py-[26px]"
+                />
+              )}
 
               <Input
                 value={price || ""}

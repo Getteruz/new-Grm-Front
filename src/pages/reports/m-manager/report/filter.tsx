@@ -5,7 +5,6 @@ import useDataFetch from "@/pages/filial/table/queries";
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { getAllData } from "@/service/apiHelpers";
 import api from "@/service/fetchInstance";
 import { useMutation } from "@tanstack/react-query";
 

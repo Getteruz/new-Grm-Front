@@ -38,9 +38,9 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "count",
     cell: ({ row }) => {
-      const [type] = useQueryState(
+      const [tip] = useQueryState(
         "tip",
-        parseAsString.withDefault("переучет")
+        parseAsString.withDefault("new")
       );
       return (
         <p>
@@ -48,12 +48,12 @@ export const Columns: ColumnDef<TData>[] = [
             row.original?.y * 100
           ) : (
             <>
-              {type === "переучет" && row.original?.check_count}
-              {type === "дефицит" &&
+              {tip === "переучет" && row.original?.check_count}
+              {tip === "дефицит" &&
                 row.original?.count - row.original?.check_count}
-              {type === "излишки" &&
+              {tip === "излишки" &&
                 row.original?.check_count - row.original?.count}
-                {type === "new" && row.original?.count}
+                {tip === "new" && row.original?.count}
             </>
           )}
 
@@ -67,33 +67,21 @@ export const Columns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       return (
         <>
-          {row.original?.bar_code?.isMetric && (
+          {/* {row.original?.bar_code?.isMetric && ( */}
             <p>
-              {(
-                (Number(row.original?.bar_code?.size?.x) *
-                  Number(
-                    row.original?.bar_code?.isMetric
-                      ? row.original?.check_count
-                      : row.original?.bar_code?.size?.y
-                  )) /
-                100
-              ).toFixed(2)}
+              {Number(row.original?.bar_code?.size?.kv).toFixed(1) }
               м²
             </p>
-          )}
+          {/* )}
           {!row.original?.bar_code?.isMetric && (
             <p>
               {Math.ceil(
                 Number(row.original?.bar_code?.size?.x) *
-                  Number(
-                    row.original?.bar_code?.isMetric
-                      ? row.original?.check_count
-                      : row.original?.bar_code?.size?.y
-                  )
+                  Number( row.original?.bar_code?.size?.y)
               )}
               м²
             </p>
-          )}
+          )} */}
         </>
       );
     },

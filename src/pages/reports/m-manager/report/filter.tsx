@@ -30,7 +30,7 @@ export default function Filters() {
 
   const { mutate } = useMutation({
     mutationFn: async () => {
-      const blob = await api.get(`/excel/cashflows/excel`, {
+      const blob = await api.get(`/excel/cashflows/excel?kassaId=${id}`, {
         responseType: "blob",
       });
       if (!(blob.data instanceof Blob)) {

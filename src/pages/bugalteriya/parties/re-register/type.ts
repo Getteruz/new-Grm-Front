@@ -10,6 +10,8 @@ export interface TData {
   date: string;
   count: number;
   y:number;
+  title:string;
+  kv:number;
   model: {
       id: string;
       title: string;

@@ -6,6 +6,10 @@ import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
 import { Input } from "@/components/ui/input";
+import { useMutation } from "@tanstack/react-query";
+import { UpdateData } from "@/service/apiHelpers";
+import { toast } from "sonner";
+import debounce from "@/utils/debounce";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -38,10 +42,7 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "count",
     cell: ({ row }) => {
-      const [tip] = useQueryState(
-        "tip",
-        parseAsString.withDefault("new")
-      );
+      const [tip] = useQueryState("tip", parseAsString.withDefault("new"));
       return (
         <p>
           {row.original?.bar_code?.isMetric ? (
@@ -53,7 +54,7 @@ export const Columns: ColumnDef<TData>[] = [
                 row.original?.count - row.original?.check_count}
               {tip === "излишки" &&
                 row.original?.check_count - row.original?.count}
-                {tip === "new" && row.original?.count}
+              {tip === "new" && row.original?.count}
             </>
           )}
 
@@ -68,10 +69,10 @@ export const Columns: ColumnDef<TData>[] = [
       return (
         <>
           {/* {row.original?.bar_code?.isMetric && ( */}
-            <p>
-              {Number(row.original?.bar_code?.size?.kv).toFixed(1) }
-              м²
-            </p>
+          <p>
+            {Number(row.original?.bar_code?.size?.kv).toFixed(1)}
+            м²
+          </p>
           {/* )}
           {!row.original?.bar_code?.isMetric && (
             <p>
@@ -146,43 +147,19 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
   {
     header: "collection",
     cell: ({ row }) => {
-      return <p>{row.original?.bar_code?.collection?.title}</p>;
+      return <p>{row.original?.title}</p>;
     },
   },
-
 
   {
     header: "Обём",
     cell: ({ row }) => {
       return (
         <>
-          {row.original?.bar_code?.isMetric && (
-            <p>
-              {(
-                (Number(row.original?.bar_code?.size?.x) *
-                  Number(
-                    row.original?.bar_code?.isMetric
-                      ? row.original?.check_count
-                      : row.original?.bar_code?.size?.y
-                  )) /
-                100
-              ).toFixed(2)}
-              м²
-            </p>
-          )}
-          {!row.original?.bar_code?.isMetric && (
-            <p>
-              {Math.ceil(
-                Number(row.original?.bar_code?.size?.x) *
-                  Number(
-                    row.original?.bar_code?.isMetric
-                      ? row.original?.check_count
-                      : row.original?.bar_code?.size?.y
-                  )
-              )}
-              м²
-            </p>
-          )}
+          <p>
+            {Number(row.original?.kv).toFixed(1)}
+            м²
+          </p>
         </>
       );
     },
@@ -193,22 +170,40 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
       return <p>{row.original?.count || 0}</p>;
     },
   },
-  {
-    header: "Сумма",
-    cell: () => {
-      return <p>{0}</p>;
-    },
-  },
-  {
-    header: "Расход",
-    cell: ({ row }) => {
-      return <p>{row.original?.expence}</p>;
-    },
-  },
+  // {
+  //   header: "Сумма",
+  //   cell: () => {
+  //     return <p>{0}</p>;
+  //   },
+  // },
+  // {
+  //   header: "Расход",
+  //   cell: ({ row }) => {
+  //     return <p>{row.original?.expence}</p>;
+  //   },
+  // },
   {
     header: "Зав.цена",
     cell: ({ row }) => {
-      return <Input defaultValue={row?.original?.commingPrice} className="w-[120px]" placeholder="0" type="number"/>;
+      const { mutate } = useMutation({
+        mutationFn: ({cost}:{cost:number}) =>
+          UpdateData(apiRoutes.excelCollection, row?.original?.id, {
+            cost:cost
+          }),
+        onSuccess: () => {
+          toast.success("changed");
+          // queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
+        },
+      });
+      return (
+        <Input
+          defaultValue={row?.original?.commingPrice}
+          className="w-[120px]"
+          onChange={debounce((e)=>mutate({cost:Number(e?.target.value)}),900)}
+          placeholder="0"
+          type="number"
+        />
+      );
     },
   },
   {

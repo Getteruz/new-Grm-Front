@@ -5,6 +5,9 @@ import useDataFetch from "@/pages/filial/table/queries";
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { getAllData } from "@/service/apiHelpers";
+import api from "@/service/fetchInstance";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Filters() {
   const { id } = useParams();
@@ -17,6 +20,33 @@ export default function Filters() {
       value: e?.id,
     })) || [];
 
+  // const  expertFile = ()=>{
+  //    const data = getAllData(`/excel/cashflows/excel`,{
+  //     kassaId:id
+  //    })
+  //    console.log(data)
+  // }
+
+
+
+  const { mutate } = useMutation({
+    mutationFn: async () => {
+      const blob = await api.get(`/excel/cashflows/excel`, {
+        responseType: "blob",
+      });
+      if (!(blob.data instanceof Blob)) {
+        throw new Error("Received data is not a Blob");
+      }
+      const blobUrl = window.URL.createObjectURL(blob.data);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(blobUrl);
+    },
+  });
+
+  console.log(id)
   return (
     <div className="bg-sidebar border-border border-b  px-[20px] h-[64px] items-center  flex   ">
       {id ? (
@@ -52,6 +82,7 @@ export default function Filters() {
         </>
       )}
      {id ? <Button
+     onClick={()=>mutate()}
         className="h-full  border-y-0 w-[140px]  ml-auto"
         variant={"outline"}
       >

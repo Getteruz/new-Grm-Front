@@ -59,4 +59,5 @@ export const apiRoutes = {
   reports:"/reports",
   reportsDealer:'/reports/dealer-closed-by-d',
   sellerReports:'/seller-reports',
+  excelCollection:'/excel/collection'
 } as const;

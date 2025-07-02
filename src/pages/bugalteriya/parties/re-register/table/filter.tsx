@@ -1,13 +1,14 @@
-import { FileOutput } from "lucide-react";
+import { FileCheck, FileOutput } from "lucide-react";
 import FilterSelect from "@/components/filters-ui/filter-select";
 import SearchInput from "@/components/filters-ui/search-input";
 import { Button } from "@/components/ui/button";
 import FileExelUpload from "@/components/file-upload";
 import { useParams } from "react-router-dom";
-
+import { useMeStore } from "@/store/me-store";
 
 export default function Filters() {
-  const {id} = useParams()
+  const { id } = useParams();
+  const { meUser } = useMeStore();
 
   return (
     <div className="bg-sidebar border-border border-b h-[64px]   flex  ">
@@ -17,7 +18,7 @@ export default function Filters() {
         options={[
           { label: "Накладной", value: "new" },
           { label: "Оприходован", value: "переучет" },
-          { label: "Розница", value: "излишки" },//дефицит
+          { label: "Розница", value: "излишки" }, //дефицит
         ]}
         placeholder="Накладной"
         name="tip"
@@ -32,11 +33,18 @@ export default function Filters() {
         placeholder="Коллекция"
         name="type"
       />
-      <FileExelUpload partiyaId={id ||""}/>
-    
-      <Button className="h-full ml-auto  border-y-0  " variant={"outline"}>
-        <FileOutput /> Отправить на приходование 
-      </Button>
+      <FileExelUpload partiyaId={id || ""} />
+
+      {meUser?.position?.role == 7 ? (
+        <Button className="h-full ml-auto  border-y-0  ">
+          <FileCheck />
+          Подтвердить оприходование
+        </Button>
+      ) : (
+        <Button className="h-full ml-auto  border-y-0  " variant={"outline"}>
+          <FileOutput /> Отправить на приходование
+        </Button>
+      )}
     </div>
   );
 }

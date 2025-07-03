@@ -54,7 +54,7 @@ const LocalColums = useMemo(()=>{
           }}
           isLoading={isLoading}
           columns={LocalColums}
-          className={tip == "излишки" ? "h-[calc(50vh-31px)] scrollCastom":"h-[calc(100vh-63px)] scrollCastom"}
+          className={tip == "излишки" ? "h-[calc(50vh-61px)] scrollCastom":"h-[calc(100vh-103px)] scrollCastom"}
           data={flatData ||[]}
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage ?? false}
@@ -63,7 +63,7 @@ const LocalColums = useMemo(()=>{
          {tip == "излишки" &&   <DataTable
           isLoading={isLoading}
           columns={Columns}
-          className={tip == "излишки" ? "h-[calc(50vh-31px)]  scrollCastom":"h-[calc(100vh-63px)] scrollCastom"}
+          className={tip == "излишки" ? "h-[calc(50vh-61px)]  scrollCastom":"h-[calc(100vh-103px)] scrollCastom"}
           data={flatData ||[]}
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage ?? false}

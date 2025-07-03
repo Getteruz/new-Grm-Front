@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { parseAsString, useQueryState } from "nuqs";
+import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 
 import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { UpdateData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import debounce from "@/utils/debounce";
+import { useParams } from "react-router-dom";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -165,6 +166,20 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
     },
   },
   {
+    header: "Сумма",
+    cell: ({ row }) => {
+      const [localPrice] = useQueryState("localPrice", parseAsInteger.withDefault(row?.original?.displayPrice|| 0));
+      return (
+        <>
+          <p>
+            {Number(localPrice *row.original?.kv).toFixed(1)}
+            $
+          </p>
+        </>
+      );
+    },
+  },
+  {
     header: "Колво",
     cell: ({ row }) => {
       return <p>{row.original?.count || 0}</p>;
@@ -183,13 +198,22 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
   //   },
   // },
   {
+    header: "Расход за м²",
+    cell: ({ row }) => {
+      return <p>{row?.original?.expense} $</p>;
+    },
+  },
+  {
     header: "Зав.цена",
     cell: ({ row }) => {
+      const [,setLocalPrice] = useQueryState("localPrice", parseAsInteger.withDefault(row?.original?.displayPrice|| 0));
+      const {id} = useParams();
       const { mutate } = useMutation({
-        mutationFn: ({cost}:{cost:number}) =>
-          UpdateData(apiRoutes.excelCollection, row?.original?.id, {
-            cost:cost
-          }),
+        mutationFn: ({cost,collectionId}:{cost:number,collectionId:string}) =>
+          UpdateData(apiRoutes.excelCollection, id || "", [ {
+            cost,
+            collectionId
+          }]),
         onSuccess: () => {
           toast.success("changed");
           // queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
@@ -197,9 +221,12 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
       });
       return (
         <Input
-          defaultValue={row?.original?.commingPrice}
+          defaultValue={row?.original?.displayPrice}
           className="w-[120px]"
-          onChange={debounce((e)=>mutate({cost:Number(e?.target.value)}),900)}
+          onChange={debounce((e)=>{
+            setLocalPrice(e?.target.value)
+            mutate({cost:Number(e?.target.value),collectionId:row?.original?.id})
+          },900)}
           placeholder="0"
           type="number"
         />
@@ -209,9 +236,10 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
   {
     header: "Касса за м²",
     cell: ({ row }) => {
-      return <p>{row?.original?.collection_price?.priceMeter} $</p>;
+      return <p>{row?.original?.collectionPrice?.priceMeter} $</p>;
     },
   },
+ 
   {
     id: "actions",
     enableHiding: true,

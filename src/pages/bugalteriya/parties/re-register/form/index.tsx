@@ -116,7 +116,7 @@ const ActionPageQrCode = () => {
       if (codeInput) {
         (codeInput as HTMLInputElement).select();
       }
-      queryClient.invalidateQueries({ queryKey: [apiRoutes.excelProduct] });
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.excelProducts] });
       if (idLoc == "new") {
         setId("new");
         toast.success("Продукт добавлено успешно");

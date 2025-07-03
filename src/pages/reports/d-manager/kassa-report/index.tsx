@@ -1,10 +1,10 @@
 import { DataTable } from "@/components/ui/data-table";
 import { KassaColumnsLoc } from "./columns";
-import CardSort from "@/components/card-sort";
 import { useKassaReports } from "./queries";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useReportsSingle } from "../../m-manager/report-finance-single/queries";
+import CardSort from "../report/card-sort";
 
 export default function PageKassaReport() {
   const {id}  =useParams()
@@ -26,12 +26,14 @@ export default function PageKassaReport() {
       },
     });
 
+    console.log(data)
+
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
     <>
-      <div className="h-[calc(100vh-140px)] scrollCastom">
-          <CardSort  KassaReport={ReportsSingle} />
+      <div className="h-[calc(100vh-70px)] scrollCastom">
+          <CardSort  SortData={ReportsSingle}  />
           <DataTable
             columns={KassaColumnsLoc}
             data={

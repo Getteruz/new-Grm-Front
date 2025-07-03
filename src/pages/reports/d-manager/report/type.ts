@@ -13,6 +13,7 @@ export interface TData {
   description?: string;
   operation: string;
   time: string;
+  is_online?:Boolean;
   title: string;
   date: string;
   filial:{

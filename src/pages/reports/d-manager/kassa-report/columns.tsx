@@ -31,10 +31,8 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <p className="text-[#89A143]">
-          {item?.totalSum &&
-            item?.totalPlasticSum &&
-            (item?.totalSum - item?.totalPlasticSum).toFixed(2) + " $"}{" "}
-          $
+          {item?.totalIncome || item?.totalPlasticSum &&
+            (item?.totalIncome - item?.totalPlasticSum).toFixed(2) + " $"}
         </p>
       );
     },
@@ -45,7 +43,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#58A0C6]"> {item?.totalPlasticSum} $</p>;
+      return <p className="text-[#58A0C6]"> {item?.totalPlasticSum.toFixed(2)} $</p>;
     },
   },
   {
@@ -76,10 +74,11 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const queryClient = useQueryClient();
       const { mutate, isPending } = useMutation({
         mutationFn: () =>
-          PatchData(apiRoutes.kassaReports +"/" +row?.original?.id+"/close-dmanage" , { }),
+          PatchData(apiRoutes.kassaReports +"/" +row?.original?.id+"/close-dmanager" , { }),
         onSuccess: () => {
           toast.success("Accepted");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
         },
       });
       

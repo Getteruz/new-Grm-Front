@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { DollarSign, Plus } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 // import ShadcnSelect from "@/components/Select";
@@ -40,6 +40,7 @@ export default function CardSort({
   kassaReportId?: string | undefined;
   isOnlyCash?: boolean | undefined;
   isOnlyTerminal?: boolean | undefined;
+  
 }) {
 
   const { meUser } = useMeStore();
@@ -295,7 +296,11 @@ export default function CardSort({
       setIsSubmitting(false);
     }
   };
-
+  useEffect(()=>{
+    setCashflow_type("");
+    setComment("");
+    setPrice(0);
+  },[dialogOpen])
   const column = meUser?.position.role === 11 ? hrColumns : columns;
 
   return (

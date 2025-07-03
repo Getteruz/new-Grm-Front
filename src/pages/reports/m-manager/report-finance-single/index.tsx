@@ -44,9 +44,9 @@ export default function PageFinanceSingle() {
 
   const DealerData: TKassareportData = {
     status: "Dealer-manager",
-    totalSum: kassaData?.totalIncome,
-    totalPlasticSum: kassaData?.totalExpense,
-    totalExpense: 120981,
+    totalSum:0,
+    totalPlasticSum:0,
+    totalExpense: 0,
     
   } as TKassareportData;
   const ReportSingleData = kassaData?.kassaReport

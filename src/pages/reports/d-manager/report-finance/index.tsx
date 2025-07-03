@@ -2,6 +2,7 @@ import { DataTable } from "@/components/ui/data-table";
 
 import { useReports } from "./queries";
 import { KassaColumnsLoc } from "./columns";
+import CardSort from "../report/card-sort";
 
 
 export default function PageFinance() {
@@ -20,10 +21,12 @@ export default function PageFinance() {
 
   const flatKasssaData =
     kassaData?.pages?.flatMap((page) => page?.items || []) || []
-    
+
   return (
     <>
-      <div className="h-[calc(100vh-140px)] scrollCastom">
+      <div className="h-[calc(100vh-65x)] scrollCastom">
+      {/* @ts-ignore */}
+      <CardSort  SortData={{}}  />
           <DataTable
             columns={KassaColumnsLoc || []}
             data={flatKasssaData}

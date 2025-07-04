@@ -14,6 +14,8 @@ export interface TData {
   fatherName: string;
   name: string;
   type: string;
+  given:number;
+  owed:number;
   model: {
     id: string;
     title: string;

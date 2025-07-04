@@ -2,32 +2,42 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { parseISO } from "date-fns";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
-import { useCropById, useCropMutation } from "./actions";
+import { usePartiyaById, usePartiyaMutation } from "./actions";
 import FormContent from "./CropContent";
-import { CropFormType, CropSchema } from "./schema";
+import { PartiyaFormType, PartiyaSchema } from "./schema";
 import { useQueryClient } from "@tanstack/react-query";
 import { apiRoutes } from "@/service/apiRoutes";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useQueryState } from "nuqs";
 
 const ActionPage = () => {
-  const form = useForm<CropFormType>({
-    resolver: zodResolver(CropSchema),
-    defaultValues: {
-      // date: new Date(),
-    },
+  const form = useForm<PartiyaFormType>({
+    resolver: zodResolver(PartiyaSchema),
   });
-  // const navigate = useNavigate();
-  const { id } = useParams();
-  const { data } = useCropById({
-    id: id != "new" ? id : undefined,
+  const [id,setId] = useQueryState("id")
+
+  const { data } = usePartiyaById({
+    id: (id != "new" && id ) ? id : undefined,
     queries: {
       populate: "*",
     },
   });
+  const resetForm =()=>{
+    form.reset({
+      country: undefined,
+      factory: undefined,
+      partiya_no:undefined,
+      warehouse: undefined,
+      user: undefined,
+      expense:  undefined,
+      volume:  undefined,
+      date: undefined,
+    })
+  }
   const queryClient= useQueryClient()
-  const { mutate } = useCropMutation({
+  const { mutate,isPending } = usePartiyaMutation({
     onSuccess: () => {
       // apiRoutes.parties
       if (id == "new") {
@@ -35,38 +45,66 @@ const ActionPage = () => {
       } else {
         toast.success("updatedSuccessfully");
       }
+      setId(null)
+      resetForm()
       queryClient.invalidateQueries({ queryKey: [apiRoutes.parties] });
-      // navigate("/crops");
+      // navigate("/Partiyas");
     },
   });
 
   useEffect(() => {
     if (data) {
       form.reset({
-        name: data?.name || "",
-        biology_name: data?.biology_name || "",
-        planting_time_end: parseISO(data?.planting_time_end) || "",
-        planting_time_start: parseISO(data?.planting_time_start) || "",
-        crop_code: data?.crop_code || "",
-        is_common: data?.is_common,
-        harvest_duration: data?.harvest_duration || 0,
-        description: data?.description || "",
-        crop_category: String(data?.crop_category?.id) || undefined,
-        main_image: data?.main_image || undefined,
+        country: {
+          label:data?.country?.title,
+          value:data?.country?.id
+        },
+        factory: {
+          label:data?.factory?.title,
+          value:data?.factory?.id
+        },
+        partiya_no: {
+          label:data?.partiya_no?.title,
+          value:data?.partiya_no?.id
+        },
+        warehouse: {
+          label:data?.warehouse?.title,
+          value:data?.warehouse?.id
+        },
+        user: {
+          label:data?.user?.firstName,
+          value:data?.user?.id
+        },
+        expense: data?.expense ?? undefined,
+        volume: data?.volume ?? undefined,
+        date: parseISO(data?.date) || "",
+        
       });
     }
   }, [data]);
+  useEffect(()=>{
+    if(!id || id=="new"){
+      resetForm()
+    }
+  },[id])
 
   return (
-    <FormProvider {...form}>
-      <form
-        onSubmit={form.handleSubmit((data) => {
-          mutate({ data: data, id: id !== "new" ? id : undefined });
-        })}
-      >
-        <FormContent />
-      </form>
-    </FormProvider>
+    <Dialog open={Boolean(id)} onOpenChange={() => {
+      setId(null)
+      resetForm()
+      }}>
+       <DialogContent className="sm:max-w-[796px]">
+          <FormProvider {...form}>
+            <form
+              onSubmit={form.handleSubmit((data) => {
+                mutate({ data: data, id: (id != "new" && id) ? id : undefined });
+              })}
+            >
+              <FormContent isPending={isPending} />
+            </form> 
+          </FormProvider>
+       </DialogContent>
+    </Dialog>
   );
 };
 

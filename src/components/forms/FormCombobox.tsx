@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { cn } from "@/lib/utils";
 import { getAllData } from "@/service/apiHelpers";
-import { TResponse } from "@/types";
+import { TResponse, TSelectOption } from "@/types";
 import debounce from "@/utils/debounce";
 
 import {
@@ -28,6 +28,7 @@ interface Props<TQuery> {
   queries?: TQuery;
   option?: TOption[];
   classNameChild?: string;
+  onLocalChange?: (value: TSelectOption) => void;
   fieldNames?: {
     value: string;
     label: string;
@@ -50,6 +51,7 @@ export default function FormComboboxDemoInput<IData, TQuery>({
   queries,
   option,
   fieldNames,
+  onLocalChange,
 }: Props<TQuery>) {
   const { control, watch } = useFormContext();
   const { t } = useTranslation();
@@ -130,7 +132,10 @@ export default function FormComboboxDemoInput<IData, TQuery>({
                 isLoading={isLoading}
                 options={memoizedData}
                 placeholder={placeholder ? t(placeholder) : ""}
-                onChange={field.onChange}
+                onChange={(e)=>{
+                  field.onChange(e)
+                  onLocalChange?.(e)
+                }}
                 fetchNextPage={fetchNextPage}
                 hasNextPage={hasNextPage ?? false}
                 isFetchingNextPage={isFetchingNextPage}

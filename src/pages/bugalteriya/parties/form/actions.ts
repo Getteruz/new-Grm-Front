@@ -5,11 +5,11 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 
-import { AddData, getByIdData, UpdateData } from "@/service/apiHelpers";
+import { AddData, getByIdData, UpdatePatchData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
-import { CropIdQuery,TData } from "../type";
-import { CropFormType } from "./schema";
+import { PartiyaIdQuery, TSingleData } from "../type";
+import { PartiyaFormType } from "./schema";
 
 interface AuthResponse {
   jwt: string;
@@ -20,37 +20,41 @@ interface AuthResponse {
   };
 }
 
-interface ICrops {
-  options?: DefinedInitialDataOptions<TData>;
+interface IPartiyas {
+  options?: DefinedInitialDataOptions<TSingleData>;
   id: string | undefined;
-  queries?: CropIdQuery;
+  queries?: PartiyaIdQuery;
 }
-interface ICropsMute {
-  data: CropFormType;
+interface IPartiyasMute {
+  data: PartiyaFormType;
   id: string | undefined;
 }
 
-export const useCropMutation = ({
+export const usePartiyaMutation = ({
   ...options
-}: UseMutationOptions<AuthResponse, Error, ICropsMute, unknown>) =>
+}: UseMutationOptions<AuthResponse, Error, IPartiyasMute, unknown>) =>
   useMutation({
     ...options,
     mutationFn: async ({ data, id }) => {
       const costomData: any = {
         ...data,
-        main_image: data?.main_image?.id,
-      };
+        country: data.country?.value,
+        factory: data.factory?.value,
+        partiya_no: data.partiya_no?.value,
+        warehouse: data.warehouse?.value,
+        user: data.user?.value,
+      }
       if (id)
-        return await UpdateData<CropFormType>(apiRoutes.crops, id, costomData);
-      return await AddData<CropFormType>(apiRoutes.crops, costomData);
+        return await UpdatePatchData<PartiyaFormType>(apiRoutes.parties, id, costomData);
+      return await AddData<PartiyaFormType>(apiRoutes.parties, costomData);
     },
   });
 
-export const useCropById = ({ options, id, queries }: ICrops) =>
+export const usePartiyaById = ({ options, id, queries }: IPartiyas) =>
   useQuery({
     ...options,
-    queryKey: [apiRoutes.crops, id],
+    queryKey: [apiRoutes.parties, id],
     enabled: Boolean(id),
     queryFn: () =>
-      getByIdData<TData, CropIdQuery>(apiRoutes.crops, id || "", queries),
+      getByIdData<TSingleData, PartiyaIdQuery>(apiRoutes.parties, id || "", queries),
   });

@@ -47,22 +47,22 @@ export const Columns: ColumnDef<TData>[] = [
   },
   {
     header: "Задолжность",
-    cell: () => {
-      return <p className="text-[#FF6600]">~</p>;
+    cell: ({row}) => {
+      return <p className="text-[#FF6600]">{row?.original?.owed.toFixed(2) } $</p>;
     },
   },
   {
     header: "Дано",
-    cell: () => {
-      return <p className="text-[#89A143]">~</p>;
+    cell: ({row}) => {
+      return <p className="text-[#89A143]">{row?.original?.given.toFixed(2)} $</p>;
     },
   },
-  {
-    header: "Статус",
-    cell: ({ row }) => {
-      return <p>{row?.original?.isActive ? "Активный" : "Не активен"}</p>;
-    },
-  },
+  // {
+  //   header: "Статус",
+  //   cell: ({ row }) => {
+  //     return <p>{row?.original?.isActive ? "Активный" : "Не активен"}</p>;
+  //   },
+  // },
   {
     id: "actions",
     enableHiding: true,

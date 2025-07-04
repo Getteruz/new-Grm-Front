@@ -1,26 +1,20 @@
 import { z } from "zod";
 
-import { requiredStringField } from "@/utils/schemaHelper";
-
-export const CropSchema = z.object({
-  name: requiredStringField(),
-  description: z.string(),
-  // details: requiredStringField(),
-  harvest_duration: z.number(),
-  biology_name: requiredStringField(),
-  crop_code: requiredStringField(),
-  // variety: requiredStringField(),
-  is_common: z.boolean(),
-  crop_category: z.string(),
-  main_image: z
-    .object({
-      id: z.number(),
-      aws_path: z.string(),
-    })
-    .optional(),
-  planting_time_start: z.date(),
-  planting_time_end: z.date(),
-  // date: z.date().optional()
+const SelectTypeField = z.object({
+  value: z.string().optional(),
+  label: z.string().optional(),
 });
 
-export type CropFormType = z.infer<typeof CropSchema>;
+export const PartiyaSchema = z.object({
+  country: SelectTypeField,
+  factory: SelectTypeField,
+  partiya_no: SelectTypeField,
+  warehouse: SelectTypeField,
+  user: SelectTypeField,
+  expense: z.number(),
+  date: z.date(),
+  volume: z.number(),
+});
+
+//     volume,
+export type PartiyaFormType = z.infer<typeof PartiyaSchema>;

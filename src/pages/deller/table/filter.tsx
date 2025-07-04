@@ -1,4 +1,4 @@
-import { Archive, FileOutput, Plus, Trash2 } from "lucide-react";
+import { Archive, Plus, Trash2 } from "lucide-react";
 import { useQueryState } from "nuqs";
 
 import SearchInput from "@/components/filters-ui/search-input";
@@ -17,9 +17,9 @@ export default function Filters() {
       <Button className="h-full  border-0 w-[64px]  " variant={"outline"}>
         <Archive />
       </Button>
-      <Button className="h-full  border-y-0 w-[140px] " variant={"outline"}>
+      {/* <Button className="h-full  border-y-0 w-[140px] " variant={"outline"}>
         <FileOutput /> Экспорт
-      </Button>
+      </Button> */}
       <Button
         onClick={() => setId("new")}
         className="h-full   border-l-0   border-y-0   "

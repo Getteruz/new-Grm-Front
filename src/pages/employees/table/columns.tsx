@@ -8,6 +8,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { useMeStore } from "@/store/me-store";
 
 import { TData } from "../type";
+import { useState } from "react";
 
 export const FilialColumns: ColumnDef<TData>[] = [
   {
@@ -80,14 +81,30 @@ export const FilialColumns: ColumnDef<TData>[] = [
   {
     header: "Зарплата",
     cell: ({ row }) => {
-      return (
-        <p>{Number(row?.original?.salary).toLocaleString("uz-UZ")} $ </p>
-      );
+      return <p>{Number(row?.original?.salary).toLocaleString("uz-UZ")} $ </p>;
     },
   },
+
   {
     header: "id для входа",
     accessorKey: "login",
+    cell: ({ row }) => {
+      const login = row.original?.login;
+      const [copied, setCopied] = useState(false);
+      const handleCopy = () => {
+        navigator.clipboard.writeText(login);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); 
+      };
+      return (
+        <div>
+          <p onClick={handleCopy} style={{ cursor: "pointer" }}>
+            {login}
+          </p>
+          {copied && <span style={{ color: "green" }}>Copied!</span>}
+        </div>
+      );
+    },
   },
   {
     header: "Телефон",

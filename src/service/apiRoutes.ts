@@ -19,6 +19,7 @@ export const apiRoutes = {
   login: "/auth/login",
   userMe: "/user/info/me",
   parties: "/partiya",
+  partiesChanngeStatus: "partiya/change-to",
   dataLibrary: "/product",
   transfers: "/transfer",
   transferBasket:"/transfer/basket",

@@ -72,9 +72,12 @@ export const Columns: ColumnDef<TData>[] = [
     id: "partiya_status.title",
     accessorKey: "partiya_status.title",
     header: "Статус пратии",
-    cell: ({ row }) => (
-      <div> {row.original.partiya_status =="new"?"Открыто":"Закрыто"}</div>
-    ),
+    cell: ({ row }) => {
+      const status =row.original.partiya_status
+      return (
+          <div> {status =="new"? "Открыто": status == "pending" || status == "closed" ? "В ожидании": "Закрыто"}</div>
+      )
+    },
   },
   {
     id: "actions",

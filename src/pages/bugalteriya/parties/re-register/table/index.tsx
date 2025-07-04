@@ -9,6 +9,7 @@ import useDataFetch from "./queries";
 import {  parseAsString, useQueryState } from "nuqs";
 import { useMemo } from "react";
 import { useMeStore } from "@/store/me-store";
+import { usePartiyaById } from "../../form/actions";
 // import useDataLibrary from "./queries";
 
 
@@ -19,6 +20,13 @@ export default function ItemsPage() {
   const [type] = useQueryState("type",parseAsString.withDefault("default"));
   const [,setBarCode] = useQueryState("barcode");
   const { meUser } = useMeStore();
+
+  const { data:onePartiya } = usePartiyaById({
+    id: id  ? id : undefined,
+    queries: {
+      populate: "*",
+    },
+  });
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
       useDataFetch({
       queries: {
@@ -41,11 +49,13 @@ const LocalColums = useMemo(()=>{
     return Columns
   }
 },[type])
+
+console.log(onePartiya)
   return (
     <div className="flex w-full">
       <ActionPageQrCode />
       <div className="w-2/3">
-        <Filter />
+        <Filter  check={onePartiya?.check} partiyaStatus={onePartiya?.partiya_status}/>
         <DataTable
           onRowClick={(e)=>{
             if(type == "default"){

@@ -6,6 +6,7 @@ import ActionPage from "../form";
 import { Columns } from "./columns";
 import Filters from "./filters";
 import useDataFetch from "./queries";
+import { useMeStore } from "@/store/me-store";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -14,6 +15,9 @@ export default function Page() {
   const [factory] = useQueryState("factory");
   const [partiyaNumber] = useQueryState("partiya-number");
   const [search] = useQueryState("search");
+
+const {meUser} = useMeStore()
+
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
       queries: {
@@ -23,6 +27,7 @@ export default function Page() {
         partiya_no: partiyaNumber || undefined,
         factory: factory || undefined,
         search: search || undefined,
+        warehouse: meUser?.position?.role == 7 ? meUser?.filial?.id : undefined,
       },
     });
     

@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { minio_img_url } from "@/constants";
+import TebleAvatar from "../teble-avatar";
 
 interface ICarpetCard {
   id: string;
@@ -82,6 +83,8 @@ export default function CarpetCashierCard({
       })
       .catch(() => toast.error("что-то пошло не так"));
   };
+
+
   return (
    <div className="flex items-center  gap-2.5">
       <p className="text-[14]">{index + 1}</p>
@@ -134,21 +137,19 @@ export default function CarpetCashierCard({
           </div>
           <div className="flex gap-1 items-center">
             {seller && (
-              <Avatar className="w-[40px] h-[40px]">
-                <AvatarImage src={minio_img_url + seller?.avatar?.path}/>
-                <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
-                  {seller?.firstName?.[0]} {seller?.lastName?.[0]}
-                </AvatarFallback>
-              </Avatar>
+            
+            <TebleAvatar name={seller?.firstName}  url={seller?.avatar?.path} status="success"/>
             )}
             {status != "progress" && meUser && (
-              <Avatar className="w-[40px] h-[40px]">
-                <AvatarImage src={minio_img_url + meUser?.avatar?.path}/>
-                <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
-                  {meUser?.firstName?.[0]}
-                  {meUser?.lastName?.[0]}
-                </AvatarFallback>
-              </Avatar>
+              // <Avatar className="w-[40px] h-[40px]">
+              //   <AvatarImage src={minio_img_url + meUser?.avatar?.path}/>
+              //   <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
+              //     {meUser?.firstName?.[0]}
+              //     {meUser?.lastName?.[0]}
+              //   </AvatarFallback>
+              // </Avatar>
+
+        <TebleAvatar name={meUser?.firstName}  url={meUser?.avatar?.path} status={(status === "canceled" || status ===  "rejected")? "fail":"success"}/>
             )}
             {status == "progress" ? (
               <Button

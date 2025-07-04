@@ -81,6 +81,7 @@ export interface TransactionItem {
   type: string;
   amount: number;
   tip: string;
+
   product: string;
   code?: string;
   size?: string;
@@ -110,6 +111,7 @@ export interface TransactionItem {
     need_get_report: boolean;
     type: "filial";
   }
+  is_cancelled:boolean;
   cashflow_type:{
     id: string;
     title: string;

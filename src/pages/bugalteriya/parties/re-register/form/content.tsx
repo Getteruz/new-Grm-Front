@@ -17,7 +17,7 @@ export default function FormContent() {
   const { meUser } = useMeStore();
 
   return (
-    <div className="w-full max-h-[calc(100vh-56px)] scrollCastom border-border border-r ">
+    <div className="w-full max-h-[calc(100vh-66px)] scrollCastom border-border border-r ">
       <Filters />
       <div className="grid row-start  px-[40px] py-[20px] gap-2 lg:grid-cols-2">
         <FormTextInput

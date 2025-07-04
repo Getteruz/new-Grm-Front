@@ -7,20 +7,20 @@ export interface TData {
   internetInfo: string | null;
   is_active: boolean;
   date: string;
-  expense:number;
+  expense: number;
   count: number;
   y: number;
   title: string;
   kv: number;
-  displayPrice:number;
+  displayPrice: number;
   collectionPrice: {
     id: string;
-    date:string;
-    type:string;
+    date: string;
+    type: string;
     priceMeter: number;
-    comingPrice:number
+    comingPrice: number;
     secondPrice: number;
-    collectionId: string
+    collectionId: string;
   };
   model: {
     id: string;
@@ -134,3 +134,9 @@ export type TQuery = {
   partiyaId?: string;
   tip?: string;
 };
+export interface TReportData {
+  total: number;
+  expence: number;
+  volume: number;
+  count: number;
+}

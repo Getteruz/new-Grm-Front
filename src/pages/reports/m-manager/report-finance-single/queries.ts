@@ -4,7 +4,6 @@ import {  getAllData, getByIdData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import {  TKassareportData, TQuery ,TDealearQuery } from "./type";
-import { TResponse } from "@/types";
 
 
 interface IKassaReportData {

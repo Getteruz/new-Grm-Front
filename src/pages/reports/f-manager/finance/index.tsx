@@ -14,7 +14,6 @@ export default function PageFinance() {
   const { meUser } = useMeStore();
   const [filial] = useQueryState("filial");
   const [seleted, setSeleted] = useState<string[]>([]);
-  const [tip] = useQueryState("tip", parseAsString);
   const {data:KassaReport} = useKassaReportTotal({
     queries:{
       filialId:meUser?.filial?.id || '',

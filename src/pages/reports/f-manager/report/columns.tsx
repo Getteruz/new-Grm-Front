@@ -7,7 +7,6 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { PatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
-import { minio_img_url } from "@/constants";
 import { TData } from "./type";
 import ActionButton from "@/components/actionButton";
 import ActionBadge from "@/components/actionBadge";

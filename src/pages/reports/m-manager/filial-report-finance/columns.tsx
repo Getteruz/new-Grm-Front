@@ -8,10 +8,10 @@ import { Button } from "@/components/ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { PatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
-import { minio_img_url } from "@/constants";
 import { TData } from "./type";
 import ActionButton from "@/components/actionButton";
 import ActionBadge from "@/components/actionBadge";
+import TebleAvatar from "@/components/teble-avatar";
 
 export const KassaColumns: ColumnDef<TData>[] = [
   {
@@ -115,21 +115,21 @@ export const KassaColumns: ColumnDef<TData>[] = [
     header: "Кассир",
     id: "closer",
     cell: ({ row }) => {
+         
+      const statusObj: Record<string, "success" | "panding" | "fail"> = {
+        accepted:"success",
+        closed_by_c:"panding",
+        rejected:"fail"
+      }
       const item = row.original;
       return item?.status != "open" &&
         item?.status != "Мои приходы и расходы" ? (
-        <div className="flex items-center">
+          <div className="flex items-center">
           {item?.closer?.avatar && (
-            <img
-              className="w-[40px] rounded-full object-cover border-background border h-[40px]"
-              src={minio_img_url + item?.closer?.avatar?.path}
-            />
+            <TebleAvatar status={"success"}  url={item?.closer?.avatar?.path} name={item?.closer?.avatar?.name}/>
           )}
           {item?.status != "closed_by_c" && item?.closer_m?.avatar ? (
-            <img
-              className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]"
-              src={minio_img_url + item?.closer_m?.avatar?.path}
-            />
+            <TebleAvatar className="-translate-x-2" status={ statusObj?.[item?.status || "panding"] }  url={item?.closer_m?.avatar?.path} name={item?.closer_m?.avatar?.name}/>
           ) : (
             ""
           )}

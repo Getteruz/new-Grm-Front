@@ -15,7 +15,7 @@ interface IKassaReportData {
 }
 
 interface IReportDealerData {
-  options?: DefinedInitialDataOptions<TKassareportData>;
+  options?: DefinedInitialDataOptions<TKassareportData[]>;
   queries?: TDealearQuery;
   enabled?: boolean;
 }
@@ -44,6 +44,6 @@ export const useReportsSingle = ({ queries,id ,enabled}: IKassaReportData) =>
     useQuery({
       queryKey: [apiRoutes.reportsDealer, queries],
       queryFn: () =>
-        getAllData<TResponse<TKassareportData>, TDealearQuery>(apiRoutes.reportsDealer || "" ,queries),
+        getAllData<TKassareportData[], TDealearQuery>(apiRoutes.reportsDealer || "" ,queries),
       enabled: enabled,
     });

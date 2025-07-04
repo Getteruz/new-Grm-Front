@@ -31,7 +31,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <p className="text-[#89A143]">
-          {item?.totalIncome || item?.totalPlasticSum &&
+          {(item?.totalIncome || item?.totalPlasticSum) &&
             (item?.totalIncome - item?.totalPlasticSum).toFixed(2) + " $"}
         </p>
       );

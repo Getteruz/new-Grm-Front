@@ -2,7 +2,7 @@ import { DataTable } from "@/components/ui/data-table";
 
 import CardSort from "@/components/card-sort";
 import { KassaColumnsLoc } from "./columns";
-import {  useReportsSingle } from "./queries";
+import {  useReportDealer, useReportsSingle } from "./queries";
 import { useNavigate, useParams } from "react-router-dom";
 import { TKassareportData } from "./type";
 import { parseAsBoolean, useQueryState } from "nuqs";
@@ -26,15 +26,17 @@ export default function PageFinanceSingle() {
   });
 
 
-  // const {
-  //   data: ReportDealer
-  // } = useReportDealer({
-  //   enabled:Boolean(kassaData),
-  //   queries: {
-  //     month: kassaData?.month,
-  //     year:kassaData?.year
-  //   },
-  // });
+  const {
+    data: ReportDealer
+  } = useReportDealer({
+    enabled:Boolean(kassaData),
+    queries: {
+      month: kassaData?.month,
+      year:kassaData?.year
+    },
+  });
+
+  
 
   const myData: TKassareportData = {
     status: "my",
@@ -43,10 +45,11 @@ export default function PageFinanceSingle() {
   } as TKassareportData;
 
   const DealerData: TKassareportData = {
-    status: "Dealer-manager",
-    totalSum:0,
-    totalPlasticSum:0,
-    totalExpense: 0,
+    
+    totalSum:ReportDealer?.[0]?.totalIncome ||0 ,
+    totalPlasticSum:ReportDealer?.[0]?.totalPlasticSum|| 0,
+    totalExpense: ReportDealer?.[0]?.totalExpense|| 0,
+    status:ReportDealer?.[0]?.status ,
     
   } as TKassareportData;
   const ReportSingleData = kassaData?.kassaReport
@@ -72,7 +75,6 @@ export default function PageFinanceSingle() {
               setMyCashFlow(false)
             }
           }}
-
           // fetchNextPage={KassafetchNextPage}
           // hasNextPage={KassafhasNextPage ?? false}
           // isFetchingNextPage={KassaisFetchingNextPage}

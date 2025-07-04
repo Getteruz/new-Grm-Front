@@ -1,4 +1,4 @@
-import {  useQueryState } from "nuqs";
+import {  parseAsString, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
 import { useMeStore } from "@/store/me-store";
@@ -14,7 +14,7 @@ export default function PageFinance() {
   const { meUser } = useMeStore();
   const [filial] = useQueryState("filial");
   const [seleted, setSeleted] = useState<string[]>([]);
-
+  const [tip] = useQueryState("tip", parseAsString);
   const {data:KassaReport} = useKassaReportTotal({
     queries:{
       filialId:meUser?.filial?.id || '',

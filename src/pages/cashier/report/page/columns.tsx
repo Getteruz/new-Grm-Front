@@ -148,7 +148,7 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
     id: "closer",
     cell: ({ row }) => {
       const item = row.original;
-      return item?.order?.seller?.avatar && <TebleAvatar status={item?.is_cancelled ? "fail": "success"} name={ item?.order?.seller?.firstName} url={item?.order?.seller?.avatar?.path} />
+      return item?.order?.seller?.avatar && <TebleAvatar status={"success"} name={ item?.order?.seller?.firstName} url={item?.order?.seller?.avatar?.path} />
        
     },
   },

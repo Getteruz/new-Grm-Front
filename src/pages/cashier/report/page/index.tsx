@@ -49,6 +49,7 @@ export default function Page() {
         kassaId: reportData?.id  || id || "",
         limit: 10,
         page: 1,
+        
         type: sortSingle == "Все" ? undefined : sortSingle || undefined,
       },
       enabled: !!reportData?.id || Boolean(id),

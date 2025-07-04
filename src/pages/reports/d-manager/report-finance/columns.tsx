@@ -119,6 +119,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         onSuccess: () => {
           toast.success("Closed");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
         },
       });
       

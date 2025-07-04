@@ -12,9 +12,9 @@ import { Button } from "@/components/ui/button";
 import formatPrice from "@/utils/formatPrice";
 
 import { format } from "date-fns";
-import { minio_img_url } from "@/constants";
 import { useMeStore } from "@/store/me-store";
 import { TData } from "./type";
+import TebleAvatar from "@/components/teble-avatar";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -148,8 +148,8 @@ export const Columns: ColumnDef<TData>[] = [
     id: "closer",
     cell: ({ row }) => {
       const item = row.original;
-      return item?.order?.seller?.avatar && <img  className="w-[50px]    rounded-full object-cover border-background border h-[50px]" src={minio_img_url + item?.order?.seller?.avatar?.path}/>
-       
+      return item?.order?.seller?.avatar &&  <TebleAvatar status="success" url={item?.order?.seller?.avatar?.path} name={item?.order?.seller?.avatar?.name} />
+
     },
   },
   {
@@ -157,7 +157,7 @@ export const Columns: ColumnDef<TData>[] = [
     id: "closer",
     cell: ({ row }) => {
       const item = row.original;
-      return <img  className="w-[50px] rounded-full object-cover border-background border h-[50px]" src={minio_img_url + item?.casher?.avatar?.path}/>
+      return   <TebleAvatar status={item?.order?.status == "rejected"? "fail": `success`} url={item?.casher?.avatar?.path} name={item?.casher?.avatar?.name} />
        
     },
   },

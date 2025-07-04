@@ -161,7 +161,7 @@ export const Columns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       const item = row.original;
        
-      return item?.order?.seller && < TebleAvatar name={ item?.order?.seller?.fatherName} url={ item?.order?.seller?.avatar?.path}/>
+      return item?.order?.seller && < TebleAvatar status="success" name={ item?.order?.seller?.fatherName} url={ item?.order?.seller?.avatar?.path}/>
     },
   },
   {
@@ -169,7 +169,7 @@ export const Columns: ColumnDef<TData>[] = [
     id: "closer",
     cell: ({ row }) => {
       const item = row.original;
-      return <TebleAvatar name={item?.casher?.fatherName} url={ item?.casher?.avatar?.path}/>
+      return <TebleAvatar status={item?.order?.status == "rejected" ? "fail" : "success"} name={item?.casher?.fatherName} url={ item?.casher?.avatar?.path}/>
        
     },
   },

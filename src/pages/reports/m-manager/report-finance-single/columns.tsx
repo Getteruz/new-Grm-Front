@@ -14,6 +14,7 @@ import ActionBadge from "@/components/actionBadge";
 import ActionButton from "@/components/actionButton";
 import { useMeStore } from "@/store/me-store";
 import { IUserData, TResponse } from "@/types";
+import { useParams } from "react-router-dom";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
@@ -37,13 +38,11 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const isMy = row?.original?.status == "my";
       return (
         <p className="text-[#89A143]">
-          {" "}
           {isMy
             ? ""
             : ((item?.totalSum || 0) - (item?.totalPlasticSum || 0)).toFixed(
                 2
               )}
-          {item?.totalSum ? "$" : ""}
         </p>
       );
     },
@@ -188,23 +187,27 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "status",
     cell: ({ row }) => {
       const { meUser } = useMeStore();
+      const {id} = useParams()
       const item = row.original;
       const queryClient = useQueryClient();
       const { mutate, isPending } = useMutation({
         mutationFn: () =>
-          PatchData(apiRoutes.kassaReports + "/" + row?.original?.id, {}),
+          PatchData(item?.status  == "closed_by_d" ? `${apiRoutes.reports}/${id}/close`   : apiRoutes.kassaReports + "/" + row?.original?.id, {}),
         onSuccess: () => {
           toast.success("Closed");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
           queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
+          queryClient.invalidateQueries({ queryKey: [ apiRoutes.reportsDealer] });
+         
         },
       });
+     
       
       return (
         <div onClick={(e) => e.stopPropagation()}>
           {item?.status == "my" ? (
             ""
-          ) : item?.status == "closed" ||
+          ) : item?.status == "closed" || item?.status  == "closed_by_d"||
             (meUser?.position?.role == 10 &&
               item?.status == "m_manager_confirmed") ||
             (meUser?.position?.role == 9 &&

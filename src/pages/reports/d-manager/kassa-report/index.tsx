@@ -26,7 +26,6 @@ export default function PageKassaReport() {
       },
     });
 
-    console.log(data)
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 

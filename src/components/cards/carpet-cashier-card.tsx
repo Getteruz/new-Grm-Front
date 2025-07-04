@@ -3,7 +3,6 @@ import { FileOutput, MessageSquareText, MoreVertical, OctagonX } from "lucide-re
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { IData } from "@/pages/cashier/home/type";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useMeStore } from "@/store/me-store";
 import { UpdatePatchData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
@@ -15,7 +14,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { minio_img_url } from "@/constants";
 import TebleAvatar from "../teble-avatar";
 
 interface ICarpetCard {

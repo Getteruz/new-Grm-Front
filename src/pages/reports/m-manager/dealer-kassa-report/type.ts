@@ -1,3 +1,4 @@
+
 export interface TKassareportData {
   id: string;
   totalSellCount: number;
@@ -7,15 +8,11 @@ export interface TKassareportData {
   kassaReportStatus:number;
   year: number;
   month: number;
-  isDealer?:boolean;
-  dealerReportId?:string
   status: string;
   filial?: {
     id: string;
     title: string;
   };
-  isMManagerConfirmed?:boolean;
-  isAccountantConfirmed?:boolean;
   kassaReport?:TKassareportData[];
   reportStatus?:number;
   totalPlasticSum: number;
@@ -29,37 +26,15 @@ export interface TKassareportData {
   totalSum: number;
 }
 
-export interface TChaFlowData{
-  expense: number,
-  income: number
-}
-
-export interface RemainingProductData {
-  remainingSize: number;
-  remainingSum: number;
-  count: number;
-}
-export interface RemainingProductColactionData {
-    country: {
-        id: string;
-        title: string;
-    };
-    remainingSize: number;
-    remainingSum: number; 
-    count: number;
-}
 export interface TQuery {
   search?: string | undefined;
   filialId?: string;
   kassaId?: string;
+  reportId?:string;
   limit?: number;
   page?: number;
   id?: string;
   startDate?: Date | null;
   endDate?: Date | null;
   type?:string;
-}
-export interface TDealearQuery {
- month?:number;
- year?:number;
 }

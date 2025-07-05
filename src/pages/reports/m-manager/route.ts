@@ -1,3 +1,5 @@
+import DealerReportPage from "./dealer-report";
+import PageDealerKassaReport from "./dealer-kassa-report";
 import PageFinanceFilial from "./filial-report-finance";
 import PageRemaider from "./remaider";
 import ReportPage from "./report";
@@ -23,6 +25,22 @@ const Route = [
   {
     url: "/m-manager/report-remaider",
     Element: PageRemaider,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/m-manager/d-manager/report-monthly/:id/info",
+    Element: PageDealerKassaReport,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  
+  {
+    url: "/m-manager/d-manager/report-monthly/:id/info",
+    Element: PageDealerKassaReport,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/m-manager/d-manager/report-monthly/:reportId/info/:id/info",
+    Element: DealerReportPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
 

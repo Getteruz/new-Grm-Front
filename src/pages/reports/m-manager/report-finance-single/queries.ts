@@ -19,6 +19,16 @@ interface IReportDealerData {
   enabled?: boolean;
 }
 
+interface ICashflowForMainManager {
+  enabled?: boolean;
+  id:string | undefined;
+}
+
+
+ type TReportData = {
+    income: 0,
+    expense: 0
+ }
 export const useReportsSingle = ({ queries,id ,enabled}: IKassaReportData) =>
   useQuery({
     queryKey: [apiRoutes.reports,id, queries],
@@ -46,3 +56,12 @@ export const useReportsSingle = ({ queries,id ,enabled}: IKassaReportData) =>
         getAllData<TKassareportData[], TDealearQuery>(apiRoutes.reportsDealer || "" ,queries),
       enabled: enabled,
     });
+
+
+export const useCashflowForMainManager = ({enabled,id}: ICashflowForMainManager) =>
+  useQuery({
+    queryKey: [apiRoutes.cashflowForMainManager],
+    queryFn: () =>
+      getByIdData<TReportData, TDealearQuery>(apiRoutes.cashflowForMainManager ,id || ""),
+    enabled: enabled,
+  });

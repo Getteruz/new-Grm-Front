@@ -31,6 +31,7 @@ export default function CardSort({
   kassaReportId,
   KassaReport,
   isOnlyCash,
+  isOnlineCashFlow,
   isOnlyTerminal,
 }: {
   KassaId?: string;
@@ -40,6 +41,7 @@ export default function CardSort({
   kassaReportId?: string | undefined;
   isOnlyCash?: boolean | undefined;
   isOnlyTerminal?: boolean | undefined;
+  isOnlineCashFlow?: boolean | undefined;
   
 }) {
 
@@ -265,6 +267,7 @@ export default function CardSort({
         tip: "cashflow",
         comment,
         price,
+        is_online:isOnlineCashFlow || undefined, 
         casher: meUser?.id,
         kassa: kassaReports ? undefined : kassaId?.id || undefined,
         kassaReport: kassaReportId || kassaReports || undefined,

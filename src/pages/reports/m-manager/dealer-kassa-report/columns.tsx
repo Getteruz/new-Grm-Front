@@ -4,11 +4,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { TKassareportData } from "./type";
 import ActionBadge from "@/components/actionBadge";
-import ActionButton from "@/components/actionButton";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiRoutes } from "@/service/apiRoutes";
-import { PatchData } from "@/service/apiHelpers";
-import { toast } from "sonner";
 import TebleAvatar from "@/components/teble-avatar";
 import { useMeStore } from "@/store/me-store";
 
@@ -58,11 +53,12 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
     header: "D-менеджер",
     cell: ({row}) => {
-       const item = row.original;
       const  {meUser}= useMeStore()
+      const item = row.original;
+      console.log(item)
       return (
         <div className="flex gap-2 items-center">
-          <TebleAvatar  status={item?.status  == "open"? "panding":item?.status  == "rejected" ? "fail":"success"}  url={meUser?.avatar?.path} name={meUser?.firstName || "A"}/>
+          <TebleAvatar status={item?.status  == "open"? "panding":item?.status  == "rejected" ? "fail":"success"}  url={meUser?.avatar?.path} name={meUser?.firstName || "A"}/>
         </div>
       ) 
     },
@@ -72,23 +68,12 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "status",
     cell: ({ row }) => {
       const item = row.original;
-      const queryClient = useQueryClient();
-      const { mutate, isPending } = useMutation({
-        mutationFn: () =>
-          PatchData(apiRoutes.kassaReports +"/" +row?.original?.id+"/close-dmanager" , { }),
-        onSuccess: () => {
-          toast.success("Accepted");
-          queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
-          queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
-        },
-      });
+  
       
       return (
         <div onClick={(e) => e.stopPropagation()}>
           {item?.kassaReportStatus == 2 ? (
             <ActionBadge status={"willSell"} />
-          ) : item?.status == "open" ? (
-            <ActionButton onClick={()=>mutate()} isLoading={isPending}  status="accept"></ActionButton>
           ) : (
             <ActionBadge status={item?.status} />
           )}

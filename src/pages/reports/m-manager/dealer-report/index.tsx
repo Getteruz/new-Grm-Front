@@ -37,7 +37,7 @@ export default function DealerReportPage() {
   return (
     <>
       <div className="h-[calc(100vh-65px)] scrollCastom">
-         {id && <CardSort  kassaReportId={id} isAddable SortData={KassaReportSingle}  />}
+         {id && <CardSort  kassaReportId={id} SortData={KassaReportSingle}  />}
         <DataTable
           columns={Columns}
           data={flatData || []}

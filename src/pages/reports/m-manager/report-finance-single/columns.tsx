@@ -14,7 +14,6 @@ import ActionBadge from "@/components/actionBadge";
 import ActionButton from "@/components/actionButton";
 import { useMeStore } from "@/store/me-store";
 import { IUserData, TResponse } from "@/types";
-import { useParams } from "react-router-dom";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
@@ -22,10 +21,13 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     header: "Филиалы",
     cell: ({ row }) => {
       const isMy = row?.original?.status == "my";
-      const isDealer = row?.original?.status == "Dealer-manager";
       return (
         <p className={isMy ? "text-[#89A143]" : ""}>
-          {isMy ? "Мои приходы и расходы" : isDealer?  row?.original?.status: row?.original?.filial?.title}
+          {isMy
+            ? "Мои приходы и расходы"
+            : row?.original?.isDealer
+              ? "Dealer-manager"
+              : row?.original?.filial?.title}
         </p>
       );
     },
@@ -40,9 +42,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         <p className="text-[#89A143]">
           {isMy
             ? ""
-            : ((item?.totalSum || 0) - (item?.totalPlasticSum || 0)).toFixed(
-                2
-              )}
+            : ((item?.totalSum || 0) - (item?.totalPlasticSum || 0)).toFixed(2)}
         </p>
       );
     },
@@ -69,9 +69,9 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return (
-          <p className={item?.totalDiscount != 0 ? "text-[#E38157]" : ""}>
-            {item?.totalDiscount?.toFixed(2)} {item?.totalDiscount ? "$" : ""}
-          </p>
+        <p className={item?.totalDiscount != 0 ? "text-[#E38157]" : ""}>
+          {item?.totalDiscount?.toFixed(2)} {item?.totalDiscount ? "$" : ""}
+        </p>
       );
     },
   },
@@ -164,11 +164,11 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
                   key={item?.id}
                   status={
                     row?.original?.status ==
-                      (item?.position.role == 10
+                      (item?.position.role == 9
                         ? "m_manager_confirmed"
                         : "accountant_confirmed") ||
-                    row?.original?.status == "accepted"
-                      ? "success"
+                    row?.original?.status == "accepted" || (item?.position.role == 9 &&  row?.original?.isMManagerConfirmed) ||(item?.position.role == 10 &&  row?.original?.isAccountantConfirmed)
+                      ? "success" 
                       : row?.original?.status == "rejected"
                         ? "fail"
                         : "panding"
@@ -187,31 +187,43 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "status",
     cell: ({ row }) => {
       const { meUser } = useMeStore();
-      const {id} = useParams()
       const item = row.original;
       const queryClient = useQueryClient();
       const { mutate, isPending } = useMutation({
         mutationFn: () =>
-          PatchData(item?.status  == "closed_by_d" ? `${apiRoutes.reports}/${id}/close`   : apiRoutes.kassaReports + "/" + row?.original?.id, {}),
+          PatchData(
+            (item?.status == "closed_by_d" && item?.dealerReportId)
+              ? `${apiRoutes.reports}/${item?.dealerReportId}/close-dealer`
+              : apiRoutes.kassaReports + "/" + row?.original?.id,
+            {}
+          ),
         onSuccess: () => {
           toast.success("Closed");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
           queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
-          queryClient.invalidateQueries({ queryKey: [ apiRoutes.reportsDealer] });
-         
+          queryClient.invalidateQueries({
+            queryKey: [apiRoutes.reportsDealer],
+          });
         },
       });
-     
-      
+
       return (
         <div onClick={(e) => e.stopPropagation()}>
+
           {item?.status == "my" ? (
             ""
-          ) : item?.status == "closed" || item?.status  == "closed_by_d"||
+          )
+          //  : (item?.isMManagerConfirmed  && meUser?.position?.role == 9) || (meUser?.position?.role == 10 || item?.isAccountantConfirmed) ? 
+          //   <ActionBadge
+          //     status={ (item?.isMManagerConfirmed && item?.isAccountantConfirmed) ?  item?.status: "inProgress"}
+          //   />
+           : item?.status == "accepted" ? <ActionBadge status={"accepted"} /> : 
+            item?.status == "closed" ||
+            (item?.status == "closed_by_d"  && !item?.isDealer) ||
             (meUser?.position?.role == 10 &&
-              item?.status == "m_manager_confirmed") ||
+              (item?.status == "m_manager_confirmed" ||item?.isMManagerConfirmed )) ||
             (meUser?.position?.role == 9 &&
-              item?.status == "accountant_confirmed") ? (
+             ( item?.status == "accountant_confirmed" || item?.isAccountantConfirmed ))  ? (
             <ActionButton
               onClick={() => mutate()}
               isLoading={isPending}
@@ -223,7 +235,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
                 item?.status == "open" || item?.kassaReportStatus == 2
                   ? "inProgress"
                   : item?.status == "accountant_confirmed" ||
-                      item?.status == "m_manager_confirmed"
+                      item?.status == "m_manager_confirmed"  || item?.isAccountantConfirmed || item?.isMManagerConfirmed 
                     ? "pending"
                     : item?.status
               }

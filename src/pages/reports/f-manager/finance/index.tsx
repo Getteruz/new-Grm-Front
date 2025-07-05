@@ -1,4 +1,4 @@
-import {  parseAsString, useQueryState } from "nuqs";
+import {  useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
 import { useMeStore } from "@/store/me-store";

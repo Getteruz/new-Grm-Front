@@ -557,22 +557,22 @@ export const DataMenu = {
       text: "Склады",
     },
     {
-      id: 3,
+      id: 32,
       icons: () => TransferIcons(),
       link: "/transfers",
       text: "Трансферы",
     },
     {
-      id: 3,
+      id: 34,
       icons: () => ProductsCheck(),
       link: "/product-check",
       text: "Проверка продукта",
     },
     {
-      id: 3,
+      id: 37,
       icons: () => ClientsIcon(),
-      link: "/client",
-      text: "Клиенты",
+      link: "/debt",
+      text: "Кенты",
     },
     {
       id: 4,
@@ -616,6 +616,12 @@ export const DataMenu = {
       icons: () => PersonsIcons(),
       link: "/user",
       text: "Сотрудники",
+    },
+    {
+      id: 37,
+      icons: () => ClientsIcon(),
+      link: "/debt",
+      text: "Кенты",
     },
     {
       id: 3,

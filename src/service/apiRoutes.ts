@@ -15,7 +15,7 @@ export const apiRoutes = {
   productscheck: "/product/check-product",
   productReport: "/product/report-product",
   productCharacteristics: "/collection/internet-shop",
-  clients: "/contact",
+  clients: "/client",
   login: "/auth/login",
   userMe: "/user/info/me",
   parties: "/partiya",

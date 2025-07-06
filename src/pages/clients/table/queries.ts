@@ -1,77 +1,37 @@
 import {
   DefinedInitialDataInfiniteOptions,
   useInfiniteQuery,
-  useMutation,
-  useQueryClient
 } from "@tanstack/react-query";
 
-import { getAllData, UpdateData } from "@/service/apiHelpers";
+import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
-import { Client, ClientsQuery } from "../type";
+import { TData, TQuery } from "../type";
 
-interface IClientsQuery {
-  options?: DefinedInitialDataInfiniteOptions<TResponse<Client>>;
-  queries?: ClientsQuery;
+interface ITransfers {
+  options?: DefinedInitialDataInfiniteOptions<TResponse<TData>>;
+  queries?: TQuery;
 }
 
-const useClientsFetch = ({ options, queries }: IClientsQuery) =>
+const useClientsData = ({ options, queries }: ITransfers) =>
   useInfiniteQuery({
     ...options,
-    queryKey: ["clients", queries],
-    queryFn: ({ pageParam = 1 }) => {
-      return getAllData<TResponse<Client>, ClientsQuery>(
-        apiRoutes.clients, 
-        {
-          ...queries,
-          page: pageParam as number,
-          limit: 10,
-        }
-      );
-    },
+    queryKey: [apiRoutes.clients, queries],
+    queryFn: ({ pageParam = 1 }) =>
+      getAllData<TResponse<TData>, TQuery>(apiRoutes.clients, {
+        ...queries,
+        page: pageParam as number,
+        limit: 20,
+      }),
     getNextPageParam: (lastPage) => {
-      if (lastPage.meta.currentPage < lastPage.meta.totalPages) {
-        return lastPage.meta.currentPage + 1;
+      if (lastPage?.meta?.currentPage <= lastPage?.meta?.totalPages) {
+        return lastPage?.meta?.currentPage + 1;
       } else {
-        return undefined;
+        return null;
       }
     },
     initialPageParam: 1,
   });
 
-// Hook for updating a client - mocked for now
-export const useUpdateClient = () => {
-  const queryClient = useQueryClient();
-  
-  return useMutation({
-    mutationFn: ({ id, data }: { id: string, data: Partial<Client> }) => {
-      return UpdateData(apiRoutes.clients, id, data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["clients"] });
-    },
-  });
-};
-
-// Hook for creating a client - mocked for now
-export const useCreateClient = () => {
-  const queryClient = useQueryClient();
-  
-  return useMutation({
-    mutationFn: (data: Omit<Client, 'id'>) => {
-      return fetch(apiRoutes.clients, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      }).then(res => res.json());
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["clients"] });
-    },
-  });
-};
-
-export default useClientsFetch;
+export default useClientsData;

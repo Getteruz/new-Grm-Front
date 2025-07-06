@@ -1,9 +1,14 @@
-import ClientsPage from "./table";
+import Page from "./table";
 
 const Route = [
   {
-    url: "/clients",
-    Element: ClientsPage,
+    url: "/client",
+    Element: Page,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/client/:id",
+    Element: Page,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
 ];

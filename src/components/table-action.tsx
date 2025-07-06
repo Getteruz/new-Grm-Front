@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { MoreHorizontal } from "lucide-react";
+import { Loader, MoreHorizontal } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -47,7 +47,7 @@ export default function TableAction({
   const [, setId] = useQueryState("id");
   const [open, setOpen] = useState<boolean>(false);
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate,isPending } = useMutation({
     mutationFn: async () => {
       if(url && id){
         return await DeleteData(url, id);
@@ -108,9 +108,11 @@ export default function TableAction({
                   </DialogClose>
                   <Button
                     variant={"destructive"}
+                    disabled={isPending}
                     onClick={() => mutate()}
                     className="w-1/2"
                   >
+                    {isPending ? <Loader className="animate-spin"/> :""}
                     {t("yes")}
                   </Button>
                 </DialogFooter>

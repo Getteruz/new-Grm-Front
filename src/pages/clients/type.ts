@@ -1,30 +1,46 @@
-export type Client = {
+export type TData = {
   id: string;
-  name: string;
-  secondName: string;
-  comment: string;
-  filial: string;
+  fullName:string
   phone: string;
-  // Additional fields for display - these might come from API or be calculated
-  fullName?: string; // Computed from name + secondName
-  status?: string;
-  registrationDate?: string;
-  lastActivity?: string;
-  ordersCount?: number;
+  comment: string;
+  user: {
+    id: string;
+    isActive: true;
+    firstName: string;
+    lastName: string;
+    fatherName: string;
+    login:string;
+    hired: string;
+    from: string
+    to: string;
+    username: null;
+    salary: 500;
+    email: string;
+    phone: string;
+  };
+  filial: {
+    id: string;
+    title: string;
+    name: string;
+    telegram: string;
+    address: string;
+    startWorkTime: string;
+    endWorkTime: string;
+    addressLink: string;
+    landmark: string;
+    phone1: string;
+    phone2: string | null;
+    isActive: boolean;
+    hickCompleted: boolean;
+    need_get_report: boolean;
+    type: string;
+  };
 };
 
-export type ClientsQuery = {
-  search?: string | undefined;
-  status?: string | undefined;
-  filial?: string | undefined;
-  sortBy?: string | undefined;
-  limit: number;
-  page: number;
+export type TQuery = {
+  limit?: number;
+  page?: number;
+  search?: string;
+  filial?: string;
+  filialId?: string;
 };
-export interface ProductCharacteristic {
-  id: string; // yoki number
-  collection: string;
-  characteristics1: string;
-  characteristics2: string;
-  // boshqa maydonlar bo'lishi mumkin
-}

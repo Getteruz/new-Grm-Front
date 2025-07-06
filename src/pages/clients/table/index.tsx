@@ -1,41 +1,48 @@
 import { parseAsInteger, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
+import { useMeStore } from "@/store/me-store";
 
-import { ClientColumns } from "./columns";
-import { SORT_OPTIONS } from "./constants";
+import ActionPage from "../form";
+import { ClientsColumns } from "./columns";
 import Filters from "./filters";
-import useCharacteristicsFetch from "./queries";
+import useClientsData from "./queries";
 
-export default function ProductCharacteristics() {
+export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [search] = useQueryState("search");
+  const { meUser } = useMeStore();
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useCharacteristicsFetch({
+    useClientsData({
       queries: {
         limit,
         page,
+        search: search || undefined,
+        filial: meUser?.filial?.id || undefined,
+          
       },
     });
-
-  const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
+  // const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
+  const flatData = data?.pages?.flatMap((page) => page || []) || [];
 
   return (
     <>
-      <Filters sortOptions={SORT_OPTIONS} selectedItems={[]} clearSelection={function (): void {
-        throw new Error("Function not implemented.");
-      } } onCreateClient={function (): void {
-        throw new Error("Function not implemented.");
-      } } />
+      <Filters />
       <DataTable
+        className="m-4"
         isLoading={isLoading}
-        columns={ClientColumns()}
+        columns={ClientsColumns}
+        isRowClickble={false}
+        // className={'max-h-screen overflow-y-scroll'}
+          // @ts-ignore
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}
         isFetchingNextPage={isFetchingNextPage}
       />
+      <ActionPage />
     </>
   );
 }

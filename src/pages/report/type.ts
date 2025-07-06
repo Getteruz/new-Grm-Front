@@ -13,6 +13,7 @@ export interface TData {
   date: string;
   is_online: boolean;
   price: number;
+  slug: string;
   tip: string;
   title: string;
   icon: {

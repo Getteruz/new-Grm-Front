@@ -23,6 +23,7 @@ import { TKassareportData } from "@/pages/report/type";
 import { minio_img_url } from "@/constants";
 import useDataFetch from "@/pages/filial/table/queries";
 import ShadcnSelect from "./Select";
+import useDeblsData from "@/pages/debt/table/queries";
 
 export default function CardSort({
   KassaId,
@@ -33,6 +34,7 @@ export default function CardSort({
   isOnlyCash,
   isOnlineCashFlow,
   isOnlyTerminal,
+  isUserSelectble,
 }: {
   KassaId?: string;
   reportId?: string | undefined;
@@ -42,6 +44,7 @@ export default function CardSort({
   isOnlyCash?: boolean | undefined;
   isOnlyTerminal?: boolean | undefined;
   isOnlineCashFlow?: boolean | undefined;
+  isUserSelectble?:boolean | undefined
   
 }) {
 
@@ -57,6 +60,9 @@ export default function CardSort({
   const [filial, setFilial] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [debtId,setDebtId] = useState<string | undefined>(undefined)
+  const [isUserLocSelectble,setisUserLocSelectble]=useState<boolean|undefined>(false)
+
 
   const { data: filialData } = useDataFetch({});
   const { data: kassaId, isLoading: isReportLoading } = useKassaById({
@@ -67,6 +73,18 @@ export default function CardSort({
     queries: { limit: 20, page: 1, type: type == "Приход" ? "in" : "out" },
     enabled: Boolean(dialogOpen),
   });
+
+  const { data:DeblsData,
+    //  isLoading, fetchNextPage, hasNextPage, isFetchingNextPage 
+    } =
+  useDeblsData({
+    queries: {
+      limit:100,
+      page:1,
+    },
+    enabled: Boolean(isUserLocSelectble),
+  });
+const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || [];
 
   interface TColumns {
     title: string;
@@ -272,7 +290,9 @@ export default function CardSort({
         kassa: kassaReports ? undefined : kassaId?.id || undefined,
         kassaReport: kassaReportId || kassaReports || undefined,
         report: reportId || undefined,
+        debtId:isUserLocSelectble ?debtId:undefined
       };
+     
       await api.post(apiRoutes.cashflow, body);
 
       toast.success(`${type} успешно добавлен`);
@@ -281,7 +301,7 @@ export default function CardSort({
       setCashflow_type("");
       setComment("");
       setPrice(0);
-
+      setDebtId(undefined)
       // Close dialog
       setDialogOpen(false);
 
@@ -303,6 +323,7 @@ export default function CardSort({
     setCashflow_type("");
     setComment("");
     setPrice(0);
+    setDebtId(undefined)
   },[dialogOpen])
   const column = meUser?.position.role === 11 ? hrColumns : columns;
 
@@ -378,7 +399,14 @@ export default function CardSort({
                 ?.map((item) => (
                   <div
                     key={item.id}
-                    onClick={() => setCashflow_type(item.id)}
+                    onClick={() => {
+                      setCashflow_type(item.id)
+                      if(item?.slug == "dolg" && isUserSelectble){
+                        setisUserLocSelectble(true)
+                      }else{
+                        setisUserLocSelectble(false)
+                      }
+                    }}
                     className={`${cashflow_type === item.id ? "bg-[#5D5D53] text-[white]" : "bg-input text-primary"} flex items-center justify-center flex-col pt-4 rounded-[7px] text-center cursor-pointer`}
                   >
                     <img
@@ -415,6 +443,20 @@ export default function CardSort({
                 />
               )}
 
+          { isUserLocSelectble &&<ShadcnSelect
+              value={debtId}
+              options={
+                flatDeblsData.map((item) => ({
+                  value: item.id,
+                  label: item.fullName,
+                })) || []
+              }
+              placeholder={"Кенты"}
+              onChange={(value) => {
+                setDebtId(value);
+              }}
+              className="w-full text-[#5D5D53] border-none h-[90px] !bg-input !text-[22px] font-semibold rounded-[7px] px-[17px] py-[26px]"
+            />}
               <Input
                 value={price || ""}
                 onChange={(e) => setPrice(Number(e.target.value))}

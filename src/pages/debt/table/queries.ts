@@ -12,17 +12,18 @@ import { TData, TQuery } from "../type";
 interface ITransfers {
   options?: DefinedInitialDataInfiniteOptions<TResponse<TData>>;
   queries?: TQuery;
+  enabled?: boolean;
 }
 
-const useClientsData = ({ options, queries }: ITransfers) =>
+const useDeblsData = ({ options, queries,enabled=true }: ITransfers) =>
   useInfiniteQuery({
     ...options,
+    enabled,
     queryKey: [apiRoutes.debt, queries],
     queryFn: ({ pageParam = 1 }) =>
       getAllData<TResponse<TData>, TQuery>(apiRoutes.debt, {
         ...queries,
         page: pageParam as number,
-        limit: 20,
       }),
     getNextPageParam: (lastPage) => {
       if (lastPage?.meta?.currentPage <= lastPage?.meta?.totalPages) {
@@ -34,4 +35,4 @@ const useClientsData = ({ options, queries }: ITransfers) =>
     initialPageParam: 1,
   });
 
-export default useClientsData;
+export default useDeblsData;

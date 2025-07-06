@@ -1,3 +1,4 @@
+import ReportPage from "./report";
 import Page from "./table";
 
 const Route = [
@@ -11,6 +12,12 @@ const Route = [
     Element: Page,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+  {
+    url: "/debt/:id/info",
+    Element: ReportPage,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  
 ];
 
 export default Route;

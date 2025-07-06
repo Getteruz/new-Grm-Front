@@ -104,6 +104,7 @@ export default function ReportPage() {
       <div className="h-[calc(100vh-140px)] scrollCastom">
         {
           <CardSort
+          isUserSelectble
             isOnlineCashFlow={meUser?.position.role == 10}
             isAddible={myCashFlow}
             kassaReportId={FManagerCashFlow ? kassaReportId : undefined}

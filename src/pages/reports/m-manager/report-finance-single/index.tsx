@@ -77,7 +77,7 @@ export default function PageFinanceSingle() {
   return (
     <>
       <div className="h-[calc(100vh-70px)] scrollCastom">
-        <CardSort reportId={id} isAddible={true} isOnlyCash={Boolean(meUser?.position?.role ==9) } isOnlyTerminal={Boolean(meUser?.position?.role == 10)} KassaReport={kassaData} />
+        <CardSort reportId={id} isUserSelectble={true} isAddible={true} isOnlyCash={Boolean(meUser?.position?.role ==9) } isOnlyTerminal={Boolean(meUser?.position?.role == 10)} KassaReport={kassaData} />
         <DataTable
           columns={KassaColumnsLoc || []}
           data={ReportSingleData || []}

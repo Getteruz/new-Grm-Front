@@ -6,7 +6,7 @@ import { useMeStore } from "@/store/me-store";
 import ActionPage from "../form";
 import { ClientsColumns } from "./columns";
 import Filters from "./filters";
-import useClientsData from "./queries";
+import useDeblsData from "./queries";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -15,7 +15,7 @@ export default function Page() {
   const { meUser } = useMeStore();
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useClientsData({
+    useDeblsData({
       queries: {
         limit,
         page,
@@ -34,7 +34,7 @@ export default function Page() {
         className="m-4"
         isLoading={isLoading}
         columns={ClientsColumns}
-        isRowClickble={false}
+        isRowClickble
         isNumberble
         ischeckble={false}
         // className={'max-h-screen overflow-y-scroll'}

@@ -7,10 +7,11 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { TData } from "../type";
 import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
-import { UpdateData } from "@/service/apiHelpers";
+import {  PatchData, UpdateData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import debounce from "@/utils/debounce";
 import { useParams } from "react-router-dom";
+import { useMeStore } from "@/store/me-store";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -137,14 +138,19 @@ export const Columns: ColumnDef<TData>[] = [
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
     cell: ({ row }) => {
+      const { meUser } = useMeStore();
+      const [tip] = useQueryState("tip", parseAsString.withDefault(meUser?.position?.role ==7 ? "переучет": "new"));
       return (
-        <TableAction
-          url={apiRoutes.products}
+     tip != "излишки" ?   <TableAction
+          url={apiRoutes.excelProducts}
           ShowPreview={false}
           ShowUpdate={false}
+          costomDelete={()=>PatchData(`/excel/change-count/${row?.original?.id}?tip${tip}`,{} )}
           id={row.original?.id}
-          refetchUrl={apiRoutes.productReport}
-        />
+          refetchUrl={apiRoutes.excelProducts}
+        />:""
+
+        
       );
     },
   },
@@ -266,14 +272,19 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
     cell: ({ row }) => {
+      const { meUser } = useMeStore();
+      const [tip] = useQueryState("tip", parseAsString.withDefault(meUser?.position?.role ==7 ? "переучет": "new"));
       return (
-        <TableAction
+     tip != "излишки" ?   <TableAction
           url={apiRoutes.excelProducts}
           ShowPreview={false}
           ShowUpdate={false}
+          costomDelete={()=>PatchData(`/excel/change-count/${row?.original?.id}?tip${tip}`,{} )}
           id={row.original?.id}
           refetchUrl={apiRoutes.excelProducts}
-        />
+        />:""
+
+        
       );
     },
   },

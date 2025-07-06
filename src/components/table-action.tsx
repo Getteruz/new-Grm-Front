@@ -30,6 +30,7 @@ export default function TableAction({
   ShowPreview,
   ShowUpdate = true,
   ShowDelete = true,
+  costomDelete,
   refetchUrl,
   children,
   id,
@@ -41,12 +42,14 @@ export default function TableAction({
   id?: string;
   refetchUrl?: string;
   children?: React.ReactNode;
+  costomDelete?:()=>void;
 }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [, setId] = useQueryState("id");
   const [open, setOpen] = useState<boolean>(false);
   const queryClient = useQueryClient();
+
   const { mutate,isPending } = useMutation({
     mutationFn: async () => {
       if(url && id){
@@ -109,7 +112,7 @@ export default function TableAction({
                   <Button
                     variant={"destructive"}
                     disabled={isPending}
-                    onClick={() => mutate()}
+                    onClick={() => costomDelete? costomDelete(): mutate()}
                     className="w-1/2"
                   >
                     {isPending ? <Loader className="animate-spin"/> :""}

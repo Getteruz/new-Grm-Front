@@ -38,6 +38,8 @@ interface DataTableProps<TData, TValue> {
   onSelectionChange?: (selectedRows: TData[]) => void;
   onRowClick?:(row: TData) => void;
   hasHeader?: boolean;
+  isNumberble?:boolean
+  ischeckble?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -53,6 +55,8 @@ export function DataTable<TData, TValue>({
   fetchNextPage,
   onSelectionChange,
   onRowClick,
+  ischeckble=true,
+  isNumberble,
   hasHeader = true,
 }: DataTableProps<TData, TValue>) {
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -84,8 +88,17 @@ export function DataTable<TData, TValue>({
     enableSorting: false,
     enableHiding: false,
   };
+  const numberboxColumn: ColumnDef<TData, any> = {
+    id: "select",
+    header: "№",
+    cell: ({ row }) => (
+      <p>{Number(row.id) + 1}</p>
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  };
 
-  const allColumns = [checkboxColumn, ...columns];
+  const allColumns =  ischeckble ?[ checkboxColumn, ...columns] :isNumberble? [numberboxColumn, ...columns]:columns;
 
   useEffect(() => {
     if (!fetchNextPage) return;

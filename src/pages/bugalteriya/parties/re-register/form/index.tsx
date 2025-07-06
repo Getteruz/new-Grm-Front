@@ -11,8 +11,11 @@ import { apiRoutes } from "@/service/apiRoutes";
 import {  parseAsString, useQueryState } from "nuqs";
 import { useParams } from "react-router-dom";
 import useDebounce from "@/hooks/useDebounce";
+import { useMeStore } from "@/store/me-store";
+
 
 const ActionPageQrCode = () => {
+  const {meUser} = useMeStore()
   const form = useForm<CropFormType>({
     resolver: zodResolver(CropSchema),
     defaultValues: {
@@ -50,7 +53,8 @@ const ActionPageQrCode = () => {
       },
     },
   });
-  const [tip] = useQueryState("tip",parseAsString.withDefault("new"));
+
+  const [tip] = useQueryState("tip",parseAsString.withDefault(meUser?.position?.role ==7 ? "переучет":"new"));
   const [idLoc, setId] = useQueryState("id");
   const { id } = useParams();
   const [barcode,setBarcode] = useQueryState("barcode");
@@ -95,6 +99,9 @@ const ActionPageQrCode = () => {
     if (barcode && barcode !== "new") {
       form.setValue("code", barcode);
     }
+    if(barcode== "new"){
+      resetForm()
+    }
   }, [barcode]);
 
   useEffect(() => {
@@ -125,6 +132,7 @@ const ActionPageQrCode = () => {
       }
     },
   });
+
   useEffect(() => {
     if (qrBaseOne) {
       form.reset({

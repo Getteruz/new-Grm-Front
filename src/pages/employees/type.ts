@@ -51,6 +51,7 @@ export type TData = {
 
 export type TQuery = {
   title?: string;
+  search?:string;
   report?:string;
   limit?: number;
   page?: number;

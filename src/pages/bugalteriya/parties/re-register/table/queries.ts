@@ -13,15 +13,18 @@ import { TData, TQuery, TReportData } from "../type";
 interface ITransfers {
   options?: DefinedInitialDataInfiniteOptions<TResponse<TData>>;
   queries?: TQuery;
+  enabled?:boolean
 }
 interface IPartiyaReport {
   options?: DefinedInitialDataInfiniteOptions<TReportData>;
   queries?: TQuery;
+  enabled?:boolean
 }
 
-const useDataFetch = ({ options, queries }: ITransfers) =>
+const useDataFetch = ({ options, queries,enabled=true }: ITransfers) =>
 useInfiniteQuery({
   ...options,
+  enabled,
   queryKey: [apiRoutes.excelProducts, queries],
   queryFn: ({ pageParam = 10 }) =>
     getAllData<TResponse<TData>, TQuery>(apiRoutes.excelProducts, {
@@ -39,8 +42,9 @@ useInfiniteQuery({
   initialPageParam: 1,
 })
 
-export const usePartiyaReport = ({  queries }: IPartiyaReport) => useQuery({
+export const usePartiyaReport = ({  queries,enabled=true }: IPartiyaReport) => useQuery({
     queryKey: [apiRoutes.excelProductsReport,queries],
+    enabled,
     queryFn: () => getAllData<TReportData, TQuery>(apiRoutes.excelProductsReport,queries),
 })
 

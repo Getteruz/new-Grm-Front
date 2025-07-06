@@ -19,7 +19,7 @@ export default function Page() {
       queries: {
         limit,
         page,
-        title: search || undefined,
+        search: search || undefined,
         filial:
           meUser?.position?.role == 11
             ? filial == "all"

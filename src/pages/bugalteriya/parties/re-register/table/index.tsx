@@ -9,15 +9,36 @@ import { parseAsString, useQueryState } from "nuqs";
 import { useMemo } from "react";
 import { useMeStore } from "@/store/me-store";
 import { usePartiyaById } from "../../form/actions";
-// import useDataLibrary from "./queries";
+import { TReportData } from "../type";
+
+
+function ItemBottom({items}:{items:TReportData }){
+
+    return(
+      <div className="w-full flex items-center  justify-end pr-10 border-border border-t  bg-sidebar">
+          <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
+            Объем: {Number(items?.volume)?.toFixed(2) || 0} м²
+          </div>
+          <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
+            Количество: { Number(items?.count)?.toFixed(0) || 0}
+          </div>
+          <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
+            Сумма: { Number(items?.total)?.toFixed(2) || 0} $
+          </div>
+          <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
+            Расход: { Number(items?.expence)?.toFixed(2) || 0} $
+          </div>
+    </div>
+    )
+}
 
 export default function ItemsPage() {
   const [search] = useQueryState("search");
   const { id } = useParams();
-  const [tip] = useQueryState("tip", parseAsString.withDefault("new"));
+  const { meUser } = useMeStore();
+  const [tip] = useQueryState("tip", parseAsString.withDefault(meUser?.position?.role ==7 ? "переучет": "new"));
   const [type] = useQueryState("type", parseAsString.withDefault("default"));
   const [, setBarCode] = useQueryState("barcode");
-  const { meUser } = useMeStore();
 
   const { data: onePartiya } = usePartiyaById({
     id: id ? id : undefined,
@@ -34,16 +55,43 @@ export default function ItemsPage() {
         tip: tip == "new" ? undefined : tip || undefined,
       },
     });
+  const {
+    data: BottomData,
+    isLoading: BottomIsLoading,
+    fetchNextPage: BottomFetchNextPage,
+    hasNextPage: BottomHasNextPage,
+    isFetchingNextPage: BottomIsFetchingNextPage,
+  } = useDataFetch({
+    queries: {
+      search: search || undefined,
+      partiyaId: id || "",
+      type: type || "default",
+      tip: "дефицит",
+    },
+    enabled: Boolean(tip == "излишки"),
+  });
 
-  const { data: PartiyaReportData, isLoading: PartiyaReportLoading } =
-    usePartiyaReport({
-      queries: {
-        partiyaId: id || "",
-        type: tip == "new" ? "дефицит" : tip || undefined,
-      },
-    });
+  const { data: PartiyaReportData } =
+  usePartiyaReport({
+    queries: {
+      partiyaId: id || "",
+      tip: tip == "new" ? undefined : tip || undefined,
+    },
+  });
+
+  const { data: BootomPartiyaReportData} =
+  usePartiyaReport({
+    queries: {
+      partiyaId: id || "",
+      tip:  "дефицит",
+    },
+    enabled: Boolean(tip == "излишки"),
+  });
+
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
+  const BottomflatData =
+    BottomData?.pages?.flatMap((page) => page?.items || []) || [];
   const LocalColums = useMemo(() => {
     if (type == "collection") {
       if (meUser?.position.role == 7) {
@@ -61,7 +109,6 @@ export default function ItemsPage() {
     }
   }, [type]);
 
-
   return (
     <div className="flex w-full">
       <ActionPageQrCode />
@@ -72,15 +119,17 @@ export default function ItemsPage() {
         />
         <DataTable
           onRowClick={(e) => {
-            if (type == "default") {
+            if (type == "default" ) {
               setBarCode(e?.bar_code?.code);
             }
           }}
           isLoading={isLoading}
           columns={LocalColums}
+           ischeckble={false}
+            isNumberble={true}
           className={
             tip == "излишки"
-              ? "h-[calc(50vh-90px)] scrollCastom"
+              ? "h-[calc(50vh-110px)] scrollCastom"
               : "h-[calc(100vh-175px)] scrollCastom"
           }
           data={flatData || []}
@@ -88,42 +137,27 @@ export default function ItemsPage() {
           hasNextPage={hasNextPage ?? false}
           isFetchingNextPage={isFetchingNextPage}
         />
+
+       {PartiyaReportData? <ItemBottom items={PartiyaReportData}/>:""}
         {tip == "излишки" && (
           <DataTable
-            isLoading={isLoading}
-            columns={Columns}
+            isLoading={BottomIsLoading}
+            columns={LocalColums}
+            ischeckble={false}
+            isNumberble={true}
             className={
               tip == "излишки"
-                ? "h-[calc(50vh-90px)]  scrollCastom"
+                ? "h-[calc(50vh-110px)]  scrollCastom"
                 : "h-[calc(100vh-165px)] scrollCastom"
             }
-            data={flatData || []}
-            fetchNextPage={fetchNextPage}
-            hasNextPage={hasNextPage ?? false}
-            isFetchingNextPage={isFetchingNextPage}
+            data={BottomflatData || []}
+            fetchNextPage={BottomFetchNextPage}
+            hasNextPage={BottomHasNextPage ?? false}
+            isFetchingNextPage={BottomIsFetchingNextPage}
           />
         )}
-
-        <div className="w-full flex items-center  justify-end pr-10 border-border border-t  bg-sidebar">
-          {PartiyaReportLoading ? (
-            "Loading..."
-          ) : (
-            <>
-              <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
-                Объем: {Number(PartiyaReportData?.volume)?.toFixed(2) || 0} м²
-              </div>
-              <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
-                Количество: { Number(PartiyaReportData?.count)?.toFixed(2) || 0}
-              </div>
-              <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
-                Сумма: { Number(PartiyaReportData?.total)?.toFixed(2) || 0} $
-              </div>
-              <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
-                Расход: { Number(PartiyaReportData?.expence)?.toFixed(2) || 0} $
-              </div>
-            </>
-          )}
-        </div>
+  {BootomPartiyaReportData && tip == "излишки" ? <ItemBottom items={BootomPartiyaReportData}/>:""}
+      
       </div>
     </div>
   );

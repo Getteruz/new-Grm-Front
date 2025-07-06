@@ -47,7 +47,13 @@ export const Columns: ColumnDef<TData>[] = [
       return (
         <p>
           {row.original?.bar_code?.isMetric ? (
-            row.original?.y * 100
+            tip === "излишки" ? (
+              row.original?.check_count - row.original?.y * 100
+            ) : tip === "дефицит" ? (
+              row.original?.y * 100 - row.original?.check_count
+            ) : (
+              row.original?.y * 100
+            )
           ) : (
             <>
               {tip === "переучет" && row.original?.check_count}
@@ -168,13 +174,13 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
   {
     header: "Сумма",
     cell: ({ row }) => {
-      const [localPrice] = useQueryState("localPrice", parseAsInteger.withDefault(row?.original?.displayPrice|| 0));
+      const [localPrice] = useQueryState(
+        "localPrice",
+        parseAsInteger.withDefault(row?.original?.displayPrice || 0)
+      );
       return (
         <>
-          <p>
-            {Number(localPrice *row.original?.kv).toFixed(1)}
-            $
-          </p>
+          <p>{Number(localPrice * row.original?.kv).toFixed(1)}$</p>
         </>
       );
     },
@@ -206,14 +212,25 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
   {
     header: "Зав.цена",
     cell: ({ row }) => {
-      const [,setLocalPrice] = useQueryState("localPrice", parseAsInteger.withDefault(row?.original?.displayPrice|| 0));
-      const {id} = useParams();
+      const [, setLocalPrice] = useQueryState(
+        "localPrice",
+        parseAsInteger.withDefault(row?.original?.displayPrice || 0)
+      );
+      const { id } = useParams();
       const { mutate } = useMutation({
-        mutationFn: ({cost,collectionId}:{cost:number,collectionId:string}) =>
-          UpdateData(apiRoutes.excelCollection, id || "", [ {
-            cost,
-            collectionId
-          }]),
+        mutationFn: ({
+          cost,
+          collectionId,
+        }: {
+          cost: number;
+          collectionId: string;
+        }) =>
+          UpdateData(apiRoutes.excelCollection, id || "", [
+            {
+              cost,
+              collectionId,
+            },
+          ]),
         onSuccess: () => {
           toast.success("changed");
           // queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
@@ -223,10 +240,13 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
         <Input
           defaultValue={row?.original?.displayPrice}
           className="w-[120px]"
-          onChange={debounce((e)=>{
-            setLocalPrice(e?.target.value)
-            mutate({cost:Number(e?.target.value),collectionId:row?.original?.id})
-          },900)}
+          onChange={debounce((e) => {
+            setLocalPrice(e?.target.value);
+            mutate({
+              cost: Number(e?.target.value),
+              collectionId: row?.original?.id,
+            });
+          }, 900)}
           placeholder="0"
           type="number"
         />
@@ -239,7 +259,7 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
       return <p>{row?.original?.collectionPrice?.priceMeter} $</p>;
     },
   },
- 
+
   {
     id: "actions",
     enableHiding: true,
@@ -248,11 +268,11 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       return (
         <TableAction
-          url={apiRoutes.products}
+          url={apiRoutes.excelProducts}
           ShowPreview={false}
           ShowUpdate={false}
           id={row.original?.id}
-          refetchUrl={apiRoutes.productReport}
+          refetchUrl={apiRoutes.excelProducts}
         />
       );
     },

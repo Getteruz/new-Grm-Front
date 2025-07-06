@@ -61,6 +61,7 @@ export default function Filters({
           { label: "Оприходован", value: "переучет" },
           { label: "Розница", value: "излишки" }, //дефицит
         ]}
+        defaultValue={meUser?.position?.role ==7 ? "переучет":"new"}
         placeholder="Накладной"
         name="tip"
       />
@@ -74,7 +75,7 @@ export default function Filters({
         placeholder="Коллекция"
         name="type"
       />
-      <FileExelUpload partiyaId={id || ""} />
+     { meUser?.position?.role ==9 ? <FileExelUpload partiyaId={id || ""} />:""}
 
       {meUser?.position?.role == 7 ? (
         <Button

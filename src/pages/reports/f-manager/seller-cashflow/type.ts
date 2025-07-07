@@ -1,17 +1,77 @@
 export interface TData {
   id: string;
-  year: number;
-  month: number;
-  totalSellCount: number;
-  totalSellKv: number;
-  totalSellPrice: number;
-  additionalProfitTotalSum: number;
-  totalPlasticSum: number;
-  totalDiscount: number;
-  totalSaleReturnCount: number;
-  totalSaleReturnPrice: number;
-  totalSaleReturnKv: number;
-  user: User;
+  status: string;
+  comment: null;
+  price: number;
+  x: number;
+  kv: number;
+  date:string;
+  additionalProfitSum: number;
+  netProfitSum:number;
+  discountSum: number;
+  discountPercentage: string;
+  tip: string;
+  plasticSum: number;
+  seller: {
+    id: string
+    isActive: true;
+    firstName: string;
+    lastName: string;
+    fatherName: string;
+    login:string;
+    hired:string;
+    from: string;
+    to: string;
+    username: string;
+    salary: number;
+    email: string;
+    phone: string;
+    isUpdated: true;
+  };
+  product: {
+    isInternetShop: false;
+    id: string;
+    code: string;
+    count: number;
+    booking_count: number;
+    date: string;
+    updated_at: string;
+    price: number;
+    secondPrice: number;
+    priceMeter: number;
+    comingPrice: number;
+    draft_priceMeter: number;
+    draft_comingPrice: number;
+    x: number;
+    y: number;
+    totalSize: number;
+    check_count: number;
+    is_deleted: false;
+    partiya_title: string;
+    book_count: number;
+    bar_code: {
+      shape: {
+        title: string;
+      };
+      imgUrl: {
+        path: string;
+      };
+      model: {
+        title: string;
+      };
+      collection: {
+        title: string;
+      };
+      color: {
+        title: string;
+      };
+      size: {
+        x: number;
+        y: number;
+        title:string;
+      };
+    };
+  };
 }
 
 export interface TQuery {

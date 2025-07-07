@@ -25,14 +25,14 @@ export default function PageSellerCashFlow() {
   const flatSellerCashflowData =
     SellerCashflowData?.pages?.flatMap((page) => page.items || []) || [];
     
-console.log(flatSellerCashflowData)
+
   return (
     <>
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
         <DataTable
           columns={SellerCashflowColumns || []}
-          data={[]}
+          data={flatSellerCashflowData}
           isLoading={SellerCashflowLoading}
           isRowClickble={true}
           fetchNextPage={SellerCashflowfetchNextPage}

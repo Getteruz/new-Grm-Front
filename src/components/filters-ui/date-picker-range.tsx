@@ -32,7 +32,7 @@ export function DateRangePicker({
     parse: (value) => value ? new Date(value) : new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
   });
   return (
-    <div className={`flex flex-col items-center border-l  w-[280px] sm:flex-row gap-2 ${className && className}`}>
+    <div className={`flex flex-col items-center border-l  max-w-[280px] w-full sm:flex-row gap-2 ${className && className}`}>
       <div className="flex-1 ">
         <Popover>
           <PopoverTrigger asChild>

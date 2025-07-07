@@ -53,6 +53,7 @@ export interface TData {
       shape: {
         title: string;
       };
+      isMetric:boolean;
       imgUrl: {
         path: string;
       };
@@ -61,6 +62,7 @@ export interface TData {
       };
       collection: {
         title: string;
+        priceMeter:string;
       };
       color: {
         title: string;

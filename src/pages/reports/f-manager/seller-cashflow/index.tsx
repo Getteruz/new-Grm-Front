@@ -34,7 +34,6 @@ export default function PageSellerCashFlow() {
           columns={SellerCashflowColumns || []}
           data={flatSellerCashflowData}
           isLoading={SellerCashflowLoading}
-          isRowClickble={true}
           fetchNextPage={SellerCashflowfetchNextPage}
           hasNextPage={SellerCashflowfhasNextPage ?? false}
           isFetchingNextPage={SellerCashflowisFetchingNextPage}

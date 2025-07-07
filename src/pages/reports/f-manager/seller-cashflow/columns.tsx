@@ -1,8 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 import { TData } from "./type";
+
 import { ShoppingCart } from "lucide-react";
 import ActionBadge from "@/components/actionBadge";
+import { format } from "date-fns";
 
 export const SellerCashflowColumns: ColumnDef<TData>[] = [
   {
@@ -57,21 +59,36 @@ export const SellerCashflowColumns: ColumnDef<TData>[] = [
     header: "Цена",
     cell: ({row}) => {
       const item = row.original
-      return <p>{item?.product?.price}$</p>;
+      return <p>{item?.product?.bar_code?.collection?.priceMeter}$</p>;
     },
   },
   {
     header: "Количество",
     cell: ({row}) => {
       const item = row.original
-      return <p>{item?.product?.count}x</p>;
+      return <p>{item?.x} {item?.product?.bar_code?.isMetric? "":"x"}</p>;
     },
   },
   {
     header: "Скидка",
     cell: ({row}) => {
       const item = row.original
-      return <p>{item?.additionalProfitSum}%</p>;
+      return <p>{item?.discountSum}$</p>;
+    },
+  },
+
+  {
+    header: "Навар",
+    cell: ({row}) => {
+      const item = row.original
+      return <p>{item?.additionalProfitSum}$</p>;
+    },
+  },
+  {
+    id: "time",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p className="text-[13px]">{format(item?.date, "dd MMM HH:mm")}</p>;
     },
   },
 ];

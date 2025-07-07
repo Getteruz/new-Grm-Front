@@ -8,7 +8,7 @@ export const SellerReportsColumns: ColumnDef<TData>[] = [
     header: "Фото",
     cell: ({ row }) => {
       const item = row.original;
-      return <TebleAvatar name={item?.user?.firstName} />;
+      return <TebleAvatar url={item?.user?.avatar.path} status="none" name={item?.user?.firstName} />;
     },
   },
   {

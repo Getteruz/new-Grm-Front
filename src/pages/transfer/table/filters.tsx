@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import { parseAsString, useQueryState } from "nuqs";
+import {  useQueryState } from "nuqs";
 import { useNavigate } from "react-router-dom";
 
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
@@ -7,14 +7,10 @@ import SearchInput from "@/components/filters-ui/search-input";
 import { BrCodeIcons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { useMeStore } from "@/store/me-store";
-import ShadcnSelect from "@/components/Select";
 
 export default function Filters() {
   const [type] = useQueryState("type");
-  const [collaction, setCollaction] = useQueryState(
-    "collection",
-    parseAsString.withDefault("collection")
-  );
+  
   const navigate = useNavigate();
   const { meUser } = useMeStore();
   const [filial] = useQueryState("filial");
@@ -27,7 +23,6 @@ export default function Filters() {
 
   return (
     <div className="h-[64px] flex justify-between border-b border-border w-full bg-sidebar pr-10">
-      <div className="      flex   ">
         {meUser?.position.role !== 6 && (
           <Button
             className="h-full border-r-1  justify-center font-[16px] gap-1  border-y-0  border-l-0"
@@ -46,7 +41,7 @@ export default function Filters() {
           meUser?.position.role !== 6 &&
           type !== "Out" && (
             <Button
-              className="h-full border-l-1 justify-center gap-1 w-[68px] border-y-0  border-r-0"
+              className="h-full border-l-1 justify-center gap-1 w-[50px] border-y-0  border-r-0"
               size={"icon"}
               variant={"outline"}
               onClick={() => navigate(link)}
@@ -54,20 +49,11 @@ export default function Filters() {
               <Plus size={40} />
             </Button>
           )}
-      </div>
-      <ShadcnSelect
-        onChange={(e) => setCollaction(e || "collection")}
-        options={[
-          { label: "Продукт", value: "product" },
-          { label: "Коллекция", value: "collection" },
-        ]}
-        value={collaction}
-        className={"w-full max-w-[150px]  ml-1 mr-auto border-y-0"}
-      />
+    
       {meUser?.position.role !== 9 &&
         (type !== "Out" && (meUser?.position.role !== 6 || type != "New") ? (
           <Button
-            className="h-full border-x-1 border-y-0 w-[140px] "
+            className="h-full border-x-1 border-y-0 w-[100px] "
             variant={"outline"}
             // onClick={() => navigate("create")}
           >

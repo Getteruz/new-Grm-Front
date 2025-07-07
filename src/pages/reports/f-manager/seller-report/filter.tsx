@@ -1,4 +1,3 @@
-import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { Button } from "@/components/ui/button";
 import { getMonth } from "date-fns";
@@ -22,9 +21,7 @@ export default function Filters() {
   return (
     <div className="bg-sidebar border-border border-b  px-[20px] h-[64px] items-center  flex   ">
       <p className="text-[#272727] text-[20px] mr-auto">Отчёт по сотрудикам </p>
-      <DateRangePicker
-        className="mr-10"
-      />
+    
       <FilterSelect 
         options={monthsArray}
         defaultValue={getMonth(new Date()) + 1 + ""  }

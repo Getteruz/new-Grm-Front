@@ -15,6 +15,11 @@ export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(50));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
 
+  const [search] = useQueryState("search")
+
+  const [fromDate] = useQueryState<Date>("startDate", { parse: () =>null});
+  const [toDate] = useQueryState<Date>("endDate",{ parse: () =>null});
+  
   const { data: filialData } = useDataFetch({
     queries: {
       limit,
@@ -48,6 +53,9 @@ export default function Page() {
       page: 1,
       from: meUser?.position.role === 9 ? filial : type=="In" ? filial : meUser?.filial?.id ,
       to: meUser?.position.role === 9 ? filialTo : type=="In" ? meUser?.filial?.id : filial ,
+      fromDate:fromDate || undefined,
+      toDate:toDate || undefined,
+      search:search ||undefined
     },
   });
 

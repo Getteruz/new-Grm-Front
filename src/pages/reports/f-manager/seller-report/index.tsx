@@ -6,9 +6,12 @@ import { SellerReportsColumns } from "./columns";
 import {  parseAsString, useQueryState } from "nuqs";
 import { useDataSellerReports } from "./queries";
 import { getMonth } from "date-fns";
+import { useMeStore } from "@/store/me-store";
 
 export default function PageSellerReport() {
   const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1 + "" ));
+  const {meUser} = useMeStore();
+  const [,setUserName] = useQueryState("userName", parseAsString.withDefault(""));
   const {
     data: SellerReportsData,
     isLoading: SellerReportsLoading,
@@ -17,7 +20,7 @@ export default function PageSellerReport() {
     isFetchingNextPage: SellerReportsisFetchingNextPage,
   } = useDataSellerReports({
     queries: {
-      // filial: meUser?.filial?.id || undefined,
+      filialId: meUser?.filial?.id || undefined,
       page: 1,
       limit: 10,
       month:month,
@@ -36,6 +39,9 @@ export default function PageSellerReport() {
           data={flatSellerReportsData}
           isLoading={SellerReportsLoading}
           isRowClickble={true}
+          onRowClick={(row) => {
+            setUserName(row.user?.firstName + " " + row.user?.lastName);
+          }}
           fetchNextPage={SellerReportsfetchNextPage}
           hasNextPage={SellerReportsfhasNextPage ?? false}
           isFetchingNextPage={SellerReportsisFetchingNextPage}

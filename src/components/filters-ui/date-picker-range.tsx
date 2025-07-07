@@ -15,11 +15,14 @@ import { cn } from "@/lib/utils";
 interface DateRangePickerProps {
   fromPlaceholder?: string;
   toPlaceholder?: string;
+  className?:string
 }
 
 export function DateRangePicker({
   fromPlaceholder,
   toPlaceholder,
+  className
+  
 }: DateRangePickerProps) {
   const { t } = useTranslation();
   const [fromDate, setFromDate] = useQueryState<Date>("startDate", {
@@ -29,7 +32,7 @@ export function DateRangePicker({
     parse: (value) => value ? new Date(value) : new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
   });
   return (
-    <div className="flex flex-col items-center border-l  w-[280px] sm:flex-row gap-2">
+    <div className={`flex flex-col items-center border-l  w-[280px] sm:flex-row gap-2 ${className && className}`}>
       <div className="flex-1 ">
         <Popover>
           <PopoverTrigger asChild>

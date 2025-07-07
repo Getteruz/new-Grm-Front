@@ -1,4 +1,4 @@
-export interface TData  {
+export interface TData {
   id: string;
   year: number;
   month: number;
@@ -14,14 +14,11 @@ export interface TData  {
   user: User;
 }
 
-
 export interface TQuery {
   search?: string | undefined;
-  filial?: string;
-  filialId?:string;
-  limit: number;
-  page: number;
-  month?:string;
+  reportId?: string;
+  limit?: number;
+  page?: number;
 }
 
 export interface User {
@@ -43,3 +40,13 @@ export interface User {
   createdAt: string;
 }
 
+export interface TTopData {
+  startDate: string;
+  endDate: string;
+  totalWorkTime: number;
+  totalCount: number;
+  totalKv: number;
+  totalPrice: number;
+  totalDiscountSum: number;
+  additionalProfitTotalSum: number;
+}

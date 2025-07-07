@@ -19,49 +19,49 @@ export const BronedColumns: ColumnDef<BronedData>[] = [
   {
     header: "collection",
     cell: ({ row }) => {
-      return <p>{row.original.model?.collection?.title}</p>;
+      return <p>{row.original?.product?.bar_code?.collection?.title}</p>;
     },
   },
   {
     header: "model",
     cell: ({ row }) => {
-      return <p>{row.original.model?.title}</p>;
+      return <p>{row.original?.product?.bar_code?.model?.title}</p>;
     },
   },
   {
     header: "size",
     cell: ({ row }) => {
-      return <p>{row.original.size}</p>;
+      return <p>{row.original?.product?.bar_code?.size?.title}</p>;
     },
   },
   {
     header: "count",
     cell: ({ row }) => {
-      return <p>{row.original.count}шт</p>;
+      return <p>{row.original?.x}шт</p>;
     },
   },
   {
     header: "shape",
     cell: ({ row }) => {
-      return <p>{row.original.shape}</p>;
+      return <p>{row.original?.product?.bar_code?.shape?.title}</p>;
     },
   },
   {
     header: "style",
     cell: ({ row }) => {
-      return <p>{row.original.style}</p>;
+      return <p>{row.original?.product?.bar_code?.style?.title}</p>;
     },
   },
   {
     header: "color",
     cell: ({ row }) => {
-      return <p>{row.original.color?.title}</p>;
+      return <p>{row.original?.product?.bar_code?.color?.title}</p>;
     },
   },
   {
     header: "price",
     cell: ({ row }) => {
-      return <p>{row.original.price} $</p>;
+      return <p>{row.original.product?.price} $</p>;
     },
   },
   {

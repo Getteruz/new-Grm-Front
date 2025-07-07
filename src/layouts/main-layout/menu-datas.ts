@@ -512,6 +512,11 @@ export const DataMenu = {
           link: "/m-manager/report-remaider",
           text: "Отчет об остатке",
         },
+        {
+          id: 25,
+          link: "/m-manager/report-seller",
+          text: "Отчёт по сотрудикам",
+        },
       ],
     },
     {
@@ -603,6 +608,11 @@ export const DataMenu = {
           link: "/m-manager/report-remaider",
           text: "Отчет об остатке",
         },
+        {
+          id: 25,
+          link: "/m-manager/report-seller",
+          text: "Отчёт по сотрудикам",
+        },
       ],
     },
     {
@@ -642,6 +652,18 @@ export const DataMenu = {
       icons: () => StatementIcon(),
       link: "/statement",
       text: "Ведомость",
+      items: [
+        {
+          id: 22,
+          link: "/statement",
+          text: "Ведомость",
+        },
+        {
+          id: 25,
+          link: "/statement/report-seller",
+          text: "Отчёт по сотрудикам",
+        },
+      ],
     },
     {
       id: 3,

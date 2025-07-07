@@ -1,41 +1,49 @@
-import { parseAsInteger, useQueryState } from "nuqs";
+import {  useQueryState } from "nuqs";
 
 import CarpetCard from "@/components/cards/carpet-card";
 
 import Filters from "./filters";
-import useBroned from "./queries";
+import useData from "./queries";
+import { useMeStore } from "@/store/me-store";
 
 export default function Page() {
-  const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
-  const [page] = useQueryState("page", parseAsInteger.withDefault(1));
 
   const [search] = useQueryState("search");
-  const { data } = useBroned({
+  const {meUser} = useMeStore()
+
+  const { data } = useData({
     queries: {
-      limit,
-      page,
       search: search || undefined,
+      filial:meUser?.filial?.id || undefined,
     },
   });
-
+  const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
   return (
     <>
       <Filters />
       <div className="px-2.5  mt-4 gap-2 grid row-start grid-cols-7  pb-[17px]">
-        {data?.items.map((item) => (
+        {flatData.map((item) => (
           <CarpetCard
             key={item.id}
-            id="1"
+            id={item?.id}
             isBron={true}
+            user={{
+              firstName: meUser?.firstName || "",
+              lastName: meUser?.lastName || "",
+              avatar: {
+                path: meUser?.avatar?.path || ""
+              }
+            }}
+            img={{
+              path:  ""
+            }}
             carpetType="my-broned"
-            user={item?.user}
             shape={item?.product?.bar_code?.shape?.title}
             discount={"5"}
-            img={item.product.bar_code?.imgUrl}
             model={item?.product?.bar_code?.model?.title}
-            size={`${item?.product?.bar_code.size.x * 100}X${item?.product?.y * 100}`}
-            count={item?.product?.book_count || "0"}
-            price={item?.product?.price}
+            size={item?.product?.bar_code.size?.title}
+            count={item?.x +"" || "0"}
+            price={item?.product?.price +""}
             colaction={item?.product?.bar_code?.collection?.title}
             color={item?.product?.bar_code?.color?.title}
           />

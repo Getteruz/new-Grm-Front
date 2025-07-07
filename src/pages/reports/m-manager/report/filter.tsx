@@ -45,7 +45,6 @@ export default function Filters() {
     },
   });
 
-  console.log(id)
   return (
     <div className="bg-sidebar border-border border-b  px-[20px] h-[64px] items-center  flex   ">
       {id ? (

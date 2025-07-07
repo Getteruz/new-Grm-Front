@@ -10,7 +10,6 @@ import { useMeStore } from "@/store/me-store";
 
 export default function Filters() {
   const [type] = useQueryState("type");
-  
   const navigate = useNavigate();
   const { meUser } = useMeStore();
   const [filial] = useQueryState("filial");

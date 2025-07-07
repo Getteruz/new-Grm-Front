@@ -5,6 +5,8 @@ import PageRemaider from "./remaider";
 import ReportPage from "./report";
 import PageFinance from "./report-finance";
 import PageFinanceSingle from "./report-finance-single";
+import PageSellerReport from "../seller/seller-report";
+import PageSellerCashFlow from "../seller/seller-cashflow";
 
 const Route = [
   {
@@ -67,6 +69,16 @@ const Route = [
   {
     url: "/m-manager/report-finance/:reportId/info/:kassaReportId/info/f-managers",
     Element: ReportPage,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "//m-manager/report-seller",
+    Element: PageSellerReport,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "//m-manager/report-seller/:id/info",
+    Element: PageSellerCashFlow,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
 ];

@@ -12,6 +12,7 @@ export default function PageSellerReport() {
   const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1 + "" ));
   const {meUser} = useMeStore();
   const [,setUserName] = useQueryState("userName", parseAsString.withDefault(""));
+  const [filial] = useQueryState("filial");
   const {
     data: SellerReportsData,
     isLoading: SellerReportsLoading,
@@ -20,7 +21,7 @@ export default function PageSellerReport() {
     isFetchingNextPage: SellerReportsisFetchingNextPage,
   } = useDataSellerReports({
     queries: {
-      filialId: meUser?.filial?.id || undefined,
+      filialId: meUser?.position?.role == 4 ? meUser?.filial?.id :filial || undefined,
       page: 1,
       limit: 10,
       month:month,

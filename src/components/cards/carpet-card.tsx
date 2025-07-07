@@ -125,7 +125,7 @@ export default function CarpetCard({
       </p>
       {discount ? (
         <div className="absolute right-0 bottom-[46px] ">
-          {user.avatar?.path ? (
+          {user?.avatar?.path ? (
             <img
               src={minio_img_url + user?.avatar?.path}
               className="w-[46px] h-[46px] rounded-full object-cover"

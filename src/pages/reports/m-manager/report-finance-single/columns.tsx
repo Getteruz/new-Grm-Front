@@ -192,7 +192,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const { mutate, isPending } = useMutation({
         mutationFn: () =>
           PatchData(
-            (item?.status == "closed_by_d" && item?.dealerReportId)
+            (item?.dealerReportId)
               ? `${apiRoutes.reports}/${item?.dealerReportId}/close-dealer`
               : apiRoutes.kassaReports + "/" + row?.original?.id,
             {}

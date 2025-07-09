@@ -53,8 +53,8 @@ export default function Page() {
       page: 1,
       from: meUser?.position.role === 9 ? filial : type=="In" ? filial : meUser?.filial?.id ,
       to: meUser?.position.role === 9 ? filialTo : type=="In" ? meUser?.filial?.id : filial ,
-      fromDate:fromDate || undefined,
-      toDate:toDate || undefined,
+      startDate:fromDate || undefined,
+      endDate:toDate || undefined,
       search:search ||undefined
     },
   });

@@ -1,6 +1,4 @@
-import { Plus } from "lucide-react";
 import {  useQueryState } from "nuqs";
-import { useNavigate } from "react-router-dom";
 
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 import SearchInput from "@/components/filters-ui/search-input";
@@ -10,15 +8,14 @@ import { useMeStore } from "@/store/me-store";
 
 export default function Filters() {
   const [type] = useQueryState("type");
-  const navigate = useNavigate();
   const { meUser } = useMeStore();
-  const [filial] = useQueryState("filial");
-  const [filialTo] = useQueryState("filialTo");
+  // const [filial] = useQueryState("filial");
+  // const [filialTo] = useQueryState("filialTo");
 
-  const linkFrom =
-    meUser?.position.role === 9 ? filial || "" : meUser?.filial?.id || "";
-  const linkTo = meUser?.position.role === 9 ? filialTo : filial;
-  const link = "/transfers/" + linkFrom + "/to/" + linkTo;
+  // const linkFrom =
+  //   meUser?.position.role === 9 ? filial || "" : meUser?.filial?.id || "";
+  // const linkTo = meUser?.position.role === 9 ? filialTo : filial;
+  // const link = "/transfers/" + linkFrom + "/to/" + linkTo;
 
   return (
     <div className="h-[64px] flex justify-between border-b border-border w-full bg-sidebar pr-10">
@@ -36,7 +33,7 @@ export default function Filters() {
           fromPlaceholder="от: 12.02.2025"
           toPlaceholder="до: 12.02.2025"
         />
-        {meUser?.position.role !== 9 &&
+        {/* {meUser?.position.role !== 9 &&
           meUser?.position.role !== 6 &&
           type !== "Out" && (
             <Button
@@ -47,7 +44,7 @@ export default function Filters() {
             >
               <Plus size={40} />
             </Button>
-          )}
+          )} */}
     
       {meUser?.position.role !== 9 &&
         (type !== "Out" && (meUser?.position.role !== 6 || type != "New") ? (
@@ -59,14 +56,15 @@ export default function Filters() {
             Принять
           </Button>
         ) : (
-          meUser?.position.role !== 6 && (
-            <Button
-              onClick={() => navigate(link)}
-              className="h-full border-x-1 border-y-0  "
-            >
-              Добавить трансфер
-            </Button>
-          )
+          ""
+          // meUser?.position.role !== 6 && (
+          //   <Button
+          //     onClick={() => navigate(link)}
+          //     className="h-full border-x-1 border-y-0  "
+          //   >
+          //     Добавить трансфер
+          //   </Button>
+          // )
         ))}
     </div>
   );

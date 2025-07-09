@@ -54,8 +54,8 @@ export type TransferQuery = {
   filial?: string;
   type?: string;
   search?:string;
-  toDate?:Date;
-  fromDate?:Date;
+  startDate?:Date;
+  endDate?:Date;
 };
 
 export type TTransferCategory = {

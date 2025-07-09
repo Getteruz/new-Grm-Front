@@ -213,15 +213,11 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
           {item?.status == "my" ? (
             ""
           )
-          //  : (item?.isMManagerConfirmed  && meUser?.position?.role == 9) || (meUser?.position?.role == 10 || item?.isAccountantConfirmed) ? 
-          //   <ActionBadge
-          //     status={ (item?.isMManagerConfirmed && item?.isAccountantConfirmed) ?  item?.status: "inProgress"}
-          //   />
            : item?.status == "accepted" ? <ActionBadge status={"accepted"} /> : 
             item?.status == "closed" ||
-            (item?.status == "closed_by_d"  && !item?.isDealer) ||
+            (item?.status == "closed_by_d") || //  && !item?.isDealer
             (meUser?.position?.role == 10 &&
-              (item?.status == "m_manager_confirmed" ||item?.isMManagerConfirmed )) ||
+              (item?.status == "m_manager_confirmed" || item?.isMManagerConfirmed )) ||
             (meUser?.position?.role == 9 &&
              ( item?.status == "accountant_confirmed" || item?.isAccountantConfirmed ))  ? (
             <ActionButton

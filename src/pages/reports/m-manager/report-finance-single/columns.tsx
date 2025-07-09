@@ -209,7 +209,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
 
       return (
         <div onClick={(e) => e.stopPropagation()}>
-
+          
           {item?.status == "my" ? (
             ""
           )

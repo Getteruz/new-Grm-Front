@@ -67,7 +67,7 @@ const Filter: React.FC<FiltersProps> = ({ seleted }) => {
         </div>
         <div className="h-[35px]  border-r flex justify-between">
           <div className="flex">
-            <SearchInput className="border-l-1 border-b-0 border  min-w-[150px]" />
+            <SearchInput className="border-l-1 border-b-0 border ml-auto  min-w-[150px]" />
             <FilterComboboxDemoInput
               queries={{
                 filial: uuid,

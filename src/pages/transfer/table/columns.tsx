@@ -9,7 +9,11 @@ import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { parseAsString, useQueryState } from "nuqs";
 import { minio_img_url } from "@/constants";
 import { Avatar,AvatarFallback,AvatarImage, } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import ActionButton from "@/components/actionButton";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { PatchData } from "@/service/apiHelpers";
+import { toast } from "sonner";
+import { useMeStore } from "@/store/me-store";
 // import { useTranslation } from "react-i18next";
 
 export const paymentColumns: ColumnDef<TransferData>[] = [
@@ -84,7 +88,6 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
     id: "product.bar_code.country.title",
     accessorKey: "product.bar_code.country.title",
   },
-
   {
     header: "count",
     cell: ({ row }) => {
@@ -95,11 +98,37 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
   {
     header: "Статус",
     cell: ({row}) => {
-         const [type] = useQueryState(
-        "type",
+      // const [type] = useQueryState(
+      //   "type",
+      //   parseAsString.withDefault("In")
+      // )
+      const [filial] = useQueryState(
+        "filial",
         parseAsString.withDefault("In")
       )
-      return <Button disabled={row?.original?.progres  == 'Accepted'} className={`${type == "In" ?"bg-[#89A143]": "border-[#E38157]  bg-transparent text-[#E38157] hover:bg-transparent"} inline-block border border-border px-[12px] py-[6px] rounded-[80px]`}> {type =="In"?  row?.original?.progres  == 'Accepted' ? "Принито": "Принять":"В ожидание"}  </Button>;
+      const {meUser} = useMeStore()
+      const queryClient = useQueryClient()
+      const status = row?.original?.progres
+      // const statusObj = {
+      //   Processing :'Processing',
+      //   Rejected: 'Rejected',
+      //   Accepted: 'Accepted',
+      //   Accepted_F : 'Accepted_F'
+      //   }
+      
+        const { mutate, isPending } = useMutation({
+          mutationFn: () =>
+            PatchData(apiRoutes.transferAccept , {
+               from: meUser?.filial?.id, include: [], exclude: [] , to: filial
+            }),
+          onSuccess: () => {
+            toast.success("Accepted");
+            queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
+          },
+        });
+      // ActionBadge
+      // ActionButton
+      return  <ActionButton onClick={()=>mutate()}  isLoading={isPending} status={status == "Processing"? "accept":"reject" }/>
     },
   },
   {

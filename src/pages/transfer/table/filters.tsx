@@ -33,19 +33,7 @@ export default function Filters() {
           fromPlaceholder="от: 12.02.2025"
           toPlaceholder="до: 12.02.2025"
         />
-        {/* {meUser?.position.role !== 9 &&
-          meUser?.position.role !== 6 &&
-          type !== "Out" && (
-            <Button
-              className="h-full border-l-1 justify-center gap-1 w-[50px] border-y-0  border-r-0"
-              size={"icon"}
-              variant={"outline"}
-              onClick={() => navigate(link)}
-            >
-              <Plus size={40} />
-            </Button>
-          )} */}
-    
+       
       {meUser?.position.role !== 9 &&
         (type !== "Out" && (meUser?.position.role !== 6 || type != "New") ? (
           <Button

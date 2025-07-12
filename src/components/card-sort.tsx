@@ -426,7 +426,7 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
                 ))}
             </div>
             <div className="w-full">
-              {meUser?.position?.role == 10 && (
+              {(meUser?.position?.role == 10 && !isUserLocSelectble) && (
                 <ShadcnSelect
                   value={filial}
                   options={
@@ -443,7 +443,7 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
                 />
               )}
 
-          { isUserLocSelectble &&<ShadcnSelect
+          { isUserLocSelectble && <ShadcnSelect
               value={debtId}
               options={
                 flatDeblsData.map((item) => ({

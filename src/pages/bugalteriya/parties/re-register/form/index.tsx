@@ -183,7 +183,7 @@ const ActionPageQrCode = () => {
           if (e.key === "Enter") e.preventDefault();
         }}
         onSubmit={form.handleSubmit((data) => {
-      
+          
           mutate({
             partiyaId: id || "",
             isUpdate: barcode == "new" ? false : true,

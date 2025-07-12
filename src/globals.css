@@ -158,6 +158,7 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+  color:rgb(93, 93, 83)
 }
 
 /* body {

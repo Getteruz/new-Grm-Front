@@ -21,7 +21,7 @@ interface Ripple {
 }
 
 const BidirectionalAudioVisualizer: React.FC<AudioVisualizerProps> = ({
-  size = 400,
+  size = 300,
   maxRipples = 5,
   rippleSpeed = 2,
   sensitivity = 1.5,
@@ -148,7 +148,7 @@ const BidirectionalAudioVisualizer: React.FC<AudioVisualizerProps> = ({
     animationIdRef.current = requestAnimationFrame(animate)
 
     // Clear canvas with fade effect
-    ctx.fillStyle = "rgba(0, 0, 0, 0.1)"
+    ctx.fillStyle = "rgba(0, 0, 0)"
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     const centerX = canvas.width / 2
@@ -374,6 +374,9 @@ const BidirectionalAudioVisualizer: React.FC<AudioVisualizerProps> = ({
     }
   }, [isListening, isSpeaking, animate])
 
+  useEffect(()=>{
+    startListening()
+  },[])
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -413,100 +416,7 @@ const BidirectionalAudioVisualizer: React.FC<AudioVisualizerProps> = ({
         </div>
       </div>
 
-      {/* Controls */}
-      <div className="flex flex-col items-center space-y-4">
-        <div className="flex items-center space-x-4">
-          <Button
-            onClick={isListening ? stopListening : startListening}
-            disabled={isLoading || isSpeaking}
-            variant={isListening ? "destructive" : "default"}
-            size="lg"
-            className="min-w-[140px]"
-          >
-            {isLoading ? (
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                <span>Loading...</span>
-              </div>
-            ) : isListening ? (
-              <div className="flex items-center space-x-2">
-                <MicOff className="w-4 h-4" />
-                <span>Stop Listening</span>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Mic className="w-4 h-4" />
-                <span>Start Listening</span>
-              </div>
-            )}
-          </Button>
-
-          <Button
-            onClick={() => speak("Hello! I am your AI assistant. How can I help you today?")}
-            disabled={isLoading || isListening || isSpeaking}
-            variant="outline"
-            size="lg"
-          >
-            {isSpeaking ? (
-              <div className="flex items-center space-x-2">
-                <Square className="w-4 h-4" />
-                <span>Speaking...</span>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Play className="w-4 h-4" />
-                <span>Test Speech</span>
-              </div>
-            )}
-          </Button>
-        </div>
-
-        {/* Status Indicators */}
-        {mode !== "idle" && (
-          <div className="flex items-center space-x-4 text-sm">
-            <div
-              className={`flex items-center space-x-2 ${mode === "listening" ? "text-purple-400" : "text-blue-400"}`}
-            >
-              <div className="w-2 h-2 rounded-full animate-pulse bg-current" />
-              <span>{mode === "listening" ? "Listening..." : "Speaking..."}</span>
-            </div>
-
-            {volume > 0 && (
-              <div className="flex items-center space-x-2 text-gray-400">
-                <span>Volume:</span>
-                <div className="w-16 h-2 bg-gray-700 rounded-full overflow-hidden">
-                  <div
-                    className={`h-full transition-all duration-100 ${
-                      mode === "listening"
-                        ? "bg-gradient-to-r from-purple-500 to-purple-300"
-                        : "bg-gradient-to-r from-blue-500 to-blue-300"
-                    }`}
-                    style={{ width: `${Math.min(100, volume)}%` }}
-                  />
-                </div>
-                <span className="text-xs w-8">{volume}%</span>
-              </div>
-            )}
-          </div>
-        )}
-
-        {error && (
-          <div className="text-red-400 text-sm text-center max-w-md">
-            <p>{error}</p>
-          </div>
-        )}
-      </div>
-
-      {/* Instructions */}
-      <div className="text-center text-purple-300/70 text-sm max-w-md space-y-2">
-        <p>
-          <strong>🔊 Listening Mode:</strong> Purple ripples expand outward from center
-        </p>
-        <p>
-          <strong>🗣️ Speaking Mode:</strong> Blue ripples collapse inward to center
-        </p>
-        <p className="text-xs text-gray-500">Audio is processed locally and never transmitted</p>
-      </div>
+    
     </div>
   )
 }

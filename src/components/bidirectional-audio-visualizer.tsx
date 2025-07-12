@@ -1,7 +1,6 @@
 import type React from "react"
 import { useEffect, useRef, useState, useCallback } from "react"
-import { Button } from "@/components/ui/button"
-import { Mic, MicOff, Volume2, Play, Square } from "lucide-react"
+import { Mic, Volume2 } from "lucide-react"
 
 interface AudioVisualizerProps {
   size?: number
@@ -35,9 +34,9 @@ const BidirectionalAudioVisualizer: React.FC<AudioVisualizerProps> = ({
   const rippleIdRef = useRef(0)
 
   const [isListening, setIsListening] = useState(false)
-  const [isSpeaking, setIsSpeaking] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [isSpeaking] = useState(false)
+  const [, setIsLoading] = useState(false)
+  const [, setError] = useState<string | null>(null)
   const [volume, setVolume] = useState(0)
   const [mode, setMode] = useState<"idle" | "listening" | "speaking">("idle")
 
@@ -282,68 +281,68 @@ const BidirectionalAudioVisualizer: React.FC<AudioVisualizerProps> = ({
   }, [])
 
   // Text-to-Speech with audio analysis
-  const speak = useCallback(
-    async (text: string) => {
-      if (!text.trim()) return
+  // const speak = useCallback(
+  //   async (text: string) => {
+  //     if (!text.trim()) return
 
-      try {
-        setIsSpeaking(true)
-        setMode("speaking")
+  //     try {
+  //       setIsSpeaking(true)
+  //       setMode("speaking")
 
-        // Create audio context for TTS analysis
-        const AudioContext = window.AudioContext || (window as any).webkitAudioContext
-        const audioContext = new AudioContext()
-        audioContextRef.current = audioContext
+  //       // Create audio context for TTS analysis
+  //       const AudioContext = window.AudioContext || (window as any).webkitAudioContext
+  //       const audioContext = new AudioContext()
+  //       audioContextRef.current = audioContext
 
-        const analyser = audioContext.createAnalyser()
-        analyser.fftSize = 256
-        analyser.smoothingTimeConstant = 0.8
-        analyserRef.current = analyser
+  //       const analyser = audioContext.createAnalyser()
+  //       analyser.fftSize = 256
+  //       analyser.smoothingTimeConstant = 0.8
+  //       analyserRef.current = analyser
 
-        // Create speech synthesis
-        const utterance = new SpeechSynthesisUtterance(text)
-        utterance.rate = 0.9
-        utterance.pitch = 1.1
-        utterance.volume = 0.8
+  //       // Create speech synthesis
+  //       const utterance = new SpeechSynthesisUtterance(text)
+  //       utterance.rate = 0.9
+  //       utterance.pitch = 1.1
+  //       utterance.volume = 0.8
 
-        // Start animation
-        if (!animationIdRef.current) {
-          animate()
-        }
+  //       // Start animation
+  //       if (!animationIdRef.current) {
+  //         animate()
+  //       }
 
-        // Simulate TTS audio data (since we can't directly analyze speech synthesis)
-        const simulateTTSAudio = () => {
-          const dataArray = new Uint8Array(128)
-          for (let i = 0; i < dataArray.length; i++) {
-            dataArray[i] = Math.random() * 150 + 50 // Simulate speech frequencies
-          }
-          return Array.from(dataArray)
-        }
+  //       // Simulate TTS audio data (since we can't directly analyze speech synthesis)
+  //       const simulateTTSAudio = () => {
+  //         const dataArray = new Uint8Array(128)
+  //         for (let i = 0; i < dataArray.length; i++) {
+  //           dataArray[i] = Math.random() * 150 + 50 // Simulate speech frequencies
+  //         }
+  //         return Array.from(dataArray)
+  //       }
 
-        // Create periodic ripples during speech
-        const rippleInterval = setInterval(() => {
-          if (isSpeaking) {
-            createRipple(simulateTTSAudio(), "inward")
-          }
-        }, 150)
+  //       // Create periodic ripples during speech
+  //       const rippleInterval = setInterval(() => {
+  //         if (isSpeaking) {
+  //           createRipple(simulateTTSAudio(), "inward")
+  //         }
+  //       }, 150)
 
-        utterance.onend = () => {
-          clearInterval(rippleInterval)
-          setIsSpeaking(false)
-          setMode("idle")
-          setVolume(0)
-          audioContext.close()
-        }
+  //       utterance.onend = () => {
+  //         clearInterval(rippleInterval)
+  //         setIsSpeaking(false)
+  //         setMode("idle")
+  //         setVolume(0)
+  //         audioContext.close()
+  //       }
 
-        speechSynthesis.speak(utterance)
-      } catch (err) {
-        console.error("Error with speech synthesis:", err)
-        setIsSpeaking(false)
-        setMode("idle")
-      }
-    },
-    [animate, createRipple, isSpeaking],
-  )
+  //       speechSynthesis.speak(utterance)
+  //     } catch (err) {
+  //       console.error("Error with speech synthesis:", err)
+  //       setIsSpeaking(false)
+  //       setMode("idle")
+  //     }
+  //   },
+  //   [animate, createRipple, isSpeaking],
+  // )
 
   // Initialize canvas
   useEffect(() => {

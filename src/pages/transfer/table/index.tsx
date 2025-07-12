@@ -82,7 +82,7 @@ export default function Page() {
                 .map((e) => (
                   <button
                     key={e?.id}
-                    disabled={filialTo === e.id}
+                    disabled={  meUser?.position.role === 9 ?filialTo === e.id :false}
                     onClick={() => onSelectFilial(e)}
                     className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                   >
@@ -98,7 +98,7 @@ export default function Page() {
                 .map((e) => (
                   <button
                     key={e?.id}
-                    disabled={filialTo === e.id}
+                    disabled={ meUser?.position.role === 9 ?filialTo === e.id :false}
                     onClick={() => onSelectFilial(e)}
                     className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                   >

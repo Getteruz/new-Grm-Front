@@ -1,4 +1,4 @@
-import {  useQueryState } from "nuqs";
+// import {  useQueryState } from "nuqs";
 
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 import SearchInput from "@/components/filters-ui/search-input";
@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useMeStore } from "@/store/me-store";
 
 export default function Filters() {
-  const [type] = useQueryState("type");
+  // const [type] = useQueryState("type");
   const { meUser } = useMeStore();
   // const [filial] = useQueryState("filial");
   // const [filialTo] = useQueryState("filialTo");
@@ -34,7 +34,7 @@ export default function Filters() {
           toPlaceholder="до: 12.02.2025"
         />
        
-      {meUser?.position.role !== 9 &&
+      {/* {meUser?.position.role !== 9 &&
         (type !== "Out" && (meUser?.position.role !== 6 || type != "New") ? (
           <Button
             className="h-full border-x-1 border-y-0 w-[100px] "
@@ -53,7 +53,7 @@ export default function Filters() {
           //     Добавить трансфер
           //   </Button>
           // )
-        ))}
+        ))} */}
     </div>
   );
 }

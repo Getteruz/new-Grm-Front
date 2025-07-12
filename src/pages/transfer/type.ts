@@ -4,6 +4,7 @@ enum progresEnum {
   reject = "Rejected",
   accept = "Accepted",
   other = "other",
+  accept_f= "Accepted_F"
 }
 
 export type TransferData = {
@@ -56,6 +57,7 @@ export type TransferQuery = {
   search?:string;
   startDate?:Date;
   endDate?:Date;
+  progress?:object;
 };
 
 export type TTransferCategory = {

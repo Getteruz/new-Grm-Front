@@ -29,7 +29,7 @@ export default function Page() {
 
   const flatDataFilial =
     filialData?.pages?.flatMap((page) => page?.items) || [];
-  // .filter((i) => i.id !== meUser?.filial?.id) || [];
+
   const [filial, setFilial] = useQueryState(
     "filial",
     parseAsString.withDefault(
@@ -55,7 +55,8 @@ export default function Page() {
       to: meUser?.position.role === 9 ? filialTo : type=="In" ? meUser?.filial?.id : filial ,
       startDate:fromDate || undefined,
       endDate:toDate || undefined,
-      search:search ||undefined
+      search:search ||undefined,
+      progress:type == "In"? {0: "Processing"}: undefined
     },
   });
 
@@ -233,7 +234,7 @@ export default function Page() {
         <Filters />
         <DataTable
           isLoading={isLoading}
-          columns={meUser?.position.role == 6 ? collactionColumns: paymentColumns}
+          columns={meUser?.position.role == 6 ? collactionColumns: paymentColumns(flatDataFilial)}
           data={meUser?.position.role == 6 ? [{ id: 1 }, { id: 1 }] as unknown as  TransferData[] : flatData}
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage ?? false}

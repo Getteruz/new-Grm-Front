@@ -2,6 +2,7 @@ import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import BidirectionalAudioVisualizer from "@/components/bidirectional-audio-visualizer";
 
 export default function Content() {
   return (
@@ -12,7 +13,9 @@ export default function Content() {
           Суний интелек
         </h2>
       </div>
-      <div></div>
+      <div>
+        <BidirectionalAudioVisualizer/>
+      </div>
       <div className="bg-[#E6E6D9] border-t flex">
         <Button
           type={"button"}

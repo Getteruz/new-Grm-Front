@@ -14,6 +14,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { PatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import { useMeStore } from "@/store/me-store";
+import ActionBadge from "@/components/actionBadge";
 // import { useTranslation } from "react-i18next";
 
 export const paymentColumns: ColumnDef<TransferData>[] = [
@@ -128,7 +129,13 @@ export const paymentColumns: ColumnDef<TransferData>[] = [
         });
       // ActionBadge
       // ActionButton
-      return  <ActionButton onClick={()=>mutate()}  isLoading={isPending} status={status == "Processing"? "accept":"reject" }/>
+      if(meUser?.position?.role == 9){
+        return <ActionBadge status={status == "Accepted"? "accepted":"inProgress"} />
+      }else{
+        return <ActionBadge status="inProgress"/>
+      }
+
+      // return  <ActionButton onClick={()=>mutate()}  isLoading={isPending} status={status == "Processing"? "accept":"reject" }/>
     },
   },
   {

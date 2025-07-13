@@ -40,7 +40,7 @@ export default function ActionBadge({ childen, status }: IActionBadgeProps) {
   return status == "willSell" ? (
     <Badge
       variant="outline"
-      className={`min-w-[100px] border-none  text-[#89A143] p-0 rounded-[63px]`}
+      className={`min-w-[100px] border-none text-[#89A143] p-0 rounded-[63px]`}
     >
       Продалажется
     </Badge>

@@ -4,6 +4,7 @@ import ReportPage from "./report";
 import SinglePage from "./report-single";
 import PageSellerCashFlow from "../seller/seller-cashflow";
 import PageSellerReport from "../seller/seller-report";
+import PageCleintDebt from "./client-debt";
 const Route = [
   {
     url: "/f-manager/report",
@@ -55,6 +56,12 @@ const Route = [
     Element: PageSellerCashFlow,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+  {
+    url: "/f-manager/report-finance/client-debt",
+    Element: PageCleintDebt,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+
 ];
 
 export default Route;

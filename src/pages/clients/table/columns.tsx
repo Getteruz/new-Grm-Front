@@ -40,7 +40,21 @@ export const ClientsColumns: ColumnDef<TData>[] = [
       return <p className="text-[#58A0C6]">{row.original?.phone}</p>;
     },
   },
+  {
+    header: "Задолжность",
+    accessorKey: "owed",
+      cell: ({ row }) => {
+        return <p className="text-[#FF6600]">{row.original?.owed}</p>;
+    },
+  },
 
+  {
+    header: "Дано",
+    accessorKey: "given",
+      cell: ({ row }) => {
+        return <p className="text-[#89A143]">{row.original?.given}</p>;
+    },
+  },
   {
     header: "Комментария",
     accessorKey: "commit",

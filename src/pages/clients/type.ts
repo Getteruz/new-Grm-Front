@@ -3,6 +3,8 @@ export type TData = {
   fullName:string
   phone: string;
   comment: string;
+  given:number;
+  owed:number;  
   user: {
     id: string;
     isActive: true;

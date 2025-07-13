@@ -111,8 +111,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <p>
-          {" "}
-          {item?.totalIncome} {item?.totalIncome ? "$" : ""}
+          {item?.totalIncome} {item?.totalIncome?.toFixed(2) ? "$" : ""}
         </p>
       );
     },
@@ -124,8 +123,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <p className="text-[#E38157]">
-          {" "}
-          {item?.totalExpense} {item?.totalExpense ? "$" : ""}
+          {item?.totalExpense} {item?.totalExpense?.toFixed(2) ? "$" : ""}
         </p>
       );
     },
@@ -137,8 +135,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <p>
-          {" "}
-          {item?.totalCashCollection?.toFixed(2)}{" "}
+          {item?.totalCashCollection?.toFixed(2)}
           {item?.totalCashCollection ? "$" : ""}
         </p>
       );

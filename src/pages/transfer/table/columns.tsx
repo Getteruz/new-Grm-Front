@@ -137,9 +137,8 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
         const isRejected = status === "Rejected";
         const isAccepted = status === "Accepted";
         const isRole9 = meUser?.position?.role === 9;
-        const isAcceptedFinalIn = type === "in" && status === "Accepted_F";
-        const isProcessingOut = type === "out" && status === "Processing";
-        
+        const isAcceptedFinalIn = (type == "In" && status == "Accepted_F");
+        const isProcessingOut =  (type == "Out" && status == "Processing");
         if (isRejected) {
           return <ActionBadge status="rejected" />;
         }

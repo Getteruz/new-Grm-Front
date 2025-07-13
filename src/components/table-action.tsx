@@ -52,8 +52,12 @@ export default function TableAction({
 
   const { mutate,isPending } = useMutation({
     mutationFn: async () => {
-      if(url && id){
-        return await DeleteData(url, id);
+      if(costomDelete){
+        return costomDelete();
+      }else{
+        if(url && id){
+          return await DeleteData(url, id);
+        }
       }
     },
     onSuccess: () => {
@@ -112,7 +116,7 @@ export default function TableAction({
                   <Button
                     variant={"destructive"}
                     disabled={isPending}
-                    onClick={() => costomDelete? costomDelete(): mutate()}
+                    onClick={() => mutate()}
                     className="w-1/2"
                   >
                     {isPending ? <Loader className="animate-spin"/> :""}

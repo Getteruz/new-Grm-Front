@@ -150,8 +150,8 @@ export const Columns: ColumnDef<TData>[] = [
           costomDelete={()=>{
             PatchData(`/excel/change-count/${row?.original?.id}?tip${tip}`,{} )
             .then(()=>{
-              toast.success("delete");
              queryClient.invalidateQueries({ queryKey: [apiRoutes?.excelProductsReport] });
+             queryClient.invalidateQueries({ queryKey: [apiRoutes?.excelProducts] });
             })
           }}
           id={row.original?.id}

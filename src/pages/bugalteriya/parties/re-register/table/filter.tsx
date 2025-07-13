@@ -95,6 +95,7 @@ export default function Filters({
         >
         { isPending ? <Loader className="animate-spin"/> :  <FileOutput />}
 
+
           {/* @ts-ignore */}
           {StatusText[check ? "close" : partiyaStatus]}
         </Button>

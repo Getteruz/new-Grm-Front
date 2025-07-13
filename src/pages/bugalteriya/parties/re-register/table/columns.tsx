@@ -6,7 +6,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
 import { Input } from "@/components/ui/input";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {  PatchData, UpdateData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import debounce from "@/utils/debounce";
@@ -139,13 +139,21 @@ export const Columns: ColumnDef<TData>[] = [
     size: 50,
     cell: ({ row }) => {
       const { meUser } = useMeStore();
+      const queryClient = useQueryClient();
       const [tip] = useQueryState("tip", parseAsString.withDefault(meUser?.position?.role ==7 ? "переучет": "new"));
       return (
-     tip != "излишки" ?   <TableAction
+     tip != "излишки" ?  
+      <TableAction
           url={apiRoutes.excelProducts}
           ShowPreview={false}
           ShowUpdate={false}
-          costomDelete={()=>PatchData(`/excel/change-count/${row?.original?.id}?tip${tip}`,{} )}
+          costomDelete={()=>{
+            PatchData(`/excel/change-count/${row?.original?.id}?tip${tip}`,{} )
+            .then(()=>{
+              toast.success("delete");
+             queryClient.invalidateQueries({ queryKey: [apiRoutes?.excelProductsReport] });
+            })
+          }}
           id={row.original?.id}
           refetchUrl={apiRoutes.excelProducts}
         />:""

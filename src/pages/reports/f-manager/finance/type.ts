@@ -37,3 +37,8 @@ export interface TQuery {
   endDate?: Date | null;
   type?:string;
 }
+
+
+export interface TTotalDebt {
+  totalDebt: number
+}

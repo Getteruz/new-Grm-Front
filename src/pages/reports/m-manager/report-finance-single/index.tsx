@@ -42,7 +42,7 @@ export default function PageFinanceSingle() {
 
   const myData: TKassareportData = {
     status: "my",
-    totalIncome: CashflowForMainManager?.income,
+    totalIncome: CashflowForMainManager?.income? CashflowForMainManager?.income?.toFixed(2):0 ,
     totalExpense: CashflowForMainManager?.expense,
   } as TKassareportData;
 

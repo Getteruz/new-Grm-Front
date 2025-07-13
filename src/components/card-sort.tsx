@@ -24,6 +24,8 @@ import { minio_img_url } from "@/constants";
 import useDataFetch from "@/pages/filial/table/queries";
 import ShadcnSelect from "./Select";
 import useDeblsData from "@/pages/debt/table/queries";
+import { TTotalDebt } from "@/pages/reports/f-manager/finance/type";
+import { useNavigate } from "react-router-dom";
 
 export default function CardSort({
   KassaId,
@@ -35,6 +37,7 @@ export default function CardSort({
   isOnlineCashFlow,
   isOnlyTerminal,
   isUserSelectble,
+  ClientdebtTotal,
 }: {
   KassaId?: string;
   reportId?: string | undefined;
@@ -44,9 +47,11 @@ export default function CardSort({
   isOnlyCash?: boolean | undefined;
   isOnlyTerminal?: boolean | undefined;
   isOnlineCashFlow?: boolean | undefined;
-  isUserSelectble?:boolean | undefined
+  isUserSelectble?:boolean | undefined;
+  ClientdebtTotal?:TTotalDebt
   
 }) {
+  const navigate = useNavigate()
 
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
@@ -354,8 +359,17 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
                 )}
               </div>
             </div>
-            <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">Дата:</p>
-            <p className="text-[14px] font-semibold">1 шт</p>
+            {
+              ClientdebtTotal ?<>
+                  <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">Продажа в долг:</p>
+                  <p onClick={(e)=>{
+                    e.stopPropagation()
+                      navigate('/f-manager/report-finance/client-debt')
+                    }} 
+                    className="text-[14px] text-[#E38157] hover:underline inline-block font-semibold">{ClientdebtTotal?.totalDebt} $</p>
+                  </>:""
+            }
+        
           </div>
           <div className="grid row-start w-full  border-border  border-b grid-cols-4  ">
             {(column as unknown as TColumns[])?.map((e) => (

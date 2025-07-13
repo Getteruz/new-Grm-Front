@@ -1,16 +1,23 @@
-import { DefinedInitialDataOptions, useInfiniteQuery } from "@tanstack/react-query";
+import { DefinedInitialDataOptions, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
-import {  TKassareportData, TQuery } from "./type";
+import {  TKassareportData, TQuery, TTotalDebt } from "./type";
 
 
 interface IKassaReportData {
   options?: DefinedInitialDataOptions<TResponse<TKassareportData>>;
   queries?: TQuery;
   enabled?: boolean
+}
+
+interface IClientDebtTotal {
+  options?: DefinedInitialDataOptions<TTotalDebt>;
+  queries?: TQuery;
+  enabled?: boolean
+  id:string;
 }
 
 export const useKassaReports = ({ queries ,enabled}: IKassaReportData) =>
@@ -33,4 +40,15 @@ export const useKassaReports = ({ queries ,enabled}: IKassaReportData) =>
     initialPageParam: 1,
   });
 
+  export const useClientdebtTotal= ({ options, queries,enabled ,id}: IClientDebtTotal) =>
+    useQuery({
+      ...options,
+      queryKey: [apiRoutes.clientDebtTotal,queries],
+      enabled,
+      queryFn: () =>
+        getAllData<TTotalDebt, object>(
+          apiRoutes.clientDebtTotal + "/" +id,
+          queries
+        ),
+    });
 

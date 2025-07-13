@@ -26,8 +26,8 @@ interface ICashflowForMainManager {
 
 
  type TReportData = {
-    income: 0,
-    expense: 0
+    income: number,
+    expense: number
  }
 export const useReportsSingle = ({ queries,id ,enabled}: IKassaReportData) =>
   useQuery({

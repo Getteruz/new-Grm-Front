@@ -65,5 +65,6 @@ export const apiRoutes = {
   excelCollection:'/excel/collection',
   excelProductsReport:'/excel/products/report',
   debt:"/debt",
-  transferAccept:"/transfer/accept"
+  transferAccept:"/transfer/accept",
+  clientDebtTotal:'/client/debt/total'
 } as const;

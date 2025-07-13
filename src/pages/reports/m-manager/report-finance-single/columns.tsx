@@ -111,7 +111,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <p>
-          {item?.totalIncome} {item?.totalIncome?.toFixed(2) ? "$" : ""}
+          {item?.totalIncome} {item?.totalIncome ? "$" : ""}
         </p>
       );
     },

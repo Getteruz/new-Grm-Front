@@ -153,7 +153,7 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
         }
         
         if (isAcceptedFinalIn || isProcessingOut) {
-          return <ActionButton onClick={()=>mutate()} isLoading={isPending} status="accept" />;
+          return <ActionButton onClick={()=>mutate()} isLoading={isPending} status={ "accept"} btnText={type == "Out"?"Отправить":"Принять"} />;
         }
         
         return <ActionBadge status="inProgress" />;

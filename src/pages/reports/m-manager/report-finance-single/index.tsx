@@ -31,7 +31,6 @@ export default function PageFinanceSingle() {
     enabled: Boolean(id),
   });
 
-  console.log(CashflowForMainManager);
 
   const { data: ReportDealer } = useReportDealer({
     enabled: Boolean(kassaData),

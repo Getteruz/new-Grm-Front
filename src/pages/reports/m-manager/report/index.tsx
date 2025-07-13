@@ -106,6 +106,8 @@ export default function ReportPage() {
           <CardSort
           isUserSelectble
             isOnlineCashFlow={meUser?.position.role == 10}
+            isOnlyCash={myCashFlow && Boolean(meUser?.position?.role == 9)}
+            isOnlyTerminal={myCashFlow && Boolean(meUser?.position?.role == 10)}
             isAddible={myCashFlow}
             kassaReportId={FManagerCashFlow ? kassaReportId : undefined}
             reportId={myCashFlow && !FManagerCashFlow ? id : undefined}

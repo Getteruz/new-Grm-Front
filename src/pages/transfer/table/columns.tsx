@@ -131,6 +131,8 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
           onSuccess: () => {
             toast.success("Accepted");
             queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
+            queryClient.invalidateQueries({ queryKey: [apiRoutes.transfers] });
+
           },
         });
   

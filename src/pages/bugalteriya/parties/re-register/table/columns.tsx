@@ -44,7 +44,8 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "count",
     cell: ({ row }) => {
-      const [tip] = useQueryState("tip", parseAsString.withDefault("new"));
+      const { meUser } = useMeStore();
+      const [tip] = useQueryState("tip", parseAsString.withDefault(meUser?.position?.role ==7 ? "переучет": "new"));
       return (
         <p>
           {row.original?.bar_code?.isMetric ? (

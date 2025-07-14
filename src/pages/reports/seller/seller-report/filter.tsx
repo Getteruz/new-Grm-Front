@@ -1,7 +1,6 @@
 import FilterSelect from "@/components/filters-ui/filter-select";
-import { Button } from "@/components/ui/button";
 import { getMonth } from "date-fns";
-import { FileOutput, Store } from "lucide-react";
+import {  Store } from "lucide-react";
 import useDataFetch from "@/pages/filial/table/queries";
 import { useMeStore } from "@/store/me-store";
 
@@ -52,9 +51,9 @@ export default function Filters() {
 
     
      
-      <Button className="h-full  border-y-0 w-[140px] " variant={"outline"}>
+      {/* <Button className="h-full  border-y-0 w-[140px] " variant={"outline"}>
         <FileOutput /> Экспорт
-      </Button>
+      </Button> */}
     </div>
   );
 }

@@ -34,7 +34,7 @@ export default function Page() {
           isLoading={isLoading}
           columns={Columns}
           data={flatData}
-          className={' max-h-[calc(100vh-160px)]  scrollCastom'}
+          className={' max-h-[calc(100vh-130px)]  scrollCastom'}
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage ?? false}
           isFetchingNextPage={isFetchingNextPage}

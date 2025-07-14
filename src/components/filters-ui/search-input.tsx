@@ -1,4 +1,4 @@
-import { Loader, Search } from "lucide-react";
+import {  Search } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useTranslation } from "react-i18next";
 
@@ -21,7 +21,7 @@ export default function SearchInput({ className }: { className?: string }) {
         className="bg-transparent p-0  border-none"
         placeholder={t("search")}
       />
-      <Loader size={16} />
+      {/* <Loader size={16} /> */}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { FileOutput, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useQueryState } from "nuqs";
 
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
@@ -49,14 +49,14 @@ export default function Filters() {
         value={partiyaNumber}
         fieldNames={{label:"title",value:"id"}}
       />
-      <Button
+      {/* <Button
         className="h-full  ml-auto border-y-0 w-[140px] "
         variant={"outline"}
       >
         <FileOutput /> Экспорт
-      </Button>
+      </Button> */}
       {(meUser?.position.role === 9  || meUser?.position.role === 5)  && (
-        <Button onClick={() => setId("new")} className="h-full    ">
+        <Button onClick={() => setId("new")} className="h-full   ml-auto ">
           <Plus size={24} /> Добавить Партия
         </Button>
       )}

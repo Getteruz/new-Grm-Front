@@ -4,6 +4,7 @@ import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
+import { useMeStore } from "@/store/me-store";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -22,29 +23,29 @@ export const Columns: ColumnDef<TData>[] = [
     accessorKey: "address",
     id: "address",
   },
-  {
-    header: "Ответственное лицо",
-    accessorKey: "address",
-    id: "address",
-    cell: ({ row }) => {
-      return (
-        <p>
-          {row?.original?.firstName || "~"} {row?.original?.lastName}
-        </p>
-      );
-    },
-  },
+  // {
+  //   header: "Ответственное лицо",
+  //   accessorKey: "address",
+  //   id: "address",
+  //   cell: ({ row }) => {
+  //     return (
+  //       <p>
+  //         {row?.original?.firstName || "~"} {row?.original?.lastName}
+  //       </p>
+  //     );
+  //   },
+  // },
 
   {
     header: "Телефон",
     accessorKey: "phone1",
     id: "phone1",
   },
-  {
-    header: "id для системы",
-    accessorKey: "login",
-    id: "login",
-  },
+  // {
+  //   header: "id для системы",
+  //   accessorKey: "login",
+  //   id: "login",
+  // },
   {
     header: "Задолжность",
     cell: ({row}) => {
@@ -57,19 +58,20 @@ export const Columns: ColumnDef<TData>[] = [
       return <p className="text-[#89A143]">{row?.original?.given.toFixed(2)} $</p>;
     },
   },
-  // {
-  //   header: "Статус",
-  //   cell: ({ row }) => {
-  //     return <p>{row?.original?.isActive ? "Активный" : "Не активен"}</p>;
-  //   },
-  // },
+
   {
     id: "actions",
     enableHiding: true,
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
     cell: ({ row }) => {
-      return <TableAction url={apiRoutes.filial} id={row.original?.id} />;
+      const {meUser} = useMeStore();
+      if(meUser?.position?.role == 6 ){
+
+        return <TableAction url={apiRoutes.filial} id={row.original?.id} />;
+      }else{
+        return <></>;
+      }
     },
   },
 ];

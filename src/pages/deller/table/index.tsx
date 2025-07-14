@@ -31,6 +31,7 @@ export default function Page() {
      
         isLoading={isLoading}
         columns={Columns}
+        ischeckble={false}
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}

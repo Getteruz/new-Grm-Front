@@ -520,10 +520,22 @@ export const DataMenu = {
       ],
     },
     {
+      id: 33,
+      icons: () => PartiesIcons(),
+      link: "/parties",
+      text: "Партии",
+    },
+    {
       id: 3,
       icons: () => BuildingIcons(),
       link: "/filial",
       text: "Филиалы",
+    },
+    {
+      id: 39,
+      icons: () => WareHouseIcons(),
+      link: "/warehouse",
+      text: "Склады",
     },
     {
       id: 4,
@@ -532,34 +544,10 @@ export const DataMenu = {
       text: "Дилеры",
     },
     {
-      id: 4,
+      id: 42,
       icons: () => PriceIcons({}),
       link: "/price",
       text: "Цени и скидки",
-    },
-    {
-      id: 3,
-      icons: () => BronedIcons(),
-      link: "/broned",
-      text: "Бронированные",
-    },
-    {
-      id: 33,
-      icons: () => PartiesIcons(),
-      link: "/parties",
-      text: "Партии",
-    },
-    {
-      id: 2,
-      icons: () => ProductIcons(),
-      link: "/products",
-      text: "Продукты в продаже",
-    },
-    {
-      id: 3,
-      icons: () => WareHouseIcons(),
-      link: "/warehouse",
-      text: "Склады",
     },
     {
       id: 32,
@@ -568,10 +556,10 @@ export const DataMenu = {
       text: "Трансферы",
     },
     {
-      id: 34,
-      icons: () => ProductsCheck(),
-      link: "/product-check",
-      text: "Проверка продукта",
+      id: 2,
+      icons: () => ProductIcons(),
+      link: "/products",
+      text: "Продукты в продаже",
     },
     {
       id: 37,

@@ -52,7 +52,7 @@ export const FilialColumns: ColumnDef<TData>[] = [
       return (
         <TableAction
           url={apiRoutes.filial}
-          ShowPreview={row.original?.need_get_report}
+          // ShowPreview={row.original?.need_get_report}
           id={row.original?.id}
         >
           {row.original?.need_get_report ? (

@@ -36,6 +36,7 @@ export default function Filters({
     new: "Отправить на приходование",
     pending: "Принимается...",
     close: "Закрыть Партие",
+    closed: "Закрыто",
   };
 
   const { mutate,isPending } = useMutation({
@@ -81,6 +82,7 @@ export default function Filters({
         <Button
           onClick={() => mutate()}
           disabled={check || isPending}
+          variant={check? "outline":"default"}
           className="h-full ml-auto  border-y-0  "
         >
           <FileCheck />
@@ -91,13 +93,14 @@ export default function Filters({
           onClick={() => mutate()}
           disabled={(partiyaStatus == "pending" && check) || isPending}
           className="h-full ml-auto  border-y-0"
-          variant={"outline"}
+          variant={partiyaStatus == "new" ?"default": "outline"}
         >
         { isPending ? <Loader className="animate-spin"/> :  <FileOutput />}
 
 
           {/* @ts-ignore */}
-          {StatusText[check ? "close" : partiyaStatus]}
+          
+          { StatusText[(check && partiyaStatus == "pending") ? "closed" : check ? "close"  : partiyaStatus]}
         </Button>
       )}
     </div>

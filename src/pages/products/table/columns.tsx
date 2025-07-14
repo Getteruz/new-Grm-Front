@@ -166,8 +166,14 @@ export const ProductColumns: ColumnDef<ProductsData>[] = [
   },
   {
     header: "Кас-цена",
+    accessorKey: "price",
     cell: ({ row }) => {
-      return <p>{row.original.price} $</p>;
+      const price = row.original?.bar_code?.collection?.collection_prices?.[0]?.priceMeter;
+      return (
+        <p className="text-[14px] font-[500] text-[#E38157]">
+          {price ? `${price}$` : '-'}
+        </p>
+      );
     },
   },
   {

@@ -177,7 +177,7 @@ const { data, isLoading, hasNextPage, fetchNextPage,isFetchingNextPage } = useIn
                 className="w-[66px] text-center  bg-transparent border-y border-border"
               />
               <Input
-                value={title?.split("x")[1]}
+                value={title?.split("x")[1]?.length ?title?.split("x")[1] :undefined }
                 onChange={(e) =>
                   setValue(
                     "title",

@@ -29,10 +29,12 @@ const queryClient = useQueryClient()
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [type] });
       form.setValue('title',"")
-      form.setValue('collection',{
-        value: undefined,
-        label: "",
-      })
+      if(type != "model"){
+        form.setValue('collection',{
+          value: undefined,
+          label: "",
+        })
+      }
       setidMadal("new")
       if (idMadal == "new") {
         toast.success("savedSuccessfully");

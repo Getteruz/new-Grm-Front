@@ -7,6 +7,7 @@ export interface ProductsData {
     imgUrl: string;
     collection: {
       title: string;
+      collection_prices: {priceMeter:number}[]
     };
     model: {
       title: string;

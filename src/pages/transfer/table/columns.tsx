@@ -11,7 +11,7 @@ import { minio_img_url } from "@/constants";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ActionButton from "@/components/actionButton";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { PatchData } from "@/service/apiHelpers";
+import {  UpdateData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import { useMeStore } from "@/store/me-store";
 import ActionBadge from "@/components/actionBadge";
@@ -123,7 +123,7 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
   
         const { mutate, isPending } = useMutation({
           mutationFn: () =>
-            PatchData(apiRoutes.transferAccept , {
+            UpdateData(apiRoutes.transferAccept , "", {
               from: meUser?.position.role === 9 ? filial : type=="In" ? filial : meUser?.filial?.id ,
               to: meUser?.position.role === 9 ? filialTo : type=="In" ? meUser?.filial?.id : filial ,
                include: [row?.original?.id], exclude: [] ,

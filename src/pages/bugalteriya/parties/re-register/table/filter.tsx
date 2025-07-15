@@ -93,7 +93,7 @@ export default function Filters({
           onClick={() => mutate()}
           disabled={(partiyaStatus == "pending" && check) || isPending}
           className="h-full ml-auto  border-y-0"
-          variant={partiyaStatus == "new" ?"default": "outline"}
+          variant={(partiyaStatus == "new" || partiyaStatus == "closed")  ?"default": "outline"}
         >
         { isPending ? <Loader className="animate-spin"/> :  <FileOutput />}
 

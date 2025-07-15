@@ -7,6 +7,7 @@ export const apiRoutes = {
   userLoginGenerate: "/user/generate/login-user",
   crops: "/crops",
   products: "/product",
+  orderBasketBookings:'/order-basket/bookings',
   productsIManager: "/product/internet-shop",
   collection: "/collection/remaining-collections",
   collectionProducts: "/collection/remaining-products",

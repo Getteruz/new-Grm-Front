@@ -5,6 +5,7 @@ import CarpetCard from "@/components/cards/carpet-card";
 import Filters from "./filters";
 import useData from "./queries";
 import { useMeStore } from "@/store/me-store";
+import BronModal from "./bron-modal";
 
 export default function Page() {
 
@@ -21,12 +22,14 @@ export default function Page() {
   return (
     <>
       <Filters />
+      <BronModal />
       <div className="px-2.5  mt-4 gap-2 grid row-start grid-cols-7  pb-[17px]">
         {flatData.map((item) => (
           <CarpetCard
             key={item.id}
             id={item?.id}
             isBron={true}
+            producdId={item?.product?.id}
             user={{
               firstName: meUser?.firstName || "",
               lastName: meUser?.lastName || "",
@@ -46,6 +49,7 @@ export default function Page() {
             price={item?.product?.price +""}
             colaction={item?.product?.bar_code?.collection?.title}
             color={item?.product?.bar_code?.color?.title}
+            isMetric={item?.product?.bar_code?.isMetric}
           />
         ))}
       </div>

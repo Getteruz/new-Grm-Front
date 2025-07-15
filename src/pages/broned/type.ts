@@ -84,3 +84,29 @@ export type BronedQuery = {
   page?: number;
   filial?: string;
 };
+export type BronModalType={
+  id: string;
+x: number;
+date: string; // ISO date string
+is_transfer: boolean;
+isMetric: boolean;
+seller: Seller;
+}
+type Seller = {
+  id: string;
+  isActive: boolean;
+  firstName: string;
+  lastName: string;
+  fatherName: string;
+  login: string;
+  hired: string; // ISO date string
+  from: string; // e.g. "09:00:00"
+  to: string;
+  username: string | null;
+  salary: number;
+  email: string | null;
+  phone: string;
+  password: string;
+  isUpdated: boolean;
+  createdAt: string;
+};

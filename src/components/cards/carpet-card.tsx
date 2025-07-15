@@ -22,6 +22,7 @@ interface ICarpetCard {
   colaction: string;
   discount?: string;
   carpetType: string;
+  isMetric?: boolean;
   isBron?: boolean;
   user: {
     firstName: string;
@@ -30,6 +31,7 @@ interface ICarpetCard {
       path: string;
     };
   };
+  producdId:string;
   shape: string;
 }
 
@@ -43,13 +45,18 @@ export default function CarpetCard({
   carpetType,
   size,
   price,
+  id,
+  isMetric,
   count,
+  producdId,
   img,
   colaction,
   color,
   shape,
 }: ICarpetCard) {
   const [, setCarpetType] = useQueryState("carpetType");
+  const [,setOpenBronId] =  useQueryState('openBronId')
+  const [,setOpenBronItemId] =  useQueryState('openBronItemId')
   // const navigate = useNavigate();
   return (
     <div
@@ -63,7 +70,7 @@ export default function CarpetCard({
           {size}
         </p>
         <p className="p-2 w-full text-[12px] text-primary text-center">
-          {count}x
+          {count} {isMetric?"": 'x'}
         </p>
       </div>
       <div
@@ -82,7 +89,6 @@ export default function CarpetCard({
         <p className="text-primary absolute left-3 bottom-1">{color}</p>
       </div>
       <p className="flex gap-2 items-center px-1.5">
-        {" "}
         {shape === "Rulo" && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -139,15 +145,19 @@ export default function CarpetCard({
       ) : (
         ""
       )}
+
       {isBron ? (
         <div
           onClick={(e) => {
             e.stopPropagation();
             setCarpetType(carpetType || null);
+            setOpenBronId(producdId)
+            setOpenBronItemId(id)
           }}
-          className="w-[46px] cursor-pointer absolute right-0 bottom-0 bg-[#FF7700] text-background h-[46px] flex items-center justify-center"
+          className={`w-[46px] cursor-pointer absolute ${(count ||0 ) < count ? 'right-11.5':'right-0'}  bottom-0 bg-[#FF7700] text-background h-[46px] flex items-center justify-center`}
         >
           <Bookmark className="text-white w-[24px]" />
+          <p className="absolute top-0  text-white font-bold text-[12px] right-1">{count}</p>
         </div>
       ) : (
         <div

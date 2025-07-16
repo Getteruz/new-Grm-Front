@@ -225,7 +225,7 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
     },
   },
   {
-    header: "Зав.цена",
+    header: "Себестоимость",
     cell: ({ row }) => {
       const [, setLocalPrice] = useQueryState(
         "localPrice",

@@ -11,11 +11,12 @@ import { minio_img_url } from "@/constants";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ActionButton from "@/components/actionButton";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {  UpdateData } from "@/service/apiHelpers";
+import {  UpdateData, UpdatePatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import { useMeStore } from "@/store/me-store";
 import ActionBadge from "@/components/actionBadge";
 import { TData } from "@/pages/deller/type";
+import { Loader } from "lucide-react";
 // import { useTranslation } from "react-i18next";
 // flatDataFilial
 export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[] => {
@@ -140,7 +141,7 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
         const isAccepted = status === "Accepted";
         const isRole9 = meUser?.position?.role === 9;
         const isAcceptedFinalIn = (type == "In" && status == "Accepted_F");
-        const isProcessingOut =  (type == "Out" && status == "Processing");
+        // const isProcessingOut =  (type == "Out" && status == "Processing");
         if (isRejected) {
           return <ActionBadge status="rejected" />;
         }
@@ -154,8 +155,8 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
           return <ActionBadge status="accepted" />;
         }
         
-        if (isAcceptedFinalIn || isProcessingOut) {
-          return <ActionButton onClick={()=>mutate()} isLoading={isPending} status={ "accept"} btnText={type == "Out"?"Отправить":"Принять"} />;
+        if (isAcceptedFinalIn ) {
+          return <ActionButton onClick={()=>mutate()} isLoading={isPending} status={ "accept"} btnText={"Принять"} />;
         }
         
         return <ActionBadge status="inProgress" />;
@@ -169,15 +170,26 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
       header: () => <div className="text-right">{"actions"}</div>,
       size: 50,
       cell: ({ row }) => {
-        const [type] = useQueryState("type", parseAsString.withDefault("In"));
+        const queryClient = useQueryClient();
+        const { mutate, isPending } = useMutation({
+          mutationFn: () =>
+          UpdatePatchData(apiRoutes.transferReject,row?.original?.id,{}),
+          onSuccess: () => {
+            toast.success("canceled");
+            queryClient.invalidateQueries({ queryKey: [apiRoutes.transfers] });
+          },
+        });
         return (
           <TableAction
             url={apiRoutes.transfers}
             id={row.original?.id}
             ShowDelete={false}
             ShowUpdate={false}
+            
           >
-            {type != "In" && <p>Отменить</p>}
+              <DropdownMenuItem disabled={isPending} onClick={() =>mutate()}>
+              {isPending?<Loader/>:"" }Отменить
+            </DropdownMenuItem>
           </TableAction>
         );
       },

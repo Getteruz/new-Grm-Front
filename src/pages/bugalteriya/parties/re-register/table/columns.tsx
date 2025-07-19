@@ -149,7 +149,7 @@ export const Columns: ColumnDef<TData>[] = [
           ShowPreview={false}
           ShowUpdate={false}
           costomDelete={()=>{
-            PatchData(`/excel/change-count/${row?.original?.id}?tip${tip}`,{} )
+            PatchData(`/excel/change-count/${row?.original?.id}${tip =="new"?"" :`?tip=${tip}`}`,{} )
             .then(()=>{
              queryClient.invalidateQueries({ queryKey: [apiRoutes?.excelProductsReport] });
              queryClient.invalidateQueries({ queryKey: [apiRoutes?.excelProducts] });
@@ -231,6 +231,7 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
         "localPrice",
         parseAsInteger.withDefault(row?.original?.displayPrice || 0)
       );
+      const queryClient = useQueryClient();
       const { id } = useParams();
       const { mutate } = useMutation({
         mutationFn: ({
@@ -248,6 +249,7 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
           ]),
         onSuccess: () => {
           toast.success("changed");
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.excelProductsReport] });
           // queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
         },
       });

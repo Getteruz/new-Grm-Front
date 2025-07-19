@@ -22,6 +22,7 @@ interface IMuteCheck {
     y:number,
     tip:string| undefined,
   }
+  isMetric:boolean,
   isUpdate:boolean,
   partiyaId:string
 }
@@ -31,9 +32,15 @@ export const useProdcutCheck = ({
 }: UseMutationOptions<object, Error, IMuteCheck, unknown>) =>
   useMutation({
     ...options,
-    mutationFn: async ({ partiyaId, data, isUpdate }) => {
+    mutationFn: async ({ partiyaId, data, isMetric, isUpdate }) => {
       if(isUpdate){
-        return await UpdateData(apiRoutes.excelProduct, partiyaId, data);
+        return await UpdateData(apiRoutes.excelSingle, partiyaId,  
+          data?.tip == "переучет" ?{
+          check_count:data?.y
+        }: {
+          count:isMetric? undefined: data?.y,
+          y:isMetric? (data?.y / 100): undefined,
+        });
       }else{
         return await AddData(apiRoutes.excelProduct + "/" + partiyaId, data);
       }

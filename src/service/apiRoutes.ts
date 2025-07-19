@@ -23,6 +23,7 @@ export const apiRoutes = {
   partiesChanngeStatus: "partiya/change-to",
   dataLibrary: "/product",
   transfers: "/transfer",
+  transferReject:'/transfer/reject',
   transferBasket:"/transfer/basket",
   broned: "/booking",
   upload: "/media-upload/single/avatar/avatar",
@@ -68,6 +69,7 @@ export const apiRoutes = {
   debt:"/debt",
   transferAccept:"/transfer/accept",
   clientDebtTotal:'/client/debt/total',
-  clientDebtsByFilial:'/client/debts/by-filial'
+  clientDebtsByFilial:'/client/debts/by-filial',
+  excelSingle:"/excel/single",
 
 } as const;

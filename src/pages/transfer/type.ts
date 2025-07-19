@@ -38,6 +38,7 @@ export type TransferData = {
   main_image: {
     aws_path: string;
   };
+  date:Date;
   progres: progresEnum;
   planting_time_end: string;
   planting_time_start: string;

@@ -159,12 +159,12 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       });
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {item?.kassaReportStatus == 2 ? (
+          {(item?.kassaReportStatus == 2  ) ? (
             <ActionBadge status={"willSell"} />
           ) : item?.status == "open" ? (
             <ActionButton onClick={()=>mutate()} isLoading={isPending} btnText={"Закрыт"} status="accept"></ActionButton>
           ) : (
-            <ActionBadge status={item?.status} />
+            <ActionBadge status={(item?.status == "m_manager_confirmed" || item?.status=="accountant_confirmed") ? "pending":  item?.status} />
           )}
         </div>
       );

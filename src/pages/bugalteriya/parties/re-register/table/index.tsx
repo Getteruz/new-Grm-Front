@@ -5,7 +5,7 @@ import { Columns, ColumnsColaction } from "./columns";
 import Filter from "./filter";
 import { useParams } from "react-router-dom";
 import useDataFetch, { usePartiyaReport } from "./queries";
-import { parseAsString, useQueryState } from "nuqs";
+import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { useMemo } from "react";
 import { useMeStore } from "@/store/me-store";
 import { usePartiyaById } from "../../form/actions";
@@ -39,6 +39,8 @@ export default function ItemsPage() {
   const [tip] = useQueryState("tip", parseAsString.withDefault(meUser?.position?.role ==7 ? "переучет": "new"));
   const [type] = useQueryState("type", parseAsString.withDefault("default"));
   const [, setBarCode] = useQueryState("barcode");
+  const [, setCount] = useQueryState("count",parseAsInteger.withDefault(0));
+  const [, setProductId] = useQueryState("productId");
 
   const { data: onePartiya } = usePartiyaById({
     id: id ? id : undefined,
@@ -121,6 +123,14 @@ export default function ItemsPage() {
           onRowClick={(e) => {
             if (type == "default" ) {
               setBarCode(e?.bar_code?.code);
+              setProductId(e?.id);
+
+              if(tip  == "переучет"){
+                setCount(e?.bar_code?.isMetric ? e?.y *100 : e?.check_count)
+              }else{
+                setCount(e?.bar_code?.isMetric ? e?.y * 100 : e?.count)
+              }
+              // setCount()
             }
           }}
           isLoading={isLoading}

@@ -8,14 +8,13 @@ import FormContent from "./content";
 import { CropFormType, CropSchema } from "./schema";
 import { useQueryClient } from "@tanstack/react-query";
 import { apiRoutes } from "@/service/apiRoutes";
-import {  parseAsString, useQueryState } from "nuqs";
+import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { useParams } from "react-router-dom";
 import useDebounce from "@/hooks/useDebounce";
 import { useMeStore } from "@/store/me-store";
 
-
 const ActionPageQrCode = () => {
-  const {meUser} = useMeStore()
+  const { meUser } = useMeStore();
   const form = useForm<CropFormType>({
     resolver: zodResolver(CropSchema),
     defaultValues: {
@@ -54,16 +53,24 @@ const ActionPageQrCode = () => {
     },
   });
 
-  const [tip] = useQueryState("tip",parseAsString.withDefault(meUser?.position?.role ==7 ? "переучет":"new"));
+  const [count, setCount] = useQueryState(
+    "count",
+    parseAsInteger.withDefault(0)
+  );
+  const [tip] = useQueryState(
+    "tip",
+    parseAsString.withDefault(meUser?.position?.role == 7 ? "переучет" : "new")
+  );
   const [idLoc, setId] = useQueryState("id");
   const { id } = useParams();
-  const [barcode,setBarcode] = useQueryState("barcode");
+  const [barcode, setBarcode] = useQueryState("barcode");
+  const [productId] = useQueryState("productId");
   // const [auto, setAuto] = useQueryState("auto", parseAsBoolean);
   const resetForm = () => {
     form.reset({
       code: "",
       isMetric: "",
-      count: undefined,
+      count: 0,
       country: {
         value: "",
         label: "",
@@ -93,23 +100,23 @@ const ActionPageQrCode = () => {
         label: "",
       },
     });
-  }
+  };
 
   useEffect(() => {
     if (barcode && barcode !== "new") {
       form.setValue("code", barcode);
     }
-    if(barcode== "new"){
-      resetForm()
+    if (barcode == "new") {
+      resetForm();
     }
   }, [barcode]);
 
   useEffect(() => {
-    resetForm()
-    setBarcode("new")
+    resetForm();
+    setBarcode("new");
   }, [tip]);
 
-  const brcode = useDebounce(form.watch("code"),500);
+  const brcode = useDebounce(form.watch("code"), 500);
 
   const { data: qrBaseOne } = useBarCodeById({
     id: brcode || undefined,
@@ -118,12 +125,16 @@ const ActionPageQrCode = () => {
 
   const { mutate } = useProdcutCheck({
     onSuccess: () => {
-      resetForm()
+      resetForm();
       const codeInput = document.querySelector('input[name="code"]');
       if (codeInput) {
         (codeInput as HTMLInputElement).select();
       }
       queryClient.invalidateQueries({ queryKey: [apiRoutes.excelProducts] });
+      queryClient.invalidateQueries({
+        queryKey: [apiRoutes.excelProductsReport],
+      });
+
       if (idLoc == "new") {
         setId("new");
         toast.success("Продукт добавлено успешно");
@@ -132,13 +143,22 @@ const ActionPageQrCode = () => {
       }
     },
   });
+  useEffect(() => {
+    if (barcode == "new" || barcode == undefined) {
+      setCount(
+        qrBaseOne?.count || qrBaseOne?.isMetric
+          ? (qrBaseOne?.size?.y || 0) * 100
+          : 1
+      );
+    }
+  }, [qrBaseOne, barcode]);
 
   useEffect(() => {
     if (qrBaseOne) {
       form.reset({
         code: qrBaseOne?.code || "",
         isMetric: qrBaseOne?.isMetric ? "Метражный" : "Штучный",
-        count: qrBaseOne?.count || qrBaseOne?.isMetric ? (qrBaseOne?.size?.y|| 0 ) * 100  : 1,
+        count: count,
         country: {
           value: qrBaseOne?.country?.id,
           label: qrBaseOne?.country?.title,
@@ -183,11 +203,15 @@ const ActionPageQrCode = () => {
           if (e.key === "Enter") e.preventDefault();
         }}
         onSubmit={form.handleSubmit((data) => {
-          
           mutate({
-            partiyaId: id || "",
-            isUpdate: barcode == "new" ? false : true,
-            data: { code: qrBaseOne?.code || "" , tip: tip != "new" ? tip : undefined, y: data?.count },
+            partiyaId: barcode == "new" || barcode == undefined ?id || "" : productId || "" ,
+            isMetric: Boolean(qrBaseOne?.isMetric),
+            isUpdate: barcode == "new" || barcode == undefined ? false : true,
+            data: {
+              code: qrBaseOne?.code || "",
+              tip: tip != "new" ? tip : undefined,
+              y: data?.count,
+            },
           });
         })}
       >

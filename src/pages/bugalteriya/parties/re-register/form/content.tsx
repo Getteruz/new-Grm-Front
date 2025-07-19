@@ -12,10 +12,13 @@ export default function FormContent() {
   const { meUser } = useMeStore();
 
   const [editble] = useState<boolean>(true);
-  const [barcode,setBarCode] = useQueryState("barcode");
+  const [barcode, setBarCode] = useQueryState("barcode");
   const { watch } = useFormContext();
   const isMetric = watch("isMetric");
-  const [tip] = useQueryState("tip",parseAsString.withDefault(meUser?.position?.role ==7 ? "переучет":"new"));
+  const [tip] = useQueryState(
+    "tip",
+    parseAsString.withDefault(meUser?.position?.role == 7 ? "переучет" : "new")
+  );
 
   return (
     <div className="w-full max-h-[calc(100vh-66px)] scrollCastom border-border border-r ">
@@ -26,11 +29,11 @@ export default function FormContent() {
           name="code"
           placeholder="code"
           localChange={() => {
-            setBarCode('new')
+            setBarCode("new");
           }}
           label="code"
         />
-        
+
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/country"
@@ -118,24 +121,33 @@ export default function FormContent() {
           disabled={true}
           label="style"
         />
-     
       </div>
-     {(meUser?.position.role == 9 && tip == "new" ) ||  meUser?.position.role === 5   || (meUser?.position.role == 7 && tip == "переучет" ) ? <div className="bg-sidebar border-y text-primary border-border  h-[44px]  flex  items-center justify-end  ">
-       {/* {meUser?.position.role == 7  ? "":<Button
-          className="h-full w-1/3 border-y-0 text-primary justify-center font-[16px] gap-1.5  "
-          variant={"outline"}
-          disabled={barcode == "new" || barcode == undefined}
-        >
-          Изменить
-        </Button>} */}
-        <Button
-          className={`h-full w-full text-primary justify-center font-[16px] gap-1.5  border-none`}
-          variant={"outline"}
-          disabled={barcode != "new" && barcode != undefined}
-        >
-          Добавить
-        </Button>
-      </div>:""}
+      <div className="bg-sidebar border-y text-primary border-border  h-[44px]  flex  items-center justify-end  ">
+        {meUser?.position.role == 9 && tip != "излишки" ? (
+          <Button
+            className={`h-full w-1/2 text-primary justify-center font-[16px] gap-1.5  border-none`}
+            variant={"outline"}
+            disabled={barcode == "new" || barcode == undefined}
+          >
+            Изменить
+          </Button>
+        ) : (
+          ""
+        )}
+        {(meUser?.position.role == 9 && tip == "new") ||
+        meUser?.position.role === 5 ||
+        (meUser?.position.role == 7 && tip == "переучет") ? (
+          <Button
+            className={`h-full w-1/2 text-primary justify-center font-[16px] gap-1.5  border-none`}
+            variant={"outline"}
+            disabled={barcode != "new" && barcode != undefined}
+          >
+            Добавить
+          </Button>
+        ) : (
+          ""
+        )}
+      </div>
       <BarcodeQenerat />
     </div>
   );

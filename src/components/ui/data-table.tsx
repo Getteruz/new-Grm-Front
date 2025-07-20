@@ -199,7 +199,7 @@ export function DataTable<TData, TValue>({
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    className="px-5 cursor-pointer  "
+                    className="px-5 cursor-pointer relative "
                     onClick={() => {
                       const id = (row.original as { id: string })?.id
                       if(onRowClick ) {

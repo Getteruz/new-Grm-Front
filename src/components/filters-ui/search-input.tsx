@@ -7,7 +7,7 @@ import debounce from "@/utils/debounce";
 import { Input } from "../ui/input";
 
 export default function SearchInput({ className }: { className?: string }) {
-  const [, setSearch] = useQueryState("search");
+  const [search, setSearch] = useQueryState("search");
   const { t } = useTranslation();
   return (
     <div
@@ -18,6 +18,7 @@ export default function SearchInput({ className }: { className?: string }) {
         onChange={debounce((e) => {
           setSearch(e.target.value);
         }, 500)}
+        defaultValue={search || ""}
         className="bg-transparent p-0  border-none"
         placeholder={t("search")}
       />

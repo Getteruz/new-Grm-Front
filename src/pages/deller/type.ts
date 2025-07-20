@@ -1,4 +1,5 @@
 export interface TData {
+  group(group: any): unknown;
   isMetric: boolean;
   id: string;
   code: string;

@@ -1,6 +1,7 @@
 // import {  useQueryState } from "nuqs";
 
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
+import FilterSelect from "@/components/filters-ui/filter-select";
 import SearchInput from "@/components/filters-ui/search-input";
 import { BrCodeIcons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,16 @@ export default function Filters() {
           </Button>
         )}
         <SearchInput />
+        <FilterSelect
+        name="progress"
+        options={[
+          { label: "Все", value: "all" },
+          { label: "непринятый", value: "Panding" },
+          { label: "принятый", value: "Accepted" },
+          { label: "отменённый", value: "Rejected" },
+        ]}
+
+        />
         <DateRangePicker
           fromPlaceholder="от: 12.02.2025"
           toPlaceholder="до: 12.02.2025"

@@ -10,10 +10,10 @@ const statusObj=  {
   none:()=><></>
 }
 
-export default function TebleAvatar({name,className,status="panding",url}:{name:string,status?:string,className?:string,url?:string}) {
+export default function TebleAvatar({name,size, className,status="panding",url}:{name:string,size?:number;status?:string,className?:string,url?:string}) {
   return (
     <div className={`${className && className}   relative`}>
-      <Avatar className="w-[50px] border-white border-[2px]  h-[50px]">
+      <Avatar className={`w-[${size|| 50}px] border-white border-[2px]  h-[${size||50}px]`}>
             <AvatarImage
               src={minio_img_url + url || undefined}
             />

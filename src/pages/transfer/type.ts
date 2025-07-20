@@ -8,6 +8,12 @@ enum progresEnum {
 }
 
 export type TransferData = {
+  transferer:{
+
+    firstName:string;
+    lastName:string;
+     avatar: { path: string } 
+  }
   courier: {
     firstName:string;
     lastName:string;
@@ -16,12 +22,14 @@ export type TransferData = {
   name: string;
   chats: [];
   createdAt: string;
+  group:string;
   createdBy: string;
   transfer_category: TTransferCategory;
   transfer_code: string;
   description: string;
   details: string;
   gallery: [];
+  type: string;
   harvest_duration: number;
   id: string;
   is_common: boolean;

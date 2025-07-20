@@ -10,12 +10,36 @@ import useTransfers from "./queries";
 import { TransferData } from "../type";
 import { TData } from "@/pages/deller/type";
 
+const buildFlatList = (data:TransferData[]) => {
+  const result = [];
+  let lastDate = null;
+
+
+  const sorted = [...data].sort((a, b) =>{
+      return  b?.group?.localeCompare(a?.group || "ç")
+  }
+  );
+
+  for (const item of sorted) {
+    const group = item.group;
+    if (group !== lastDate) {
+      result.push({ type: 'header',transferer:item?.transferer,courier:item?.courier ,group: group });
+      lastDate = group;
+    }
+    result.push(item );
+  }
+
+  return result;
+};
+
 export default function Page() {
   const { meUser } = useMeStore();
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(50));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
 
   const [search] = useQueryState("search")
+  // const [progressStatus] = useQueryState("progress",parseAsString.withDefault('all'))
+  
 
   const [fromDate] = useQueryState<Date>("startDate", { parse: () =>null});
   const [toDate] = useQueryState<Date>("endDate",{ parse: () =>null});
@@ -29,7 +53,6 @@ export default function Page() {
 
   const flatDataFilial =
     filialData?.pages?.flatMap((page) => page?.items) || [];
-
   const [filial, setFilial] = useQueryState(
     "filial",
     parseAsString.withDefault(
@@ -62,12 +85,14 @@ export default function Page() {
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
+
  const onSelectFilial = (data:TData)=>{
   setFilial(data?.id)
+  // setSearch(null)
  }
   return (
     <div className="grid grid-cols-12 h-full">
-      <div className="col-span-4 flex">
+      <div className="col-span-4  max-h-[calc(100vh-100px)] scrollCastom flex">
         <div className={`w-full h-full border-r border-border `}>
           <div className="w-full flex h-[64px] items-center justify-between border-border border-solid border-b p-[21.22px] bg-sidebar">
             <h4 className="text-[14px] font-semibold text-foreground">
@@ -75,7 +100,7 @@ export default function Page() {
             </h4>
           </div>
           {meUser?.position.role !== 6 && (
-            <div className="p-3 px-0 mx-5 border-b border-border pb-5">
+            <div className="p-3 px-0 mx-5 border-b border-border  pb-5">
               {flatDataFilial
                 ?.filter((i) => i.type === "filial")
                 ?.filter((i) => i.id !== meUser?.filial?.id)
@@ -234,10 +259,12 @@ export default function Page() {
         <Filters />
         <DataTable
           isLoading={isLoading}
+          className="max-h-[calc(100vh-140px)] scrollCastom"
           columns={meUser?.position.role == 6 ? collactionColumns: paymentColumns(flatDataFilial)}
-          data={meUser?.position.role == 6 ? [{ id: 1 }, { id: 1 }] as unknown as  TransferData[] : flatData}
+          data={meUser?.position.role == 6 ? [{ id: 1 }, { id: 1 }] as unknown as  TransferData[] : buildFlatList(flatData) as unknown as  TransferData[]}
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage ?? false}
+          ischeckble={false}
           isFetchingNextPage={isFetchingNextPage}
         />
       </div>

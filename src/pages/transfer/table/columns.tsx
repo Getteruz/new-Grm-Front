@@ -59,12 +59,12 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
         });
         
         if (row.original?.type === "header") {
-          return <div className="absolute top-7 bg-sidebar left-0 px-2 gap-2 py-0.5 w-full  flex items-center ">
+          return <div className="absolute top-7 bg-sidebar left-0 px-2 gap-2 py-2 w-full  flex items-center ">
             <TebleAvatar size={38} url={ row?.original?.transferer?.avatar?.path} name={row?.original?.transferer?.firstName} status="none"/>
             <RefreshCcw size={14}/>
             <TebleAvatar size={38} url={ row?.original?.courier?.avatar?.path} name={row.original?.courier?.firstName} status="none"/>
-            <p>{ group?.split('-')?.[0]}</p>
-            <p className="ml-10 ">{ group?.split('-')?.[1]} шт</p>
+            {/* <p>{ group?.split('-')?.[0]}</p> */}
+            <p className="ml-8 ">{ group?.split('-')?.[1]} шт</p>
             <p >{ group?.split('-')?.[2]} м²</p>
             <p className="ml-auto">{ group?.split('-')?.[3]} </p>
             <Button onClick={()=>mutate()} disabled={isPending} variant={"outline"} className="border ml-2 rounded-lg py-[6px] px-[12px] h-[26px] text-[12px] border-[#89A143] text-[#89A143]  ">Принять все </Button>
@@ -142,7 +142,7 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
       header: "Статус",
       cell: ({ row }) => {
         if (row.original?.type === "header") {
-          return <div className="h-12"></div>
+          return <div className="h-14"></div>
         }
         const [type] = useQueryState("type", parseAsString.withDefault("In"));
         const [filial] = useQueryState(

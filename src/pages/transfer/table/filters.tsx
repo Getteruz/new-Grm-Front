@@ -34,9 +34,9 @@ export default function Filters() {
         name="progress"
         options={[
           { label: "Все", value: "all" },
-          { label: "непринятый", value: "Panding" },
-          { label: "принятый", value: "Accepted" },
-          { label: "отменённый", value: "Rejected" },
+          { label: "В ожидании", value: "Panding" },
+          { label: "Принятые", value: "Accepted" },
+          { label: "Отменённые", value: "Rejected" },
         ]}
 
         />

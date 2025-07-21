@@ -37,8 +37,7 @@ export default function Filters() {
         <SearchInput />
         <FilterSelect
         name="progress"
-
-
+        defaultValue="all"
         options={[
           { label: "Все", value: "all" },
           { label: type == "In"? "Новый": "В ожидании", value: type== "In"? "New" : "InProgres"},

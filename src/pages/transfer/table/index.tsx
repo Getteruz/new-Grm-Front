@@ -38,7 +38,7 @@ export default function Page() {
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
 
   const [search] = useQueryState("search")
-  const [progressStatus] = useQueryState("progress",parseAsString.withDefault('all'))
+  const [progressStatus,setProgressStatus] = useQueryState("progress",parseAsString.withDefault('all'))
   
 
   const [fromDate] = useQueryState<Date>("startDate", { parse: () =>null});
@@ -258,7 +258,10 @@ export default function Page() {
                 <button
                   key={e?.id}
                   disabled={filial === e.id}
-                  onClick={() => setType(e?.id)}
+                  onClick={() => {
+                    setType(e?.id)
+                    setProgressStatus('all')
+                  }}
                   className={`${type === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar px-3  py-2.5`}
                 >
                   {e.name}

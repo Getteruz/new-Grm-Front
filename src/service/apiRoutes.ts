@@ -56,7 +56,7 @@ export const apiRoutes = {
   kassaCancel: "/kassa/cancel-kassa",
   statement: "/statement",
   productRemaining: "/product/remaining-products",
-  productRemainingCollection:'/product/remaining-products-collection',
+  countryReport:'/country-report',
   excelProducts:'/excel/products',
   excelProduct:'/excel/product',
   reports:"/reports",
@@ -71,5 +71,7 @@ export const apiRoutes = {
   clientDebtTotal:'/client/debt/total',
   clientDebtsByFilial:'/client/debts/by-filial',
   excelSingle:"/excel/single",
-
+  factoryReport:'/factory-report',
+  collectionReport:'/collection-report',
+  productRemainingCollection:'/product/remaining-products-collection',
 } as const;

@@ -1,11 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
-import { CollectionData } from "@/pages/products/type";
-import { ProductsData } from "@/pages/price/type";
+import { SalesData } from "./type";
 
 
-export const CollectionDealerColumns: ColumnDef<CollectionData>[] = [
+
+export const CollectionDealerColumns: ColumnDef<SalesData>[] = [
   {
     accessorKey: "id",
     header: "№",
@@ -21,7 +21,7 @@ export const CollectionDealerColumns: ColumnDef<CollectionData>[] = [
       return (
         <div className="flex items-center gap-2">
           <p className="text-[14px] font-[500]">
-            {row.original.title}
+            {row.original?.factory?.title}
           </p>
         </div>
       );
@@ -34,7 +34,7 @@ export const CollectionDealerColumns: ColumnDef<CollectionData>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-[14px] font-[500]">
-          {row.original.totalKv || 0} м²
+          {row.original?.totalKv?.toFixed(2) || 0} м²
         </p>
       );
     },
@@ -45,7 +45,7 @@ export const CollectionDealerColumns: ColumnDef<CollectionData>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-[14px] font-[500]">
-          {(Number(row.original.totalKv) * row.original.collectionPrices?.[0]?.priceMeter).toFixed(2) || 0}$
+         {row.original?.totalPrice?.toFixed(2) || 0} $
         </p>
       );
     },
@@ -54,7 +54,7 @@ export const CollectionDealerColumns: ColumnDef<CollectionData>[] = [
     header: "Кол-во ковров",
     accessorKey: "totalCount",
     cell: ({ row }) => {
-      return <p className="text-[14px] w-[200px] font-[500]">{row.original.totalCount || 0} шт</p>;
+      return <p className="text-[14px] w-[200px] font-[500]">{row.original?.totalCount || 0} шт</p>;
     },
   },
   {
@@ -64,7 +64,7 @@ export const CollectionDealerColumns: ColumnDef<CollectionData>[] = [
       return (
         <p className="text-[14px] font-[500]">
     
-        {row.original.orderKv || 0} м²
+        {row.original?.totalSellKv?.toFixed(2) || 0} м²
         </p>
       );
     },
@@ -75,20 +75,19 @@ export const CollectionDealerColumns: ColumnDef<CollectionData>[] = [
     cell: ({row}) => {
       return (
         <p className="text-[14px] font-[500]">
-            {row.original.totalPrice || 0} $
+            {row.original?.totalPrice?.toFixed(2) || 0} $
         </p>
       );
     },
   },
   {
-    header: "Кас-цена",
+    header: "Кол-во продажы",
     accessorKey: "price",
     cell: ({ row }) => {
-      const price = row.original.collectionPrices?.[0]?.priceMeter;
+      const price = row.original?.totalSellCount;
       return (
         <p className="text-[14px] font-[500] text-[#E38157]">
-          {price ? `${price}$` : '-'}
-          
+          {price ? `${price}x` : '-'}
         </p>
       );
     },
@@ -112,7 +111,7 @@ export const CollectionDealerColumns: ColumnDef<CollectionData>[] = [
   },
 ];
 
-export const CollectionColumns: ColumnDef<ProductsData>[] = [
+export const CollectionColumns: ColumnDef<SalesData>[] = [
   {
     accessorKey: "id",
     header: "№",
@@ -128,7 +127,7 @@ export const CollectionColumns: ColumnDef<ProductsData>[] = [
       return (
         <div className="flex items-center gap-2">
           <p className="text-[14px] font-[500]">
-            {row.original.title}
+            {row.original?.collection?.title}
           </p>
         </div>
       );
@@ -141,7 +140,7 @@ export const CollectionColumns: ColumnDef<ProductsData>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-[14px] font-[500]">
-          {row.original.totalKv || 0} м²
+          {row.original?.totalKv?.toFixed(2) || 0} м²
         </p>
       );
     },
@@ -152,8 +151,67 @@ export const CollectionColumns: ColumnDef<ProductsData>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-[14px] font-[500]">
-          {(Number(row.original.totalKv) * row.original.collection_prices?.[0]?.priceMeter).toFixed(2) || 0}$
+         {row.original?.totalPrice?.toFixed(2) || 0} $
         </p>
+      );
+    },
+  },
+  {
+    header: "Кол-во ковров",
+    accessorKey: "totalCount",
+    cell: ({ row }) => {
+      return <p className="text-[14px] w-[200px] font-[500]">{row.original?.totalCount || 0} шт</p>;
+    },
+  },
+  {
+    header: "Объём продажы",
+    accessorKey: "",
+    cell: ({row}) => {
+      return (
+        <p className="text-[14px] font-[500]">
+    
+        {row.original?.totalSellKv?.toFixed(2) || 0} м²
+        </p>
+      );
+    },
+  },
+  {
+    header: "Сумма продажы",
+    accessorKey: "",
+    cell: ({row}) => {
+      return (
+        <p className="text-[14px] font-[500]">
+            {row.original?.totalPrice?.toFixed(2) || 0} $
+        </p>
+      );
+    },
+  },
+  {
+    header: "Кол-во продажы",
+    accessorKey: "price",
+    cell: ({ row }) => {
+      const price = row.original?.totalSellCount;
+      return (
+        <p className="text-[14px] font-[500] text-[#E38157]">
+          {price ? `${price}x` : '-'}
+        </p>
+      );
+    },
+  },
+  {
+    id: "actions",  
+    enableHiding: true,
+    header: () => <div className="text-right">{"actions"}</div>,
+    size: 50,
+    cell: ({ row }) => {
+      return (
+        <TableAction
+          url={apiRoutes.products}
+          ShowUpdate={false}
+          ShowDelete={false}
+          ShowPreview={false}
+          id={row.original.id}
+        />
       );
     },
   },

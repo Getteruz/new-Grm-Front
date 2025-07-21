@@ -3,12 +3,10 @@ import { DataTable } from "@/components/ui/data-table";
 import { CollectionColumns, CollectionDealerColumns } from "./columns";
 import Filter from "./filter";
 import CardSortRemaider from "./card-sort";
-import { useCollectionDataFetch } from "@/pages/products/table/queries";
 import { parseAsString, useQueryState } from "nuqs";
-import useDataFetch from "@/pages/price/table/queries";
+import { useCollectionReport, useFactoryReport } from "./queries";
 
 export default function PageRemaider() {
-  const [sorttype] = useQueryState("sorttype", parseAsString);
   const [fromDate] = useQueryState<Date | undefined>("startDate", {
     parse: () => undefined,
   });
@@ -19,13 +17,13 @@ export default function PageRemaider() {
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useCollectionDataFetch({
-      url: "/collection/remaining-factory",
-      filialId: filialId || undefined,
-      country: sorttype || undefined,
-      startDate: fromDate || undefined,
-      endDate: toDate || undefined,
-      enabled: sort == "delears",
+  useFactoryReport({
+      queries:{
+        filialId: filialId || undefined,
+        from: fromDate || undefined,
+        to: toDate || undefined,
+      },
+    enabled: sort == "delears",
     });
 
   const {
@@ -34,14 +32,18 @@ export default function PageRemaider() {
     fetchNextPage: CollectionfetchNextPage,
     hasNextPage: CollectionhasNextPage,
     isFetchingNextPage: CollectionisFetchingNextPage,
-  } = useDataFetch({
-    filialId: filialId || undefined,
-    enabled: sort == "collaction",
+  } = useCollectionReport({
+    queries:{
+      filialId: filialId || undefined,
+      from: fromDate || undefined,
+      to: toDate || undefined,
+    },
+  enabled: sort == "delears",
   });
   const flatData =
-    CollectionData?.pages?.flatMap((page) => page?.items || []) || [];
+    CollectionData?.pages?.flatMap((page) => page?.data || []) || [];
 
-  const collections = data?.pages?.flatMap((page) => page || []) || [];
+  const collections = data?.pages?.flatMap((page) => page?.data || []) || [];
   return (
     <>
       <Filter />

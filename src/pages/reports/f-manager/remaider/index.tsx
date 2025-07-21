@@ -1,39 +1,31 @@
 import { DataTable } from "@/components/ui/data-table";
-import { useMeStore } from "@/store/me-store";
 
 import { CollectionColumns, CollectionDealerColumns } from "./columns";
 import Filter from "./filter";
 import CardSortRemaider from "./card-sort";
-import { useCollectionDataFetch } from "@/pages/products/table/queries";
 import { parseAsString, useQueryState } from "nuqs";
-import useDataFetch from "@/pages/price/table/queries";
+import { useCollectionReport, useFactoryReport } from "./queries";
+import { useMeStore } from "@/store/me-store";
 
 export default function PageRemaider() {
-  const { meUser } = useMeStore();
-  const [sorttype] = useQueryState("sorttype", parseAsString);
-  const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
-
   const [fromDate] = useQueryState<Date | undefined>("startDate", {
     parse: () => undefined,
   });
-  const [toDate] = useQueryState<Date| undefined>("endDate", {
+  const [toDate] = useQueryState<Date | undefined>("endDate", {
     parse: () => undefined,
   });
+  const { meUser } = useMeStore();
+  const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
 
-  const { 
-    data,
-    isLoading,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage
-  } = useCollectionDataFetch({
-    url:'/collection/remaining-factory',
-    filialId: meUser?.filial?.id,
-    country:sorttype || undefined,
-    startDate:fromDate  || undefined,
-    endDate:toDate || undefined,
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  useFactoryReport({
+      queries:{
+        filialId: meUser?.filial?.id || undefined,
+        from: fromDate || undefined,
+        to: toDate || undefined,
+      },
     enabled: sort == "delears",
-  });
+    });
 
   const {
     data: CollectionData,
@@ -41,28 +33,33 @@ export default function PageRemaider() {
     fetchNextPage: CollectionfetchNextPage,
     hasNextPage: CollectionhasNextPage,
     isFetchingNextPage: CollectionisFetchingNextPage,
-  } = useDataFetch({
-    filialId: meUser?.filial?.id || undefined,
-    enabled: sort == "collaction",
+  } = useCollectionReport({
+    queries:{
+      filialId: meUser?.filial?.id  || undefined,
+      from: fromDate || undefined,
+      to: toDate || undefined,
+    },
+  enabled: sort == "delears",
   });
-  const collections = data?.pages?.flatMap((page) => page || []) || [];
   const flatData =
-    CollectionData?.pages?.flatMap((page) => page?.items || []) || [];
+    CollectionData?.pages?.flatMap((page) => page?.data || []) || [];
+
+  const collections = data?.pages?.flatMap((page) => page?.data || []) || [];
   return (
     <>
       <Filter />
       <div className="h-[calc(100vh-140px)] scrollCastom">
-      <CardSortRemaider />
-      {sort == "delears" ? (
-        <DataTable
-        columns={CollectionDealerColumns}
-        data={collections ||[]}
-        isLoading={isLoading}
-        isRowClickble={false}
-        fetchNextPage={fetchNextPage}
-        hasNextPage={hasNextPage ?? false}
-        isFetchingNextPage={isFetchingNextPage}
-     />
+        {<CardSortRemaider />}
+        {sort == "delears" ? (
+          <DataTable
+            columns={CollectionDealerColumns}
+            data={collections || []}
+            isLoading={isLoading}
+            isRowClickble={false}
+            fetchNextPage={fetchNextPage}
+            hasNextPage={hasNextPage ?? false}
+            isFetchingNextPage={isFetchingNextPage}
+          />
         ) : (
           <DataTable
             columns={CollectionColumns}
@@ -74,7 +71,6 @@ export default function PageRemaider() {
             isFetchingNextPage={CollectionisFetchingNextPage}
           />
         )}
-    
       </div>
     </>
   );

@@ -38,12 +38,25 @@ export default function Page() {
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
 
   const [search] = useQueryState("search")
-  // const [progressStatus] = useQueryState("progress",parseAsString.withDefault('all'))
+  const [progressStatus] = useQueryState("progress",parseAsString.withDefault('all'))
   
 
   const [fromDate] = useQueryState<Date>("startDate", { parse: () =>null});
   const [toDate] = useQueryState<Date>("endDate",{ parse: () =>null});
   
+  const progestingInObj ={
+    all:{},
+    New:{1:"Accepted",2:"Rejected"},
+    Accepted:{1:"Accepted_F",2:"Rejected"},
+    Rejected:{1:"Accepted_F",2:"Accepted"},
+  }
+
+  const progestingOutObj ={
+    all:undefined,
+    InProgres:{0:"Accepted",1:"Accepted_F",2:"Rejected"},
+    Accepted:{0:"Processing",1:"Accepted_F",2:"Rejected"},
+    Rejected:{0:"Processing",1:"Accepted_F",2:"Accepted"},
+  }
   const { data: filialData } = useDataFetch({
     queries: {
       limit,
@@ -69,7 +82,7 @@ export default function Page() {
     "type",
     parseAsString.withDefault("In")
   )
-
+  /* @ts-ignore */
   const { data, isLoading ,fetchNextPage, hasNextPage, isFetchingNextPage} = useTransfers({
     queries: {
       limit: 10,
@@ -79,7 +92,8 @@ export default function Page() {
       startDate:fromDate || undefined,
       endDate:toDate || undefined,
       search:search ||undefined,
-      progress:type == "In"? {0: "Processing"}: undefined
+      /* @ts-ignore */
+      progress:type == "In"? {0: "Processing", ...progestingInObj?.[progressStatus] }: progestingOutObj?.[progressStatus]
     },
   });
 

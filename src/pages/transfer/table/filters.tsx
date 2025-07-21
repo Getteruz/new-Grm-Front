@@ -6,10 +6,15 @@ import SearchInput from "@/components/filters-ui/search-input";
 import { BrCodeIcons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { useMeStore } from "@/store/me-store";
+import { parseAsString, useQueryState } from "nuqs";
 
 export default function Filters() {
   // const [type] = useQueryState("type");
   const { meUser } = useMeStore();
+  const [type] = useQueryState(
+    "type",
+    parseAsString.withDefault("In")
+  )
   // const [filial] = useQueryState("filial");
   // const [filialTo] = useQueryState("filialTo");
 
@@ -32,9 +37,11 @@ export default function Filters() {
         <SearchInput />
         <FilterSelect
         name="progress"
+
+
         options={[
           { label: "Все", value: "all" },
-          { label: "В ожидании", value: "Panding" },
+          { label: type == "In"? "Новый": "В ожидании", value: type== "In"? "New" : "InProgres"},
           { label: "Принятые", value: "Accepted" },
           { label: "Отменённые", value: "Rejected" },
         ]}

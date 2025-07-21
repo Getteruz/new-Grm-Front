@@ -13,7 +13,7 @@ interface ITransfers {
   queries?: TransferQuery;
 }
 
-const useDataFetch = ({ options, queries }: ITransfers, p0: {}, progress: any, p1: any) =>
+const useDataFetch = ({ options, queries }: ITransfers) =>
   useInfiniteQuery({
     ...options,
     queryKey: [apiRoutes.transfers, queries],

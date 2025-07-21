@@ -82,7 +82,6 @@ export default function Page() {
     "type",
     parseAsString.withDefault("In")
   )
-  /* @ts-ignore */
   const { data, isLoading ,fetchNextPage, hasNextPage, isFetchingNextPage} = useTransfers({
     queries: {
       limit: 10,

@@ -92,8 +92,8 @@ export const usefilialWarehouseFetch = ({ options, queries }: ITransfers) =>
           limit: queries?.limit || 10,
         }),
       getNextPageParam: (lastPage) => {
-        if (lastPage.page <= (lastPage.totalPages || 2) ) {
-          return lastPage.page + 1;
+        if (lastPage?.meta?.pagination?.page <= lastPage?.meta?.pagination?.totalPages ) {
+          return lastPage?.meta?.pagination?.page + 1;
         } else {
           return null;
         }
@@ -111,13 +111,13 @@ export const usefilialWarehouseFetch = ({ options, queries }: ITransfers) =>
             page: pageParam as number,
             limit: queries?.limit || 10,
           }),
-        getNextPageParam: (lastPage) => {
-          if (lastPage.page <= (lastPage.totalPages || 2) ) {
-            return lastPage.page + 1;
-          } else {
-            return null;
-          }
-        },
+          getNextPageParam: (lastPage) => {
+            if (lastPage?.meta?.pagination?.page <= lastPage?.meta?.pagination?.totalPages ) {
+              return lastPage?.meta?.pagination?.page + 1;
+            } else {
+              return null;
+            }
+          },
         enabled,
         initialPageParam: 1,
       });

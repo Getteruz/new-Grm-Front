@@ -54,21 +54,30 @@ export interface RemainingProductColactionData {
       title: "Kazakhstan";
     };
   }[];
-  total: number;
-  totalCount: number;
-  totalKv: number;
-  totalPrice: number;
-  totalSellCount: number;
-  totalSellKv: number;
-  totalSellPrice: number;
-  page: number;
-  limit: number;
+  meta:Meta
+}
+
+type Meta = {
+  pagination:{
+    hasNext:boolean
+    hasPrev:boolean
+    limit:number
+    page:number
+    total:number
+    totalPages:number
+  },
+  totals:{
+    totalCount: number;
+    totalKv: number;
+    totalPrice: number;
+    totalSellCount: number;
+    totalSellKv: number;
+    totalSellPrice: number;
+  }
 }
 export interface IFactoryReportData {
   data: SalesData[];
-  page: number;
-  totalPages: number;
-  limit: number;
+  meta: Meta
 }
 type Filial = {
   dateOne: string;

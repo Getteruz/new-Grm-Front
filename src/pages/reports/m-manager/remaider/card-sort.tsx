@@ -41,7 +41,7 @@ export default function CardSortRemaider() {
                   <Skeleton className="h-7 w-24 mt-1" />
                 ) : (
                   <p className="text-[25px] font-bold text-foreground">
-                   {formatPrice(remainingColaction?.totalKv|| 0)}
+                   {formatPrice(remainingColaction?.meta?.totals?.totalKv || 0)}
                   </p>
                 )}
               </div>
@@ -49,18 +49,17 @@ export default function CardSortRemaider() {
             <p className="text-[12px] mt-[15px] mb-1 text-[#5D5D53]">
                 Сумма объёма
             </p>
-            <p className="text-[14px] font-semibold">   {formatPrice(remainingColaction?.totalPrice|| 0)} $</p>
+            <p className="text-[14px] font-semibold">   {formatPrice(remainingColaction?.meta?.totals?.totalPrice|| 0)} $</p>
           </div>
           <div className="grid row-start w-full  grid-cols-4  ">
             {remainingColaction?.data?.map((e) => (
               <div
                 key={e?.country?.id}
-                // onClick={() => setSortType(e?.country?.id)}
                 className={` bg-sidebar  text-primary h-[78px] border-border border-r border-b  flex justify-between items-center cursor-pointer px-4 py-5`}
               >
                 <div className="">
                   <p className="text-[12px] mb-0.5 flex  items">{e?.country?.title}</p>
-                <p className="text-[15px]  font-medium">{formatPrice(e?.totalKv)}</p>
+                  <p className="text-[15px]  font-medium">{formatPrice(e?.totalKv)}</p>
                 </div>
               </div>
             ))}

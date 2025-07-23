@@ -39,7 +39,7 @@ export default function PageRemaider() {
       from: fromDate || undefined,
       to: toDate || undefined,
     },
-  enabled: sort == "delears",
+  enabled: sort == "collaction",
   });
   const flatData =
     CollectionData?.pages?.flatMap((page) => page?.data || []) || [];

@@ -75,7 +75,7 @@ export const CollectionDealerColumns: ColumnDef<SalesData>[] = [
     cell: ({row}) => {
       return (
         <p className="text-[14px] font-[500]">
-            {row.original?.totalPrice?.toFixed(2) || 0} $
+            {row.original?.totalSellPrice?.toFixed(2) || 0} $
         </p>
       );
     },
@@ -86,8 +86,8 @@ export const CollectionDealerColumns: ColumnDef<SalesData>[] = [
     cell: ({ row }) => {
       const price = row.original?.totalSellCount;
       return (
-        <p className="text-[14px] font-[500] text-[#E38157]">
-          {price ? `${price}x` : '-'}
+        <p className="text-[14px] font-[500] ">
+          {price ? `${price} шт` : '-'}
         </p>
       );
     },
@@ -181,7 +181,7 @@ export const CollectionColumns: ColumnDef<SalesData>[] = [
     cell: ({row}) => {
       return (
         <p className="text-[14px] font-[500]">
-            {row.original?.totalPrice?.toFixed(2) || 0} $
+            {row.original?.totalSellPrice?.toFixed(2) || 0} $
         </p>
       );
     },
@@ -192,8 +192,8 @@ export const CollectionColumns: ColumnDef<SalesData>[] = [
     cell: ({ row }) => {
       const price = row.original?.totalSellCount;
       return (
-        <p className="text-[14px] font-[500] text-[#E38157]">
-          {price ? `${price}x` : '-'}
+        <p className="text-[14px] font-[500] ">
+          {price ? `${price} шт` : '-'}
         </p>
       );
     },

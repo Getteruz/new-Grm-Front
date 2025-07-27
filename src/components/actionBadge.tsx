@@ -23,7 +23,7 @@ const ColorStatus = {
   new: "#FFA500",
   completed: "#212121",
   closed:"#212121",
-  inProgress: "#89A143",
+  inprogress: "#89A143",
 };
 
 const statusObj = {
@@ -34,7 +34,7 @@ const statusObj = {
   open:"Открыто",
   completed: "Завершено",
   closed:"Закрыто",
-  inProgress: "В процессе",
+  inprogress: "В процессе",
 };
 export default function ActionBadge({ childen, status }: IActionBadgeProps) {
   return status == "willSell" ? (
@@ -49,7 +49,7 @@ export default function ActionBadge({ childen, status }: IActionBadgeProps) {
       variant="outline"
       className={`min-w-[100px] border-[${ColorStatus?.[status as keyof typeof statusObj]}]  text-[${ColorStatus?.[status as keyof typeof statusObj]}]  py-[10px] px-[14px] rounded-[63px]`}
     >
-      {childen || statusObj?.[status as keyof typeof statusObj]}
+      {childen || statusObj?.[status.toLocaleLowerCase() as keyof typeof statusObj]}
     </Badge>
   );
 }

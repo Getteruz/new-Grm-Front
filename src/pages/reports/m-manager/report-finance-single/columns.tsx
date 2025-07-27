@@ -240,6 +240,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       );
     },
   },
+  // /payrolls/{id}/reject
   {
     id: "actions",
     header: "actions",
@@ -248,8 +249,9 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const { mutate, isPending } = useMutation({
         mutationFn: async () => {
           return await UpdatePatchData(
+            row?.original?.payrollsDealerId  ? apiRoutes.payrolls + `/${row?.original?.payrollsDealerId}/reject` :
             apiRoutes.kassaReports + "/reject",
-            row?.original?.id,
+            row?.original?.id ? row?.original?.id :'',
             {}
           );
         },
@@ -257,6 +259,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
           toast.success("Status changed successfully");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.payrollsDealer] });
         },
       });
       return row?.original?.status != "my" ? (

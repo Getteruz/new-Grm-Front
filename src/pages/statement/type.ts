@@ -10,7 +10,9 @@ export type Statement = {
   month: string;
   bonus: number;
   prepayment: number;
-  award: number;
+  award: {
+    title:string;
+  } ;
   title: string;
   to_date: string;
   total: number;

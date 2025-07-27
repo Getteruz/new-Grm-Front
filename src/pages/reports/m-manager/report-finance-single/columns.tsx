@@ -27,7 +27,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
             ? "Мои приходы и расходы"
             : row?.original?.isDealer
               ? "Dealer-manager"
-              : row?.original?.filial?.title}
+              : row?.original?.payrollsDealerId ? "Ведомость": row?.original?.filial?.title}
         </p>
       );
     },
@@ -191,13 +191,15 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
           PatchData(
             (item?.dealerReportId)
               ? `${apiRoutes.reports}/${item?.dealerReportId}/close-dealer`
-              : apiRoutes.kassaReports + "/" + row?.original?.id,
+              : item?.payrollsDealerId  ? apiRoutes.payrolls + `/${item?.payrollsDealerId}/close-payroll` :
+               apiRoutes.kassaReports + "/" + row?.original?.id,
             {}
           ),
         onSuccess: () => {
           toast.success("Closed");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
           queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
+          queryClient.invalidateQueries({ queryKey: [apiRoutes.payrollsDealer] });
           queryClient.invalidateQueries({
             queryKey: [apiRoutes.reportsDealer],
           });
@@ -210,8 +212,8 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
           {item?.status == "my" ? (
             ""
           )
-           : item?.status == "accepted" ? <ActionBadge status={"accepted"} /> : 
-            item?.status == "closed" ||
+           : item?.status == "accepted" || (item?.status == "Accepted" && item?.payrollsDealerId)  ? <ActionBadge status={"accepted"} /> : 
+            item?.status == "closed" || (item?.status == "InProgress" && item?.payrollsDealerId) ||
             (item?.status == "closed_by_d") || //  && !item?.isDealer
             (meUser?.position?.role == 10 &&
               (item?.status == "m_manager_confirmed" || item?.isMManagerConfirmed )) ||
@@ -225,7 +227,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
           ) : (
             <ActionBadge
               status={
-                item?.status == "open" || item?.kassaReportStatus == 2
+                item?.status == "open" || item?.kassaReportStatus == 2 || (item?.status == "Sent" && item?.payrollsDealerId)
                   ? "inProgress"
                   : item?.status == "accountant_confirmed" ||
                       item?.status == "m_manager_confirmed"  || item?.isAccountantConfirmed || item?.isMManagerConfirmed 

@@ -3,7 +3,7 @@ import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";
 import {  getAllData, getByIdData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
-import {  TKassareportData, TQuery ,TDealearQuery } from "./type";
+import {  TKassareportData, TQuery ,TDealearQuery, TKassaPayrollsData } from "./type";
 
 
 interface IKassaReportData {
@@ -15,6 +15,12 @@ interface IKassaReportData {
 
 interface IReportDealerData {
   options?: DefinedInitialDataOptions<TKassareportData[]>;
+  queries?: TDealearQuery;
+  enabled?: boolean;
+}
+
+interface IPayrollsDealerData {
+  options?: DefinedInitialDataOptions<TKassaPayrollsData>;
   queries?: TDealearQuery;
   enabled?: boolean;
 }
@@ -57,6 +63,13 @@ export const useReportsSingle = ({ queries,id ,enabled}: IKassaReportData) =>
       enabled: enabled,
     });
 
+    export const usePayrollsDealer = ({ queries,enabled}: IPayrollsDealerData) =>
+      useQuery({
+        queryKey: [apiRoutes.payrollsDealer, queries],
+        queryFn: () =>
+          getAllData< TKassaPayrollsData, TDealearQuery>(apiRoutes.payrollsDealer || "" ,queries),
+        enabled: enabled,
+      });
 
 export const useCashflowForMainManager = ({enabled,id}: ICashflowForMainManager) =>
   useQuery({

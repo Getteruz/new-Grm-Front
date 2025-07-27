@@ -4,11 +4,12 @@ import CardSort from "@/components/card-sort";
 import { KassaColumnsLoc } from "./columns";
 import {
   useCashflowForMainManager,
+  usePayrollsDealer,
   useReportDealer,
   useReportsSingle,
 } from "./queries";
 import { useNavigate, useParams } from "react-router-dom";
-import { TKassareportData } from "./type";
+import {  TKassareportData } from "./type";
 import { parseAsBoolean, useQueryState } from "nuqs";
 import { useMeStore } from "@/store/me-store";
 import { useMemo } from "react";
@@ -40,6 +41,15 @@ export default function PageFinanceSingle() {
     },
   });
 
+  const { data: PayrollsDealer } = usePayrollsDealer({
+    enabled: Boolean(kassaData),
+    queries: {
+      month: kassaData?.month,
+      year: kassaData?.year,
+    },
+  });
+  
+
   const myData: TKassareportData = {
     status: "my",
     totalIncome: CashflowForMainManager?.income? CashflowForMainManager?.income?.toFixed(2):0 ,
@@ -66,10 +76,29 @@ export default function PageFinanceSingle() {
       isMManagerConfirmed: ReportDealer?.[0]?.isMManagerConfirmed,
     } as TKassareportData;
   }, [ReportDealer]);
+  const PayrollsDealerData = useMemo(() => {
+    return {
+      payrollsDealerId:PayrollsDealer?.data?.id,
+      totalSum: PayrollsDealer?.data?.total || 0,
+      totalPlasticSum: PayrollsDealer?.data?.plastic || 0,
+      status:
+        (PayrollsDealer?.data?.isMManagerConfirmed &&
+        PayrollsDealer?.data?.isAccountantConfirmed)
+          ? PayrollsDealer?.data?.status
+          : PayrollsDealer?.data?.isMManagerConfirmed
+            ? "m_manager_confirmed"
+            : PayrollsDealer?.data?.isAccountantConfirmed
+              ? "accountant_confirmed"
+              : PayrollsDealer?.data?.status || "open",
+      isAccountantConfirmed: PayrollsDealer?.data?.isAccountantConfirmed,
+      isMManagerConfirmed:PayrollsDealer?.data?.isMManagerConfirmed,
+    } as TKassareportData;
+  }, [PayrollsDealer]);
+
 
   const ReportSingleData = useMemo(() => {
     return kassaData?.kassaReport
-      ? [myData, DealerData, ...(kassaData?.kassaReport as TKassareportData[])]
+      ? [myData,PayrollsDealerData, DealerData, ...(kassaData?.kassaReport as TKassareportData[])]
       : [myData];
   }, [kassaData, myData, DealerData]);
 

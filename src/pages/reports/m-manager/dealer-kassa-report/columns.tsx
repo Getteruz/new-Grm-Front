@@ -55,7 +55,6 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     cell: ({row}) => {
       const  {meUser}= useMeStore()
       const item = row.original;
-      console.log(item)
       return (
         <div className="flex gap-2 items-center">
           <TebleAvatar status={item?.status  == "open"? "panding":item?.status  == "rejected" ? "fail":"success"}  url={meUser?.avatar?.path} name={meUser?.firstName || "A"}/>

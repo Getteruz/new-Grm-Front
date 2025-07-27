@@ -54,7 +54,7 @@ const isReportLoading = false
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(columnData?.award || 0 )
+        formatPrice(columnData?.award as unknown as number  || 0 )
       ),
     },
   ];
@@ -62,7 +62,6 @@ const isReportLoading = false
   function formatPrice(price: number): string {
     return Number(price).toFixed(2);
   }
-
 
   return (
     <>

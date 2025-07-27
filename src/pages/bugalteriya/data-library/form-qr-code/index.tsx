@@ -110,7 +110,6 @@ const ActionPageQrCode = () => {
     },
   });
 
-  console.log(data)
 
   useEffect(() => {
     if (data) {

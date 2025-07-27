@@ -27,7 +27,6 @@ export const UploadAvatarButton = () => {
     api
       .post(apiRoutes.upload, formData)
       .then((res) => {
-        console.log(res?.data);
         setValue("avatar", res?.data?.[0] );
       })
       .catch((err) => toast.error(String(err)));

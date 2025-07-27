@@ -1,23 +1,24 @@
 export interface TKassareportData {
   id: string;
+  payrollsDealerId?: string;
   totalSellCount: number;
   additionalProfitTotalSum: number;
   netProfitTotalSum: number;
   totalSize: number;
-  kassaReportStatus:number;
+  kassaReportStatus: number;
   year: number;
   month: number;
-  isDealer?:boolean;
-  dealerReportId?:string
+  isDealer?: boolean;
+  dealerReportId?: string;
   status: string;
   filial?: {
     id: string;
     title: string;
   };
-  isMManagerConfirmed?:boolean;
-  isAccountantConfirmed?:boolean;
-  kassaReport?:TKassareportData[];
-  reportStatus?:number;
+  isMManagerConfirmed?: boolean;
+  isAccountantConfirmed?: boolean;
+  kassaReport?: TKassareportData[];
+  reportStatus?: number;
   totalPlasticSum: number;
   totalInternetShopSum: number;
   totalSale: number;
@@ -29,9 +30,33 @@ export interface TKassareportData {
   totalSum: number;
 }
 
-export interface TChaFlowData{
-  expense: number,
-  income: number
+export interface TKassaPayrollsData {
+  data: TKassaPayrollsDataItem;
+}
+
+export interface TKassaPayrollsDataItem {
+  dateOne: Date;
+  dateTwo: Date;
+  deletedDate: null;
+  id: string;
+  title: string;
+  createdAt: Date;
+  award: number;
+  bonus: number;
+  total: number;
+  plastic: number;
+  in_hand: number;
+  prepayment: number;
+  status: string;
+  month: number;
+  isAccountantConfirmed: boolean;
+  isMManagerConfirmed: boolean;
+  year: number;
+  number_payroll: number;
+}
+export interface TChaFlowData {
+  expense: number;
+  income: number;
 }
 
 export interface RemainingProductData {
@@ -40,13 +65,13 @@ export interface RemainingProductData {
   count: number;
 }
 export interface RemainingProductColactionData {
-    country: {
-        id: string;
-        title: string;
-    };
-    remainingSize: number;
-    remainingSum: number; 
-    count: number;
+  country: {
+    id: string;
+    title: string;
+  };
+  remainingSize: number;
+  remainingSum: number;
+  count: number;
 }
 export interface TQuery {
   search?: string | undefined;
@@ -57,9 +82,9 @@ export interface TQuery {
   id?: string;
   startDate?: Date | null;
   endDate?: Date | null;
-  type?:string;
+  type?: string;
 }
 export interface TDealearQuery {
- month?:number;
- year?:number;
+  month?: number;
+  year?: number;
 }

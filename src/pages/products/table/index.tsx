@@ -59,7 +59,6 @@ export default function Page() {
   const productsFlat = productsData?.pages?.flatMap((page) => page?.items || []) || [];
   const collections = collectionsData?.pages?.flatMap((page) => page || []) || [];
 
-  console.log('Raw collections:', collections);
 
   const showProductTable = collection === "product" && card !== "card";
   const showCardGrid = collection === "product" && card === "card";

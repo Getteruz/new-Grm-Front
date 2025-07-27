@@ -13,13 +13,12 @@ export const StatementEmployeeColumns = (): ColumnDef<Statement>[] => {
       id: "employee",
       header: "Сотрудник",
       cell: ({ row }) => {
-        console.log(row.original.user?.avatar);
         return (
           <div className="flex gap-2 items-center">
-           <TebleAvatar  status="none"  url={row.original?.user?.avatar?.path} name={row.original.user?.firstName}/>
+           <TebleAvatar  status="none"  url={row.original?.user?.avatar?.path} name={row.original?.user?.firstName}/>
             <div className="font-normal text-foreground tetx-[13px]">
-              {row.original.user?.firstName}
-              {row.original.user?.lastName}
+              {row.original?.user?.firstName}
+              {row.original?.user?.lastName}
             </div>
           </div>
         );
@@ -32,7 +31,7 @@ export const StatementEmployeeColumns = (): ColumnDef<Statement>[] => {
       cell: ({ row }) => {
         return (
           <div className="bg-[#F0F0E5] py-[12px] px-[16px] rounded-full inline-block text-[#5D5D53] text-[12px]">
-            {row.original.user?.filial}
+            {row.original?.user?.filial}
           </div>
         );
       },
@@ -45,7 +44,7 @@ export const StatementEmployeeColumns = (): ColumnDef<Statement>[] => {
           <span className="text-[#E38157] flex items-center">
             {" "}
             <IdCardIcon className="mr-1 text-[12px]" size={18} />{" "}
-            {row.original.user?.salary} $
+            {row.original?.user?.salary} $
           </span>
         );
       },
@@ -54,7 +53,7 @@ export const StatementEmployeeColumns = (): ColumnDef<Statement>[] => {
       header: "Бонус",
       accessorKey: "bonus",
       cell: ({ row }) => {
-        return row.original?.bonus ? (
+        return typeof row.original?.bonus == "string" ? (
           <span className="text-[#C3AD54] flex items-center">
             {" "}
             <Gem className="mr-1 text-[12px]" size={18} /> +{row.original?.bonus} $
@@ -71,7 +70,7 @@ export const StatementEmployeeColumns = (): ColumnDef<Statement>[] => {
         return row.original?.award ? (
           <span className="text-[#94C3DC] flex items-center">
             <Gift className="mr-1 text-[12px]" size={18} /> +
-            {row.original?.award} $
+            {row.original?.award?.title} $
           </span>
         ) : (
           <span>—</span>

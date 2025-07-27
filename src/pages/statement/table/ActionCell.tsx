@@ -13,7 +13,7 @@ interface ActionCellProps {
   onEditClick: (id: string) => void;
 }
 
-export const ActionCell = ({ row, onDeleteClick, onEditClick }: ActionCellProps) => {
+export const ActionCell = ({ row, onDeleteClick }: ActionCellProps) => {
   const navigate = useNavigate();
 
   return (
@@ -31,12 +31,12 @@ export const ActionCell = ({ row, onDeleteClick, onEditClick }: ActionCellProps)
           Подробности
         </DropdownMenuItem>
 
-        <DropdownMenuItem onClick={(e) => {
+        {/* <DropdownMenuItem onClick={(e) => {
           e.stopPropagation();
           onEditClick(String(row.original.id));
         }}>
           Редактировать
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
 
         <DropdownMenuItem
           className="text-red-600"

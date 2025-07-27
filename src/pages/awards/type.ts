@@ -1,14 +1,15 @@
-// type.ts
-export type Award = {
-    id: string;
-    number: number;
-    name: string;
-    createdAt: string;
-    amount: number;
-  };
+export type TData = {
   
-  export type AwardQuery = {
-    search?: string;
-    limit: number;
-    page: number;
-  };
+  id: string;
+  title: string;
+  sum: number;
+  createdAt:Date;
+};
+
+export type TQuery = {
+  limit?: number;
+  page?: number;
+  search?: string;
+  filial?: string;
+  filialId?: string;
+};

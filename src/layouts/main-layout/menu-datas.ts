@@ -674,7 +674,7 @@ export const DataMenu = {
     {
       id: 6,
       icons: () => DiamondIcon(),
-      link: "/bonuses",
+      link: "/bonus",
       text: "Бонусы",
     },
   ],

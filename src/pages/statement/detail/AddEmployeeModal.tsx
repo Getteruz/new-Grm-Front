@@ -9,38 +9,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-const monthList = [
-  { value: "1", label: "Январь" },
-  { value: "2", label: "Февраль" },
-  { value: "3", label: "Март" },
-  { value: "4", label: "Апрель" },
-  { value: "5", label: "Май" },
-  { value: "6", label: "Июнь" },
-  { value: "7", label: "Июль" },
-  { value: "8", label: "Август" },
-  { value: "9", label: "Сентябрь" },
-  { value: "10", label: "Октябрь" },
-  { value: "11", label: "Ноябрь" },
-  { value: "12", label: "Декабрь" },
-];
+
 
 import FormComboboxDemoInput from "@/components/forms/FormCombobox";
 import { AddData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useQueryClient } from "@tanstack/react-query";
-import FormSelectInput from "@/components/forms/FormSelect";
-
 interface AddEmployeeModalProps {
   isOpen: boolean;
+  month: string;
   onClose: () => void;
   statementId: string;
   selectedFilialId?: string;
 }
 
-
 const formSchema = z.object({
-  selectedMonth:z.string(),
+  selectedMonth:z.string().optional(),
   employeeId:  z.object({
     value: z.string(),
     label: z.string()
@@ -59,12 +44,12 @@ type FormValues = z.infer<typeof formSchema>;
 export default function AddEmployeeModal({
   isOpen,
   onClose,
+  month,
   statementId,
 }: AddEmployeeModalProps) {
   const queryClient = useQueryClient();
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
- 
+    resolver: zodResolver(formSchema )
   });
 
   const selectedFilial = form.watch("filial");
@@ -85,7 +70,7 @@ export default function AddEmployeeModal({
     try {
    
       await AddData("/payroll-items", {
-        selectedMonth: Number(data?.selectedMonth),
+        selectedMonth: month,
         plastic: 0,
         in_hand: data?.salary,
         prepayment: 0,
@@ -135,8 +120,7 @@ export default function AddEmployeeModal({
                         placeholder="Укажите флиал"
                         label="Флиал"
                       />
-                  
-                  <FormComboboxDemoInput
+                   <FormComboboxDemoInput
                         fieldNames={{ value: "id", label: "firstName" }}
                         fetchUrl={`/user` }
                         className="w-2/3"
@@ -149,16 +133,7 @@ export default function AddEmployeeModal({
                       />
                   </div>
 
-                  <FormSelectInput
-                        fieldNames={{ value: "id", label: "firstName" }}
-                        option={monthList}
-                        className="w-1/3 max-w-[243px]"
-                        classNameChild="h-[40px]  p-2"
-                        name="selectedMonth"
-                        placeholder="За какой месяц"
-                        label="За какой месяц"
-                        
-                      />
+               
                 </div>
               </div>
             </div>

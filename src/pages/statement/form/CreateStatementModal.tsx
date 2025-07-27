@@ -11,7 +11,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
@@ -19,7 +18,22 @@ import { toast } from "sonner";
 import { useQueryState } from "nuqs";
 import { useTranslation } from "react-i18next";
 import { useStatementsId } from "../table/queries";
-
+import FormSelectInput from "@/components/forms/FormSelect";
+import FormTextInput from "@/components/forms/FormTextInput";
+const monthsArray = [
+  { label: "Январь", value: "1" },
+  { label: "Февраль", value: "2" },
+  { label: "Март", value: "3" },
+  { label: "Апрель", value: "4" },
+  { label: "Май", value: "5" },
+  { label: "Июнь", value: "6" },
+  { label: "Июль", value: "7" },
+  { label: "Август", value: "8" },
+  { label: "Сентябрь", value: "9" },
+  { label: "Октябрь", value: "10" },
+  { label: "Ноябрь", value: "11" },
+  { label: "Декабрь", value: "12" }
+]
 interface CreateStatementModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -27,6 +41,7 @@ interface CreateStatementModalProps {
 
 const formSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
+  month: z.string().min(1, "Месяц обязательно"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -57,11 +72,9 @@ const {data,isLoading:dataLoading} = useStatementsId({id: id  === "new"? undefin
   const onSubmit = async (data: FormValues) => {
     try {
       setIsLoading(true);
-      const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-
       const body = {
         title: data.title,
-        to_date: today,
+        month: +data?.month || undefined,
       };
       if(id=="new"){
         await api.post(apiRoutes.payrolls, body);
@@ -83,6 +96,7 @@ const {data,isLoading:dataLoading} = useStatementsId({id: id  === "new"? undefin
 useEffect(()=>{
   form.reset({
     title: data?.title || undefined,
+    month: data?.month || undefined,
   })
 },[data,id])
 
@@ -90,7 +104,7 @@ useEffect(()=>{
 
   return (
     <Dialog open={isOpen} onOpenChange={CloseFunc}>
-      <DialogContent className="sm:max-w-[796px] p-0 bg-[#F0F0E5]">
+      <DialogContent className="sm:max-w-[568px] p-0 bg-[#F0F0E5]">
         <DialogHeader className="p-4 border-b">
           <div className="flex justify-between items-center">
             <DialogTitle className="text-lg font-medium">
@@ -100,42 +114,27 @@ useEffect(()=>{
         </DialogHeader>
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="p-6">
+            <div className="py-[32px] px-13">
               <div className="space-y-4">
                 <Label htmlFor="number">Данные о ведомости</Label>
-                <div className="flex mt-3">
-                  <div className="mr-2">
-                    <Label
-                      htmlFor="number"
-                      className="text-[#99998C] text-[12px]"
-                    >
-                      Номер ведомости
-                    </Label>
-                   <div className="w-[100px] relative">
-                    <p className="absolute left-2 top-2">№</p>
-                   <Input
-                      // readOnly
-                      id="number"
-                      placeholder='---'
-                      className="mt-1 pl-8 w-[100px]"
+                <div className="flex flex-wrap gap-2 mt-3">
+                     <FormTextInput
+                      name="number"
+                      label="Название"
+                      className="w-[100px]"
+                       placeholder='№---'
                     />
-                   </div>
-                  </div>
-
-                  <div>
-                    <Label
-                      htmlFor="name"
-                      className="text-[#99998C] text-[12px]"
-                    >
-                      Название
-                    </Label>
-                    <Input
-                      id="title"
-                      className="mt-1 min-w-[448px]"
-                      {...form.register("title")}
+                  <FormSelectInput
+                    label="За какой месяц"
+                    name="month"
+                    className="max-w-[350px]"
+                    option={monthsArray}
+                    />
+                    <FormTextInput
+                      name="title"
+                      label="Название"
                       placeholder="Введите название"
                     />
-                  </div>
                 </div>
               </div>
             </div>

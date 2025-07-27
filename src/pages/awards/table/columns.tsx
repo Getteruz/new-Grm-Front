@@ -1,71 +1,50 @@
 // table/columns.tsx
 import { ColumnDef } from "@tanstack/react-table";
+import { TData } from "../type";
+import TableAction from "@/components/table-action";
+import { apiRoutes } from "@/service/apiRoutes";
 import { format } from "date-fns";
-import { MoreHorizontal } from "lucide-react";
-import { useQueryState } from "nuqs";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
-import { Award } from "../type";
-
-export const AwardColumns: ColumnDef<Award>[] = [
-  {
-    accessorKey: "number",
-    header: "№",
-    size: 60,
-  },
+export const AwardsColumns: ColumnDef<TData>[] = [
   {
     header: "Название",
-    accessorKey: "name",
+    accessorKey: "title",
   },
   {
     header: "Дата создания премии",
     accessorKey: "createdAt",
     cell: ({ row }) => {
-      return format(new Date(row.original.createdAt), "dd.MM.yyyy");
+      return (
+        <span className="text-foreground">
+          {format(new Date(row.original?.createdAt), "dd.MM.yyyy")}
+        </span>
+      );
     },
   },
   {
     header: "Сумма",
-    accessorKey: "amount",
+    accessorKey: "sum",
     cell: ({ row }) => {
-      return <span>{row.original.amount} $</span>;
+      return (
+        <p>{row?.original?.sum} $</p>
+      );
     },
-    size: 120,
   },
+ 
   {
     id: "actions",
     enableHiding: true,
-    cell: function ActionsCell({ row }) {
-      const [, setEditId] = useQueryState("editId");
-      const [, setDeleteId] = useQueryState("deleteId");
-
+    cell: ({ row }) => {
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setEditId(row.original.id)}>
-              Редактировать
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              className="text-red-600"
-              onClick={() => setDeleteId(row.original.id)}
-            >
-              Удалить
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <TableAction
+          url={apiRoutes.awards}
+          refetchUrl={apiRoutes.awards}
+          ShowPreview={false}
+          id={row.original?.id}
+        />
       );
     },
   },
 ];
+

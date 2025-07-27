@@ -1,19 +1,23 @@
-// type.ts
-export type Bonus = {
-    id: string;
-    number: number;
-    name: string;
-    condition: number;
-    measurementUnit: string;
-    operator: string;
-    bonusValue: number;
-    bonusUnit: string;
-    period: string;
-    endDate?: string;
-  };
-  
-  export type BonusQuery = {
-    search?: string;
-    limit: number;
-    page: number;
-  };
+export type TData = {
+  dateOne: Date;
+  dateTwo: Date;
+  deletedDate: Date;
+  id: string;
+  title: string;
+  condition: number;
+  conditionUnit:string;
+  operator:string;
+  bonusAmount: number;
+  bonusUnit:string;
+  endDate: Date;
+  createdAt: Date;
+  payroll_items: [];
+};
+
+export type TQuery = {
+  limit?: number;
+  page?: number;
+  search?: string;
+  filial?: string;
+  filialId?: string;
+};

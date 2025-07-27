@@ -1,19 +1,26 @@
 // Statement types
 export type Statement = {
   createdAt: string;
-  id: number;
+  id: string;
   in_hand: number;
   number_payroll: number;
   plastic: number;
   premium: number;
   status: string;
+  month: string;
+  bonus: number;
+  prepayment: number;
+  award: number;
   title: string;
   to_date: string;
   total: number;
   user: {
     firstName: string;
     lastName: string;
-    avatar: string;
+    id: string;
+    avatar: {
+      path: string;
+    };
     salary: number;
     filial: string;
   };
@@ -24,6 +31,52 @@ export type Statement = {
     plastic: number;
     prepayment: number;
     in_hand: number;
+  };
+};
+
+export type StatementItem = {
+  dateOne: Date;
+  dateTwo: Date;
+  deletedDate: null;
+  id: Date;
+  createdAt: Date;
+  total: number;
+  plastic: number;
+  in_hand: number;
+  prepayment: number;
+  selectedMonth: number;
+  year: number;
+  user: {
+    dateOne: Date;
+    dateTwo: Date;
+    deletedDate: null;
+    id: string;
+    isActive: boolean;
+    firstName: string;
+    lastName: string;
+    fatherName: string
+    login:string;
+    hired: Date;
+    from: string;
+    to: string;
+    avatar:{
+      path: string;
+    }
+    username: null;
+    salary: number;
+    email: null;
+    phone: string
+    isUpdated: boolean;
+    createdAt: Date;
+  };
+  payroll: Statement;
+  award: {
+    id: string;
+  };
+  is_bonus: boolean;
+  is_premium:boolean;
+  bonus: {
+    id: string;
   };
 };
 

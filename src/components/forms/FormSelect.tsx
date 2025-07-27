@@ -73,10 +73,9 @@ export default function FormSelectInput<IData, TQuery>({
       render={({ field }) => {
         return (
           <FormItem
-            className={cn("flex flex-col items-start w-full", className)}
-          >
+          className={cn("flex gap-1 flex-col items-start w-full", className)}>
             {label && (
-              <FormLabel className="mb-1 font-medium text-foreground ">
+              <FormLabel className="font-normal text-[12px] text-[#99998C]">
                 {t(label)}
               </FormLabel>
             )}

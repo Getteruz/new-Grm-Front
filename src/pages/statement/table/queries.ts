@@ -51,9 +51,7 @@ export const useStatementsDataDetail = ({
   useQuery({
     queryKey: [apiRoutes.payrollItems, queries?.payrollId],
     queryFn: () =>
-      getAllData<TResponse<Statement>, StatementQuery>(`${apiRoutes.payrollItems}`, {
-        payrollId: queries?.payrollId,
-      }),
+      getAllData<TResponse<Statement>, StatementQuery>(`${apiRoutes.payrollItems}`,queries),
     enabled: !!queries?.payrollId,
   });
 

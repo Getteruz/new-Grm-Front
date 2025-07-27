@@ -83,6 +83,7 @@ export const StatementColumns: ColumnDef<Statement>[] = [
             }}
             isLoading={isPending}
             status="accept"
+            btnText="Отправить"
           />
         ) : (
           <ActionBadge

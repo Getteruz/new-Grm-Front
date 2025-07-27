@@ -53,10 +53,9 @@ export const StatementEmployeeColumns = (): ColumnDef<Statement>[] => {
       header: "Бонус",
       accessorKey: "bonus",
       cell: ({ row }) => {
-        return typeof row.original?.bonus == "string" ? (
+        return typeof row.original?.bonus  ? (
           <span className="text-[#C3AD54] flex items-center">
-            {" "}
-            <Gem className="mr-1 text-[12px]" size={18} /> +{row.original?.bonus} $
+            <Gem className="mr-1 text-[12px]" size={18} /> {row.original?.bonus?.title} 
           </span>
         ) : (
           <span>—</span>
@@ -69,8 +68,8 @@ export const StatementEmployeeColumns = (): ColumnDef<Statement>[] => {
       cell: ({ row }) => {
         return row.original?.award ? (
           <span className="text-[#94C3DC] flex items-center">
-            <Gift className="mr-1 text-[12px]" size={18} /> +
-            {row.original?.award?.title} $
+            <Gift className="mr-1 text-[12px]" size={18} /> 
+            {row.original?.award?.title} 
           </span>
         ) : (
           <span>—</span>

@@ -9,12 +9,16 @@ import FormSwitch from "@/components/forms/FormSwitch";
 import FormSelectInput from "@/components/forms/FormSelect";
 import { useFormContext } from "react-hook-form";
 
+
 export default function FormContent({
   data,
 }: {
   data: StatementItem | undefined;
 }) {
   const { watch } = useFormContext();
+
+
+
   return (
     <>
       <DialogHeader>
@@ -49,7 +53,7 @@ export default function FormContent({
           label="Аванс"
           type="number"
           className="w-full"
-          name="prapayment"
+          name="prepayment"
           placeholder="Аванс"
         />
 

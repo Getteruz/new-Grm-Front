@@ -15,15 +15,17 @@ import { useQueryState } from "nuqs";
 import { useStatusMutation } from "../form/action";
 import CardSort from "./card-sort";
 import ActionPage from "./form";
+import { useMeStore } from "@/store/me-store";
 
 export default function DetailPage() {
   const { id } = useParams<{ id: string }>();
   const [isAddEmployeeOpen, setIsAddEmployeeOpen] = useState(false);
   const [filial] = useQueryState("filial");
+  const {meUser} = useMeStore();
   const { data, isLoading } = useStatementsDataDetail({
     queries: {
       payrollId: id,
-      filialId: filial || undefined,
+      filialId: filial == "all" ? undefined : filial || undefined,
     },
   });
   const { data: dataSingle } = useStatementsId({
@@ -84,7 +86,7 @@ export default function DetailPage() {
   return (
     <>
       <div className="bg-sidebar border-border border-b  px-[20px] h-[64px] items-center  flex   ">
-        <Button
+       {meUser?.position?.role == 11 &&   <Button
           onClick={() =>
             mutate({
               id: id || "",
@@ -101,7 +103,7 @@ export default function DetailPage() {
             <Send className="mr-2 h-4 w-4" />
           )}
           {dataSingle?.status == "Sent" ? "Отправить ведомость" : "Отправлено"}
-        </Button>
+        </Button>}
 
         <FilterSelect
           icons={<Store />}
@@ -113,13 +115,13 @@ export default function DetailPage() {
         <Button className="h-full  border-y-0 w-[140px]  " variant={"outline"}>
           <FileOutput className="mr-2 h-4 w-4" /> Экспорт
         </Button>
-        <Button
+      {meUser?.position?.role == 11 &&  <Button
           className="h-full  border-y-0 w-[240px] "
           variant={"outline"}
           onClick={() => setIsAddEmployeeOpen(true)}
         >
           <PlusCircle className="mr-2 h-4 w-4" /> Добавить сотрудника
-        </Button>
+        </Button>}
       </div>
 
       <CardSort columnData={dataSingle}/>

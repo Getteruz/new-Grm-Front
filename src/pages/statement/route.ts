@@ -12,6 +12,11 @@ const Route = [
     Element: DetailPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+  {
+    url: "/m-manager/report-finance/statement/:id/info",
+    Element: DetailPage,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
 ];
 
 export default Route;

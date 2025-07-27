@@ -8,7 +8,9 @@ export type Statement = {
   premium: number;
   status: string;
   month: string;
-  bonus: number;
+  bonus: {
+    title: string;
+  };
   prepayment: number;
   award: {
     title:string;

@@ -38,7 +38,7 @@ const isReportLoading = false
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(columnData?.bonus || 0 )
+        formatPrice(columnData?.bonus as unknown as number || 0 )
       ),
     },
     {

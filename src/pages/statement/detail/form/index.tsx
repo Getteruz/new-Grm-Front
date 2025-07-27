@@ -58,6 +58,14 @@ const ActionPage = ({month}:{month:string}) => {
     }
   }, [data]);
 
+  useEffect(()=>{
+    if(!form.watch('is_bonus')) form.setValue('bonusId',undefined)
+  },[form.watch('is_bonus')])
+
+  useEffect(()=>{
+    if(!form.watch('is_premium')) form.setValue('awardId',undefined)
+  },[form.watch('is_premium')])
+
   return (
     <Dialog
       open={Boolean(id)}

@@ -126,6 +126,11 @@ export default function PageFinanceSingle() {
               navigate(
                 `/m-manager/d-manager/report-monthly/${item?.dealerReportId}/info`
               );
+            } else if (item?.payrollsDealerId){
+              navigate(
+                `/m-manager/report-finance/statement/${item?.payrollsDealerId}/info`
+              );
+              
             } else {
               setMyCashFlow(false);
             }

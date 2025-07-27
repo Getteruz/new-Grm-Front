@@ -8,14 +8,19 @@ import FormDatePicker from "@/components/forms/FormDateRangePicker";
 
 const operatorArr = [
   {
+    label: "= Равно",
+    value: "=",
+  },
+  {
+    label: ">= Больше и Равно",
+    value: ">=",
+  },
+  {
     label: "> Больше",
     value: ">",
   },
-  {
-    label: "< Меньше",
-    value: "<",
-  },
 ];
+
 
 const conditionUnitArr = [
   {

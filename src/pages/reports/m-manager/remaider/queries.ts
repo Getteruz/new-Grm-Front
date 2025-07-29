@@ -93,7 +93,7 @@ export const usefilialWarehouseFetch = ({ options, queries }: ITransfers) =>
         }),
       getNextPageParam: (lastPage) => {
         if (lastPage?.meta?.pagination?.page <= lastPage?.meta?.pagination?.totalPages ) {
-          return lastPage?.meta?.pagination?.page + 1;
+          return  Number(lastPage?.meta?.pagination?.page) + 1;
         } else {
           return null;
         }

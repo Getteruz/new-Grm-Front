@@ -21,8 +21,8 @@ export default function CardSortRemaider() {
   const {data:remainingColaction} = useProductRemainingColaction({
     queries:{
       filialId:filialId|| undefined,
-      startDate:fromDate|| undefined,
-      endDate:toDate|| undefined
+      from:fromDate|| undefined,
+      to:toDate|| undefined
     }
   })
 

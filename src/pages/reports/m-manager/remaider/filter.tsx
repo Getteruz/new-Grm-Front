@@ -39,7 +39,7 @@ export default function Filters() {
               sort ==="delears"?  <Factory/>:<Layers2/>
             }
           />
-    <DateRangePicker/>
+    <DateRangePicker className="mr-6"/>
       <Button
         className="h-full  border-y-0 w-[140px]  "
         variant={"outline"}

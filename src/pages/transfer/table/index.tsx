@@ -26,7 +26,7 @@ const buildFlatList = (data:TransferData[]) => {
       result.push({ type: 'header',transferer:item?.transferer,courier:item?.courier ,group: group });
       lastDate = group;
     }
-    result.push(item );
+    result.push(item);
   }
 
   return result;
@@ -97,7 +97,6 @@ export default function Page() {
   });
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
-
 
  const onSelectFilial = (data:TData)=>{
   setFilial(data?.id)

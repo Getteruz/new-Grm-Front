@@ -172,6 +172,12 @@ export const DataMenu = {
           link: "/f-manager/report-seller",
           text: "Отчёт по сотрудикам",
         },
+        {
+          id: 26,
+          link: "/f-manager/report-orginal",
+          text: "Хисобот",
+        },
+       
       ],
     },
     {

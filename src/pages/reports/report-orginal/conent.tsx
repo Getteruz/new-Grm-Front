@@ -65,11 +65,11 @@ export default function Conent() {
         </div>
       </div>
 
-      <div className="flex items-center justify-center border-border border-t mt-auto p-3">
+    { meUser?.position?.role == 4 && <div className="flex items-center justify-center border-border border-t mt-auto p-3">
         <Button disabled={month !== getMonth(new Date()) + 1 + ""} className="w-full rounded-md max-w-[610px] bg-[#272727]">
           Добавить
         </Button>
-      </div>
+      </div>}
     </div>
   );
 }

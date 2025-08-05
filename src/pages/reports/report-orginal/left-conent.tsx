@@ -1,5 +1,6 @@
 import FilterSelect from "@/components/filters-ui/filter-select";
 import useDataFetch from "@/pages/filial/table/queries";
+import { useMeStore } from "@/store/me-store";
 import { getMonth } from "date-fns";
 import { Store } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
@@ -19,6 +20,7 @@ const monthsArray = [
   { label: "Декабрь", value: "12" },
 ];
 export default function LeftConent() {
+  const { meUser } = useMeStore();
   const [month, setMonth] = useQueryState(
     "month",
     parseAsString.withDefault(getMonth(new Date()) + 1 + "")
@@ -33,32 +35,36 @@ export default function LeftConent() {
     })) || [];
 
   return (
-    <div className="h-full flex flex-col   w-[220px]">
+    <div className="h-full flex flex-col   min-w-[220px]">
       <div className="p-1.5 h-[55px] ">
-        <FilterSelect
-          placeholder="все"
-          className="w-[200px] rounded-lg px-2 h-[44px] bg-popover"
-          options={[{ value: "clear", label: "все" }, ...filialOption]}
-          name="filial"
-          icons={
-            <>
-              <Store />
-            </>
-          }
-        />
+      
+          <FilterSelect
+            placeholder="все"
+            disabled={meUser?.position?.role == 4}
+            className="w-[200px] rounded-lg px-2 h-[44px] bg-popover"
+            options={[{ value: "clear", label: "все" }, ...filialOption]}
+            name="filial"
+            defaultValue={meUser?.filial?.id}
+            icons={
+              <>
+                <Store />
+              </>
+            }
+          />
+      
       </div>
       <div className="p-1.5 w-full border-border  border-t">
         {monthsArray?.map((item) => (
           <p
             onClick={() => setMonth(item?.value)}
-            className={`${item?.value == month ? "bg-input" :""} w-full text-[#272727] cursor-pointer rounded-md text-[16px] font-medium px-[26px] py-[12px] `}
+            className={`${item?.value == month ? "bg-input" : ""} w-full text-[#272727] cursor-pointer rounded-md text-[16px] font-medium px-[26px] py-[12px] `}
           >
             {item?.label}
           </p>
         ))}
       </div>
       <p className="border-t mt-auto px-[31px] text-[#272727] py-[18px] border-border">
-      Годовой отчет
+        Годовой отчет
       </p>
     </div>
   );

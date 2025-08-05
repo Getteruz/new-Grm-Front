@@ -5,7 +5,7 @@ import SinglePage from "./report-single";
 import PageSellerCashFlow from "../seller/seller-cashflow";
 import PageSellerReport from "../seller/seller-report";
 import PageCleintDebt from "./client-debt";
-import PageOrginal from "./report-orginal";
+import PageOrginal from "../report-orginal";
 const Route = [
   {
     url: "/f-manager/report",

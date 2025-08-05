@@ -7,6 +7,7 @@ import PageFinance from "./report-finance";
 import PageFinanceSingle from "./report-finance-single";
 import PageSellerReport from "../seller/seller-report";
 import PageSellerCashFlow from "../seller/seller-cashflow";
+import PageOrginal from "../report-orginal";
 
 const Route = [
   {
@@ -72,13 +73,18 @@ const Route = [
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {
-    url: "//m-manager/report-seller",
+    url: "/m-manager/report-seller",
     Element: PageSellerReport,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {
-    url: "//m-manager/report-seller/:id/info",
+    url: "/m-manager/report-seller/:id/info",
     Element: PageSellerCashFlow,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/m-manager/report-orginal",
+    Element: PageOrginal,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
 ];

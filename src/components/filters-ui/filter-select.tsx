@@ -14,6 +14,7 @@ interface iFilterSelect {
   classNameContainer?: string;
   classNameItem?: string;
   icons?: React.ReactNode;
+  disabled?:boolean
   options?: {
     label: string;
     value: string | undefined;
@@ -28,6 +29,7 @@ export default function FilterSelect({
   defaultValue,
   classNameContainer,
   options,
+  disabled,
   classNameValue,
 }: iFilterSelect) {
   const [value, setValue] = useQueryState(
@@ -46,7 +48,7 @@ export default function FilterSelect({
       { icons && icons}
       <ShadcnSelect
         className={` border-none  ${className && className}`}
-        disabled={false}
+        disabled={disabled}
         value={value?.length ? value : undefined}
         defaultValue={defaultValue && defaultValue}
         classNameContainer={classNameContainer && classNameContainer}

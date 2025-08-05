@@ -21,6 +21,7 @@ export default function Conent() {
       year:getYear(new Date()) ,
     }
   })
+  const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
     <div className="h-full flex flex-col w-full border-border border-x">
@@ -36,7 +37,7 @@ export default function Conent() {
 
       <div className="w-full max-w-[610px] mx-auto border-border border m-[20px] overflow-hidden  rounded-sm">
           {
-            data?.pages?.[0]?.map((e) => (
+           flatData?.map((e) => (
               <div key={e?.id} className="flex items-center w-full border-border border-b">
               
                 <p className="pr-[23px] py-[11px] flex items-center gap-[3px]  w-[379px] text-[#272727] text-[15px] border-border border-r font-medium">
@@ -60,7 +61,7 @@ export default function Conent() {
         <div className="flex items-center w-full border-border border-b">
           <FormTextInput classNameInput="min-w-[378px] bg-background"  name="title" placeholder="Пишите сюда" />
           <FormTextInput classNameInput="min-w-[100px] bg-background" name="price" type="number" placeholder="price" />
-          <FormTextInput classNameInput="min-w-[100px] bg-background" name="price1" type="number" placeholder="price" />
+          <FormTextInput classNameInput="min-w-[100px] bg-background" disabled name="price1" type="number" placeholder="price" />
         </div>
       </div>
 

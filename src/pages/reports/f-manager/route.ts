@@ -65,7 +65,7 @@ const Route = [
   {
     url: "/f-manager/report-finance/client-debt",
     Element: PageCleintDebt,
-    meta: { isAuth: true, role: new Set(["admin"]) },
+    meta: { isAuth: true, role: new Set(["admin"])},
   },
   {
     url: "/f-manager/report-orginal",

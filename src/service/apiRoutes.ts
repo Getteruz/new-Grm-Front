@@ -77,5 +77,6 @@ export const apiRoutes = {
   collectionReport:'/collection-report',
   productRemainingCollection:'/product/remaining-products-collection',
   payrollsDealer:"/payrolls/get-for-managers",
-  paperReport:'/paper-report'
+  paperReport:'/paper-report',
+  paperReportStatic:'/paper-report/stats'
 } as const;

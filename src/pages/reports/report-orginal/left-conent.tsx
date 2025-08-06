@@ -35,7 +35,7 @@ export default function LeftConent() {
     })) || [];
 
   return (
-    <div className="h-full flex flex-col   min-w-[220px]">
+    <div className="h-full flex flex-col    min-w-[220px]">
       <div className="p-1.5 h-[55px] ">
       
           <FilterSelect

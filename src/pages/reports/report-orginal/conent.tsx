@@ -60,7 +60,7 @@ export default function Conent() {
   const [filial] = useQueryState("filial");
 
   const { data: StatucData } = useQuery({
-    queryKey: [apiRoutes.paperReportStatic],
+    queryKey: [apiRoutes.paperReportStatic,meUser,filial,month],
     queryFn: () =>
       getAllData<TStaticData, object>(apiRoutes.paperReportStatic, {
         month: +month || undefined,

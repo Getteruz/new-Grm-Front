@@ -138,13 +138,13 @@ export default function Conent() {
             kv={StatucData?.qarzgaSotilganKv || 0}
           />
           <RowUI
-            title={"Magazin rasxod"}
-            price={StatucData?.magazinRasxod || 0}
+            title={"Kelgan qarzlar"}
+            price={StatucData?.kelganQarzlar || 0}
             kv={0}
           />
           <RowUI
-            title={"Kelgan qarzlar"}
-            price={StatucData?.kelganQarzlar || 0}
+            title={"Magazin rasxod"}
+            price={StatucData?.magazinRasxod || 0}
             kv={0}
           />
           <RowUI title={"Навар сумма"} price={StatucData?.navar || 0} kv={0} />

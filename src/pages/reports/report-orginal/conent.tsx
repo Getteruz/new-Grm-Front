@@ -165,17 +165,17 @@ export default function Conent() {
             name="title"
             placeholder="Пишите сюда"
           />
+           <FormTextInput
+            classNameInput="min-w-[100px] bg-background"
+            name="kv"
+            type="number"
+            placeholder="kv"
+          />
           <FormTextInput
             classNameInput="min-w-[100px] bg-background"
             name="price"
             type="number"
             placeholder="price"
-          />
-          <FormTextInput
-            classNameInput="min-w-[100px] bg-background"
-            name="kv"
-            type="number"
-            placeholder="kv"
           />
         </div>
       </div>

@@ -78,5 +78,6 @@ export const apiRoutes = {
   productRemainingCollection:'/product/remaining-products-collection',
   payrollsDealer:"/payrolls/get-for-managers",
   paperReport:'/paper-report',
-  paperReportStatic:'/paper-report/stats'
+  paperReportStatic:'/paper-report/stats',
+  paperReportStaticExport:'/paper-report/export-excel'
 } as const;

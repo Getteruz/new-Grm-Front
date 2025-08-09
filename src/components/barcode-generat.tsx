@@ -23,7 +23,8 @@ export default function BarcodeQenerat() {
     documentTitle: "Barcode Print",
     removeAfterPrint: true,
   });
-  // return null;
+
+
   return (
     <div className="w-full">
       <div className="bg-sidebar border-y border-border  h-[64px]   flex   ">

@@ -1,4 +1,4 @@
-import Conent from "./conent";
+import {Conent} from "./conent";
 import LeftConent from "./left-conent";
 import RightConent from "./right-conent";
 
@@ -11,6 +11,7 @@ import { AddData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import { useMeStore } from "@/store/me-store";
 import { useQueryState } from "nuqs";
+import { useRef } from "react";
 
 export default function PageOrginal() {
   const form = useForm<ReportFormType>({
@@ -19,6 +20,8 @@ export default function PageOrginal() {
   const queryClient = useQueryClient();
   const {meUser} = useMeStore()
   const [filial] = useQueryState("filial");
+
+  const printRef = useRef<HTMLDivElement>(null);
 
   const { mutate } = useMutation({
     mutationFn: async ({ data }: { data: ReportFormType }) => {
@@ -46,8 +49,7 @@ export default function PageOrginal() {
       })
     },
   });
-
-
+  console.log(printRef)
       
   return (
     <FormProvider {...form}>
@@ -59,9 +61,9 @@ export default function PageOrginal() {
           });
         })}
       >
-        <LeftConent />
-        <Conent />
-        <RightConent />
+        <LeftConent  />
+        <Conent ref={printRef}/>
+        <RightConent printRef={printRef}/>
       </form>
     </FormProvider>
   );

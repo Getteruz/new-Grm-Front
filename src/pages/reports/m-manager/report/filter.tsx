@@ -2,35 +2,46 @@ import { FileOutput, Store } from "lucide-react";
 
 import FilterSelect from "@/components/filters-ui/filter-select";
 import useDataFetch from "@/pages/filial/table/queries";
-import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import api from "@/service/fetchInstance";
+import qs from "qs";
 import { useMutation } from "@tanstack/react-query";
+import { apiRoutes } from "@/service/apiRoutes";
+import { parseAsBoolean, useQueryState } from "nuqs";
 
 export default function Filters() {
-  const { id } = useParams();
+  const { id, kassaReportId } = useParams();
   const { data } = useDataFetch({
     queries: { type: "filial", limit: 50 },
   });
+
+  const [myCashFlow] = useQueryState(
+    "myCashFlow",
+    parseAsBoolean.withDefault(false)
+  );
+
+  const [FManagerCashFlow] = useQueryState(
+    "FManagerCashFlow",
+    parseAsBoolean.withDefault(false)
+  );
+
   const filialOption =
     data?.pages[0]?.items?.map((e) => ({
       label: e?.name,
       value: e?.id,
     })) || [];
 
-  // const  expertFile = ()=>{
-  //    const data = getAllData(`/excel/cashflows/excel`,{
-  //     kassaId:id
-  //    })
-  //    console.log(data)
-  // }
-
-
-
-  const { mutate } = useMutation({
+  const { mutate: exelMudate } = useMutation({
     mutationFn: async () => {
-      const blob = await api.get(`/excel/cashflows/excel?kassaId=${id}`, {
+      const query = {
+        reportId: myCashFlow && !FManagerCashFlow ? id : undefined,
+        kassaReportId: FManagerCashFlow ? kassaReportId || undefined : undefined,
+      };
+      const params = query
+        ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
+        : "";
+      const blob = await api.get(apiRoutes.excelCashflowsExcel + params, {
         responseType: "blob",
       });
       if (!(blob.data instanceof Blob)) {
@@ -62,30 +73,20 @@ export default function Filters() {
               </>
             }
           />
-          {/* <FilterSelect
-            className="w-[200px]  h-[65px] ml-2  border-border border-r"
-            placeholder="Тип операции"
-            options={[
-              { value: "clear", label: "Все" },
-              { value: "income", label: "Приход" }, // Приход cashflow
-              { value: "expense", label: "Расход" }, // Расход cashflow
-              { value: "sale", label: "Продажа" }, // Приход order
-              { value: "return", label: "Возврат" }, // Расход order
-              { value: "collection", label: "Инкассация" }, // cashflowSlug => Инкассация
-            ]}
-            name="tip"
-          /> */}
-          
-          <DateRangePicker fromPlaceholder={`от`} toPlaceholder={`до`} />
+          {/* <DateRangePicker fromPlaceholder={`от`} toPlaceholder={`до`} /> */}
         </>
       )}
-     {id ? <Button
-     onClick={()=>mutate()}
-        className="h-full  border-y-0 w-[140px]  ml-auto"
-        variant={"outline"}
-      >
-        <FileOutput /> Экспорт
-      </Button>:""}
+      {id || kassaReportId  ? (
+        <Button
+          onClick={() => exelMudate()}
+          className="h-full  border-y-0 w-[140px]  ml-auto"
+          variant={"outline"}
+        >
+          <FileOutput /> Экспорт
+        </Button>
+      ) : (
+        ""
+      )}
       {/* <Button
         className="h-full border-l-0 bg-primary hover:bg-[#525248] hover:text-accent text-accent border-y-0 w-[165px]  "
         variant={"outline"}

@@ -31,7 +31,7 @@ export default function Page() {
     queries: {
       limit,
       page,
-      search: search || undefined,
+      search: collection == "product"?  search  || undefined: undefined,
       filialId:
         filial ||
         meUser?.position?.role === 2 ||
@@ -53,7 +53,8 @@ export default function Page() {
     hasNextPage: hasNextCollectionsPage,
     isFetchingNextPage: isFetchingNextCollectionsPage
   } = useCollectionDataFetch({
-    filialId: meUser?.filial?.id
+    filialId: meUser?.filial?.id,
+    search: collection == "product"?  undefined: search || undefined,
   });
 
   const productsFlat = productsData?.pages?.flatMap((page) => page?.items || []) || [];
@@ -70,7 +71,7 @@ export default function Page() {
       <Filters />
       {meUser?.position?.role === 9 ||
         (search && (
-          <div className="bg-sidebar py-0.5 px-[50px]">
+          <div className="bg-sidebar scrollCastom   py-0.5 px-[50px]">
             <TabsFilter />
           </div>
         ))}

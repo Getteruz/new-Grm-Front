@@ -95,7 +95,7 @@ export default function Content({ orderList, isFetchingNextPage = false,
                     item?.plasticSum ? (item?.plasticSum || 0) + "$" : "0$"
                   }
                   priceMitr={
-                    (item?.product.bar_code?.collection?.collection_prices?.[0]
+                    (item?.product?.bar_code?.collection?.collection_prices?.[0]
                       ?.priceMeter || 0) + "$"
                   }
                   colaction={item?.product?.bar_code?.collection?.title}

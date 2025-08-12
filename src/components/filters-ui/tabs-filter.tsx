@@ -25,10 +25,10 @@ export default function TabsFilter() {
 
   const [filial, setFilial] = useQueryState("filial");
   return (
-    <div className="flex  ">
+    <div className="flex ">
       {data?.data?.map((e) => (
         <p
-          className={`${filial == e?.id ? "bg-primary text-sidebar" : ""} border text-[] bg-background px-4 border-r border-border py-2.5 text-foreground cursor-pointer`}
+          className={`${filial == e?.id ? "bg-primary text-sidebar" : ""} border text-nowrap bg-background px-4 border-r border-border py-2.5 text-foreground cursor-pointer`}
           onClick={() => setFilial(e?.id)}
           key={e?.id}
         >

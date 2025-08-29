@@ -16,6 +16,14 @@ export type TStaticData = {
   inkasatsiya: number;
   qaytganKv: number;
   qaytganNarx: number;
+  foyda1: number;
+  foyda1Kv: number;
+  navarRasxod:number;
+  bossPrixod:number;
+  bossRasxod:number;
+  postavshik:number;
+  postavshikTerminal:number;
+  tamojnya:number;
   davlatlar: [
     {
       countryId: string;
@@ -26,14 +34,22 @@ export type TStaticData = {
     {
       countryId: string;
       countryName: string;
-      totalKv:number;
+      totalKv: number;
       totalPrice: number;
     },
     {
       countryId: string;
-      countryName:string;
+      countryName: string;
       totalKv: number;
       totalPrice: number;
+    },
+  ];
+  debts: [
+    {
+      fullName: string;
+      totalDebt: number;
+      monthlyOwed: number;
+      monthlyGiven: number;
     },
   ];
   skidka: number;

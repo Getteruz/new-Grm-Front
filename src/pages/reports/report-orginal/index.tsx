@@ -49,7 +49,6 @@ export default function PageOrginal() {
       })
     },
   });
-  console.log(printRef)
       
   return (
     <FormProvider {...form}>

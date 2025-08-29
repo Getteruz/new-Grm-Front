@@ -16,11 +16,15 @@ function RowUI({
   title,
   price,
   kv,
+  price1,
+  price2
 }: {
   id?: string;
   title: string;
   price: number;
-  kv: number;
+  kv?: number;
+  price1?: number;
+  price2?: number;
 }) {
   return (
     <div className="flex items-center w-full border-border border-b">
@@ -40,9 +44,15 @@ function RowUI({
         )}
         {title}
       </p>
-      <p className="px-[23px] py-[11px] w-[110px]  text-nowrap text-[#272727] text-[15px]  border-border border-r font-medium">
+     {kv || kv ==0 ? <p className="px-[23px] py-[11px] w-[110px]  text-nowrap text-[#272727] text-[15px]  border-border border-r font-medium">
         {kv.toFixed(2)} м²
-      </p>
+      </p>:""}
+      {price1 || price1 ==0 ? <p className="px-[23px] py-[11px] w-[110px]  text-nowrap text-[#272727] text-[15px]  border-border border-r font-medium">
+        ${price1.toFixed(2)} 
+      </p>:""}
+      {price2  || price2 ==0? <p className="px-[23px] py-[11px] w-[110px]  text-nowrap text-[#272727] text-[15px]  border-border border-r font-medium">
+        ${price2.toFixed(2)} 
+      </p>:""}
       {
         <p className="px-[23px] py-[11px]  w-[110px] text-nowrap text-[#272727] text-[15px] font-medium">
           ${price.toFixed(2)}
@@ -98,6 +108,15 @@ export const Conent = forwardRef<HTMLDivElement>(
             {meUser?.firstName} {meUser?.lastName}
           </p>
         </div>
+        <div  className="w-full max-w-[610px] max-h-[700px] mx-auto border-border border m-[20px] rounded-sm">
+          <p className="text-primary px-3">Qarzlar</p>
+        { 
+            StatucData?.debts && StatucData?.debts?.map((item)=>(
+              <RowUI title={item?.fullName} price1={item?.monthlyGiven}  price2={item?.totalDebt} price={item?.monthlyOwed || 0}  />
+            )) 
+           }
+
+        </div>
   
         <div  className="w-full max-w-[610px] max-h-[700px] mx-auto border-border border m-[20px] rounded-sm">
           <div className=" max-h-[640px]  overflow-scroll ">
@@ -151,7 +170,17 @@ export const Conent = forwardRef<HTMLDivElement>(
               kv={0}
             />
             <RowUI title={"Навар сумма"} price={StatucData?.navar || 0} kv={0} />
-  
+         {
+         !filial &&  <>
+           <RowUI title={"Foyda 1"} price={StatucData?.foyda1 || 0} kv={StatucData?.foyda1Kv || 0} />
+            <RowUI title={"Navar rasxod"} price={StatucData?.navarRasxod || 0} kv={0} />
+            <RowUI title={"Boss — rasxod - prixod"} price={StatucData?.bossRasxod || 0}  price1={StatucData?.bossPrixod|| 0} />
+            <RowUI title={"Postavshik"} price={StatucData?.postavshik || 0} price1={StatucData?.postavshikTerminal || 0} />
+            <RowUI title={"Tamojnya"} price={StatucData?.tamojnya || 0}   />
+          </> 
+            }
+
+            
             {flatData?.map((e) => (
               <RowUI
                 key={e.id}

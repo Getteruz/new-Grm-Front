@@ -15,12 +15,13 @@ const buildFlatList = (data:TransferData[]) => {
   let lastDate = null;
 
 
-  const sorted = [...data].sort((a, b) =>{
-      return  b?.group?.localeCompare(a?.group || "ç")
-  }
-  );
+  // const sorted = [...data].sort((a, b) =>{
+  //     return  b?.group?.localeCompare(a?.group || "ç")
+  // }
+  // );
+  // console.log(sorted)
 
-  for (const item of sorted) {
+  for (const item of data) {
     const group = item.group;
     if (group !== lastDate) {
       result.push({ type: 'header',transferer:item?.transferer,courier:item?.courier ,group: group });

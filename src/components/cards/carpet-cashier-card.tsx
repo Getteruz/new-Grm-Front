@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import TebleAvatar from "../teble-avatar";
+import { useState } from "react";
 
 interface ICarpetCard {
   id: string;
@@ -60,16 +61,19 @@ export default function CarpetCashierCard({
 }: ICarpetCard) {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
-
+  const [isloading,setLoading] = useState(false)
   const AccepedFunt = () => {
+    setLoading(true)
     UpdatePatchData(apiRoutes.order + "/isActive", id, {})
       .then(() => {
         toast.success("Подтверждено успешно");
         queryClient.invalidateQueries({ queryKey: [apiRoutes.orderByKassa] });
       })
-      .catch(() => toast.error("что-то пошло не так"));
+      .catch(() => toast.error("что-то пошло не так"))
+      .finally(()=>setLoading(false));
   };
   const RejectFunt = (type: string) => {
+    setLoading(true)
     UpdatePatchData(apiRoutes.order + `/${type}`, id, {})
       .then(() => {
         if (type == "reject") {
@@ -79,7 +83,8 @@ export default function CarpetCashierCard({
         }
         queryClient.invalidateQueries({ queryKey: [apiRoutes.orderByKassa] });
       })
-      .catch(() => toast.error("что-то пошло не так"));
+      .catch(() => toast.error("что-то пошло не так"))
+      .finally(()=>setLoading(false));
   };
 
 
@@ -151,6 +156,7 @@ export default function CarpetCashierCard({
             )}
             {status == "progress" ? (
               <Button
+               disabled={isloading}
                 onClick={() => AccepedFunt()}
                 className="rounded-[70px] p-[14px] h-10 text-white bg-[#89A143]"
               >
@@ -179,7 +185,7 @@ export default function CarpetCashierCard({
                   <DropdownMenuItem className="text-center flex items-center justify-center pt-[14px] pb-[8px]">
                     {status === "progress" ? (
                       <div
-                        onClick={() => RejectFunt("reject")}
+                        onClick={isloading ? ()=>{} : () => RejectFunt("reject")}
                         className="w-full text-center"
                       >
                         <OctagonX
@@ -192,7 +198,7 @@ export default function CarpetCashierCard({
                       </div>
                     ) : (
                       <div
-                        onClick={() => RejectFunt("return")}
+                        onClick={isloading ? ()=>{} :() => RejectFunt("return")}
                         className="w-full text-center"
                       >
                         <FileOutput

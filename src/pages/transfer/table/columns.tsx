@@ -65,7 +65,7 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
             <TebleAvatar size={38} url={ row?.original?.courier?.avatar?.path} name={row.original?.courier?.firstName} status="none"/>
             {/* <p>{ group?.split('-')?.[0]}</p> */}
             <p className="ml-8 ">{ group?.split('-')?.[1]} шт</p>
-            <p >{ group?.split('-')?.[2]} м²</p>
+            <p >{ Number(group?.split('-')?.[2] || 0)?.toFixed(2)} м²</p>
             <p className="ml-auto">{ group?.split('-')?.[3]} </p>
            {type =="In" && <Button onClick={()=>mutate()} disabled={isPending} variant={"outline"} className="border ml-2 rounded-lg py-[6px] px-[12px] h-[26px] text-[12px] border-[#89A143] text-[#89A143]  ">Принять все </Button>}
           </div>;

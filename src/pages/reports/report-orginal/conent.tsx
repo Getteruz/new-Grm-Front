@@ -110,7 +110,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
       ref={ref}
       className="min-h-full flex flex-col w-full border-border border-x"
     >
-      <div className="flex items-center border-border border-b h-[56px] gap-[100px] justify-center">
+      <div className="flex items-center border-border border-b min-h-[56px] gap-[100px] justify-center">
         <p className="text-[13px] text-[#272727] font-semibold">
           {format(new Date(2025, +month - 1, 1), "MMMM")} {getYear(new Date())}
         </p>
@@ -124,22 +124,20 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
 
       <div className="w-full max-w-[610px] max-h-[700px] mx-auto border-border border m-[20px] rounded-sm">
         <div className=" max-h-[600px]  overflow-scroll ">
-          <div className="border border-border m-[20px] ">
-            <p className="text-primary px-3">Qarzlar</p>
-            {StatucData?.debts &&
-              StatucData?.debts?.map((item) => (
-                <RowUI
-                  title={item?.fullName}
-                  price1={item?.monthlyGiven}
-                  price2={item?.totalDebt}
-                  price={item?.monthlyOwed || 0}
-                />
-              ))}
-          </div>
           <RowUI
-            title={"Продажа"}
+            title={"Savdo"}
             price={StatucData?.savdoNarxi || 0}
             kv={StatucData?.savdoKv || 0}
+          />
+          <RowUI
+            title={"Kelgan qarzlar"}
+            price={StatucData?.kelganQarzlar || 0}
+            kv={0}
+          />
+          <RowUI
+            title={"Oldingi oydan o'tgan pul"}
+            price={StatucData?.qolganPul || 0}
+            kv={0}
           />
           <RowUI
             title={"Terminal va perechisleniya savdosi"}
@@ -151,11 +149,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
             price={StatucData?.inkasatsiya || 0}
             kv={0}
           />
-          <RowUI
-            title={"Qaytgan tovarlar"}
-            price={StatucData?.qaytganNarx || 0}
-            kv={StatucData?.qaytganKv || 0}
-          />
+
           {StatucData?.davlatlar?.map((item) => (
             <RowUI
               key={item?.countryId}
@@ -164,54 +158,106 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
               kv={item?.totalKv || 0}
             />
           ))}
-
-          <RowUI
-            title={"Skidka"}
-            price={StatucData?.skidka || 0}
-            kv={StatucData?.skidka || 0}
-          />
-          <RowUI
-            title={"Qarzga sotilgan"}
-            price={StatucData?.qarzgaSotilganNarx || 0}
-            kv={StatucData?.qarzgaSotilganKv || 0}
-          />
-          <RowUI
-            title={"Kelgan qarzlar"}
-            price={StatucData?.kelganQarzlar || 0}
-            kv={0}
-          />
-          <RowUI
-            title={"Magazin rasxod"}
-            price={StatucData?.magazinRasxod || 0}
-            kv={0}
-          />
-          <RowUI title={"Навар сумма"} price={StatucData?.navar || 0} kv={0} />
-          {!filial && (
+          {!filial && meUser?.position?.role != 4 && (
             <>
+              <RowUI
+                title={"Naqd kassa"}
+                price={StatucData?.naqdFilial || 0}
+                kv={0}
+              />
+              <RowUI
+                title={"Diller naqd"}
+                price={StatucData?.naqdDealer || 0}
+                kv={0}
+              />
+              <RowUI
+                title={"Diller perechisleniya"}
+                price={StatucData?.terminalDealer || 0}
+                kv={0}
+              />
               <RowUI
                 title={"Foyda 1"}
                 price={StatucData?.foyda1 || 0}
                 kv={StatucData?.savdoKv || 0}
               />
               <RowUI
-                title={"Navar rasxod"}
-                price={StatucData?.navarRasxod || 0}
-                kv={0}
-              />
-              <RowUI
                 title={"Boss — rasxod - prixod"}
                 price={StatucData?.bossRasxod || 0}
                 price1={StatucData?.bossPrixod || 0}
               />
+            </>
+          )}
+          <RowUI
+            title={"Navar miqdori"}
+            price={StatucData?.navar || 0}
+            kv={0}
+          />
+          <RowUI
+            title={"Qarzga sotilgan"}
+            price={StatucData?.qarzgaSotilganNarx || 0}
+            kv={StatucData?.qarzgaSotilganKv || 0}
+          />
+
+          <RowUI
+            title={"Qaytgan tovarlar"}
+            price={StatucData?.qaytganNarx || 0}
+            kv={StatucData?.qaytganKv || 0}
+          />
+
+          <RowUI
+            title={"Skidka"}
+            price={StatucData?.skidka || 0}
+            kv={StatucData?.skidka || 0}
+          />
+
+          <RowUI
+            title={"Biznes rasxod"}
+            price={StatucData?.magazinRasxod || 0}
+            kv={0}
+          />
+
+          <RowUI
+            title={"Navar rasxod"}
+            price={StatucData?.navarRasxod || 0}
+            kv={0}
+          />
+          {!filial && meUser?.position?.role != 4 && (
+            <>
               <RowUI
                 title={"Postavshik"}
                 price={StatucData?.postavshik || 0}
                 price1={StatucData?.postavshikTerminal || 0}
               />
-              <RowUI title={"Tamojnya"} price={StatucData?.tamojnya || 0} />
+            
+              <RowUI title={"Tamojnya"} price={StatucData?.tamojnya || 0} kv={0} />
+
+              {/* <RowUI
+                title={"Bank harajatlari"}
+                price={StatucData?.bank || 0}
+                kv={0}
+              />
+                <RowUI
+                title={"Kredit"}
+                price={StatucData?.kredit || 0}
+                kv={0}
+              /> */}
             </>
           )}
 
+          {!filial && meUser?.position?.role != 4 && (
+            <div className="border border-border m-[20px] ">
+              <p className="text-primary px-3">Qarzlar</p>
+              {StatucData?.debts &&
+                StatucData?.debts?.map((item) => (
+                  <RowUI
+                    title={item?.fullName}
+                    price1={item?.monthlyGiven}
+                    price2={item?.totalDebt}
+                    price={item?.monthlyOwed || 0}
+                  />
+                ))}
+            </div>
+          )}
           {flatData?.map((e) => (
             <RowUI
               key={e.id}

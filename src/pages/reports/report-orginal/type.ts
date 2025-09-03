@@ -21,9 +21,15 @@ export type TStaticData = {
   navarRasxod:number;
   bossPrixod:number;
   bossRasxod:number;
+  qolganPul:number;
   postavshik:number;
   postavshikTerminal:number;
   tamojnya:number;
+  naqdDealer:number;
+  naqdFilial:number;
+  terminalDealer:number;
+  bank:number;
+  kredit:number;
   davlatlar: [
     {
       countryId: string;

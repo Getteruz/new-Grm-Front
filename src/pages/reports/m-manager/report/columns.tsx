@@ -3,7 +3,6 @@ import {
   Delete,
   MessageSquareText,
   Minus,
-  MoreHorizontal,
   Plus,
   ShoppingCart,
 } from "lucide-react";
@@ -13,6 +12,9 @@ import formatPrice from "@/utils/formatPrice";
 import { format } from "date-fns";
 import { TData } from "./type";
 import TebleAvatar from "@/components/teble-avatar";
+import TableAction from "@/components/table-action";
+import { parseAsBoolean, useQueryState } from "nuqs";
+import { apiRoutes } from "@/service/apiRoutes";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -183,11 +185,21 @@ export const Columns: ColumnDef<TData>[] = [
   {
     id: "actions",
     header: "",
-    cell: () => (
-      <Button variant="ghost" size="icon">
-        <MoreHorizontal className="h-4 w-4" />
-      </Button>
-    ),
+    cell: ({row}) => {
+      const [myCashFlow] = useQueryState(
+        "myCashFlow",
+        parseAsBoolean.withDefault(false)
+      );
+      return(
+        <TableAction
+          ShowDelete={myCashFlow}
+          ShowUpdate={false}
+          url={apiRoutes.cashflow}
+          refetchUrl={apiRoutes.cashflow}
+          id={row?.original?.id + ""}
+        />
+      )
+    },
   },
 ];
 

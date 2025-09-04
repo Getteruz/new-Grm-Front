@@ -104,6 +104,8 @@ export interface TKassareportData {
     id: string;
     title: string;
   };
+  manegerSum?:number;
+  accauntantSum?:number;
   kassaReport?:TKassareportData[];
   reportStatus?:number;
   totalPlasticSum: number;

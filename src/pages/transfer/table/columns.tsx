@@ -190,7 +190,7 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
           return <ActionBadge status={role9Status} />;
         }
         
-        if (isAccepted) {
+        if (isAccepted && type != "Out" ) {
           return <ActionBadge status="accepted" />;
         }
         

@@ -8,6 +8,7 @@ export interface TKassareportData {
   isAccountantConfirmed:boolean;
   isMManagerConfirmed:boolean;
   year: number;
+  managerSum:number;
   month: number;
   status: string;
   filial?: {

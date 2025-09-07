@@ -15,6 +15,9 @@ import { format } from "date-fns";
 import { useMeStore } from "@/store/me-store";
 import { TData } from "./type";
 import TebleAvatar from "@/components/teble-avatar";
+import TableAction from "@/components/table-action";
+import { useParams } from "react-router-dom";
+import { apiRoutes } from "@/service/apiRoutes";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -171,11 +174,19 @@ export const Columns: ColumnDef<TData>[] = [
   {
     id: "actions",
     header: "",
-    cell: () => (
-      <Button variant="ghost" size="icon">
-        <MoreHorizontal className="h-4 w-4" />
-      </Button>
-    ),
+    cell: ({row}) => {
+      const { id,report } = useParams();
+     
+      return(
+        <TableAction
+          ShowDelete={ Boolean(report && id == 'my')}
+          ShowUpdate={false}
+          url={apiRoutes.cashflow}
+          refetchUrl={apiRoutes.cashflow}
+          id={row?.original?.id + ""}
+        />
+      )
+    },
   },
 ];
 

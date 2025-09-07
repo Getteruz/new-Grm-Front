@@ -3,7 +3,6 @@ import {
   Delete,
   MessageSquareText,
   Minus,
-  MoreHorizontal,
   Plus,
   ShoppingCart,
 } from "lucide-react";

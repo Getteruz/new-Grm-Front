@@ -37,6 +37,7 @@ export default function Filters() {
       const query = {
         reportId: myCashFlow && !FManagerCashFlow ? id : undefined,
         kassaReportId: FManagerCashFlow ? kassaReportId || undefined : undefined,
+        kassaId: myCashFlow ? undefined:  id || undefined,
       };
       const params = query
         ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`

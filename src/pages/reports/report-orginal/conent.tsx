@@ -104,7 +104,6 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
     },
   });
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
-
   return (
     <div
       ref={ref}
@@ -123,7 +122,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
       </div>
 
       <div className="w-full max-w-[610px] max-h-[700px] mx-auto border-border border m-[20px] rounded-sm">
-        <div className=" max-h-[600px]  overflow-scroll ">
+        <div className=" max-h-[600px]  scrollCastom ">
           <RowUI
             title={"Savdo"}
             price={StatucData?.savdoNarxi || 0}
@@ -149,7 +148,13 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
             price={StatucData?.inkasatsiya || 0}
             kv={0}
           />
-
+          {!filial && meUser?.position?.role != 4 && (
+            <RowUI
+              title={"Naqd kassa"}
+              price={StatucData?.naqdFilial || 0}
+              kv={0}
+            />
+          )}
           {StatucData?.davlatlar?.map((item) => (
             <RowUI
               key={item?.countryId}
@@ -160,11 +165,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
           ))}
           {!filial && meUser?.position?.role != 4 && (
             <>
-              <RowUI
-                title={"Naqd kassa"}
-                price={StatucData?.naqdFilial || 0}
-                kv={0}
-              />
+             
               <RowUI
                 title={"Diller naqd"}
                 price={StatucData?.naqdDealer || 0}
@@ -187,11 +188,6 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
               />
             </>
           )}
-          <RowUI
-            title={"Navar miqdori"}
-            price={StatucData?.navar || 0}
-            kv={0}
-          />
           <RowUI
             title={"Qarzga sotilgan"}
             price={StatucData?.qarzgaSotilganNarx || 0}
@@ -216,11 +212,6 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
             kv={0}
           />
 
-          <RowUI
-            title={"Navar rasxod"}
-            price={StatucData?.navarRasxod || 0}
-            kv={0}
-          />
           {!filial && meUser?.position?.role != 4 && (
             <>
               <RowUI
@@ -228,8 +219,12 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
                 price={StatucData?.postavshik || 0}
                 price1={StatucData?.postavshikTerminal || 0}
               />
-            
-              <RowUI title={"Tamojnya"} price={StatucData?.tamojnya || 0} kv={0} />
+
+              <RowUI
+                title={"Tamojnya"}
+                price={StatucData?.tamojnya || 0}
+                kv={0}
+              />
 
               {/* <RowUI
                 title={"Bank harajatlari"}

@@ -121,6 +121,7 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
   };
 
 
+
   const categories = getCategories();
 
   const handleSubmit = () => {
@@ -157,6 +158,7 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
     // Send to API
     addCashflow(cashflowData);
   };
+
 
   return (
     <Dialog open={isOpen}  onOpenChange={setIsOpen}>

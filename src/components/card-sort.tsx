@@ -357,7 +357,7 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
                     )} */}
                     {formatPrice(
                      isOnlyCash
-                     ? (KassaReport?.manegerSum || 0) : 
+                     ? (KassaReport?.managerSum ||KassaReport?.manegerSum  || 0) : 
                          isOnlyTerminal ?(KassaReport?.accauntantSum || 0)  : KassaReport?.totalSum || kassaId?.totalSum || 0
                     )}
                   </p>

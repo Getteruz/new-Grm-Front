@@ -105,6 +105,7 @@ export interface TKassareportData {
     title: string;
   };
   manegerSum?:number;
+  managerSum?:number;
   accauntantSum?:number;
   kassaReport?:TKassareportData[];
   reportStatus?:number;

@@ -3,7 +3,6 @@ import {
   Delete,
   MessageSquareText,
   Minus,
-  MoreHorizontal,
   Plus,
   ShoppingCart,
 } from "lucide-react";
@@ -12,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import formatPrice from "@/utils/formatPrice";
 import { format } from "date-fns";
 import { TData } from "./type";
+import TableAction from "@/components/table-action";
+import { apiRoutes } from "@/service/apiRoutes";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -150,10 +151,16 @@ export const Columns: ColumnDef<TData>[] = [
   {
     id: "actions",
     header: "",
-    cell: () => (
-      <Button variant="ghost" size="icon">
-        <MoreHorizontal className="h-4 w-4" />
-      </Button>
-    ),
+    cell: ({row}) => {
+   
+      return(
+        <TableAction
+          ShowUpdate={false}
+          url={apiRoutes.cashflow}
+          refetchUrl={apiRoutes.cashflow}
+          id={row?.original?.id + ""}
+        />
+      )
+    },
   },
 ];

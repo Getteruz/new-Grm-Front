@@ -15,6 +15,8 @@ import { KassaItem, TransactionItem } from "../type";
 import { format } from "date-fns";
 import { useMeStore } from "@/store/me-store";
 import TebleAvatar from "@/components/teble-avatar";
+import TableAction from "@/components/table-action";
+import { apiRoutes } from "@/service/apiRoutes";
 
 export const ReportColumns: ColumnDef<TransactionItem>[] = [
   {
@@ -173,11 +175,16 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
   {
     id: "actions",
     header: "",
-    cell: () => (
-      <Button variant="ghost" size="icon">
-        <MoreHorizontal className="h-4 w-4" />
-      </Button>
-    ),
+    cell: ({row}) => {
+      return(
+        <TableAction
+          ShowUpdate={false}
+          url={apiRoutes.cashflow}
+          refetchUrl={apiRoutes.cashflow}
+          id={row?.original?.id + ""}
+        />
+      )
+    },
   },
 ];
 

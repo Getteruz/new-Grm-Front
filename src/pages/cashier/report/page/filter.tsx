@@ -1,4 +1,10 @@
-import { CircleX, FileOutput, SquareCheckBig, SquarePen, Tornado } from "lucide-react";
+import {
+  CircleX,
+  FileOutput,
+  SquareCheckBig,
+  SquarePen,
+  Tornado,
+} from "lucide-react";
 
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { Button } from "@/components/ui/button";
@@ -47,7 +53,7 @@ export default function Filters({ countLength }: { countLength: number }) {
     mutationFn: async () => {
       const query = {
         // reportId: myCashFlow && !FManagerCashFlow ? id : undefined,
-        kassaId:id ||undefined,
+        kassaId: id || undefined,
       };
       const params = query
         ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
@@ -121,13 +127,17 @@ export default function Filters({ countLength }: { countLength: number }) {
         Фильтр
       </Button>
 
-    {id ?  <Button
-              onClick={() => exelMudate()}
-        className="h-full ml-auto  border-l-1 text-primary justify-center gap-1 px-4 border-y-0 border-r-0"
-        variant={"outline"}
-      >
-             <FileOutput /> Экспорт
-      </Button>:""}
+      {id ? (
+        <Button
+          onClick={() => exelMudate()}
+          className="h-full ml-auto  border-l-1 text-primary justify-center gap-1 px-4 border-y-0 border-r-0"
+          variant={"outline"}
+        >
+          <FileOutput /> Экспорт
+        </Button>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

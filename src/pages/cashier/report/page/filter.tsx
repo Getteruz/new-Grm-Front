@@ -1,8 +1,12 @@
-import { CircleX, SquareCheckBig, SquarePen, Tornado } from "lucide-react";
+import { CircleX, FileOutput, SquareCheckBig, SquarePen, Tornado } from "lucide-react";
 
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { Button } from "@/components/ui/button";
+import qs from "qs";
 import { useQueryState } from "nuqs";
+import api from "@/service/fetchInstance";
+import { apiRoutes } from "@/service/apiRoutes";
+import { useMutation } from "@tanstack/react-query";
 const Sort = [
   {
     label: "Открытый",
@@ -38,6 +42,30 @@ const SortSingle = [
 ];
 export default function Filters({ countLength }: { countLength: number }) {
   const [id] = useQueryState("id");
+
+  const { mutate: exelMudate } = useMutation({
+    mutationFn: async () => {
+      const query = {
+        // reportId: myCashFlow && !FManagerCashFlow ? id : undefined,
+        kassaId:id ||undefined,
+      };
+      const params = query
+        ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
+        : "";
+      const blob = await api.get(apiRoutes.excelCashflowsExcel + params, {
+        responseType: "blob",
+      });
+      if (!(blob.data instanceof Blob)) {
+        throw new Error("Received data is not a Blob");
+      }
+      const blobUrl = window.URL.createObjectURL(blob.data);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(blobUrl);
+    },
+  });
   return (
     <div className="w-full  sticky top-0 flex h-[40px] bg-sidebar">
       {id ? (
@@ -86,12 +114,20 @@ export default function Filters({ countLength }: { countLength: number }) {
         <SquarePen />
       </Button>
       <Button
-        className="h-full  border-l-1 text-primary justify-center gap-1 px-4 border-y-0 border-r-0"
+        className="h-full  border-l-1 text-primary justify-center gap-1 px-4 border-y-0 "
         variant={"outline"}
       >
         <Tornado />
         Фильтр
       </Button>
+
+    {id ?  <Button
+              onClick={() => exelMudate()}
+        className="h-full ml-auto  border-l-1 text-primary justify-center gap-1 px-4 border-y-0 border-r-0"
+        variant={"outline"}
+      >
+             <FileOutput /> Экспорт
+      </Button>:""}
     </div>
   );
 }

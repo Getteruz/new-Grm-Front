@@ -27,9 +27,9 @@ export const ClientsColumns: ColumnDef<TData>[] = [
 
   {
     header: "Задолжность",
-    accessorKey: "owed",
+    accessorKey: "totalDebt",
       cell: ({ row }) => {
-        return <p className="text-[#FF6600]">{row.original?.owed}</p>;
+        return <p className="text-[#FF6600]">{row.original?.totalDebt}</p>;
     },
   },
 

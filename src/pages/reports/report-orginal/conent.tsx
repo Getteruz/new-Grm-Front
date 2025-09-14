@@ -46,28 +46,28 @@ function RowUI({
       </p>
       {kv || kv == 0 ? (
         <p className="px-[23px] py-[11px] w-[110px]  text-nowrap text-[#272727] text-[15px]  border-border border-r font-medium">
-          {kv.toFixed(2)} м²
+          {kv == 0? "-": `${kv.toFixed(2)}м²`} 
         </p>
       ) : (
         ""
       )}
       {price1 || price1 == 0 ? (
         <p className="px-[23px] py-[11px] w-[110px]  text-nowrap text-[#272727] text-[15px]  border-border border-r font-medium">
-          ${price1.toFixed(2)}
+          {price1 == 0? "-": `$${price1.toFixed(2)}`} 
         </p>
       ) : (
         ""
       )}
       {price2 || price2 == 0 ? (
         <p className="px-[23px] py-[11px] w-[110px]  text-nowrap text-[#272727] text-[15px]  border-border border-r font-medium">
-          ${price2.toFixed(2)}
+          {price2 == 0? "-": `$${price2.toFixed(2)}`} 
         </p>
       ) : (
         ""
       )}
       {
         <p className="px-[23px] py-[11px]  w-[110px] text-nowrap text-[#272727] text-[15px] font-medium">
-          ${price.toFixed(2)}
+          {price == 0? "-": `$${price.toFixed(2)}`} 
         </p>
       }
     </div>
@@ -124,7 +124,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
       <div className="w-full max-w-[610px] max-h-[700px] mx-auto border-border border m-[20px] rounded-sm">
         <div className=" max-h-[600px]  scrollCastom ">
           <RowUI
-            title={"Savdo"}
+            title={"Savdo naqd"}
             price={StatucData?.savdoNarxi || 0}
             kv={StatucData?.savdoKv || 0}
           />
@@ -144,7 +144,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
             kv={0}
           />
           <RowUI
-            title={"Inskassatsiya"}
+            title={"Ins — Inkassatsiya"}
             price={StatucData?.inkasatsiya || 0}
             kv={0}
           />
@@ -182,7 +182,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
                 kv={StatucData?.savdoKv || 0}
               />
               <RowUI
-                title={"Boss — rasxod - prixod"}
+                title={"Boss - prixod - rasxod"}
                 price={StatucData?.bossRasxod || 0}
                 price1={StatucData?.bossPrixod || 0}
               />

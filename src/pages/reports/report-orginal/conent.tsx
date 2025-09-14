@@ -246,8 +246,8 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
                 StatucData?.debts?.map((item) => (
                   <RowUI
                     title={item?.fullName}
-                    price1={item?.monthlyGiven}
-                    price2={item?.totalDebt}
+                    price1={item?.totalDebt}
+                    price2={item?.monthlyGiven}
                     price={item?.monthlyOwed || 0}
                   />
                 ))}

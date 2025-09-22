@@ -203,7 +203,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
           <RowUI
             title={"Skidka"}
             price={StatucData?.skidka || 0}
-            kv={StatucData?.skidka || 0}
+            kv={ 0}
           />
 
           <RowUI

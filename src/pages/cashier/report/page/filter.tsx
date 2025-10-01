@@ -9,7 +9,7 @@ import {
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { Button } from "@/components/ui/button";
 import qs from "qs";
-import { useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 import api from "@/service/fetchInstance";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useMutation } from "@tanstack/react-query";
@@ -46,14 +46,17 @@ const SortSingle = [
     value: "Приход",
   },
 ];
-export default function Filters({ countLength }: { countLength: number }) {
+export default function Filters({ countLength ,kassaId}: { countLength: number,kassaId:string | undefined }) {
   const [id] = useQueryState("id");
-
+  const [sort] = useQueryState(
+    "sort",
+    parseAsString.withDefault("open")
+  );
   const { mutate: exelMudate } = useMutation({
     mutationFn: async () => {
       const query = {
         // reportId: myCashFlow && !FManagerCashFlow ? id : undefined,
-        kassaId: id || undefined,
+        kassaId: sort == "open" ? kassaId: id || undefined,
       };
       const params = query
         ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
@@ -127,7 +130,7 @@ export default function Filters({ countLength }: { countLength: number }) {
         Фильтр
       </Button>
 
-      {id ? (
+      {sort === "open"  || Boolean(id)  ? (
         <Button
           onClick={() => exelMudate()}
           className="h-full ml-auto  border-l-1 text-primary justify-center gap-1 px-4 border-y-0 border-r-0"

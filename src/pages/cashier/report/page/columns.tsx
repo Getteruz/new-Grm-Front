@@ -1,6 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import {
   Delete,
+  FileOutput,
+  Loader,
   MessageSquareText,
   Minus,
   MoreHorizontal,
@@ -17,6 +19,11 @@ import { useMeStore } from "@/store/me-store";
 import TebleAvatar from "@/components/teble-avatar";
 import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useState } from "react";
+import { toast } from "sonner";
+import { UpdatePatchData } from "@/service/apiHelpers";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const ReportColumns: ColumnDef<TransactionItem>[] = [
   {
@@ -176,13 +183,42 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
     id: "actions",
     header: "",
     cell: ({row}) => {
+      const [loading,setLoading] = useState(false)
+      const queryClient = useQueryClient();
+      const RejectFunt = () => {
+        setLoading(true)
+        UpdatePatchData(apiRoutes.cashflow +"/"+ row?.original?.id+"" ,"cancel",{})
+          .then(() => {
+              toast.success("Успешно отменено");
+            queryClient.invalidateQueries({ queryKey: [apiRoutes.cashflow] });
+          })
+          .finally(()=>setLoading(false));
+      };
+    
       return(
+     
         <TableAction
           ShowUpdate={false}
+          ShowDelete={row?.original?.tip != "order"}
           url={apiRoutes.cashflow}
           refetchUrl={apiRoutes.cashflow}
           id={row?.original?.id + ""}
-        />
+        >
+        { row?.original?.tip == "order" &&  <DropdownMenuItem className="text-center flex items-center justify-center pt-[14px] pb-[8px]">
+              <div
+                onClick={loading ? ()=>{} :() => RejectFunt()}
+                className="w-full text-center"
+              >
+               {loading? <Loader/>: <FileOutput
+                  size={28}
+                  width={28}
+                  height={28}
+                  className="w-[28px] m-auto h-[28px] text-[#EC6C49]"
+                />}
+                <p className="text-[#EC6C49] text-[13px]">Возрат</p>
+              </div>
+          </DropdownMenuItem>}
+        </TableAction>
       )
     },
   },

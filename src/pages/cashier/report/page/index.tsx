@@ -62,7 +62,7 @@ export default function Page() {
     <>
       <div className="flex justify-between w-full bg-[#f8f6e9]">
         <div className="flex flex-col h-screen w-full">
-      <Filters countLength={selectedItems?.length} />
+      <Filters kassaId={reportData?.id} countLength={selectedItems?.length} />
          {sort === "open"  || Boolean(id) ?  <CardSort  KassaId={sort == "open"? reportData?.id || "" : id || "" }/>:""}
           {sort === "open"  ?"":<div className="px-10 pt-2 mb-1 w-full bg-[#f8f6e9] sticky top-0">
             <p className="text-sm font-medium ">

@@ -1,7 +1,10 @@
+import { SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
+import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
-import { useMutation } from "@tanstack/react-query";
+import { Select } from "@radix-ui/react-select";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getMonth, getYear } from "date-fns";
 import { FileInput, Printer } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
@@ -22,9 +25,10 @@ export default function RightConent({printRef}:RightContentProps) {
   const [filial] = useQueryState("filial");
 
   const { mutate } = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (type:string) => {
       const query = {
         month: +month || undefined,
+        tur:type,
         year: getYear(new Date()),
         filialId:
           meUser?.position?.role == 4
@@ -34,7 +38,7 @@ export default function RightConent({printRef}:RightContentProps) {
       const params = query
         ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
         : "";
-      const blob = await api.get(apiRoutes.paperReportStaticExport + params, {
+      const blob = await api.get(apiRoutes.paperReportUniversalExcel + params, {
         responseType: "blob",
       });
       if (!(blob.data instanceof Blob)) {
@@ -48,6 +52,17 @@ export default function RightConent({printRef}:RightContentProps) {
       window.URL.revokeObjectURL(blobUrl);
     },
   });
+
+  // /paper-report/array/get-all-types
+interface IType {
+  label: string;
+  value: string;
+}
+
+  const { data } = useQuery({
+    queryKey: ["paper-report/array/get-all-types", meUser],
+    queryFn: () => getAllData<IType[], unknown>('/paper-report/array/get-all-types'),
+  })
 
   const handlePrint = useReactToPrint({
     contentRef: printRef,
@@ -69,13 +84,35 @@ export default function RightConent({printRef}:RightContentProps) {
       </p>
 
       <div className="p-[24px] text-[#272727]">
+       
+        <Select
+        onValueChange={(value)=>{
+            mutate(value)
+        }}
+    >
+      <SelectTrigger className={`outline-none active:border-none p-0 pr-2 border-none bg-white rounded-sm `}>
         <div
-          onClick={() => mutate()}
+          // onClick={() => mutate()}
           className="flex cursor-pointer items-center py-[13px] px-[23px] rounded-sm bg-white text-[16px] font-normal gap-1"
         >
           <FileInput size={20} /> Экспорт в Excel
         </div>
-
+      </SelectTrigger>
+      {data && (
+        <SelectContent  className="bg-white">
+          {data?.map((option) => (
+            <SelectItem
+              key={option.value}
+             
+              className="bg-white focus:bg-white  hover:bg-white"
+              value={String(option.value)}
+            >
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      )} 
+    </Select>
         <div onClick={()=>handlePrint()} className="flex  cursor-pointer mt-2 items-center py-[13px] px-[23px] rounded-sm bg-white text-[16px] font-normal gap-1">
           <Printer size={20} /> Распечатать
         </div>

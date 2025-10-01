@@ -78,6 +78,7 @@ export const apiRoutes = {
   productRemainingCollection:'/product/remaining-products-collection',
   payrollsDealer:"/payrolls/get-for-managers",
   paperReport:'/paper-report',
+  paperReportUniversalExcel:'/paper-report/universal-excel',
   paperReportStatic:'/paper-report/stats',
   paperReportStaticExport:'/paper-report/export-excel',
   excelCashflowsExcel:'/excel/cashflows/excel',

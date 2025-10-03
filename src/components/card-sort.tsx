@@ -348,17 +348,12 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
                   <Skeleton className="h-7 w-24 mt-1" />
                 ) : (
                   <p className="text-[25px] font-bold text-foreground">
-                    {/* {formatPrice(
-                     isOnlyCash
-                     ? (KassaReport?.totalSum || 0) -
-                         (KassaReport?.totalPlasticSum || 0): 
-                         isOnlyTerminal ?(KassaReport?.totalPlasticSum || 0) +
-                         Math.abs(KassaReport?.totalCashCollection || 0) : KassaReport?.totalSum || kassaId?.totalSum || 0
-                    )} */}
                     {formatPrice(
                      isOnlyCash
                      ? (KassaReport?.managerSum ||KassaReport?.manegerSum  || 0) : 
-                         isOnlyTerminal ?(KassaReport?.accauntantSum || 0)  : KassaReport?.totalSum || kassaId?.totalSum || 0
+                         isOnlyTerminal ?(KassaReport?.accauntantSum || 0)  : KassaReport?.totalSum ?(KassaReport?.totalSum <KassaReport?.totalPlasticSum ? 0: KassaReport?.totalSum - KassaReport?.totalPlasticSum) : kassaId?.totalSum || 0
+                        //  isOnlyTerminal ?(KassaReport?.accauntantSum || 0)  : KassaReport?.totalSum || kassaId?.totalSum || 0
+
                     )}
                   </p>
                 )}

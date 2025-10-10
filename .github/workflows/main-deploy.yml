@@ -1,27 +1,35 @@
-name: Deployment Gilam Marker ERP
+name: Deployment Grm Seller Web
 on:
   push:
     branches:
-      - main
+      - oneip
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Or other suitable runner environment
+    strategy:
+      matrix:
+        node-version: [20] # Specify Node.js versions to test against
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4 # Checkout your repository code
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        # with:
+          #version: 10 Specify the pnpm version to install
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm' # Enable caching for pnpm dependencies
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: pnpm install
 
-      - name: Build React.js app
-        run: npm run build
+      - name: Build project (example)
+        run: pnpm build
 
   deploy:
     needs: build
@@ -31,13 +39,13 @@ jobs:
       - name: Deploying to server...
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           script: |
-            cd /home/user/getter/gilam-market-erp
+            cd /home/oneip/grm-web
             git stash
-            git pull origin main
-            npm install --yes --legacy-peer-deps
-            npm run build
+            git pull origin oneip
+            pnpm install
+            pnpm run build

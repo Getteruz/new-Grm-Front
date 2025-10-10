@@ -100,7 +100,7 @@ export default function CashierHeader() {
           </p>
           ~
           <p className="text-[14px] leading-[17px] font-semibold text-[#E38157]">
-            {currency?.items?.[0]?.uzs.toLocaleString("uz-UZ")} сум
+            {currency?.items?.[0]?.uzs?.toLocaleString("uz-UZ")} сум
           </p>
         </div>
       </div>

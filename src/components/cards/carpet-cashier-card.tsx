@@ -10,7 +10,7 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { IData } from "@/pages/cashier/home/type";
 import { useMeStore } from "@/store/me-store";
-import { AddData, getAllData, getByIdData, UpdatePatchData } from "@/service/apiHelpers";
+import { AddData, getAllData, UpdatePatchData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { toast } from "sonner";
 import { useQuery, useQueryClient } from "@tanstack/react-query";

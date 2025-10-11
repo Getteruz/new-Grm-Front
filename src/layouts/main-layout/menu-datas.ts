@@ -147,6 +147,12 @@ export const DataMenu = {
   ],
   4: [
     {
+      id: 1,
+      icons: () => DeviceDesktopIcons({ width: 28, height: 28 }),
+      link: "/cashier/home",
+      text: "Касса",
+    },
+    {
       id: 2,
       icons: () => ReportBottom({}),
       link: "/f-manager/report",

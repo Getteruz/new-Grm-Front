@@ -2,14 +2,18 @@ import { format } from "date-fns";
 
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import {  PatchData } from "@/service/apiHelpers";
-import { useMutation } from "@tanstack/react-query";
+import {  getByIdData, PatchData } from "@/service/apiHelpers";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRoutes } from "@/service/apiRoutes";
+import AddingParishOrFlow from "@/components/adding-parish-flow";
+import { useMeStore } from "@/store/me-store";
+import { IOpenKassa } from "@/types/api-type";
 
 
 
 export default function Pricecheck({disabled,id}:{disabled?:boolean,id:string}) {
-
+  const { meUser } = useMeStore();
+  const filialId = meUser?.filial.id;
   const { mutate, isPending } = useMutation({
     mutationFn: () => PatchData(apiRoutes.kassaClose, {
       ids:[id]
@@ -18,8 +22,15 @@ export default function Pricecheck({disabled,id}:{disabled?:boolean,id:string}) 
       toast.success("close");
     },
   });
+  const { data } = useQuery({
+    queryKey: [apiRoutes.filial, filialId],
+    queryFn: () =>
+      getByIdData<IOpenKassa, void>("/kassa/open-kassa", filialId || ""),
+    enabled: !!filialId,
+  });
   return (
-    <div className="w-full border-border border-l bg-card max-w-[312px] h-[calc(100vh-90px)] flex flex-col justify-between  p-[10px] pt-0 sticky top-0">
+    <div className="w-full border-border border-l bg-card max-w-[312px] h-[calc(100vh-90px)] flex flex-col justify-between  pb-[10px] pt-6 sticky top-0">
+      <AddingParishOrFlow kassaId={String(data?.id)} />
       <div></div>
       <div className="w-full mt-8">
       <Button 

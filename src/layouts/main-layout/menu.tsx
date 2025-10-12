@@ -39,7 +39,7 @@ export default function Menu() {
           {meUser?.lastName?.[0]}
         </AvatarFallback>
       </Avatar>
-      <div className="h-[100%] overflow-y-auto">
+      <div className="h-[100%] scrollCastom">
         <div className="overflow-scroll h-[100%]">
           {meUser?.position?.role == 3 || meUser?.position?.role == 4 ? (
             ""

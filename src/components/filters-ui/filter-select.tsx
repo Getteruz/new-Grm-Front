@@ -47,7 +47,7 @@ export default function FilterSelect({
     <div className={`flex items-center  ${className && className}`}>
       { icons && icons}
       <ShadcnSelect
-        className={` border-none  ${className && className}`}
+        className={` border-none bg-card rounded-xl px-4  ${className && className}`}
         disabled={disabled}
         value={value?.length ? value : undefined}
         defaultValue={defaultValue && defaultValue}

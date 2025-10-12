@@ -1,20 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { BellRing, Grip } from "lucide-react";
 import { ReactElement, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { minio_img_url } from "@/constants";
 import { getAllData } from "@/service/apiHelpers";
 import { useAuthStore } from "@/store/auth-store";
 import { useMeStore } from "@/store/me-store";
 
 import Currency from "./currency";
 import { DataMenu } from "./menu-datas";
-import NotePage from "./note/list";
 import { CurrencyData } from "./types";
-import Weather from "./weather";
 
 type Tmenu = {
   id: number;
@@ -51,22 +46,24 @@ export default function Header() {
   ]?.find((e) => location.pathname.includes(e?.link));
 
   return (
-    <div className="flex items-center gap-5 w-full h-[64px] pl-4  py-[23px] bg-sidebar border-b border-border">
-      <p className="flex mr-[auto]  items-center gap-4 text-[14px] leading-[16px] text-foreground">
-        {(oneMenu as Tmenu)?.items?.length ? (
-          (oneMenu as Tmenu)?.items.map((e) => (
-            <Link
-              key={e?.id}
-              className={ location.pathname.includes(e?.link) || location.pathname+ "s" == e?.link ?  "" : "opacity-60"}
-              to={e?.link}
-            >
-              {e.text}
-            </Link>
-          ))
-        ) : (
-          <Link to={oneMenu?.link || "/"}>{oneMenu?.text}</Link>
-        )}
-      </p>
+    <div className="flex items-center gap-5 w-full h-[64px] pl-4  py-[23px] bg-background ">
+      <div className={`${(oneMenu as Tmenu)?.items?.length >2 ?"justify-center":""} flex items-center w-full `}>
+        <div className={`${(oneMenu as Tmenu)?.items?.length >2 ?"bg-card":""} flex    items-center  h-[50px] p-1 rounded-xl  gap-4 text-[14px] leading-[16px] text-foreground`}>
+          {(oneMenu as Tmenu)?.items?.length ? (
+            (oneMenu as Tmenu)?.items.map((e) => (
+              <Link
+                key={e?.id}
+                className={ location.pathname.includes(e?.link) || location.pathname+ "s" == e?.link ?  "bg-primary  text-card flex items-center justify-center px-3  h-full rounded-xl" : "h-full flex items-center justify-center pl-3  last:pr-6"}
+                to={e?.link}
+              >
+                {e.text}
+              </Link>
+            ))
+          ) : (
+            <Link to={oneMenu?.link || "/"}>{oneMenu?.text}</Link>
+          )}
+        </div>
+      </div>
       {meUser?.filial?.need_get_report && meUser.position.role == 4 && (
         <Button onClick={() => navigate("/re-register")}>Переучёт</Button>
       )}
@@ -77,23 +74,7 @@ export default function Header() {
             Переучёт
           </Button>
         )}
-      <NotePage isCashier={false} />
-      <BellRing className="text-primary w-5 h-5" />
-      <Grip className="text-primary w-5 h-5" />
-
-      <div className="bg-background h-[50px] w-[50px] flex items-center justify-center ">
-        <Avatar className="w-[40px] h-[40px]">
-          <AvatarImage
-            src={minio_img_url + meUser?.avatar?.path || undefined}
-          />
-          <AvatarFallback className="bg-primary text-white    flex items-center justify-center">
-            {meUser?.firstName?.[0]}
-          </AvatarFallback>
-        </Avatar>
-      </div>
-      <Weather />
-      <div className="flex gap-2 items-center-">
-        <div>
+      <div className=" w-full flex gap-2 max-w-[200px] ">
           <p className="text-[14px] leading-[17px] font-semibold text-foreground">
             {currency?.items?.[0]?.usd.toLocaleString("uz-UZ")} $
           </p>
@@ -102,7 +83,6 @@ export default function Header() {
           </p>
         </div>
         {meUser?.position?.role === 9 && <Currency />}
-      </div>
     </div>
   );
 }

@@ -24,6 +24,8 @@ export interface TKassareportData {
   totalIncome: number;
   totalExpense: number;
   totalSum: number;
+  in_hand:number;
+  debt_sum:number;
 }
 
 export interface TQuery {

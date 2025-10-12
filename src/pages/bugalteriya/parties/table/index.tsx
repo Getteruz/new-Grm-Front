@@ -27,7 +27,7 @@ const {meUser} = useMeStore()
         partiya_no: partiyaNumber || undefined,
         factory: factory || undefined,
         search: search || undefined,
-        warehouse: meUser?.position?.role == 7 ? meUser?.filial?.id : undefined,
+        warehouse: (meUser?.position?.role == 7 || meUser?.position?.role == 4) ? meUser?.filial?.id : undefined,
       },
     });
     

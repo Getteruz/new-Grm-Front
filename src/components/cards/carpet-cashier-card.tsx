@@ -147,17 +147,16 @@ export default function CarpetCashierCard({
   },[data,open])
 
   return (
-    <div className="flex items-center  gap-2.5">
-      <p className="text-[14]">{index + 1}</p>
       <label
-        className={`w-full flex  gap-4 relative p-1 rounded-[3px] bg-sidebar ${className && className}`}
+        className={`w-full flex   gap-4 relative p-1 rounded-[12px] bg-sidebar ${className && className}`}
       >
         <Checkbox
           onCheckedChange={onCheckedChange}
           className="absolute data-[state=checked]:bg-[#89A143] data-[state=checked]:border-[#89A143] w-[20px] h-[20px] rounded-full bg-background top-2 left-2 "
         />
+            <p className="text-[14] absolute bottom-2 left-3  ">{index + 1}</p>
         <img
-          className="object-cover min-w-[120px] h-full"
+          className="object-cover min-w-[120px] rounded-[12px] h-full"
           style={{ aspectRatio: "0.72/1" }}
           src={img}
           width={120}
@@ -167,17 +166,17 @@ export default function CarpetCashierCard({
         <div className="w-full pt-[20px] px-[12px]">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center justify-between flex-wrap w-2/3">
-              <p className="text-[18px] font-semibold text-[#5D5D53]">
+              <p className="text-[18px] font-semibold text-primary">
                 {colaction}
               </p>
-              <p className="text-[18px] font-semibold text-[#5D5D53]">
+              <p className="text-[18px] font-semibold text-primary">
                 {model}
               </p>
-              <p className="text-[18px] font-semibold text-[#5D5D53]">{size}</p>
-              <p className="text-[18px] font-semibold text-[#5D5D53]">
+              <p className="text-[18px] font-semibold text-primary">{size}</p>
+              <p className="text-[18px] font-semibold text-primary">
                 {priceMitr}
               </p>
-              <p className="text-[18px] font-semibold text-[#5D5D53]">
+              <p className="text-[18px] font-semibold text-primary">
                 {count}
               </p>
             </div>
@@ -185,7 +184,7 @@ export default function CarpetCashierCard({
               {discount === null ? "~" : discount}
             </p>
             <div className="flex justify-between">
-              <p className="text-[18px] font-semibold text-[#5D5D53]">
+              <p className="text-[18px] font-semibold text-primary">
                 {price}
               </p>
               <p className="text-[18px] ml-2 font-semibold text-[#58A0C6]">
@@ -199,7 +198,7 @@ export default function CarpetCashierCard({
                 <p
                   key={e}
                   className={
-                    "inline-block text-[##F0F0E5] text-[12px] font-light border-border border rounded-[70px] px-2.5 py-1"
+                    "inline-block text-pretty text-[12px] font-light border-border border rounded-[70px] px-2.5 py-1"
                   }
                 >
                   {e}
@@ -270,7 +269,7 @@ export default function CarpetCashierCard({
               ) : (
                 <DropdownMenu>
                   <DropdownMenuTrigger className="text-end" asChild>
-                    <Button className="w-10 h-10 rounded-full text-[#5D5D53] bg-[#F0F0E5] hover:text-[#F0F0E5]">
+                    <Button className="w-10 h-10 rounded-full text-primary bg-background hover:text-[#F0F0E5]">
                       <MoreVertical className="h-4 w-4 hover:text-[#F0F0E5]" />
                     </Button>
                   </DropdownMenuTrigger>
@@ -314,7 +313,7 @@ export default function CarpetCashierCard({
               )}
             </div>
           </div>
-          <div className="flex items-center  justify-between gap-2 mt-[30px] text-[10px] text-[#5D5D53]">
+          <div className="flex items-center  justify-between gap-2 mt-[30px] text-[10px] text-primary">
             <p className="text-[13px] flex items-center text-muted-foreground gap-1">
               {comment && <MessageSquareText width={14} />}
               {comment}
@@ -323,6 +322,5 @@ export default function CarpetCashierCard({
           </div>
         </div>
       </label>
-    </div>
   );
 }

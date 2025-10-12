@@ -41,7 +41,7 @@ const CardSelect = ({
 }: CategoryProps) => {
   return (
     <div
-      className={`w-[calc(50%-2px)] h-20 bg-input flex items-center justify-center flex-col rounded-[7px] text-center cursor-pointer ${isSelected && type === "parish" ? "ring-2 ring-[#89A143]" : isSelected && type === "flow" ? "ring-2 ring-[#E38157]" : ""}`}
+      className={`w-[calc(50%-2px)] h-22 bg-input flex  items-center justify-center flex-col rounded-[7px] text-center cursor-pointer ${isSelected && type === "parish" ? "ring-2 ring-[#89A143]" : isSelected && type === "flow" ? "ring-2 ring-[#E38157]" : ""}`}
       onClick={onClick}
     >
       {icons ? icons() : ""}
@@ -89,10 +89,8 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
     setComment("");
   };
 
-  // Prepare categories data with cashflow type IDs
   const getCategories = () => {
-    // Filter cashflow types based on current operation type (parish = "Приход", flow = "Расход")
-    const operationType = type === "parish" ? "in" : "out";
+    const operationType = type === "parish" ? "income" : "out";
     return  (cashflowTypesResponse as unknown as  CashflowType[])?.filter((ct) => ct.type === operationType || ct.type === "both")
       ?.map((ct) => ({
         id: ct.id,
@@ -163,11 +161,11 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
 
   return (
     <Dialog open={isOpen}  onOpenChange={setIsOpen}>
-      <div className="flex -mt-6 w-full">
+      <div className="flex gap-2 -mt-6  w-[96%]">
         <DialogTrigger asChild>
           <Button
             onClick={() => openDialog("parish")}
-            className="py-8 h-full w-1/2 ml-auto text-[22px] px-11 bg-[#89A143] text-white"
+            className="py-7 h-full w-1/2 ml-auto rounded-2xl text-[22px] px-11 bg-[#48B533] text-white"
           >
             Приход
           </Button>
@@ -175,14 +173,14 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
         <DialogTrigger asChild>
           <Button
             onClick={() => openDialog("flow")}
-            className="py-8 h-full w-1/2 text-[22px] px-12 bg-[#E38157] text-white"
+            className="py-7 h-full w-1/2 text-[22px] rounded-2xl px-12 bg-[#FD6F33] text-white"
           >
             Расход
           </Button>
         </DialogTrigger>
       </div>
 
-      <DialogContent className="costomModal min-w-[494px] p-1 rounded-[10px]">
+      <DialogContent className="costomModal min-w-[494px] p-1 gap-0 rounded-[10px]">
         <div
           className={`p-1 h-[30px] pb-0 text-center mx-auto rounded-t-[7px] w-1/2 -mt-[35px]  ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white`}
         >
@@ -190,7 +188,7 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
         </div>
 
         <div className="flex gap-1">
-          <div className="flex w-full max-w-[210px] flex-wrap gap-0.5">
+          <div className="flex w-full  max-w-[210px] items-start justify-start flex-wrap gap-1">
             {typesLoading ? (
               <div className="w-full flex justify-center items-center h-[181px]">
                 <Spinner /> {/* Assuming you have a spinner component */}
@@ -226,7 +224,7 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
               placeholder="Комментария"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              className="w-full border-none focus:border-none outline-none mt-0.5 h-[90px] text-[13px] bg-input font-semibold rounded-[7px] px-2 py-2.5"
+              className="w-full border-none focus:border-none outline-none shadow-none mt-0.5 h-[90px] text-[13px] bg-input font-semibold rounded-[7px] px-2 py-2.5"
             />
           </div>
         </div>
@@ -234,7 +232,7 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
         <Button
           onClick={handleSubmit}
           disabled={isPending || !selectedCategory || !amount}
-          className={`p-5 rounded-[7px] ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white ${isPending ? " cursor-not-allowed" : ""}`}
+          className={`p-5 rounded-[7px] mt-1 ${type == "parish" ? "bg-[#89A143]" : "bg-[#E38157]"} text-white ${isPending ? " cursor-not-allowed" : ""}`}
         >
           {isPending ? (
             <span className="flex items-center">

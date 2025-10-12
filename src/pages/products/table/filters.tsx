@@ -32,10 +32,10 @@ const {meUser} = useMeStore()
   });
 
   return (
-    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px]   flex   ">
+    <div className=" gap-2 mb-4 px-[20px] h-[64px] flex ">
       <SearchInput />
       <Button
-        className="h-full w-[63px] border-l-1   justify-center font-[16px] gap-1  border-y-0  border-r-1"
+        className="h-full w-[63px] bg-card hover:bg-card rounded-xl  justify-center font-[16px] gap-1  border-0 "
         variant={"outline"}
       >
         <BrCodeIcons />
@@ -43,7 +43,7 @@ const {meUser} = useMeStore()
       {/* <FilterSelect placeholder="Фильтр" name="news" /> */}
       <FilterSelect 
         placeholder="Продукт"
-        className="border-r-1 w-[150px]"
+        className=" w-[150px]"
         defaultValue="collections"
         options={[
           { label: "Продукт", value: "product"},
@@ -66,7 +66,7 @@ const {meUser} = useMeStore()
       <Statistics />
       <Button
       onClick={()=>exelMudate()}
-        className="h-full border-l-0 border-y-0 w-[140px]  ml-auto"
+        className="h-full border-0 bg-card rounded-xl hover:bg-card w-[140px]  ml-auto"
         variant={"outline"}
       >
        {isPending? <Loader className="animate-spin"/>:<FileOutput />}   Экспорт

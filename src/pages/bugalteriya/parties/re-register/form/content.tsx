@@ -17,7 +17,7 @@ export default function FormContent() {
   const isMetric = watch("isMetric");
   const [tip] = useQueryState(
     "tip",
-    parseAsString.withDefault(meUser?.position?.role == 7 ? "переучет" : "new")
+    parseAsString.withDefault((meUser?.position?.role == 7 ||meUser?.position.role == 4)? "переучет" : "new")
   );
 
   return (
@@ -136,7 +136,7 @@ export default function FormContent() {
         )}
         {(meUser?.position.role == 9 && tip == "new") ||
         meUser?.position.role === 5 ||
-        (meUser?.position.role == 7 && tip == "переучет") ? (
+        ((meUser?.position.role == 7 || meUser?.position.role == 4) && tip == "переучет") ? (
           <Button
             className={`h-full w-1/2 text-primary justify-center font-[16px] gap-1.5  border-none`}
             variant={"outline"}

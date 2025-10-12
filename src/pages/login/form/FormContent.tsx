@@ -28,17 +28,21 @@ export default function LoginFormContent({
       <div className="flex  gap-[92px]">
         <div className="w-full  max-w-[360px]">
           <img src="/logo.svg" className="w-[175px] h-[115px]" alt="image" />
-          <p className="text-foreground leading-[17px] text-[15px] mb-[31px]">
+          {/* <p className="text-foreground leading-[17px] text-[15px] mb-[31px]">
             Автоматизация процесса: производство, склад, продажи и контроль
             процессов для роста вашего бизнеса.
-          </p>
+          </p> */}
           <FormTextInput
             name="login"
             placeholder="# Введите всой ID"
             //label="userName"
-            className="mb-12"
+            classNameInput="text-[32px] p-[30px]   font-bold"
+            className="mb-12 "
+            style={{
+              fontSize:"22px"
+            }}
           />
-          <Button className="py-[12px] px-[25px] cursor-pointer bg-[#282828] text-[15px] leading-[18px] text-white">
+          <Button className="p-[30px]  rounded-sm cursor-pointer bg-[#282828] text-[22px] font-bold  leading-[18px] text-white">
             {isPending && <Loader2 className="animate-spin" />}
             Войти
           </Button>

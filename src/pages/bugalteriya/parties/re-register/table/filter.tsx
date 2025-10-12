@@ -78,7 +78,7 @@ export default function Filters({
       />
      { meUser?.position?.role ==9 ? <FileExelUpload partiyaId={id || ""} />:""}
 
-      {meUser?.position?.role == 7 ? (
+      {(meUser?.position?.role == 7 || meUser?.position.role == 4) ? (
         <Button
           onClick={() => mutate()}
           disabled={check || isPending}

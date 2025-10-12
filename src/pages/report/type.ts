@@ -16,6 +16,8 @@ export interface TData {
   slug: string;
   tip: string;
   title: string;
+  in_hand:number;
+  debt_sum:number;
   icon: {
     id: string;
     path: string;

@@ -154,7 +154,7 @@ export function DataTable<TData, TValue>({
   const navigate = useNavigate();
 
   return (
-    <div className={`${className}` }>
+    <div className={`${className}`  }>
       {isLoading && data.length === 0 ? (
         <TableLoading limit={15} table={table} />
       ) : (

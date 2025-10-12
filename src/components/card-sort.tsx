@@ -37,6 +37,7 @@ export default function CardSort({
   isOnlineCashFlow,
   isOnlyTerminal,
   isUserSelectble,
+  isKassa,
   ClientdebtTotal,
 }: {
   KassaId?: string;
@@ -47,11 +48,11 @@ export default function CardSort({
   isOnlyCash?: boolean | undefined;
   isOnlyTerminal?: boolean | undefined;
   isOnlineCashFlow?: boolean | undefined;
-  isUserSelectble?:boolean | undefined;
-  ClientdebtTotal?:TTotalDebt
-  
+  isUserSelectble?: boolean | undefined;
+  ClientdebtTotal?: TTotalDebt;
+  isKassa?: boolean | undefined;
 }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
@@ -65,9 +66,10 @@ export default function CardSort({
   const [filial, setFilial] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [debtId,setDebtId] = useState<string | undefined>(undefined)
-  const [isUserLocSelectble,setisUserLocSelectble]=useState<boolean|undefined>(false)
-
+  const [debtId, setDebtId] = useState<string | undefined>(undefined);
+  const [isUserLocSelectble, setisUserLocSelectble] = useState<
+    boolean | undefined
+  >(false);
 
   const { data: filialData } = useDataFetch({});
   const { data: kassaId, isLoading: isReportLoading } = useKassaById({
@@ -79,17 +81,18 @@ export default function CardSort({
     enabled: Boolean(dialogOpen),
   });
 
-  const { data:DeblsData,
-    //  isLoading, fetchNextPage, hasNextPage, isFetchingNextPage 
-    } =
-  useDeblsData({
+  const {
+    data: DeblsData,
+    //  isLoading, fetchNextPage, hasNextPage, isFetchingNextPage
+  } = useDeblsData({
     queries: {
-      limit:100,
-      page:1,
+      limit: 100,
+      page: 1,
     },
     enabled: Boolean(isUserLocSelectble),
   });
-const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || [];
+  const flatDeblsData =
+    DeblsData?.pages?.flatMap((page) => page?.items || []) || [];
 
   interface TColumns {
     title: string;
@@ -191,7 +194,9 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
         <Skeleton className="h-5 w-12" />
       ) : (
         formatPrice(
-          KassaReport?.totalCashCollection? Math.abs(KassaReport?.totalCashCollection) : kassaId?.cash_collection || 0
+          KassaReport?.totalCashCollection
+            ? Math.abs(KassaReport?.totalCashCollection)
+            : kassaId?.cash_collection || 0
         )
       ),
       // button:
@@ -290,14 +295,14 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
         tip: "cashflow",
         comment,
         price,
-        is_online:isOnlineCashFlow || undefined, 
+        is_online: isOnlineCashFlow || undefined,
         casher: meUser?.id,
         kassa: kassaReports ? undefined : kassaId?.id || undefined,
         kassaReport: kassaReportId || kassaReports || undefined,
         report: reportId || undefined,
-        debtId:isUserLocSelectble ?debtId:undefined
+        debtId: isUserLocSelectble ? debtId : undefined,
       };
-     
+
       await api.post(apiRoutes.cashflow, body);
 
       toast.success(`${type} успешно добавлен`);
@@ -306,7 +311,7 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
       setCashflow_type("");
       setComment("");
       setPrice(0);
-      setDebtId(undefined)
+      setDebtId(undefined);
       // Close dialog
       setDialogOpen(false);
 
@@ -324,21 +329,21 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
       setIsSubmitting(false);
     }
   };
-  useEffect(()=>{
+  useEffect(() => {
     setCashflow_type("");
     setComment("");
     setPrice(0);
-    setDebtId(undefined)
-  },[dialogOpen])
+    setDebtId(undefined);
+  }, [dialogOpen]);
   const column = meUser?.position.role === 11 ? hrColumns : columns;
 
   return (
     <>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <div className="flex ">
+        <div className="flex rounded-t-xl overflow-hidden  bg-card">
           <div
             onClick={() => setSortType(null)}
-            className=" bg-sidebar/20 cursor-pointer p-5 w-full border border-t border-r max-w-[399px]"
+            className=" bg-sidebar/20 cursor-pointer rounded-tl-xl p-5 w-full border border-t border-r max-w-[399px]"
           >
             <div className="flex items-center">
               <DollarSign size={54} />
@@ -349,34 +354,66 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
                 ) : (
                   <p className="text-[25px] font-bold text-foreground">
                     {formatPrice(
-                     isOnlyCash
-                     ? (KassaReport?.managerSum ||KassaReport?.manegerSum  || 0) : 
-                         isOnlyTerminal ?(KassaReport?.accauntantSum || 0)  : KassaReport?.totalSum ?(KassaReport?.totalSum <KassaReport?.totalPlasticSum ? 0: KassaReport?.totalSum - KassaReport?.totalPlasticSum) : kassaId?.totalSum || 0
-                        //  isOnlyTerminal ?(KassaReport?.accauntantSum || 0)  : KassaReport?.totalSum || kassaId?.totalSum || 0
-
+                      isOnlyCash
+                        ? KassaReport?.managerSum ||
+                            KassaReport?.manegerSum ||
+                            0
+                        : isKassa
+                          ? kassaId?.in_hand || 0
+                          : isOnlyTerminal
+                            ? KassaReport?.accauntantSum || 0
+                            : KassaReport?.totalSum
+                              ? KassaReport?.totalSum <
+                                KassaReport?.totalPlasticSum
+                                ? 0
+                                : KassaReport?.totalSum -
+                                  KassaReport?.totalPlasticSum
+                              : kassaId?.totalSum || 0
+                      //  isOnlyTerminal ?(KassaReport?.accauntantSum || 0)  : KassaReport?.totalSum || kassaId?.totalSum || 0
                     )}
                   </p>
                 )}
               </div>
             </div>
-            {
-              ClientdebtTotal ?<>
-                  <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">Продажа в долг:</p>
-                  <p onClick={(e)=>{
-                    e.stopPropagation()
-                      navigate('/f-manager/report-finance/client-debt')
-                    }} 
-                    className="text-[14px] text-[#E38157] hover:underline inline-block font-semibold">{ClientdebtTotal?.totalDebt} $</p>
-                  </>:""
-            }
-        
+            {ClientdebtTotal ? (
+              <>
+                <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
+                  Продажа в долг:
+                </p>
+                <p
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate("/f-manager/report-finance/client-debt");
+                  }}
+                  className="text-[14px] text-[#E38157] hover:underline inline-block font-semibold"
+                >
+                  {ClientdebtTotal?.totalDebt} $
+                </p>
+              </>
+            ) : (
+              ""
+            )}
+            {/* debt_sum */}
+
+            {isKassa ? <>
+              <>
+                <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
+                  Продажа в долг:
+                </p>
+                <p
+                  className="text-[14px] text-[#E38157]  inline-block font-semibold"
+                >
+                  {kassaId?.debt_sum} $
+                </p>
+              </>
+            </> : ""}
           </div>
           <div className="grid row-start w-full  border-border  border-b grid-cols-4  ">
-            {(column as unknown as TColumns[])?.map((e) => (
+            {(column as unknown as TColumns[])?.map((e,index) => (
               <div
                 key={e.title}
                 onClick={() => setSortType(e.value)}
-                className={`${sorttype == e.value ? "bg-primary text-background" : "bg-sidebar/20  text-primary"} border-t border-r border-border cursor-pointer px-4 py-5`}
+                className={`${sorttype == e.value ? "bg-primary text-background" : "bg-sidebar/20  text-primary"} ${index == 3 ?"rounded-tr-xl":""}  border-t border-r border-border cursor-pointer px-4 py-5`}
               >
                 <div className="flex justify-between items-center">
                   <p className="text-[12px] mb-0.5 flex items">{e.title}</p>
@@ -414,11 +451,11 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
                   <div
                     key={item.id}
                     onClick={() => {
-                      setCashflow_type(item.id)
-                      if(item?.slug == "dolg" && isUserSelectble){
-                        setisUserLocSelectble(true)
-                      }else{
-                        setisUserLocSelectble(false)
+                      setCashflow_type(item.id);
+                      if (item?.slug == "dolg" && isUserSelectble) {
+                        setisUserLocSelectble(true);
+                      } else {
+                        setisUserLocSelectble(false);
                       }
                     }}
                     className={`${cashflow_type === item.id ? "bg-[#5D5D53] text-[white]" : "bg-input text-primary"} flex items-center justify-center flex-col pt-4 rounded-[7px] text-center cursor-pointer`}
@@ -440,7 +477,7 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
                 ))}
             </div>
             <div className="w-full">
-              {(meUser?.position?.role == 10 && !isUserLocSelectble) && (
+              {meUser?.position?.role == 10 && !isUserLocSelectble && (
                 <ShadcnSelect
                   value={filial}
                   options={
@@ -457,20 +494,22 @@ const flatDeblsData = DeblsData?.pages?.flatMap((page) => page?.items || []) || 
                 />
               )}
 
-          { isUserLocSelectble && <ShadcnSelect
-              value={debtId}
-              options={
-                flatDeblsData.map((item) => ({
-                  value: item.id,
-                  label: item.fullName,
-                })) || []
-              }
-              placeholder={"Кенты"}
-              onChange={(value) => {
-                setDebtId(value);
-              }}
-              className="w-full text-[#5D5D53] border-none h-[90px] !bg-input !text-[22px] font-semibold rounded-[7px] px-[17px] py-[26px]"
-            />}
+              {isUserLocSelectble && (
+                <ShadcnSelect
+                  value={debtId}
+                  options={
+                    flatDeblsData.map((item) => ({
+                      value: item.id,
+                      label: item.fullName,
+                    })) || []
+                  }
+                  placeholder={"Кенты"}
+                  onChange={(value) => {
+                    setDebtId(value);
+                  }}
+                  className="w-full text-[#5D5D53] border-none h-[90px] !bg-input !text-[22px] font-semibold rounded-[7px] px-[17px] py-[26px]"
+                />
+              )}
               <Input
                 value={price || ""}
                 onChange={(e) => setPrice(Number(e.target.value))}

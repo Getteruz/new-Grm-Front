@@ -59,7 +59,7 @@ const ActionPageQrCode = () => {
   );
   const [tip] = useQueryState(
     "tip",
-    parseAsString.withDefault(meUser?.position?.role == 7 ? "переучет" : "new")
+    parseAsString.withDefault((meUser?.position?.role == 7 || meUser?.position.role == 4) ? "переучет" : "new")
   );
   const [idLoc, setId] = useQueryState("id");
   const { id } = useParams();

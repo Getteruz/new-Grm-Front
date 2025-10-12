@@ -73,7 +73,7 @@ export default function FormTextInput({
                 type={type ?? "text"}
                 onKeyDown={handleKeyDown}
                 className={cn(
-                  "flex flex-col items-start w-full",
+                  "flex flex-col items-start w-full rounded-sm",
                   classNameInput
                 )}
                 placeholder={placeholder ? t(placeholder) : ""}

@@ -32,14 +32,14 @@ export function DateRangePicker({
     parse: (value) => value ? new Date(value) : new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
   });
   return (
-    <div className={`flex flex-col items-center border-l  max-w-[280px] w-full sm:flex-row gap-2 ${className && className}`}>
+    <div className={`flex flex-col items-center  max-w-[280px] w-full sm:flex-row gap-2 ${className && className}`}>
       <div className="flex-1 ">
         <Popover>
           <PopoverTrigger asChild>
             <Button
               variant={"outline"}
               className={cn(
-                "w-full justify-start  text-left border-0 font-normal",
+                "w-full justify-start  text-left bg-card hover:bg-card rounded-xl h-[50px] border-0 font-normal",
                 !fromDate && "text-muted-foreground"
               )}
             >
@@ -56,6 +56,7 @@ export function DateRangePicker({
           <PopoverContent className="w-auto p-0">
             <Calendar
               mode="single"
+              className='rounded-xl'
               selected={fromDate || undefined}
               onSelect={(date) => (date ? setFromDate(date) : "")}
               initialFocus
@@ -71,7 +72,7 @@ export function DateRangePicker({
             <Button
               variant={"outline"}
               className={cn(
-                "w-full justify-start text-left border-0 font-normal",
+                "w-full justify-start text-left border-0 rounded-xl hover:bg-white bg-white h-[50px] font-normal",
                 !toDate && "text-muted-foreground"
               )}
             >
@@ -87,6 +88,7 @@ export function DateRangePicker({
           <PopoverContent className="w-auto p-0">
             <Calendar
               mode="single"
+               className='rounded-xl'
               selected={toDate || undefined}
               onSelect={(date) => (date ? setToDate(date) : "")}
               initialFocus

@@ -1,8 +1,6 @@
-import { SquareCheckBig } from "lucide-react";
 
 import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 import FilterSelect from "@/components/filters-ui/filter-select";
-import { Button } from "@/components/ui/button";
 import useData from "@/pages/employees/table/queries";
 import { useMeStore } from "@/store/me-store";
 const Sort = [
@@ -27,7 +25,7 @@ const Sort = [
     value: "canceled",
   },
 ];
-export default function Filters({ countLength }: { countLength: number }) {
+export default function Filters() {
   const { meUser } = useMeStore();
   const { data } = useData({
     queries: {
@@ -38,25 +36,18 @@ export default function Filters({ countLength }: { countLength: number }) {
   });
 
   return (
-    <div className="w-full flex h-[40px] bg-sidebar">
-      <FilterSelect
+    <div className="w-full flex gap-3  h-[50px] ">
+       <FilterSelect
         options={Sort}
-        className="max-w-[426px] bg-primary text-[#E6E6D9]  w-full text-[20px]"
+        className="max-w-[426px] bg-primary text-[#E6E6D9] rounded-xl px-2  w-full text-[20px]"
         classNameValue="bg-red-200"
         placeholder="Все операции"
-        classNameContainer="bg-primary text-[#E6E6D9]"
-        classNameItem="bg-[#5D5D53CC] hover:bg-[#5D5D53CC] p-4 text-[20px]"
+        classNameContainer="bg-primary rounded-[12px] text-[#E6E6D9]"
+        classNameItem=" bg-primery rounded-[9px] hover:bg-[#5D5D53CC] p-4 text-[20px]"
         defaultValue="all"
         name="sort"
+        icons
       />
-      <Button
-        className="h-full border-l-1 text-primary justify-center gap-1 w-[60px] border-y-0 border-r-0"
-        size={"icon"}
-        variant={"outline"}
-      >
-        <SquareCheckBig />
-        {countLength}
-      </Button>
       <FilterSelect
         options={[
           { label: "Все", value: "all" },
@@ -65,18 +56,12 @@ export default function Filters({ countLength }: { countLength: number }) {
             value: l.id,
           })) || []),
         ]}
-        className=" w-[200px]  border-l "
-        placeholder="Выберите продавца "
+        className=" w-[220px]  rounded-xl px-2 bg-card"
+        placeholder="Выберите продавца"
         name="sellerId"
       />
       <DateRangePicker toPlaceholder="до" fromPlaceholder="от" />
-      {/* <Button
-        className="h-full  border-l-1 text-primary justify-center gap-1 px-4 border-y-0 border-r-0"
-        variant={"outline"}
-      >
-        <Tornado />
-        Фильтр
-      </Button> */}
+     
     </div>
   );
 }

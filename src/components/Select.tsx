@@ -43,9 +43,10 @@ function ShadcnSelect(props: ShadcnSelectProps) {
       value={value}
       onValueChange={onChange}
       onOpenChange={onOpenChange}
+    
       disabled={disabled || isLoading}
     >
-      <SelectTrigger className={`outline-none active:border-none ${className}`}>
+      <SelectTrigger className={`outline-none  active:border-none ${className}`}>
         <SelectValue className={`${classNameValue}`} placeholder={placeholder}>
           <span
             className={`flex items-center justify-start gap-2 ${classNameValueSpan}`}

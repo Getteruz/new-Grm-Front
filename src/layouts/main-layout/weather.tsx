@@ -27,8 +27,8 @@ export default function Weather() {
   }, []);
 
   return (
-    <div className={`flex items-center gap-1 mr-2 `}>
-      <img width={48} src={weather?.current?.condition?.icon} />
+    <div className={`flex items-center justify-center flex-col mb-4 gap-1 mr-2 `}>
+      <img width={40}  src={weather?.current?.condition?.icon} />
       <h3 className="text-[24px] relative text-primary leading-[120%]">
         {weather?.current?.temp_c}
         <p className="font-normal absolute -top-3 -right-3 text-[10px]">° C</p>

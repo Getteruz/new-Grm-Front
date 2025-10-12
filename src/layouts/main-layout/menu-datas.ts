@@ -187,6 +187,12 @@ export const DataMenu = {
       ],
     },
     {
+      id: 2,
+      icons: () => PartiesIcons(),
+      link: "/parties",
+      text: "Партии",
+    },
+    {
       id: 14,
       icons: () => TransferIcons(),
       link: "/transfers",
@@ -240,6 +246,7 @@ export const DataMenu = {
       link: "/data-library",
       text: "data-library",
     },
+   
   ],
   5: [
     {

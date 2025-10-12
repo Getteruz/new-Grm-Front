@@ -8,9 +8,10 @@ import { IOpenKassa } from "@/types/api-type";
 
 import Content from "./content";
 import useOrder from "./queries";
+import CashierHeader from "@/layouts/main-layout/cashier-header";
+import Filters from "./filter";
 
 export default function Page() {
-
   const { meUser } = useMeStore();
   const [sort] = useQueryState("sort");
   const [sellerId] = useQueryState("sellerId");
@@ -38,17 +39,20 @@ export default function Page() {
     },
   });
 
-
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
     <>
+
+    <CashierHeader>
+      <Filters/>
+    </CashierHeader>
       <Content
-       fetchNextPage={fetchNextPage}
-      hasNextPage={hasNextPage}
-      isFetchingNextPage={isFetchingNextPage}
-       orderList={flatData} 
-       />
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        orderList={flatData}
+      />
     </>
   );
 }

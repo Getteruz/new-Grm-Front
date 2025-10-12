@@ -1,9 +1,6 @@
 import {
-  CircleX,
   FileOutput,
-  SquareCheckBig,
-  SquarePen,
-  Tornado,
+ 
 } from "lucide-react";
 
 import FilterSelect from "@/components/filters-ui/filter-select";
@@ -46,7 +43,7 @@ const SortSingle = [
     value: "Приход",
   },
 ];
-export default function Filters({ countLength ,kassaId}: { countLength: number,kassaId:string | undefined }) {
+export default function Filters({ kassaId}: { countLength: number,kassaId:string | undefined }) {
   const [id] = useQueryState("id");
   const [sort] = useQueryState(
     "sort",
@@ -76,64 +73,50 @@ export default function Filters({ countLength ,kassaId}: { countLength: number,k
     },
   });
   return (
-    <div className="w-full  sticky top-0 flex h-[40px] bg-sidebar">
+    <div className="w-full mb-2 sticky top-0 flex gap-3  h-[50px] ">
       {id ? (
         <FilterSelect
           options={SortSingle}
-          className="max-w-[426px] bg-primary text-[#E6E6D9]  w-full text-[20px]"
+          className="max-w-[426px] rounded-xl bg-primary text-[#E6E6D9]  w-full text-[20px]"
           classNameValue="bg-red-200"
           placeholder="Все операции"
           classNameContainer="bg-primary text-[#E6E6D9]"
-          classNameItem="bg-[#5D5D53CC] hover:bg-[#5D5D53CC] p-4 text-[20px]"
+          classNameItem="bg-primary p-4 text-[20px]"
           defaultValue="Все"
           name="sortSingle"
         />
       ) : (
         <FilterSelect
           options={Sort}
-          className="max-w-[426px] bg-primary text-[#E6E6D9]  w-full text-[20px]"
+          className="max-w-[426px] rounded-xl bg-primary text-[#E6E6D9]  w-full text-[20px]"
           classNameValue="bg-red-200"
           placeholder="Все операции"
           classNameContainer="bg-primary text-[#E6E6D9]"
-          classNameItem="bg-[#5D5D53CC] hover:bg-[#5D5D53CC] p-4 text-[20px]"
+          classNameItem="bg-bg-primary p-4 text-[20px]"
           defaultValue="open"
           name="sort"
         />
       )}
-      <Button
-        className="h-full border-l-1 text-primary justify-center gap-1 w-[60px] border-y-0 border-r-0"
-        size={"icon"}
-        variant={"outline"}
-      >
-        <SquareCheckBig />
-        {countLength}
-      </Button>
-      <Button
-        className="h-full border-l-1 text-primary justify-center gap-1 w-[60px] border-y-0 border-r-0"
-        size={"icon"}
-        variant={"outline"}
-      >
-        <CircleX />
-      </Button>
-      <Button
+    
+      {/* <Button
         className="h-full border-l-1 text-primary justify-center gap-1 w-[60px] border-y-0 border-r-0"
         size={"icon"}
         variant={"outline"}
       >
         <SquarePen />
-      </Button>
-      <Button
+      </Button> */}
+      {/* <Button
         className="h-full  border-l-1 text-primary justify-center gap-1 px-4 border-y-0 "
         variant={"outline"}
       >
         <Tornado />
         Фильтр
-      </Button>
+      </Button> */}
 
       {sort === "open"  || Boolean(id)  ? (
         <Button
           onClick={() => exelMudate()}
-          className="h-full ml-auto  border-l-1 text-primary justify-center gap-1 px-4 border-y-0 border-r-0"
+          className="h-full ml-auto  bg-card hover:bg-card rounded-xl  text-primary justify-center gap-1 px-4 border-0"
           variant={"outline"}
         >
           <FileOutput /> Экспорт

@@ -45,7 +45,7 @@ export const Columns: ColumnDef<TData>[] = [
     header: "count",
     cell: ({ row }) => {
       const { meUser } = useMeStore();
-      const [tip] = useQueryState("tip", parseAsString.withDefault(meUser?.position?.role ==7 ? "переучет": "new"));
+      const [tip] = useQueryState("tip", parseAsString.withDefault((meUser?.position?.role ==7 || meUser?.position.role == 4) ? "переучет": "new"));
       return (
         <p>
           {row.original?.bar_code?.isMetric ? (
@@ -141,7 +141,7 @@ export const Columns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       const { meUser } = useMeStore();
       const queryClient = useQueryClient();
-      const [tip] = useQueryState("tip", parseAsString.withDefault(meUser?.position?.role ==7 ? "переучет": "new"));
+      const [tip] = useQueryState("tip", parseAsString.withDefault((meUser?.position?.role ==7 ||meUser?.position.role == 4) ? "переучет": "new"));
       return (
      tip != "излишки" ?  
       <TableAction
@@ -284,7 +284,7 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
     size: 50,
     cell: ({ row }) => {
       const { meUser } = useMeStore();
-      const [tip] = useQueryState("tip", parseAsString.withDefault(meUser?.position?.role ==7 ? "переучет": "new"));
+      const [tip] = useQueryState("tip", parseAsString.withDefault((meUser?.position?.role ==7 || meUser?.position.role == 4) ? "переучет": "new"));
       return (
      tip != "излишки" ?   <TableAction
           url={apiRoutes.excelProducts}

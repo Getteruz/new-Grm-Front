@@ -5,7 +5,6 @@ import CarpetCashierCard from "@/components/cards/carpet-cashier-card";
 import { minio_img_url } from "@/constants";
 
 import { IData } from "../type";
-import Filters from "./filter";
 import Pricecheck from "./price-check";
 import { LoaderIcon } from "lucide-react";
 
@@ -46,16 +45,16 @@ export default function Content({ orderList, isFetchingNextPage = false,
 
   return (
     <div className="flex ">
-      <div className="w-full">
-        <Filters countLength={selected.length} />
-        <div className="my-[13px] h-[calc(100vh-160px)]  scrollCastom ml-[10px] mr-[20px]">
+      <div className="w-full ">
+        {/* <Filters countLength={selected.length} /> */}
+        <div className="my-[13px] h-[calc(100vh-114px)]  scrollCastom ml-[10px] mr-[20px]">
           {orderList &&
             orderList?.map((item, index) => {
               return (
                 <CarpetCashierCard
                   key={index}
                   index={index}
-                  className="mb-1"
+                  className="mb-2.5"
                   onCheckedChange={(e) => {
                     setSelected((prev) => {
                       if (e) {

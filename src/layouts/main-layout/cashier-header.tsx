@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BellRing, ChevronLeft } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
-import AddingParishOrFlow from "@/components/adding-parish-flow";
+// import AddingParishOrFlow from "@/components/adding-parish-flow";
 import { DollarIcon } from "@/components/icons";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -66,7 +66,7 @@ export default function CashierHeader() {
           </>
         )}
       </div>
-      <AddingParishOrFlow kassaId={String(data?.id)} />
+      {/* <AddingParishOrFlow kassaId={String(data?.id)} /> */}
       <div className="ml-8">
         <div className="flex items-center justify-between w-full max-w-[312px] pr-3 gap-5">
           <div className="flex text-primary items-center gap-[5px]">

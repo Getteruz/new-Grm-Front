@@ -159,14 +159,15 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
     addCashflow(cashflowData);
   };
 
+  
 
   return (
     <Dialog open={isOpen}  onOpenChange={setIsOpen}>
-      <div>
+      <div className="flex -mt-6 w-full">
         <DialogTrigger asChild>
           <Button
             onClick={() => openDialog("parish")}
-            className="py-8 h-full ml-auto text-[22px] px-11 bg-[#89A143] text-white"
+            className="py-8 h-full w-1/2 ml-auto text-[22px] px-11 bg-[#89A143] text-white"
           >
             Приход
           </Button>
@@ -174,7 +175,7 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
         <DialogTrigger asChild>
           <Button
             onClick={() => openDialog("flow")}
-            className="py-8 h-full text-[22px] px-12 bg-[#E38157] text-white"
+            className="py-8 h-full w-1/2 text-[22px] px-12 bg-[#E38157] text-white"
           >
             Расход
           </Button>

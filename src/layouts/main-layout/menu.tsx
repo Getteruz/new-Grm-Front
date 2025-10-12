@@ -27,7 +27,10 @@ export default function Menu() {
         className={`border-b inline-block w-full ${meUser?.position.role == 3 ? "h-[90px]" : "h-[64px]"}  border-border`}
       />
       <div className="h-[100%] overflow-y-auto">
-        {meUser?.position?.role !== 3 ? (
+        {(meUser?.position?.role == 3 || meUser?.position?.role == 4)   ?  (
+          ""
+        ):
+        (
           pathName.pathname.split("/").length > 3 || isBack ? (
             <div
               onClick={() => {
@@ -54,9 +57,8 @@ export default function Menu() {
               </span>
             </div>
           )
-        ) : (
-          ""
-        )}
+        )
+        }
         {DataMenu[
           (meUser?.position?.role || "admin") as keyof typeof DataMenu
         ]?.map((e) => (

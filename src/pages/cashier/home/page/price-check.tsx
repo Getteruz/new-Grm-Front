@@ -1,18 +1,23 @@
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { toast } from "sonner";
 
 import CheckList from "@/components/check";
 import { Button } from "@/components/ui/button";
-import { UpdatePatchData } from "@/service/apiHelpers";
+import { getByIdData, UpdatePatchData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { IData } from "../type";
+import AddingParishOrFlow from "@/components/adding-parish-flow";
+import { useMeStore } from "@/store/me-store";
+import { IOpenKassa } from "@/types/api-type";
 
 export default function Pricecheck({ selected }: { selected: IData[] }) {
   const price = selected?.reduce((a, b) => a + b.plasticSum + b.price, 0);
   const discountSum = selected?.reduce((a, b) => a + b.discountSum, 0);
   const queryClient = useQueryClient();
+  const { meUser } = useMeStore();
+  const filialId = meUser?.filial.id;
   const AccepedFunt = () => {
     UpdatePatchData(apiRoutes.order + "/accept", "", {
       ids: selected?.map((e) => e.id),
@@ -23,8 +28,17 @@ export default function Pricecheck({ selected }: { selected: IData[] }) {
       })
       .catch(() => toast.error("что-то пошло не так"));
   };
+
+  const { data } = useQuery({
+    queryKey: [apiRoutes.filial, filialId],
+    queryFn: () =>
+      getByIdData<IOpenKassa, void>("/kassa/open-kassa", filialId || ""),
+    enabled: !!filialId,
+  });
+
   return (
     <div className="w-full bg-card max-w-[312px] flex flex-col justify-between  h-[calc(100vh-90px)]  pt-[23px] ">
+      <AddingParishOrFlow kassaId={String(data?.id)} />
       <div className="w-full  h-[calc(100vh-260px)]  scrollCastom px-5">
         <div className="sticky top-0">
           <p className="text-primary text-[14px] font-medium">Итого:</p>

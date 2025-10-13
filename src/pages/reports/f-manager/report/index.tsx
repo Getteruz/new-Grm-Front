@@ -54,7 +54,9 @@ const { data: KassaReportSingle } = useKassaReportSingle({
   return (
     <>
       <Filter status={KassaReportSingle?.status || ""}/>
-     <CardSort isAddible={Boolean(id)} kassaReportId={id}  KassaReport={id ? KassaReportSingle: KassaReport }/>
+     <CardSort 
+    //  isAddible={Boolean(id)}
+      kassaReportId={id}  KassaReport={id ? KassaReportSingle: KassaReport }/>
       <div className="h-[calc(100vh-370px)] scrollCastom">
       <DataTable 
         columns={KassaColumns || []}

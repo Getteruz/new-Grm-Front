@@ -38,9 +38,7 @@ export const KassaColumns: ColumnDef<TData>[] = [
       const item = row.original;
       return (
         <p className="text-[#89A143]">
-          {" "}
-          {item?.totalSum &&
-            (item?.totalSum - (item?.plasticSum || 0)).toFixed(2) + " $"}{" "}
+          { (item?.in_hand || 0).toFixed(2)}
         </p>
       );
     },
@@ -54,8 +52,17 @@ export const KassaColumns: ColumnDef<TData>[] = [
       return <p> {item?.plasticSum && item?.plasticSum + " $"} </p>;
     },
   },
+  {
+    header: "Дебит",
+    id: "debt_sum",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.debt_sum} $</p>;
+    },
+  },
 
   {
+
     header: "Скидка",
     id: "discount",
     cell: ({ row }) => {

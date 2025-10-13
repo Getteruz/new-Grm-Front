@@ -37,7 +37,6 @@ export default function CardSort({
   isOnlineCashFlow,
   isOnlyTerminal,
   isUserSelectble,
-  isKassa,
   ClientdebtTotal,
 }: {
   KassaId?: string;
@@ -336,7 +335,6 @@ export default function CardSort({
     setDebtId(undefined);
   }, [dialogOpen]);
   const column = meUser?.position.role === 11 ? hrColumns : columns;
-
   return (
     <>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -358,17 +356,10 @@ export default function CardSort({
                         ? KassaReport?.managerSum ||
                             KassaReport?.manegerSum ||
                             0
-                        : isKassa
-                          ? kassaId?.in_hand || 0
-                          : isOnlyTerminal
-                            ? KassaReport?.accauntantSum || 0
-                            : KassaReport?.totalSum
-                              ? KassaReport?.totalSum <
-                                KassaReport?.totalPlasticSum
-                                ? 0
-                                : KassaReport?.totalSum -
-                                  KassaReport?.totalPlasticSum
-                              : kassaId?.totalSum || 0
+                        : isOnlyTerminal
+                          ? KassaReport?.accauntantSum || 0
+                          : KassaReport?.in_hand ? KassaReport?.in_hand
+                            : kassaId?.in_hand || kassaId?.totalSum || 0
                       //  isOnlyTerminal ?(KassaReport?.accauntantSum || 0)  : KassaReport?.totalSum || kassaId?.totalSum || 0
                     )}
                   </p>
@@ -390,30 +381,24 @@ export default function CardSort({
                   {ClientdebtTotal?.totalDebt} $
                 </p>
               </>
-            ) : (
-              ""
-            )}
-            {/* debt_sum */}
-
-            {isKassa ? <>
+            )  :  (
               <>
                 <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
                   Продажа в долг:
                 </p>
-                <p
-                  className="text-[14px] text-[#E38157]  inline-block font-semibold"
-                >
-                  {kassaId?.debt_sum} $
+                <p className="text-[14px] text-[#E38157]  inline-block font-semibold">
+                  {KassaReport?.debt_sum ? KassaReport?.debt_sum : kassaId?.debt_sum} $
                 </p>
               </>
-            </> : ""}
+            )}
+            {/* debt_sum */}
           </div>
           <div className="grid row-start w-full  border-border  border-b grid-cols-4  ">
-            {(column as unknown as TColumns[])?.map((e,index) => (
+            {(column as unknown as TColumns[])?.map((e, index) => (
               <div
                 key={e.title}
                 onClick={() => setSortType(e.value)}
-                className={`${sorttype == e.value ? "bg-primary text-background" : "bg-sidebar/20  text-primary"} ${index == 3 ?"rounded-tr-xl":""}  border-t border-r border-border cursor-pointer px-4 py-5`}
+                className={`${sorttype == e.value ? "bg-primary text-background" : "bg-sidebar/20  text-primary"} ${index == 3 ? "rounded-tr-xl" : ""}  border-t border-r border-border cursor-pointer px-4 py-5`}
               >
                 <div className="flex justify-between items-center">
                   <p className="text-[12px] mb-0.5 flex items">{e.title}</p>

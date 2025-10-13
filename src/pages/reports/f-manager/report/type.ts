@@ -11,6 +11,8 @@ export interface TData {
   internetInfo: string | null;
   is_active: boolean;
   date: string;
+  in_hand?:number;
+  debt_sum?:number;
   is_online: boolean;
   price: number;
   tip: string;

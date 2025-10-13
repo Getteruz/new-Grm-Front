@@ -15,7 +15,6 @@ export default function Filters() {
   const [factory,setFactory]= useState<TSelectOption |null>(null);
   const [partiyaNumber,setpartiyaNumber]= useState<TSelectOption |null>(null);
   
-  // const [factory,setCactory]= useQueryState("factory");
   return (
     <div className=" w-full  px-[20px] h-[64px] flex   gap-2 mb-2 ">
       <DateRangePicker
@@ -49,13 +48,8 @@ export default function Filters() {
         value={partiyaNumber}
         fieldNames={{label:"title",value:"id"}}
       />
-      {/* <Button
-        className="h-full  ml-auto border-y-0 w-[140px] "
-        variant={"outline"}
-      >
-        <FileOutput /> Экспорт
-      </Button> */}
-      {(meUser?.position.role === 9  || meUser?.position.role === 5 )  && ( 
+  
+      {(meUser?.position.role === 9  || meUser?.position.role === 5 ||meUser?.position.role === 7 )  && ( 
         <Button onClick={() => setId("new")} className="h-full  rounded-xl  ml-auto ">
           <Plus size={24} /> Добавить Партия
         </Button>

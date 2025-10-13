@@ -15,6 +15,8 @@ export interface TData{
   discount?: number;
   income?: number;
   expense?: number;
+  in_hand?: number;
+  debt_sum?:number;
   status?: string;
 closer?: {
     id: string;

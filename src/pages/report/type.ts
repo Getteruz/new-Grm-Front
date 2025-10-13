@@ -106,6 +106,9 @@ export interface TKassareportData {
     id: string;
     title: string;
   };
+
+  in_hand?:number;
+  debt_sum?:number;
   manegerSum?:number;
   managerSum?:number;
   accauntantSum?:number;

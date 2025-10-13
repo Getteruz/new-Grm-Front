@@ -17,13 +17,13 @@ export default function Filters() {
   
   // const [factory,setCactory]= useQueryState("factory");
   return (
-    <div className="bg-sidebar w-full border-border border-b  px-[20px] h-[64px]   flex   ">
+    <div className=" w-full  px-[20px] h-[64px] flex   gap-2 mb-2 ">
       <DateRangePicker
         fromPlaceholder={`от`}
         toPlaceholder={`до`}
       />
       <FilterComboboxDemoInput
-        className="w-full max-w-[170px] h-[63px] border-0 border-l border-r"
+        className="w-full max-w-[170px] h-[63px] "
         placeholder="Страна" 
         fetchUrl="/country"
          name="country"
@@ -32,7 +32,7 @@ export default function Filters() {
         fieldNames={{label:"title",value:"id"}}
       />
        <FilterComboboxDemoInput
-        className="w-full max-w-[170px] h-[63px] border-0 border-l border-r"
+        className="w-full max-w-[170px] h-[63px] "
         placeholder="Поставщик" 
         fetchUrl="/factory"
         name="factory"
@@ -41,7 +41,7 @@ export default function Filters() {
         fieldNames={{label:"title",value:"id"}}
       />
        <FilterComboboxDemoInput
-        className="w-full max-w-[170px] h-[63px] border-0 border-l border-r"
+        className="w-full max-w-[170px] h-[63px] "
         placeholder="Партия" 
           name="partiya-number"
         fetchUrl="/partiya-number"
@@ -56,7 +56,7 @@ export default function Filters() {
         <FileOutput /> Экспорт
       </Button> */}
       {(meUser?.position.role === 9  || meUser?.position.role === 5 )  && ( 
-        <Button onClick={() => setId("new")} className="h-full   ml-auto ">
+        <Button onClick={() => setId("new")} className="h-full  rounded-xl  ml-auto ">
           <Plus size={24} /> Добавить Партия
         </Button>
       )}

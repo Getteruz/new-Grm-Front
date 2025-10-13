@@ -34,13 +34,12 @@ export default function Filters() {
     },
   });
   return (
-    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px] items-center  flex   ">
+    <div className="  px-[20px] h-[64px] items-center  flex   gap-2 mb-2  ">
         <p className="text-[#272727] text-[20px]">Касса магазина</p>
-      
       <Button
         onClick={() => exelMudate()}
-        className="h-full  border-y-0 w-[140px]  ml-auto"
-        variant={"outline"}
+        className="h-full   w-[140px]  ml-auto"
+        variant={"secondary"}
       >
         <FileOutput /> Экспорт
       </Button>

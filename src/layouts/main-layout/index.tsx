@@ -31,8 +31,16 @@ export default function MainLayout() {
     <SidebarProvider>
       <Menu />
       <SidebarInset>
-        {meUser?.position?.role === 3 ? <div className="h-5"></div> : pathname.pathname == '/cashier/home' ?<div className="h-5"></div>:  <Header />}
-        <div className={`${meUser?.position?.role === 3 || pathname.pathname == '/cashier/home' ? "h-[calc(100vh-10px)] ":"h-[calc(100vh-63px)] "} scrollCastom`}>
+        {meUser?.position?.role === 3 ? (
+          <div className="h-5"></div>
+        ) : pathname.pathname == "/cashier/home" ? (
+          <div className="h-5"></div>
+        ) : (
+          <Header />
+        )}
+        <div
+          className={`${(meUser?.position?.role === 3 || pathname.pathname == "/cashier/home") ? "h-[calc(100vh-20px)] " : "h-[calc(100vh-63px)] "} scrollCastom`}
+        >
           <Outlet />
         </div>
       </SidebarInset>

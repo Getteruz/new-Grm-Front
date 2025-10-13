@@ -29,11 +29,11 @@ export default function Filters() {
     })) || [];
     const {meUser}= useMeStore()
   return (
-    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px] items-center  flex   ">
+    <div className="  px-[20px] h-[64px] items-center  flex gap-2 mb-2  ">
       <p className="text-[#272727] text-[20px] mr-auto">Отчёт по сотрудикам </p>
       {meUser?.position?.role != 4 &&  <FilterSelect
             placeholder="все"
-            className="w-[200px] h-[65px] border-border pl-4  border-l"
+            className="w-[200px] h-[62px]  pl-4  "
             options={[{ value: "clear", label: "все" }, ...filialOption]}
             name="filial"
             icons={
@@ -46,7 +46,7 @@ export default function Filters() {
         options={monthsArray}
         defaultValue={getMonth(new Date()) + 1 + ""  }
         name="month"
-        className="w-[160px] px-2 h-[64px]  border-l"
+        className="w-[160px] px-2 h-[62px]  "
       />
 
     

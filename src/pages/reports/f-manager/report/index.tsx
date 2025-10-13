@@ -54,8 +54,8 @@ const { data: KassaReportSingle } = useKassaReportSingle({
   return (
     <>
       <Filter status={KassaReportSingle?.status || ""}/>
-      <div className="h-[calc(100vh-140px)] scrollCastom">
      <CardSort isAddible={Boolean(id)} kassaReportId={id}  KassaReport={id ? KassaReportSingle: KassaReport }/>
+      <div className="h-[calc(100vh-370px)] scrollCastom">
       <DataTable 
         columns={KassaColumns || []}
         data={ id ?[
@@ -72,6 +72,7 @@ const { data: KassaReportSingle } = useKassaReportSingle({
         hasNextPage={KassafhasNextPage ?? false}
         isFetchingNextPage={KassaisFetchingNextPage}
       />
+    
       </div>
     </>
   );

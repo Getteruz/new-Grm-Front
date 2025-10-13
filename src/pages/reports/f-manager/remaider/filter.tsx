@@ -9,10 +9,10 @@ export default function Filters() {
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
 
   return (
-    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px] items-center  flex   ">
+    <div className="  px-[20px] h-[64px] items-center  flex mb-2   gap-2 ">
        <FilterSelect
             placeholder="Поставщики"
-            className="w-[200px] px-3 mr-auto h-[65px] border-border border-r"
+            className="w-[200px] px-3 mr-auto  h-[62px] "
             options={[{ value: "delears", label: "Поставщики" },{value: "collaction", label: "Коллекция"}]}
             name="sort"
             icons={
@@ -22,7 +22,7 @@ export default function Filters() {
     <DateRangePicker/>
       <Button
         className="h-full  border-y-0 w-[140px]  "
-        variant={"outline"}
+        variant={"secondary"}
       >
         <FileOutput /> Экспорт
       </Button>

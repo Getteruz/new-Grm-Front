@@ -44,7 +44,7 @@ export default function FilterSelect({
   const { t } = useTranslation();
   
   return (
-    <div className={`flex items-center  ${className && className}`}>
+    <div className={`flex items-center bg-card rounded-xl  ${className && className}`}>
       { icons && icons}
       <ShadcnSelect
         className={` border-none bg-card rounded-xl px-4  ${className && className}`}

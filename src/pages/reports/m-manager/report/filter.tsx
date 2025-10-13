@@ -58,14 +58,14 @@ export default function Filters() {
   });
 
   return (
-    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px] items-center  flex   ">
+    <div className=" px-[20px] h-[64px] items-center  flex gap-2 mb-2   ">
       {id ? (
         <p className="text-[#272727] text-[20px] mr-auto">Касса магазина</p>
       ) : (
         <>
           <FilterSelect
             placeholder="все"
-            className="w-[200px] h-[65px] border-border mr-auto border-r"
+            className="w-[200px] h-[65px] px-3"
             options={[{ value: "clear", label: "все" }, ...filialOption]}
             name="filial"
             icons={

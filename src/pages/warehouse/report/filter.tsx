@@ -9,7 +9,7 @@ export default function Filters() {
   //   },
   // });
   return (
-    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px]   flex   ">
+    <div className=" px-[20px] h-[64px]   flex  gap-2 mb-2  ">
       <FilterSelect
         options={[]}
         // options={[
@@ -19,7 +19,7 @@ export default function Filters() {
         //     value: l.id,
         //   })) || []),
         // ]}
-        className=" w-[200px]  border-l "
+        className=" w-[200px]   "
         placeholder="Страна "
         name="country"
       />
@@ -32,7 +32,7 @@ export default function Filters() {
         //     value: l.id,
         //   })) || []),
         // ]}
-        className=" w-[200px]  border-l "
+        className=" w-[200px]   "
         placeholder="Поставщик "
         name="country"
       />
@@ -45,7 +45,7 @@ export default function Filters() {
         //     value: l.id,
         //   })) || []),
         // ]}
-        className=" w-[200px]  border-l border-r "
+        className=" w-[200px]   "
         placeholder="Партия "
         name="country"
       />

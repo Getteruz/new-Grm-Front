@@ -18,10 +18,10 @@ export default function Filters() {
       value: e?.id,
     })) || [];
   return (
-    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px] items-center  flex   ">
+    <div className=" px-[20px] h-[64px] items-center  flex  gap-2 mb-2  ">
         <FilterSelect
             placeholder="все"
-            className="w-[200px] pl-2 h-[65px] border-border border-r"
+            className="w-[200px] pl-2 h-[65px] "
             options={[{ value: "clear", label: "все" }, ...filialOption]}
             name="filial"
             icons={
@@ -32,7 +32,7 @@ export default function Filters() {
           />
        <FilterSelect
             placeholder="Поставщики"
-            className="w-[200px] px-3 mr-auto h-[65px] border-border border-r"
+            className="w-[200px] px-3 mr-auto h-[65px] "
             options={[{ value: "delears", label: "Поставщики" },{value: "collaction", label: "Коллекция"}]}
             name="sort"
             icons={
@@ -41,8 +41,8 @@ export default function Filters() {
           />
     <DateRangePicker className="mr-6"/>
       <Button
-        className="h-full  border-y-0 w-[140px]  "
-        variant={"outline"}
+        className="h-full  w-[140px]  "
+        variant={"secondary"}
       >
         <FileOutput /> Экспорт
       </Button>

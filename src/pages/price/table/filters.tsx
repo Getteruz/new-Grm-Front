@@ -22,36 +22,39 @@ export default function Filters() {
     }
   };
   return (
-    <div className="bg-sidebar border-border border-b  flex justify-between px-[20px] h-[64px]     ">
-      <div className="flex  ">
-        <Button className="h-full px-[50px] w-full max-w-[160px]">
+    <div className=" flex justify-between px-[20px] h-[64px] mb-3">
+      <div className="flex  gap-2 ">
+        <Button
+          className="h-full   px-[50px] w-full max-w-[160px]"
+          variant="secondary"
+        >
           <Tag />
           Цены
         </Button>
         <Button
-          variant={"outline"}
-          className="h-full border-y-0 px-[50px] w-full max-w-[160px]"
+          variant="secondary"
+          className="h-full  px-[50px] w-full max-w-[160px]"
         >
           <BadgePercent />
           Скидки
         </Button>
         <Button
-          variant={"outline"}
-          className="h-full border-y-0 px-[50px] w-full max-w-[160px]"
+          variant="secondary"
+          className="h-full   px-[50px] w-full max-w-[160px]"
         >
           <Gift />
           Акции
         </Button>
         <Button
-          variant={"outline"}
-          className="h-full border-y-0 px-[50px] w-full max-w-[160px]"
+          variant="secondary"
+          className="h-full  px-[50px] w-full max-w-[160px]"
         >
           <Tag />
           Бонусы
         </Button>
         <Button
-          variant={"outline"}
-          className="h-full border-y-0 px-[50px] w-full max-w-[160px]"
+          variant="secondary"
+          className="h-full  px-[50px] w-full max-w-[160px]"
         >
           <Ticket />
           Промокоды

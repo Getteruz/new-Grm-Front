@@ -37,7 +37,7 @@ export default function NotePage() {
   }, [active]);
 
   return (
-    <div ref={noteRef} className="relative mt-3 z-20">
+    <div ref={noteRef} className="relative  z-1000 mt-3 z-20">
       <div
         onClick={(e) => {
           e.stopPropagation(); // prevent closing immediately
@@ -51,7 +51,7 @@ export default function NotePage() {
       </div>
 
       {active && (
-        <div className="absolute bottom-8 py-[14px] px-5 left-10 bg-card rounded-[12px] border w-[380px] shadow-[0px_34px_44px_0px_rgba(65,55,23,0.06)] max-h-[600px] overflow-y-auto">
+        <div className="absolute bottom-8 py-[14px] px-5 left-10  z-1000 bg-card rounded-[12px] border w-[380px]  max-h-[600px] ">
           <Content data={flatData} />
         </div>
       )}

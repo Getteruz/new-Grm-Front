@@ -117,7 +117,7 @@ export default function FilterComboboxDemoInput<IData, TQuery>({
         onFilter={debounce((e) => setSearch(e.target.value), 500)}
         disabled={disabled}
         value={value?.value}
-        className={className && className +"w-full"}
+        className={className && className +"w-full bg-card hover:bg-card border-none rounded-xl"}
         isLoading={isLoading}
         options={memoizedData}
         placeholder={placeholder ? t(placeholder) : ""}

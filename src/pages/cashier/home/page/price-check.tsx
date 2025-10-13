@@ -57,7 +57,7 @@ export default function Pricecheck({ selected }: { selected: IData[] }) {
            <Button
           // onClick={AccepedFunt}
           // disabled
-          className="w-full rounded-xl h-[50px] bg-card  hover:bg-card mt-auto text-primary text-[16px] font-semibold "
+          className="w-full rounded-xl h-[50px] bg-card  hover:bg-card mb-2 mt-auto text-primary text-[16px] font-semibold "
         >
           Распечатать чек
         </Button>

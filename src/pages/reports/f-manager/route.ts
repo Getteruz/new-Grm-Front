@@ -7,26 +7,12 @@ import PageSellerReport from "../seller/seller-report";
 import PageCleintDebt from "./client-debt";
 import PageOrginal from "../report-orginal";
 const Route = [
-  // {
-  //   url: "/f-manager/report",
-  //   Element: ReportPage,
-  //   meta: { isAuth: true, role: new Set(["admin"]) },
-  // },
   {
     url: "/f-manager/report/:id/info",
     Element: SinglePage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
-  // {
-  //   url: "/f-manager/reports",
-  //   Element: ReportPage,
-  //   meta: { isAuth: true, role: new Set(["admin"]) },
-  // },
-  // {
-  //   url: "/f-manager/reports/:id/info",
-  //   Element: SinglePage,
-  //   meta: { isAuth: true, role: new Set(["admin"]) },
-  // },
+
   {
     url: "/f-manager/report-finance",
     Element: PageFinance,

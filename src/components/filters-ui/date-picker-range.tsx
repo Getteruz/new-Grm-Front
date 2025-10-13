@@ -39,7 +39,7 @@ export function DateRangePicker({
             <Button
               variant={"outline"}
               className={cn(
-                "w-full justify-start  text-left bg-card hover:bg-card rounded-xl h-[50px] border-0 font-normal",
+                "w-full justify-start  text-left bg-card hover:bg-card rounded-xl h-[62px] border-0 font-normal",
                 !fromDate && "text-muted-foreground"
               )}
             >
@@ -72,7 +72,7 @@ export function DateRangePicker({
             <Button
               variant={"outline"}
               className={cn(
-                "w-full justify-start text-left border-0 rounded-xl hover:bg-white bg-white h-[50px] font-normal",
+                "w-full justify-start text-left border-0 rounded-xl hover:bg-white bg-white h-[62px] font-normal",
                 !toDate && "text-muted-foreground"
               )}
             >

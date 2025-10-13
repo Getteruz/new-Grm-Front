@@ -20,12 +20,12 @@ export default function Filters() {
   const { meUser } = useMeStore();
 
   return (
-    <div className="bg-sidebar border-border border-b  px-[20px] h-[64px]   flex   ">
-      <SearchInput className="w-full border border-y-0 border-l-0 border-r mr-4" />
+    <div className="  px-[20px] h-[64px]   flex  gap-2 mb-2  ">
+      <SearchInput className="w-full  max-w-[300px] mr-auto" />
       {meUser?.position.role == 11 ? (
         <FilterSelect
           icons={<Store />}
-          className="w-full max-w-[170px]"
+          className="w-full max-w-[170px] pl-4"
           placeholder="Филиалы"
           name="filial"
           options={[{ label: "Все", value: "all" }, ...filialOption]}
@@ -33,20 +33,20 @@ export default function Filters() {
       ) : (
         ""
       )}
-      <Button className="h-full  border-y-0 w-[64px]" variant={"outline"}>
+      <Button className="h-full   w-[64px]" variant={"secondary"}>
         <Trash2 />
       </Button>
-      <Button className="h-full  border-0 w-[64px]  " variant={"outline"}>
+      <Button className="h-full  w-[64px]  " variant={"secondary"}>
         <Archive />
       </Button>
-      <Button className="h-full  border-y-0 w-[140px] " variant={"outline"}>
+      <Button className="h-full   w-[140px] " variant={"secondary"}>
         <FileOutput /> Экспорт
       </Button>
       {(meUser?.position.role == 11 || meUser?.position.role == 4) ? (
         <Button
           onClick={() => setId("new")}
-          className="h-full   border-l-0   border-y-0   "
-          variant={"outline"}
+          className="h-full   "
+          variant={"secondary"}
         >
           <Plus size={24} /> Добавить
         </Button>

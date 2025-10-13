@@ -64,18 +64,14 @@ export default function Page() {
 
   return (
     <>
-       <CashierHeader>
-       <Filters
-            kassaId={reportData?.id}
-            countLength={selectedItems?.length}
-          />
-    </CashierHeader>
-      <div className="flex justify-between w-full bg-background">
-        <div className="flex flex-col mr-2 w-full">
-         
+      <CashierHeader>
+        <Filters kassaId={reportData?.id} countLength={selectedItems?.length} />
+      </CashierHeader>
+      <div className="flex w-full ">
+        <div className=" mr-2 w-full">
           {sort === "open" || Boolean(id) ? (
             <CardSort
-            isKassa={true}
+              isKassa={true}
               KassaId={sort == "open" ? reportData?.id || "" : id || ""}
             />
           ) : (
@@ -84,13 +80,14 @@ export default function Page() {
           {sort === "open" ? (
             ""
           ) : (
-            <div className="px-10 pt-2 mb-1 w-full bg-card sticky top-0">
+            <div className="px-4 pt-2 mb-1 w-full  sticky top-0">
               <p className="text-sm font-medium ">
                 {format(new Date(), "dd-MMMM")}
               </p>
             </div>
           )}
-          <div className="flex-1   bg-card ">
+        <div className="h-[calc(100vh-285px)] scrollCastom ">
+
             {sort === "open" || Boolean(id) ? (
               <DataTable
                 columns={ReportColumns}
@@ -112,7 +109,8 @@ export default function Page() {
                 isFetchingNextPage={KassaisFetchingNextPage}
               />
             )}
-          </div>
+        </div>
+       
         </div>
         {sort === "open" ? (
           <Pricecheck disabled={!flatData.length} id={reportData?.id || ""} />

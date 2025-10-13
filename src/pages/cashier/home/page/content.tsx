@@ -44,10 +44,8 @@ export default function Content({ orderList, isFetchingNextPage = false,
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
-    <div className="flex ">
-      <div className="w-full ">
-        {/* <Filters countLength={selected.length} /> */}
-        <div className="my-[13px] h-[calc(100vh-114px)]  scrollCastom ml-[10px] mr-[20px]">
+    <div className="flex">
+        <div className="my-[13px] h-[calc(100vh-135px)]  scrollCastom ml-[10px] mr-[20px]">
           {orderList &&
             orderList?.map((item, index) => {
               return (
@@ -118,7 +116,6 @@ export default function Content({ orderList, isFetchingNextPage = false,
             </div>
           )}
         </div>
-      </div>
       <Pricecheck selected={selected} />
     </div>
   );

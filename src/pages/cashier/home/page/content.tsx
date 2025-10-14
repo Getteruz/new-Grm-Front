@@ -45,7 +45,7 @@ export default function Content({ orderList, isFetchingNextPage = false,
 
   return (
     <div className="flex">
-        <div className="my-[13px] h-[calc(100vh-135px)]  scrollCastom ml-[10px] mr-[20px]">
+        <div className="my-[13px] w-full h-[calc(100vh-135px)]  scrollCastom ml-[10px] mr-[20px]">
           {orderList &&
             orderList?.map((item, index) => {
               return (

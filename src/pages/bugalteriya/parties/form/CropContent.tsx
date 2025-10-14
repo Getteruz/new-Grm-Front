@@ -125,13 +125,13 @@ export default function FormContent({isPending}:{isPending:boolean}) {
             onLocalChange={() => {
               form.setValue("user", null);
             }}
-            queries={{ type: "warehouse" }}
+            queries={{ type: "filial" }}
             name="warehouse"
-            placeholder="Укажите склад"
-            label="Склад"
+            placeholder="Укажите Филиал"
+            label="Филиал"
           />
           <FormComboboxDemoInput
-            fetchUrl={`/user/managers/${warehouse?.value}`}
+            fetchUrl={`/user/filial/${warehouse?.value}`}
             fieldNames={{ value: "id", label: "firstName" }}
             name="user"
             disabled={!warehouse}
@@ -142,8 +142,8 @@ export default function FormContent({isPending}:{isPending:boolean}) {
       </div>
 
       <DialogFooter className="justify-start">
-        <Button disabled={isPending} type="submit">   {isPending ? <Loader className="animate-spin"/>: ""} Сохранить</Button>
-        <Button variant="outline" type="button" onClick={() => setId(null)}>
+        <Button className="rounded-lg" disabled={isPending} type="submit">   {isPending ? <Loader className="animate-spin"/>: ""} Сохранить</Button>
+        <Button  className="rounded-lg" variant={"secondary"} type="button" onClick={() => setId(null)}>
           Отменить
         </Button>
       </DialogFooter>

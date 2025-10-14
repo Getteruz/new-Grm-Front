@@ -80,10 +80,10 @@ export default function FormComboboxDemoInput<IData, TQuery>({
               : String(item),
           }))
         ),
-        meta: res.pages[res.pages.length - 1].meta,
+        meta: res?.pages?.[res.pages.length - 1]?.meta,
       }),
       getNextPageParam: (lastPage) => {
-        if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+        if (lastPage?.meta?.currentPage <= lastPage?.meta?.totalPages) {
           return lastPage?.meta?.currentPage + 1;
         } else {
           return null;
@@ -121,7 +121,7 @@ export default function FormComboboxDemoInput<IData, TQuery>({
             )}
             <FormControl className="w-full">
               <ComboboxDemo
-                className={cn("w-full h-[42px]", classNameChild)}
+                className={cn("w-full h-[42px] rounded-sm", classNameChild)}
                 onOpenChange={(isopen) => {
                   setOpen(isopen)
                   setSearch(undefined);

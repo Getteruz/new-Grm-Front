@@ -46,6 +46,7 @@ export default function FormDatePicker({
               onChange={onChange}
               placeholder={placeholder}
               value={value}
+              
             />
           </FormControl>
           <FormMessage className="text-sm text-red-500" />

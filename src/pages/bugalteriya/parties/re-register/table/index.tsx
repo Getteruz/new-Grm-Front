@@ -36,7 +36,7 @@ export default function ItemsPage() {
   const [search] = useQueryState("search");
   const { id } = useParams();
   const { meUser } = useMeStore();
-  const [tip] = useQueryState("tip", parseAsString.withDefault((meUser?.position?.role ==7 || meUser?.position.role == 4) ? "переучет": "new"));
+  const [tip] = useQueryState("tip", parseAsString.withDefault(meUser?.position.role == 4 ? "переучет": "new"));
   const [type] = useQueryState("type", parseAsString.withDefault("default"));
   const [, setBarCode] = useQueryState("barcode");
   const [, setCount] = useQueryState("count",parseAsInteger.withDefault(0));

@@ -55,7 +55,7 @@ export default function Filters() {
         <FileOutput /> Экспорт
       </Button> */}
   
-      {(meUser?.position.role === 9  || meUser?.position.role === 5 ||meUser?.position.role === 7 )  && ( 
+      {(meUser?.position.role === 9  || meUser?.position.role === 5 || meUser?.position.role === 7 )  && ( 
         <Button onClick={() => setId("new")} className="h-full  rounded-xl  ml-auto ">
           <Plus size={24} /> Добавить Партия
         </Button>

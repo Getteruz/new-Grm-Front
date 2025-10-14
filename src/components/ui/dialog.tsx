@@ -38,7 +38,7 @@ function DialogOverlay({
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/40",
+        "data-[state=open]:animate-in rounded-xl data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/40",
         className
       )}
       {...props}
@@ -57,7 +57,7 @@ function DialogContent({
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          "bg-popover data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-[4px] border  shadow-lg duration-200 sm:max-w-lg",
+          "bg-popover  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4  border  shadow-lg duration-200 sm:max-w-lg rounded-xl overflow-hidden",
           className
         )}
         {...props}
@@ -77,7 +77,7 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="dialog-header"
       className={cn(
-        "flex bg-[#E6E6D9] rounded-[4px] border-b border-[#CBCBC1] text-[#5D5D53] px-5 py-[11px]",
+        "flex bg-background  rounded-[4px] border-b border-border text-primary px-5 py-[11px]",
         className
       )}
       {...props}
@@ -90,7 +90,7 @@ function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="dialog-footer"
       className={cn(
-        "flex flex-col-reverse bg-[#E6E6D9] border-t border-[#CBCBC1] gap-2 px-5 py-[11px] sm:flex-row sm:justify-end",
+        "flex flex-col-reverse bg-background border-t border-border gap-2 px-5 py-[11px] sm:flex-row sm:justify-end",
         className
       )}
       {...props}

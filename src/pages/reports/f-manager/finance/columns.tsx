@@ -54,20 +54,21 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       );
     },
   },
-  {
-    header: "Дебит",
-    id: "debt_sum",
-    cell: ({ row }) => {
-      const item = row.original;
-      return <p> {item?.debt_sum} $</p>;
-    },
-  },
+  
   {
     header: "Терминал",
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
       return <p> {item?.totalPlasticSum} $</p>;
+    },
+  },
+  {
+    header: "Дебит",
+    id: "debt_sum",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.debt_sum} $</p>;
     },
   },
   {

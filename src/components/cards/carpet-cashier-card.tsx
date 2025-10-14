@@ -141,8 +141,9 @@ export default function CarpetCashierCard({
   });
 
   useEffect(()=>{
-    if(data?.meta?.currentPage && !data?.items?.length && !isLoading && open){
+    if(data?.meta && !data?.items?.length && !isLoading && open){
       AccepedFunt()
+      setOpen(false)
     }
   },[data,open])
 

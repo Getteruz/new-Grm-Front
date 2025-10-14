@@ -11,6 +11,8 @@ export interface TKassareportData {
   isDealer?: boolean;
   dealerReportId?: string;
   status: string;
+  debt_sum?:number;
+  in_hand?:number;
   filial?: {
     id: string;
     title: string;

@@ -42,7 +42,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         <p className="text-[#89A143]">
           {isMy
             ? ""
-            : ((item?.totalSum || 0) - (item?.totalPlasticSum || 0)).toFixed(2)}
+            : (item?.in_hand || 0).toFixed(2)}
         </p>
       );
     },
@@ -63,6 +63,14 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     },
   },
 
+  {
+    header: "Дебит",
+    id: "debt_sum",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p> {item?.debt_sum} $</p>;
+    },
+  },
   {
     header: "Скидка",
     id: "discount",

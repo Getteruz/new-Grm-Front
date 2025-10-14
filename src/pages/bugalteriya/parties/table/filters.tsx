@@ -15,7 +15,6 @@ export default function Filters() {
   const [factory,setFactory]= useState<TSelectOption |null>(null);
   const [partiyaNumber,setpartiyaNumber]= useState<TSelectOption |null>(null);
   
-  // const [factory,setCactory]= useQueryState("factory");
   return (
     <div className=" w-full  px-[20px] h-[64px] flex   gap-2 mb-2 ">
       <DateRangePicker

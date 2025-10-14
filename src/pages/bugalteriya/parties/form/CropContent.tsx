@@ -131,9 +131,10 @@ export default function FormContent({isPending}:{isPending:boolean}) {
             label="Филиал"
           />
           <FormComboboxDemoInput
-            fetchUrl={`/user/filial/${warehouse?.value}`}
+            fetchUrl={`/user`}
             fieldNames={{ value: "id", label: "firstName" }}
             name="user"
+            queries={{ filial: warehouse?.value }}
             disabled={!warehouse}
             placeholder="Ответсвенный лицо"
             label="Ответсвенный лицо"

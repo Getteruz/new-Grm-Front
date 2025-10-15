@@ -5,6 +5,7 @@ import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
+import { useMeStore } from "@/store/me-store";
 
 export const Columns: ColumnDef<TData>[] = [
   {
@@ -85,10 +86,12 @@ export const Columns: ColumnDef<TData>[] = [
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
     cell: ({ row }) => {
+      const { meUser } = useMeStore();
       return (
         <TableAction
           url={apiRoutes.parties}
           ShowPreview
+          ShowDelete={meUser?.position.role !== 7}
           id={row.original?.id}
         />
       );

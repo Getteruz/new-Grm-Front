@@ -2,7 +2,7 @@ name: Deployment Grm Seller Web
 on:
   push:
     branches:
-      - oneip
+      - main
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10 Specify the pnpm version to install
+          version: 10 # Specify the pnpm version to install
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4

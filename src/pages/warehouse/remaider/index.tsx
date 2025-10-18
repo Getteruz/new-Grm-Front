@@ -31,7 +31,7 @@ export default function PageRemaider() {
     endDate:toDate || undefined
   });
 
-  const collections = data?.pages?.flatMap((page) => page || []) || [];
+  const collections = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
     <>

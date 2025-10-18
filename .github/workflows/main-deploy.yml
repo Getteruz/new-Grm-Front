@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest # Or other suitable runner environment
     strategy:
       matrix:
-        node-version: [22] # Specify Node.js versions to test against
+        node-version: [20] # Specify Node.js versions to test against
 
     steps:
       - uses: actions/checkout@v4 # Checkout your repository code

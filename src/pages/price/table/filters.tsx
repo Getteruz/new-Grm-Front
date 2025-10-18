@@ -3,9 +3,9 @@ import { useQueryState } from "nuqs";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-import Statistics from "@/components/filters-ui/statistics";
 import { Button } from "@/components/ui/button";
 import { useMeStore } from "@/store/me-store";
+import SearchInput from "@/components/filters-ui/search-input";
 
 export default function Filters() {
   const [edit, setEdit] = useQueryState("edit");
@@ -24,6 +24,7 @@ export default function Filters() {
   return (
     <div className=" flex justify-between px-[20px] h-[64px] mb-3">
       <div className="flex  gap-2 ">
+        <SearchInput className="w-full min-w-[200px]"/>
         <Button
           className="h-full   px-[50px] w-full max-w-[160px]"
           variant="secondary"
@@ -59,7 +60,6 @@ export default function Filters() {
           <Ticket />
           Промокоды
         </Button>
-        <Statistics />
       </div>
       {meUser?.position.role === 9 && (
         <Button onClick={() => handleSave()} className="h-full w-[146px]">

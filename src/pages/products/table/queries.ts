@@ -20,7 +20,7 @@ export const useCollectionDataFetch = ({url,search, filialId,country,endDate,sta
   useInfiniteQuery({
     queryKey: [url, filialId,country,endDate,startDate,search ],
     queryFn: ({ pageParam = 1 }) =>
-      getAllData<CollectionData[], ProductsQuery>(
+      getAllData<TResponse<CollectionData>, ProductsQuery>(
         `${url? url: apiRoutes.collectionProducts}`,
         {
           filial: filialId,
@@ -33,9 +33,12 @@ export const useCollectionDataFetch = ({url,search, filialId,country,endDate,sta
         }
       ),
     enabled:enabled,
-    getNextPageParam: (_lastPage, allPages) => {
-      if (!_lastPage) return null;
-      return _lastPage.length === 10 ? allPages.length + 1 : null;
+    getNextPageParam: (lastPage) => {
+      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+        return lastPage?.meta?.currentPage + 1;
+      } else {
+        return null;
+      }
     },
     initialPageParam: 1,
   });

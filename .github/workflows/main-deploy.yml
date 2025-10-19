@@ -45,40 +45,11 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             echo "🚀 Starting deployment on server..."
-
-            # Ensure pnpm and Node.js paths are available
-            export PATH="$HOME/.local/share/pnpm:$PATH"
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
             cd /home/grm/grm-admin
 
             # Get latest changes
             git stash
             git pull origin main
-
-            # If pnpm not installed, install it
-            if ! command -v pnpm &> /dev/null
-            then
-              echo "⚙️ Installing pnpm..."
-              curl -fsSL https://get.pnpm.io/install.sh | bash -
-              export PATH="$HOME/.local/share/pnpm:$PATH"
-            fi
-
-            # If node not installed, install it via nvm
-            if ! command -v node &> /dev/null
-            then
-              echo "⚙️ Installing Node.js via nvm..."
-              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-              export NVM_DIR="$HOME/.nvm"
-              [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-              nvm install 20
-            fi
-
-            # Confirm versions
-            echo "📦 Versions:"
-            node -v
-            pnpm -v
 
             # Install dependencies & build
             pnpm install --frozen-lockfile

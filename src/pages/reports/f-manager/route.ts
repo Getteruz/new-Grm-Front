@@ -1,11 +1,15 @@
 import PageFinance from "./finance";
-import PageRemaider from "./remaider";
 import ReportPage from "./report";
 import SinglePage from "./report-single";
 import PageSellerCashFlow from "../seller/seller-cashflow";
 import PageSellerReport from "../seller/seller-report";
 import PageCleintDebt from "./client-debt";
 import PageOrginal from "../report-orginal";
+import CountryTable from "./remaider/county-table";
+import FoctoryTable from "./remaider/factory-table";
+import CollectionTable from "./remaider/collection-table";
+import ModelTable from "./remaider/model-table";
+import SizeTable from "./remaider/size-table";
 const Route = [
   {
     url: "/f-manager/report/:id/info",
@@ -28,9 +32,30 @@ const Route = [
     Element: SinglePage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+ 
   {
     url: "/f-manager/report-remaider",
-    Element: PageRemaider,
+    Element: CountryTable,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/f-manager/report-remaider/:countryId",
+    Element: FoctoryTable,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/f-manager/report-remaider/:countryId/:factoryId",
+    Element:CollectionTable,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/f-manager/report-remaider/:countryId/:factoryId/:collectionId",
+    Element:ModelTable,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/f-manager/report-remaider/:countryId/:factoryId/:collectionId/:modelId",
+    Element:SizeTable,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {

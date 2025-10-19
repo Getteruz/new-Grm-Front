@@ -361,12 +361,12 @@ export const DataMenu = {
     },
   ],
   7: [
-    {
-      id: 1,
-      icons: () => ReportBottom({}),
-      link: "/warehouse-report",
-      text: "Отчет об остатке",
-    },
+    // {
+    //   id: 1,
+    //   icons: () => ReportBottom({}),
+    //   link: "/warehouse-report",
+    //   text: "Отчет об остатке",
+    // },
     {
       id: 2,
       icons: () => PartiesIcons(),
@@ -550,6 +550,19 @@ export const DataMenu = {
       text: "Партии",
     },
     {
+      id: 2,
+      icons: () => ProductIcons(),
+      link: "/products",
+      text: "Продукты в продаже",
+    },
+    {
+      id: 32,
+      icons: () => TransferIcons(),
+      link: "/transfers",
+      text: "Трансферы",
+    },
+    
+    {
       id: 3,
       icons: () => BuildingIcons(),
       link: "/filial",
@@ -573,18 +586,7 @@ export const DataMenu = {
       link: "/price",
       text: "Цени и скидки",
     },
-    {
-      id: 32,
-      icons: () => TransferIcons(),
-      link: "/transfers",
-      text: "Трансферы",
-    },
-    {
-      id: 2,
-      icons: () => ProductIcons(),
-      link: "/products",
-      text: "Продукты в продаже",
-    },
+  
     {
       id: 37,
       icons: () => ClientsIcon(),

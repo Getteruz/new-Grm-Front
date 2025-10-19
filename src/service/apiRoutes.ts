@@ -83,5 +83,10 @@ export const apiRoutes = {
   paperReportStaticExport:'/paper-report/export-excel',
   excelCashflowsExcel:'/excel/cashflows/excel',
   excelProductExcelNew:"/excel/product/excel/new",
-  productCheckProductReport:'/product/check-product/report'
+  productCheckProductReport:'/product/check-product/report',
+  countryReportMonthly:'/country-report/monthly',
+  factoryReportMonthly:'/factory-report/monthly',
+  collectionReportMonthly:'/collection-report/monthly',
+  modelReport:'/model/models-report',
+  SizeReport:'/size/reports'
 } as const;

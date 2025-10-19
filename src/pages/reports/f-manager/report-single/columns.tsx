@@ -41,7 +41,7 @@ export const Columns: ColumnDef<TData>[] = [
   },
   {
     id: "price",
-    header:"Сумма",
+    header:"Наличие",
     cell: ({ row }) => {
       const item = row.original;
       return (
@@ -49,8 +49,23 @@ export const Columns: ColumnDef<TData>[] = [
           className={`font-bold text-[16px] ${item.type === "Приход" ? "text-[#89A143]" : "text-[#E38157]"}`}
         >
           {item?.type === "Приход" ? "+" : "-"}
-          {formatPrice(item?.price || 0)}$
+          {item?.tip =="order" ? formatPrice(item?.order?.price || 0) :formatPrice(item?.price || 0) }$
         </span>
+      );
+    },
+  },
+  {
+    id: "terminal",
+    header:"Терминал",
+    cell: ({ row }) => {
+      const item = row.original;
+      return (
+        item.type === "Приход"?
+        <span
+          className={`font-bold text-[16px]  text-[#58A0C6]`}
+        >
+          { formatPrice(item?.order?.plasticSum || 0)}$
+        </span>:""
       );
     },
   },

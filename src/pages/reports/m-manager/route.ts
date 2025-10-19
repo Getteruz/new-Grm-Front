@@ -1,13 +1,17 @@
 import DealerReportPage from "./dealer-report";
 import PageDealerKassaReport from "./dealer-kassa-report";
 import PageFinanceFilial from "./filial-report-finance";
-import PageRemaider from "./remaider";
 import ReportPage from "./report";
 import PageFinance from "./report-finance";
 import PageFinanceSingle from "./report-finance-single";
 import PageSellerReport from "../seller/seller-report";
 import PageSellerCashFlow from "../seller/seller-cashflow";
 import PageOrginal from "../report-orginal";
+import CountryTable from "./remaider/county-table";
+import FoctoryTable from "./remaider/factory-table";
+import CollectionTable from "./remaider/collection-table";
+import ModelTable from "./remaider/model-table";
+import SizeTable from "./remaider/size-table";
 
 const Route = [
   {
@@ -27,9 +31,30 @@ const Route = [
   },
   {
     url: "/m-manager/report-remaider",
-    Element: PageRemaider,
+    Element: CountryTable,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+  {
+    url: "/m-manager/report-remaider/:countryId",
+    Element: FoctoryTable,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/m-manager/report-remaider/:countryId/:factoryId",
+    Element:CollectionTable,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/m-manager/report-remaider/:countryId/:factoryId/:collectionId",
+    Element:ModelTable,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/m-manager/report-remaider/:countryId/:factoryId/:collectionId/:modelId",
+    Element:SizeTable,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  
   {
     url: "/m-manager/d-manager/report-monthly/:id/info",
     Element: PageDealerKassaReport,

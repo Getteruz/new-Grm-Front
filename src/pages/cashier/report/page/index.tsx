@@ -13,6 +13,21 @@ import { KassaColumns, ReportColumns } from "./columns";
 import { parseAsString, useQueryState } from "nuqs";
 import CashierHeader from "@/layouts/main-layout/cashier-header";
 
+const tipFilter = {
+  income: "cashflow",
+  expense: "cashflow",
+  sale: "order",
+  return: "order",
+  terminal:"Терминал",
+  discount:"Скидка",
+  navar:"Навар",
+};
+const typeFilter = {
+  income: "Приход",
+  expense: "Расход",
+  sale: "Приход",
+  return: "Расход",
+};
 export default function Page() {
   const [selectedItems] = useState<number[]>([]);
   const { meUser } = useMeStore();
@@ -45,6 +60,7 @@ export default function Page() {
     },
     enabled: sort != "open" && !id,
   });
+  const [tip] = useQueryState("tip", parseAsString);
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataCashflow({
@@ -52,8 +68,11 @@ export default function Page() {
         kassaId: reportData?.id || id || "",
         limit: 10,
         page: 1,
-
-        type: sortSingle == "Все" ? undefined : sortSingle || undefined,
+        // @ts-ignore
+        tip: tipFilter[tip],
+        // @ts-ignore
+        type: sortSingle == "Все" ? typeFilter[tip as string] : sortSingle || typeFilter[tip as string],
+        cashflowSlug: tip == "collection" ? "Инкассация" : undefined,
       },
       enabled: !!reportData?.id || Boolean(id),
     });

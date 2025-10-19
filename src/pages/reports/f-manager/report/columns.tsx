@@ -45,6 +45,7 @@ export const KassaColumns: ColumnDef<TData>[] = [
     },
   },
 
+  
   {
     header: "Терминал",
     id: "plasticSum",

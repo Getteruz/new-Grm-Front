@@ -707,4 +707,57 @@ export const DataMenu = {
       text: "Бонусы",
     },
   ],
+  12:[
+    {
+      id: 2,
+      icons: () => ReportBottom({}),
+      link: "/m-manager/report",
+      text: "Отчеты",
+      items: [
+        {
+          id: 22,
+          link: "/m-manager/reports",
+          text: "Кассовый учёт",
+        },
+        {
+          id: 23,
+          link: "/m-manager/report-finance",
+          text: "Финансовый учёт",
+        },
+        {
+          id: 24,
+          link: "/m-manager/report-remaider",
+          text: "Отчет об остатке",
+        },
+        {
+          id: 25,
+          link: "/m-manager/report-seller",
+          text: "Отчёт по сотрудикам",
+        },
+        {
+          id: 26,
+          link: "/m-manager/report-orginal",
+          text: "Хисобот",
+        },
+      ],
+    },
+    {
+      id: 33,
+      icons: () => PartiesIcons(),
+      link: "/parties",
+      text: "Партии",
+    },
+    {
+      id: 2,
+      icons: () => ProductIcons(),
+      link: "/products",
+      text: "Продукты в продаже",
+    },
+    {
+      id: 42,
+      icons: () => PriceIcons({}),
+      link: "/price",
+      text: "Цени и скидки",
+    },
+  ]
 };

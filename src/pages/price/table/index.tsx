@@ -34,7 +34,7 @@ export default function Page() {
           me.meUser?.position.role === 10 ||
           me.meUser?.position.role === 3
             ? IManagerColumns
-            : me.meUser?.position.role === 9
+            : me.meUser?.position.role === 9 || me.meUser?.position.role === 12
               ? Columns
               : AColumns
         }

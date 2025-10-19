@@ -28,7 +28,6 @@ export default function Page() {
       <DataTable
         isRowClickble={false}
         link="/report-monthly"
-     
         isLoading={isLoading}
         columns={Columns}
         ischeckble={false}

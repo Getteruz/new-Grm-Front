@@ -182,7 +182,7 @@ export const Columns: ColumnDef<ProductsData>[] = [
   {
     header: "Зав-цена за м²",
     cell: ({ row }) => {
-      const [edit] = useQueryState("edit");
+      const [editId] = useQueryState("editId");
       const changePrices = (val: number, id: string) => {
         const body = [
           {
@@ -196,8 +196,8 @@ export const Columns: ColumnDef<ProductsData>[] = [
       return (
         <div className="relative max-w-[90px]">
           <Input
-            readOnly={!(edit === "edit")}
-            className={`${edit !== "edit" ? "bg-[#DEDED0]" : "bg-transparent"}   border-border border rounded-[5px] `}
+            disabled={editId!= row?.original?.id}
+            className={`border-border bg-card border rounded-[5px] `}
             defaultValue={row?.original?.collection_prices?.[0]?.comingPrice}
             placeholder="0"
             type="number"
@@ -214,8 +214,7 @@ export const Columns: ColumnDef<ProductsData>[] = [
   {
     header: "Цена за м²",
     cell: ({ row }) => {
-      const [edit] = useQueryState("edit");
-
+      const [editId] = useQueryState("editId");
       const changePrices = (val: { val: number }, id: string) => {
         const body = [
           {
@@ -228,8 +227,8 @@ export const Columns: ColumnDef<ProductsData>[] = [
       return (
         <div className="relative max-w-[90px]">
           <Input
-            readOnly={!(edit === "edit")}
-            className={`${edit !== "edit" ? "bg-[#DEDED0]" : "bg-transparent"}   border-border border rounded-[5px] `}
+          disabled={editId!= row?.original?.id}
+            className={`border-border bg-card border rounded-[5px] `}
             defaultValue={row?.original?.collection_prices?.[0]?.priceMeter}
             placeholder="0"
             type="number"
@@ -244,9 +243,16 @@ export const Columns: ColumnDef<ProductsData>[] = [
   },
   {
     id: "actions",
-    enableHiding: true,
-    header: () => <div className="text-right">{"actions"}</div>,
+    header: "actions",
     size: 50,
+    cell: ({row}) => {
+      const [editId,seEditId] = useQueryState("editId");
+      return (
+        <p onClick={()=>seEditId(editId== row?.original?.id ? null :row?.original?.id )} className={`${editId== row?.original?.id ? "bg-primary text-background":"bg-background "}  inline-block  py-[6px]  text-[12px] px-[10px] rounded-[4px]`}>
+        {editId ==row?.original?.id ? "сохранить":"изменить"} 
+      </p>
+      )
+    }
   },
 ];
 export const AColumns: ColumnDef<ProductsData>[] = [

@@ -26,6 +26,7 @@ export const apiRoutes = {
   dataLibrary: "/product",
   transfers: "/transfer",
   transferReject:'/transfer/reject',
+  transferRejectDealer:'/transfer/reject/dealer-transfer',
   transferBasket:"/transfer/basket",
   broned: "/booking",
   upload: "/media-upload/single/avatar/avatar",
@@ -70,6 +71,7 @@ export const apiRoutes = {
   excelProductsReport:'/excel/products/report',
   debt:"/debt",
   transferAccept:"/transfer/accept",
+  transferDealer:'/transfer/dealer',
   clientDebtTotal:'/client/debt/total',
   clientDebtsByFilial:'/client/debts/by-filial',
   excelSingle:"/excel/single",
@@ -88,5 +90,8 @@ export const apiRoutes = {
   factoryReportMonthly:'/factory-report/monthly',
   collectionReportMonthly:'/collection-report/monthly',
   modelReport:'/model/models-report',
-  SizeReport:'/size/reports'
+  SizeReport:'/size/reports',
+  packageTransfer:"package-transfer",
+  acceptPackage:"/transfer/accept-package",
+  transferGivePrice:'/transfer/give-price'
 } as const;

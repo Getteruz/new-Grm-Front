@@ -10,6 +10,7 @@ export default function CollectionTable() {
   const [filialId] = useQueryState("filial", parseAsString);
   const [month] = useQueryState("month", parseAsString);
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
+  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("typeOther"));
     const navigate = useNavigate()
     const {factoryId} = useParams()
 
@@ -18,7 +19,8 @@ export default function CollectionTable() {
       queries: {
         filialId: filialId || undefined,
         month: month || undefined,
-        factory:factoryId
+        factory:factoryId,
+        typeOther
       },
       enabled: sort == "delears",
     });

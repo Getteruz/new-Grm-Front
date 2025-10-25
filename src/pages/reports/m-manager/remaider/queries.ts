@@ -55,9 +55,9 @@ export const useCountryReport = ({
 }: IcountryReport) =>
   useInfiniteQuery({
     ...options,
-    queryKey: [apiRoutes.countryReportMonthly, queries],
+    queryKey: [queries?.typeOther == "none"? apiRoutes.countryReportMonthly:apiRoutes.countryOrderReport, queries],
     queryFn: ({ pageParam = 1 }) =>
-      getAllData<ICountryReportData, TQuery>(apiRoutes.countryReportMonthly, {
+      getAllData<ICountryReportData, TQuery>(queries?.typeOther == "none"? apiRoutes.countryReportMonthly:apiRoutes.countryOrderReport, {
         ...queries,
         page: pageParam as number,
         limit: queries?.limit || 10,
@@ -83,9 +83,9 @@ export const useFactoryReport = ({
 }: IcountryReport) =>
   useInfiniteQuery({
     ...options,
-    queryKey: [apiRoutes.factoryReportMonthly, queries],
+    queryKey: [ queries?.typeOther == "none"? apiRoutes.factoryReportMonthly:apiRoutes.factoryOrderReport, queries],
     queryFn: ({ pageParam = 1 }) =>
-      getAllData<ICountryReportData, TQuery>(apiRoutes.factoryReportMonthly, {
+      getAllData<ICountryReportData, TQuery>(queries?.typeOther == "none"? apiRoutes.factoryReportMonthly:apiRoutes.factoryOrderReport, {
         ...queries,
         page: pageParam as number,
         limit: queries?.limit || 10,
@@ -111,9 +111,9 @@ export const useCollectionReport = ({
 }: IcountryReport) =>
   useInfiniteQuery({
     ...options,
-    queryKey: [apiRoutes.collectionReportMonthly, queries],
+    queryKey: [ queries?.typeOther == "none"? apiRoutes.collectionReportMonthly:apiRoutes.collectionOrderReport, queries],
     queryFn: ({ pageParam = 1 }) =>
-      getAllData<ICountryReportData, TQuery>(apiRoutes.collectionReportMonthly, {
+      getAllData<ICountryReportData, TQuery>(queries?.typeOther == "none"? apiRoutes.collectionReportMonthly:apiRoutes.collectionOrderReport,  {
         ...queries,
         page: pageParam as number,
         limit: queries?.limit || 10,
@@ -139,9 +139,9 @@ export const useCollectionReport = ({
   }: IModelReport) =>
     useInfiniteQuery({
       ...options,
-      queryKey: [apiRoutes.modelReport, queries],
+      queryKey: [queries?.typeOther == "none"? apiRoutes.modelReport:apiRoutes.modelsOrderReport,  queries],
       queryFn: ({ pageParam = 1 }) =>
-        getAllData<IModelData, TQuery>(apiRoutes.modelReport, {
+        getAllData<IModelData, TQuery>(queries?.typeOther == "none"? apiRoutes.modelReport:apiRoutes.modelsOrderReport, {
           ...queries,
           page: pageParam as number,
           limit: queries?.limit || 10,
@@ -168,9 +168,9 @@ export const useCollectionReport = ({
     }: IModelReport) =>
       useInfiniteQuery({
         ...options,
-        queryKey: [apiRoutes.SizeReport, queries],
+        queryKey: [ queries?.typeOther == "none"? apiRoutes.SizeReport:apiRoutes.sizeOrderReport, queries],
         queryFn: ({ pageParam = 1 }) =>
-          getAllData<IModelData, TQuery>(apiRoutes.SizeReport, {
+          getAllData<IModelData, TQuery>(queries?.typeOther == "none"? apiRoutes.SizeReport:apiRoutes.sizeOrderReport, {
             ...queries,
             page: pageParam as number,
             limit: queries?.limit || 10,

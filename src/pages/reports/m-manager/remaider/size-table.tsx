@@ -10,6 +10,7 @@ export default function SizeTable() {
   const [filialId] = useQueryState("filial", parseAsString);
   const [month] = useQueryState("month", parseAsString);
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
+  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("typeOther"));
     const {modelId} = useParams()
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -17,7 +18,8 @@ export default function SizeTable() {
       queries: {
         filialId: filialId || undefined,
         month: month || undefined,
-        model:modelId
+        model:modelId,
+        typeOther
       },
       enabled: sort == "delears",
     });

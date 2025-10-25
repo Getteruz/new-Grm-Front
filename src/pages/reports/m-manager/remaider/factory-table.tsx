@@ -10,6 +10,7 @@ export default function FoctoryTable() {
   const [filialId] = useQueryState("filial", parseAsString);
   const [month] = useQueryState("month", parseAsString);
   const {countryId} = useParams()
+  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("typeOther"));
   const navigate = useNavigate()
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -17,7 +18,8 @@ export default function FoctoryTable() {
       queries: {
         filialId: filialId || undefined,
         month: month || undefined,
-        country:countryId
+        country:countryId,
+        typeOther
       },
       enabled: true,
     });

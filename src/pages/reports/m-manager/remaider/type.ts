@@ -71,5 +71,6 @@ export interface TQuery {
   type?: string;
   collectionId?:string;
   model?:string;
+  typeOther?: string;
 }
 

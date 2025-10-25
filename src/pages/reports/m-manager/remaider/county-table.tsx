@@ -10,6 +10,7 @@ export default function CountryTable() {
   const [filialId] = useQueryState("filial", parseAsString);
   const [month] = useQueryState("month", parseAsString);
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
+  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("typeOther"));
     const navigate = useNavigate()
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -17,6 +18,7 @@ export default function CountryTable() {
       queries: {
         filialId: filialId || undefined,
         month: month || undefined,
+        typeOther,
       },
       enabled: sort == "delears",
     });

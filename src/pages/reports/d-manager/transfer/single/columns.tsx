@@ -207,6 +207,14 @@ export const collactionColumns: ColumnDef<TransferCollectionDealerData>[] = [
     },
   },
   {
+    header: "Нavar",
+    id: "total_profit_sum",
+    cell: ({ row }) => {
+      return <p>{Number(row.original?.total_profit_sum).toFixed(2)} $</p>;
+    },
+  },
+  
+  {
     header: "Цена за м²",
     cell: ({ row }) => {
       const { package_id } = useParams();

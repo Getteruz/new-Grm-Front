@@ -169,6 +169,7 @@ export type TransferCollectionDealerData = {
   total_kv: string;
   total_count: string;
   comingPrice:string;
+  total_profit_sum: string;
   collection_prices: 
     {
       id: string;

@@ -2,7 +2,7 @@ import { FileOutput } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import FilterSelect from "@/components/filters-ui/filter-select";
-import { MonthsArray } from "@/consts";
+import { MonthsArray } from "@/constants/index";
 import { getMonth } from "date-fns";
 import { useParams } from "react-router-dom";
 

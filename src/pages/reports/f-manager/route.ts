@@ -1,5 +1,4 @@
 import PageFinance from "./finance";
-import PageRemaider from "./remaider";
 import ReportPage from "./report";
 import SinglePage from "./report-single";
 import PageSellerCashFlow from "../seller/seller-cashflow";
@@ -28,11 +27,11 @@ const Route = [
     Element: SinglePage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
-  {
-    url: "/f-manager/report-remaider",
-    Element: PageRemaider,
-    meta: { isAuth: true, role: new Set(["admin"]) },
-  },
+  // {
+  //   url: "/f-manager/report-remaider",
+  //   Element: PageRemaider,
+  //   meta: { isAuth: true, role: new Set(["admin"]) },
+  // },
   {
     url: "/f-manager/report-seller",
     Element: PageSellerReport,

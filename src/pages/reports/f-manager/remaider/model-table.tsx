@@ -11,6 +11,7 @@ export default function ModelTable() {
   const {meUser} = useMeStore();
   const [month] = useQueryState("month", parseAsString);
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
+  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
     const navigate = useNavigate()
     const {collectionId} = useParams()
 
@@ -19,7 +20,8 @@ export default function ModelTable() {
       queries: {
         filialId: meUser?.filial?.id || undefined,
         month: month || undefined,
-        collectionId:collectionId
+        collectionId:collectionId,
+        typeOther
       },
       enabled: sort == "delears",
     });

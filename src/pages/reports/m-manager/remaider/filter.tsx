@@ -5,6 +5,7 @@ import FilterSelect from "@/components/filters-ui/filter-select";
 import { usefilialWarehouseFetch } from "./queries";
 import { MonthsArray } from "@/consts";
 import { getMonth } from "date-fns";
+import { useParams } from "react-router-dom";
 
 export default function Filters({
   totalCount,
@@ -24,12 +25,14 @@ export default function Filters({
       value: e?.id,
     })) || [];
 
+    const {countryId} = useParams()
   return (
     <div className=" h-[64px] items-center  flex  gap-2 mb-2  ">
       <FilterSelect
         placeholder="все"
         className="w-[200px] pl-2  h-[65px] "
         defaultValue="none"
+        disabled={Boolean(countryId)}
         options={[
           {
             label: "Отчет об остатке",

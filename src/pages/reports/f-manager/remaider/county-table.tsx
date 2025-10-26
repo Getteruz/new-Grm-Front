@@ -12,12 +12,14 @@ export default function CountryTable() {
   const [month] = useQueryState("month", parseAsString);
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
     const navigate = useNavigate()
+    const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useCountryReport({
       queries: {
         filialId: meUser?.filial?.id || undefined,
         month: month || undefined,
+        typeOther
       },
       enabled: sort == "delears",
     });

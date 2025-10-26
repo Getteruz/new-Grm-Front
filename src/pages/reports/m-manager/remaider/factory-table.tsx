@@ -10,7 +10,7 @@ export default function FoctoryTable() {
   const [filialId] = useQueryState("filial", parseAsString);
   const [month] = useQueryState("month", parseAsString);
   const {countryId} = useParams()
-  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("typeOther"));
+  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
   const navigate = useNavigate()
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =

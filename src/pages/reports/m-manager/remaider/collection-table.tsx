@@ -10,7 +10,7 @@ export default function CollectionTable() {
   const [filialId] = useQueryState("filial", parseAsString);
   const [month] = useQueryState("month", parseAsString);
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
-  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("typeOther"));
+  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
     const navigate = useNavigate()
     const {factoryId} = useParams()
 

@@ -10,7 +10,7 @@ export default function SizeTable() {
   const [filialId] = useQueryState("filial", parseAsString);
   const [month] = useQueryState("month", parseAsString);
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
-  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("typeOther"));
+  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
     const {modelId} = useParams()
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =

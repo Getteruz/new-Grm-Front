@@ -11,6 +11,7 @@ export default function SizeTable() {
   const {meUser} = useMeStore();
   const [month] = useQueryState("month", parseAsString);
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
+  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
     const {modelId} = useParams()
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -18,7 +19,8 @@ export default function SizeTable() {
       queries: {
         filialId: meUser?.filial?.id || undefined,
         month: month || undefined,
-        model:modelId
+        model:modelId,
+        typeOther
       },
       enabled: sort == "delears",
     });

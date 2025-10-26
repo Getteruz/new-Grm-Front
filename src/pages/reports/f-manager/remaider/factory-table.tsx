@@ -12,13 +12,15 @@ export default function FoctoryTable() {
   const [month] = useQueryState("month", parseAsString);
   const {countryId} = useParams()
   const navigate = useNavigate()
+  const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
   useFactoryReport({
       queries: {
         filialId: meUser?.filial?.id || undefined,
         month: month || undefined,
-        country:countryId
+        country:countryId,
+        typeOther
       },
       enabled: true,
     });

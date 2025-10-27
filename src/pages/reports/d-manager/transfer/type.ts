@@ -197,4 +197,5 @@ export type TransferQuery = {
   endDate?: Date;
   progress?: object;
   mode?: string;
+  toId?: string;
 };

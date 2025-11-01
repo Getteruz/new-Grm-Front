@@ -37,7 +37,7 @@ export default function NotePage() {
   }, [active]);
 
   return (
-    <div ref={noteRef} className="relative  z-1000 mt-3 z-20">
+    <div ref={noteRef} className=" z-1000 mt-3 z-20">
       <div
         onClick={(e) => {
           e.stopPropagation(); // prevent closing immediately

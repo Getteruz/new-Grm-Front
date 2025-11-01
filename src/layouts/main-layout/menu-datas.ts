@@ -750,6 +750,12 @@ export const DataMenu = {
       text: "Партии",
     },
     {
+      id: 4,
+      icons: () => UfoBottom(),
+      link: "/dealer",
+      text: "Дилеры",
+    },
+    {
       id: 2,
       icons: () => ProductIcons(),
       link: "/products",

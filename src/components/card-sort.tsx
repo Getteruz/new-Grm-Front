@@ -350,7 +350,7 @@ export default function CardSort({
                 {isReportLoading ? (
                   <Skeleton className="h-7 w-24 mt-1" />
                 ) : (
-                  <p className="text-[25px] font-bold text-foreground">
+                  <p className={`${((kassaId?.in_hand || KassaReport?.in_hand || 0) >= 0) ? "text-foreground":"text-red-500"} text-[25px] font-bold `}>
                     {formatPrice(
                       isOnlyCash
                         ? KassaReport?.managerSum ||

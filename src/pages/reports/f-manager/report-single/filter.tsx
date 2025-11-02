@@ -1,15 +1,16 @@
-import { FileOutput } from "lucide-react";
+import { FileOutput, Loader } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import qs from "qs";
-import api from "@/service/fetchInstance";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useParams } from "react-router-dom";
 
 export default function Filters() {
   const { id,report } = useParams();
-  const { mutate: exelMudate } = useMutation({
+ 
+
+  const { mutate: exelMudate, isPending: exelPending } = useMutation({
     mutationFn: async () => {
       const query = {
         // reportId: myCashFlow && !FManagerCashFlow ? id : undefined,
@@ -19,18 +20,8 @@ export default function Filters() {
       const params = query
         ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
         : "";
-      const blob = await api.get(apiRoutes.excelCashflowsExcel + params, {
-        responseType: "blob",
-      });
-      if (!(blob.data instanceof Blob)) {
-        throw new Error("Received data is not a Blob");
-      }
-      const blobUrl = window.URL.createObjectURL(blob.data);
-      const a = document.createElement("a");
-      a.href = blobUrl;
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(blobUrl);
+  
+      window.location.href = import.meta.env.VITE_BASE_URL+apiRoutes.excelCashflowsExcel + params;
     },
   });
   return (
@@ -40,8 +31,9 @@ export default function Filters() {
         onClick={() => exelMudate()}
         className="h-full   w-[140px]  ml-auto"
         variant={"secondary"}
+        disabled={exelPending}
       >
-        <FileOutput /> Экспорт
+             {exelPending ? <Loader className="animate-spin"/>: <FileOutput />} Экспорт
       </Button>
 
     </div>

@@ -1,10 +1,9 @@
-import { FileOutput, Store } from "lucide-react";
+import { FileOutput, Loader, Store } from "lucide-react";
 
 import FilterSelect from "@/components/filters-ui/filter-select";
 import useDataFetch from "@/pages/filial/table/queries";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import api from "@/service/fetchInstance";
 import qs from "qs";
 import { useMutation } from "@tanstack/react-query";
 import { apiRoutes } from "@/service/apiRoutes";
@@ -31,31 +30,21 @@ export default function Filters() {
       label: e?.name,
       value: e?.id,
     })) || [];
-
-  const { mutate: exelMudate } = useMutation({
-    mutationFn: async () => {
-      const query = {
-        reportId: myCashFlow && !FManagerCashFlow ? id : undefined,
-        kassaReportId: FManagerCashFlow ? kassaReportId || undefined : undefined,
-        kassaId: myCashFlow ? undefined:  id || undefined,
-      };
-      const params = query
-        ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
-        : "";
-      const blob = await api.get(apiRoutes.excelCashflowsExcel + params, {
-        responseType: "blob",
-      });
-      if (!(blob.data instanceof Blob)) {
-        throw new Error("Received data is not a Blob");
-      }
-      const blobUrl = window.URL.createObjectURL(blob.data);
-      const a = document.createElement("a");
-      a.href = blobUrl;
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(blobUrl);
-    },
-  });
+    
+    const { mutate: exelMudate, isPending: exelPending } = useMutation({
+      mutationFn: async () => {
+        const query = {
+          reportId: myCashFlow && !FManagerCashFlow ? id : undefined,
+          kassaReportId: FManagerCashFlow ? kassaReportId || undefined : undefined,
+          kassaId: myCashFlow ? undefined : id || undefined,
+        };
+        const params = query
+          ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
+          : "";
+    
+        window.location.href = import.meta.env.VITE_BASE_URL+apiRoutes.excelCashflowsExcel + params;
+      },
+    });
 
   return (
     <div className=" px-[20px] h-[64px] items-center  flex gap-2 mb-2   ">
@@ -80,10 +69,12 @@ export default function Filters() {
       {id || kassaReportId  ? (
         <Button
           onClick={() => exelMudate()}
+          disabled={exelPending}
           className="h-full  border-y-0 w-[140px]  ml-auto"
           variant={"outline"}
         >
-          <FileOutput /> Экспорт
+          {exelPending ? <Loader className="animate-spin"/>: <FileOutput />}
+          Экспорт
         </Button>
       ) : (
         ""

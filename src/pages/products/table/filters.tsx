@@ -4,7 +4,6 @@ import Statistics from "@/components/filters-ui/statistics";
 import { BrCodeIcons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { apiRoutes } from "@/service/apiRoutes";
-import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
 import { useMutation } from "@tanstack/react-query";
 import { FileOutput, Loader } from "lucide-react";
@@ -13,21 +12,11 @@ import { FileOutput, Loader } from "lucide-react";
 // /excel/product/excel/new
 export default function Filters() {
 const {meUser} = useMeStore()
-  const { mutate: exelMudate,isPending } = useMutation({
+
+
+  const { mutate: exelMudate, isPending: exelPending } = useMutation({
     mutationFn: async () => {
-  
-      const blob = await api.get(apiRoutes.excelProductExcelNew + `?filialId=${meUser?.filial?.id}` , {
-        responseType: "blob",
-      });
-      if (!(blob.data instanceof Blob)) {
-        throw new Error("Received data is not a Blob");
-      }
-      const blobUrl = window.URL.createObjectURL(blob.data);
-      const a = document.createElement("a");
-      a.href = blobUrl;
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(blobUrl);
+      window.location.href = import.meta.env.VITE_BASE_URL+apiRoutes.excelProductExcelNew +  `?filialId=${meUser?.filial?.id}`
     },
   });
 
@@ -66,10 +55,11 @@ const {meUser} = useMeStore()
       <Statistics />
       <Button
       onClick={()=>exelMudate()}
+      disabled={exelPending}
         className="h-full border-0 bg-card rounded-xl hover:bg-card w-[140px]  ml-auto"
         variant={"outline"}
       >
-       {isPending? <Loader className="animate-spin"/>:<FileOutput />}   Экспорт
+       {exelPending? <Loader className="animate-spin"/>:<FileOutput />}   Экспорт
       </Button>
     </div>
   );

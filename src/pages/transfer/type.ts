@@ -14,6 +14,7 @@ export type TransferData = {
     lastName:string;
      avatar: { path: string } 
   }
+  number:number;
   courier: {
     firstName:string;
     lastName:string;

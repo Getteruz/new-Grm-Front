@@ -24,7 +24,6 @@ export default function PageFinance() {
 
   return (
     <>
-      <div className="h-[calc(100vh-70px)] scrollCastom">
         <CardSort
           KassaReport={undefined}
           isOnlyCash={Boolean(meUser?.position?.role == 9)}
@@ -35,11 +34,11 @@ export default function PageFinance() {
           data={flatKasssaData}
           isLoading={KassaLoading}
           isRowClickble={true}
+          className="h-[calc(100vh-240px)] scrollCastom"
           fetchNextPage={KassafetchNextPage}
           hasNextPage={KassafhasNextPage ?? false}
           isFetchingNextPage={KassaisFetchingNextPage}
         />
-      </div>
     </>
   );
 }

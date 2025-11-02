@@ -168,7 +168,7 @@ export const KassaColumns: ColumnDef<TData>[] = [
       return (
         <div onClick={(e) => e.stopPropagation()}>
           {item?.status != "Мои приходы и расходы" ? (
-            item?.status == "closed_by_c" ? (
+            item?.status == "closed_by_c" || item?.status == "warning" ? (
               <ActionButton
                 onClick={() => mutate()}
                 isLoading={isPending}

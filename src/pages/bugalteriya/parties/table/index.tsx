@@ -40,7 +40,7 @@ const {meUser} = useMeStore()
         isLoading={isLoading}
         columns={Columns}
         data={flatData ?? []}
-        className="h-full"
+         className="h-[calc(100vh-140px)] scrollCastom"
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}
         isRowClickble

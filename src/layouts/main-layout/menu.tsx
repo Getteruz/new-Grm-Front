@@ -21,7 +21,7 @@ export default function Menu() {
   const [isBack] = useQueryState("isBack", parseAsBoolean.withDefault(false));
   return (
     <div
-      className={`${meUser?.position?.role == 3 ? " w-[90px] " : " w-[104px] "} h-screen flex relative pb-[110px] justify-between flex-col  bg-background   `}
+      className={`${meUser?.position?.role == 3 ? " min-w-[90px] " : " min-w-[104px] "} h-screen flex relative pb-[110px] justify-between flex-col  bg-background   `}
     >
       <Avatar
         onClick={
@@ -40,7 +40,7 @@ export default function Menu() {
         </AvatarFallback>
       </Avatar>
       <div className="h-[100%] scrollCastom">
-        <div className="overflow-scroll h-[100%]">
+        <div className="scrollCastom h-[100%]">
           {meUser?.position?.role == 3 || meUser?.position?.role == 4 ? (
             ""
           ) : pathName.pathname.split("/").length > 3 || isBack ? (

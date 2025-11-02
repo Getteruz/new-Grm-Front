@@ -106,7 +106,7 @@ export default function PageFinanceSingle() {
 
   return (
     <>
-      <div className="h-[calc(100vh-70px)] scrollCastom">
+      <>
         <CardSort
           reportId={id}
           isUserSelectble={true}
@@ -120,6 +120,7 @@ export default function PageFinanceSingle() {
           data={ReportSingleData || []}
           isLoading={KassaLoading}
           isRowClickble={true}
+          className="h-[calc(100vh-310px)] scrollCastom"
           onRowClick={(item) => {
             if (item?.status == "my") {
               navigate(item?.status);
@@ -141,7 +142,7 @@ export default function PageFinanceSingle() {
           // hasNextPage={KassafhasNextPage ?? false}
           // isFetchingNextPage={KassaisFetchingNextPage}
         />
-      </div>
+      </>
     </>
   );
 }

@@ -101,7 +101,7 @@ export default function ReportPage() {
   return (
     <>
       <Filter />
-      <div className="h-[calc(100vh-140px)] scrollCastom">
+      < >
         {
           <CardSort
           isUserSelectble
@@ -125,12 +125,13 @@ export default function ReportPage() {
           columns={Columns}
           data={flatData || []}
           isLoading={isLoading}
+          className="h-[calc(100vh-310px)] scrollCastom"
           isRowClickble={false}
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage ?? false}
           isFetchingNextPage={isFetchingNextPage}
         />
-      </div>
+      </>
     </>
   );
 }

@@ -154,7 +154,7 @@ export function DataTable<TData, TValue>({
   const navigate = useNavigate();
 
   return (
-    <div className={`${className} bg-card`  }>
+    <div className={`${className} bg-card w-full  max-w-[calc(100vw-104px)]`  }>
       {isLoading && data.length === 0 ? (
         <TableLoading limit={15} table={table} />
       ) : (

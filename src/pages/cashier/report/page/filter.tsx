@@ -1,13 +1,9 @@
-import {
-  FileOutput,
- 
-} from "lucide-react";
+import { FileOutput, Loader } from "lucide-react";
 
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { Button } from "@/components/ui/button";
 import qs from "qs";
 import { parseAsString, useQueryState } from "nuqs";
-import api from "@/service/fetchInstance";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useMutation } from "@tanstack/react-query";
 const Sort = [
@@ -43,33 +39,27 @@ const SortSingle = [
     value: "Приход",
   },
 ];
-export default function Filters({ kassaId}: { countLength: number,kassaId:string | undefined }) {
+export default function Filters({
+  kassaId,
+}: {
+  countLength: number;
+  kassaId: string | undefined;
+}) {
   const [id] = useQueryState("id");
-  const [sort] = useQueryState(
-    "sort",
-    parseAsString.withDefault("open")
-  );
-  const { mutate: exelMudate } = useMutation({
+  const [sort] = useQueryState("sort", parseAsString.withDefault("open"));
+
+  const { mutate: exelMudate, isPending: exelPending } = useMutation({
     mutationFn: async () => {
       const query = {
         // reportId: myCashFlow && !FManagerCashFlow ? id : undefined,
-        kassaId: sort == "open" ? kassaId: id || undefined,
+        kassaId: sort == "open" ? kassaId : id || undefined,
       };
       const params = query
         ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
         : "";
-      const blob = await api.get(apiRoutes.excelCashflowsExcel + params, {
-        responseType: "blob",
-      });
-      if (!(blob.data instanceof Blob)) {
-        throw new Error("Received data is not a Blob");
-      }
-      const blobUrl = window.URL.createObjectURL(blob.data);
-      const a = document.createElement("a");
-      a.href = blobUrl;
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(blobUrl);
+
+      window.location.href =
+        import.meta.env.VITE_BASE_URL + apiRoutes.excelCashflowsExcel + params;
     },
   });
   return (
@@ -97,7 +87,7 @@ export default function Filters({ kassaId}: { countLength: number,kassaId:string
           name="sort"
         />
       )}
-    
+
       {/* <Button
         className="h-full border-l-1 text-primary justify-center gap-1 w-[60px] border-y-0 border-r-0"
         size={"icon"}
@@ -113,13 +103,14 @@ export default function Filters({ kassaId}: { countLength: number,kassaId:string
         Фильтр
       </Button> */}
 
-      {sort === "open"  || Boolean(id)  ? (
+      {sort === "open" || Boolean(id) ? (
         <Button
           onClick={() => exelMudate()}
           className="h-full ml-auto  bg-card hover:bg-card rounded-xl  text-primary justify-center gap-1 px-4 border-0"
           variant={"outline"}
+          disabled={exelPending}
         >
-          <FileOutput /> Экспорт
+          {exelPending ? <Loader /> : <FileOutput />} Экспорт
         </Button>
       ) : (
         ""

@@ -4,33 +4,22 @@ import Statistics from "@/components/filters-ui/statistics";
 import { BrCodeIcons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { apiRoutes } from "@/service/apiRoutes";
-import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
 import { useMutation } from "@tanstack/react-query";
 import { FileOutput, Loader } from "lucide-react";
 
-
 // /excel/product/excel/new
 export default function Filters() {
-const {meUser} = useMeStore()
-  const { mutate: exelMudate,isPending } = useMutation({
+  const { meUser } = useMeStore();
+
+  const { mutate: exelMudate, isPending: exelPending } = useMutation({
     mutationFn: async () => {
-  
-      const blob = await api.get(apiRoutes.excelProductExcelNew + `?filialId=${meUser?.filial?.id}` , {
-        responseType: "blob",
-      });
-      if (!(blob.data instanceof Blob)) {
-        throw new Error("Received data is not a Blob");
-      }
-      const blobUrl = window.URL.createObjectURL(blob.data);
-      const a = document.createElement("a");
-      a.href = blobUrl;
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(blobUrl);
+      window.location.href =
+        import.meta.env.VITE_BASE_URL +
+        apiRoutes.excelProductExcelNew +
+        `?filialId=${meUser?.filial?.id}`;
     },
   });
-
   return (
     <div className=" gap-2 mb-4 px-[20px] h-[64px] flex ">
       <SearchInput />
@@ -41,35 +30,36 @@ const {meUser} = useMeStore()
         <BrCodeIcons />
       </Button>
       {/* <FilterSelect placeholder="Фильтр" name="news" /> */}
-      <FilterSelect 
+      <FilterSelect
         placeholder="Продукт"
         className=" w-[150px]"
         defaultValue="collections"
         options={[
-          { label: "Продукт", value: "product"},
-          { label: "Коллекция", value: "collections" }
+          { label: "Продукт", value: "product" },
+          { label: "Коллекция", value: "collections" },
         ]}
-        name="collection" 
+        name="collection"
       />
 
-    
-      <FilterSelect 
-        placeholder="Лист" 
-        className="w-[150px]" 
+      <FilterSelect
+        placeholder="Лист"
+        className="w-[150px]"
         name="card"
         defaultValue="list"
         options={[
-          { label: "Лист", value: "list"},
-          { label: "Карточкы", value: "card" }
+          { label: "Лист", value: "list" },
+          { label: "Карточкы", value: "card" },
         ]}
       />
       <Statistics />
       <Button
-      onClick={()=>exelMudate()}
+        disabled={exelPending}
+        onClick={() => exelMudate()}
         className="h-full border-0 bg-card rounded-xl hover:bg-card w-[140px]  ml-auto"
         variant={"outline"}
       >
-       {isPending? <Loader className="animate-spin"/>:<FileOutput />}   Экспорт
+        {exelPending ? <Loader className="animate-spin" /> : <FileOutput />}{" "}
+        Экспорт
       </Button>
     </div>
   );

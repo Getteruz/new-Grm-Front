@@ -4,7 +4,7 @@ import { useKassaReports } from "./queries";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useReportsSingle } from "../../m-manager/report-finance-single/queries";
-import CardSort from "../report/card-sort";
+import CardSort from "./card-sort";
 
 export default function PageKassaReport() {
   const {id}  =useParams()
@@ -32,7 +32,7 @@ export default function PageKassaReport() {
   return (
     <>
       <div className="h-[calc(100vh-70px)] scrollCastom">
-          <CardSort  SortData={ReportsSingle}  />
+        <CardSort SortData={ReportsSingle} />
           <DataTable
             columns={KassaColumnsLoc}
             data={

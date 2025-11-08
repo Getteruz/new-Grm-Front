@@ -17,11 +17,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "Филиал",
     header: "Дата",
     cell: ({ row }) => {
-      return (
-        <p >
-          {row?.original?.filial?.title}
-        </p>
-      );
+      return <p>{row?.original?.filial?.title}</p>;
     },
   },
   {
@@ -31,8 +27,8 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <p className="text-[#89A143]">
-          {(item?.totalIncome || item?.totalPlasticSum) &&
-            (item?.totalIncome - item?.totalPlasticSum).toFixed(2) + " $"}
+          {item?.in_hand?.toFixed(2)}
+          $
         </p>
       );
     },
@@ -43,28 +39,50 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#58A0C6]"> {item?.totalPlasticSum.toFixed(2)} $</p>;
+      return (
+        <p className="text-[#58A0C6]"> {item?.totalPlasticSum.toFixed(2)} $</p>
+      );
+    },
+  },
+  {
+    header: "Отправлено",
+    id: "totalSum",
+    cell: ({ row }) => {
+      const item = row.original;
+      return (
+        <p className="text-[#58A0C6]"> {item?.debt_sum?.toFixed(2)} $</p>
+      );
     },
   },
   {
     header: "Задолжность",
-    id: "totalSum",
+    id: "owed",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#FF6600]"> {item?.totalExpense} $</p>;
+      return <p className="text-[#FF6600]"> {item?.filial?.owed} $</p>;
     },
   },
 
   {
     header: "D-менеджер",
-    cell: ({row}) => {
-       const item = row.original;
-      const  {meUser}= useMeStore()
+    cell: ({ row }) => {
+      const item = row.original;
+      const { meUser } = useMeStore();
       return (
         <div className="flex gap-2 items-center">
-          <TebleAvatar  status={item?.status  == "open"? "panding":item?.status  == "rejected" ? "fail":"success"}  url={meUser?.avatar?.path} name={meUser?.firstName || "A"}/>
+          <TebleAvatar
+            status={
+              item?.status == "open"
+                ? "panding"
+                : item?.status == "rejected"
+                  ? "fail"
+                  : "success"
+            }
+            url={meUser?.avatar?.path}
+            name={meUser?.firstName || "A"}
+          />
         </div>
-      ) 
+      );
     },
   },
   {
@@ -75,20 +93,30 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const queryClient = useQueryClient();
       const { mutate, isPending } = useMutation({
         mutationFn: () =>
-          PatchData(apiRoutes.kassaReports +"/" +row?.original?.id+"/close-dmanager" , { }),
+          PatchData(
+            apiRoutes.kassaReports +
+              "/" +
+              row?.original?.id +
+              "/close-dmanager",
+            {}
+          ),
         onSuccess: () => {
           toast.success("Accepted");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
           queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
         },
       });
-      
+
       return (
         <div onClick={(e) => e.stopPropagation()}>
           {item?.kassaReportStatus == 2 ? (
             <ActionBadge status={"willSell"} />
           ) : item?.status == "open" ? (
-            <ActionButton onClick={()=>mutate()} isLoading={isPending}  status="accept"></ActionButton>
+            <ActionButton
+              onClick={() => mutate()}
+              isLoading={isPending}
+              status="accept"
+            ></ActionButton>
           ) : (
             <ActionBadge status={item?.status} />
           )}

@@ -9,10 +9,13 @@ export interface TKassareportData {
   year: number;
   month: number;
   status: string;
+  debt_sum?:number;
   filial?: {
     id: string;
     title: string;
+    owed?: number;
   };
+  in_hand?:number;
   kassaReport?:TKassareportData[];
   reportStatus?:number;
   totalPlasticSum: number;

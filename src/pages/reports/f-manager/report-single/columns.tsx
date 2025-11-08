@@ -193,7 +193,7 @@ export const Columns: ColumnDef<TData>[] = [
      
       return(
         <TableAction
-          ShowDelete={ Boolean(report && id == 'my')}
+          ShowDelete={Boolean(report && id == 'my')}
           ShowUpdate={false}
           url={apiRoutes.cashflow}
           refetchUrl={apiRoutes.cashflow}

@@ -98,13 +98,17 @@ export interface TKassareportData {
   additionalProfitTotalSum: number;
   netProfitTotalSum: number;
   totalSize: number;
+  debt_profit_sum?:number;
+  debt_kv?:number;
   kassaReportStatus:number;
   year: number;
+  owed?:number;
   month: number;
   status: string;
   filial?: {
     id: string;
     title: string;
+    owed?:number;
   };
 
   in_hand?:number;

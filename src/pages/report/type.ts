@@ -18,6 +18,10 @@ export interface TData {
   title: string;
   in_hand:number;
   debt_sum:number;
+  kassaReport?:{
+    opening_balance?:number
+    filialType?:string;
+  }
   icon: {
     id: string;
     path: string;
@@ -103,6 +107,8 @@ export interface TKassareportData {
   kassaReportStatus:number;
   year: number;
   owed?:number;
+  opening_balance?:number;
+  filialType?:string;
   month: number;
   status: string;
   filial?: {

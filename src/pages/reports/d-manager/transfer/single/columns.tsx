@@ -206,6 +206,7 @@ export const collactionColumns: ColumnDef<TransferCollectionDealerData>[] = [
       );
     },
   },
+
   {
     header: "Нavar",
     id: "total_profit_sum",
@@ -243,7 +244,7 @@ export const collactionColumns: ColumnDef<TransferCollectionDealerData>[] = [
       });
       return (
         <Input
-          defaultValue={row?.original?.comingPrice}
+          defaultValue={+row?.original?.comingPrice || undefined}
           className="w-[120px]"
           onChange={debounce((e) => {
             mutate({

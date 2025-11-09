@@ -78,7 +78,8 @@ export default function CardSort({kassaReportId,isAddable,SortData}:{kassaReport
       ) : (
         (
           formatPrice(
-            SortData?.filial?.owed || 0 )
+            SortData?.kassaReportStatus == 2? (SortData.filial?.owed || 0) : (SortData?.dealer_frozen_owed||0)
+             )
         )
       )
     },

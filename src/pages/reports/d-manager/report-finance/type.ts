@@ -9,6 +9,7 @@ export interface TKassareportData {
   month: number;
   status: string;
   owed?:number;
+  dealer_frozen_owed?:number;
   in_hand?:number;
   filial?: {
     id: string;

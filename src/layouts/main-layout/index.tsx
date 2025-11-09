@@ -39,7 +39,7 @@ export default function MainLayout() {
           <Header />
         )}
         <div
-          className={`${(meUser?.position?.role === 3 || pathname.pathname == "/cashier/home") ? "h-[calc(100vh-20px)] " : "h-[calc(100vh-63px)] "} scrollCastom`}
+          className={`${(meUser?.position?.role === 3 || pathname.pathname == "/cashier/home") ? "h-[calc(100vh-20px)] " : "h-[calc(100vh-68px)] "} scrollCastom`}
         >
           <Outlet />
         </div>

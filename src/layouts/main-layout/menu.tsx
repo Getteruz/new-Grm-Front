@@ -7,11 +7,11 @@ import { useMeStore } from "@/store/me-store";
 import {  HomeIcons } from "../../components/icons";
 import { DataMenu } from "./menu-datas";
 import { parseAsBoolean, useQueryState } from "nuqs";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { AvatarFallback } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { minio_img_url } from "@/constants";
 import NotePage from "./note/list";
 import Weather from "./weather";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Menu() {
   const navigate = useNavigate();
@@ -21,9 +21,10 @@ export default function Menu() {
   const [isBack] = useQueryState("isBack", parseAsBoolean.withDefault(false));
   return (
     <div
-      className={`${meUser?.position?.role == 3 ? " min-w-[90px] " : " min-w-[104px] "} h-screen flex relative pb-[110px] justify-between flex-col  bg-background   `}
+      className={`${meUser?.position?.role == 3 ? " min-w-[90px] " : " min-w-[104px] "}  flex relative  flex-col  bg-background   `}
     >
-      <Avatar
+     <Avatar
+     className="w-[50px] h-[50px] my-4 mx-auto"
         onClick={
           meUser?.position?.role == 3
             ? () => {
@@ -31,7 +32,6 @@ export default function Menu() {
               }
             : () => {}
         }
-        className="w-[50px] mt-5 ml-5 mb-15 h-[50px]"
       >
         <AvatarImage src={minio_img_url + meUser?.avatar?.path} />
         <AvatarFallback className="bg-primary text-white w-[50px] flex items-center justify-center h-[50px]">
@@ -39,8 +39,7 @@ export default function Menu() {
           {meUser?.lastName?.[0]}
         </AvatarFallback>
       </Avatar>
-      <div className="h-[100%] scrollCastom">
-        <div className="scrollCastom h-[100%]">
+        <ScrollArea className={`h-[calc(100vh-190px)]  pt-15`}>
           {meUser?.position?.role == 3 || meUser?.position?.role == 4 ? (
             ""
           ) : pathName.pathname.split("/").length > 3 || isBack ? (
@@ -103,16 +102,8 @@ export default function Menu() {
               Выйти
             </span>
           </div>
-        </div>
-        <div className="absolute bottom-0 w-full z-10">
+        </ScrollArea>
           <Weather />
-          {/* {meUser?.position?.role == 3 ? "" : (
-            <>
-              <OpenAI />
-            </>
-          )} */}
-        </div>
-      </div>
     </div>
   );
 }

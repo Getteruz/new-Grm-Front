@@ -7,10 +7,10 @@ export default function Filters() {
         <SearchInput  className="w-[350px]"/>
 
         <FilterSelect
-        className="border-border max-w-[150px] w-full border-r"
+        className="border-border max-w-[150px] w-full"
         options={[
           { label: "Коллекция", value: "collection" },
-          { label: "Листь", value: "list" },
+          { label: "Продукт", value: "list" },
         ]}
         defaultValue="list"
         placeholder="Коллекция"

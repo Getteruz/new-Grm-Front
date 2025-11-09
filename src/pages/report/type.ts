@@ -95,10 +95,10 @@ export interface TActionData {
   };
   code: string;
 }
-
 export interface TKassareportData {
   id: string;
   totalSellCount: number;
+  dealer_frozen_owed?:number;
   additionalProfitTotalSum: number;
   netProfitTotalSum: number;
   totalSize: number;
@@ -134,7 +134,6 @@ export interface TKassareportData {
   totalExpense: number;
   totalSum: number;
 }
-
 export interface TChaFlowData{
   expense: number,
   income: number
@@ -165,4 +164,4 @@ export interface TQuery {
   startDate?: Date | null;
   endDate?: Date | null;
   type?:string;
-}
+};

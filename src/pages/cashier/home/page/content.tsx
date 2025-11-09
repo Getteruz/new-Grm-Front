@@ -91,6 +91,7 @@ export default function Content({ orderList, isFetchingNextPage = false,
                   plasticSum={
                     item?.plasticSum ? (item?.plasticSum || 0) + "$" : "0$"
                   }
+                  isDebt={item?.isDebt}
                   priceMitr={
                     (item?.product?.bar_code?.collection?.collection_prices?.[0]
                       ?.priceMeter || 0) + "$"

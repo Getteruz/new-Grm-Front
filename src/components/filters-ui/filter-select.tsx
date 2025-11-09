@@ -3,7 +3,6 @@ import { parseAsString, useQueryState } from "nuqs";
 import { useTranslation } from "react-i18next";
 
 import ShadcnSelect from "../Select";
-import { useEffect } from "react";
 
 interface iFilterSelect {
   name: string;
@@ -37,9 +36,9 @@ export default function FilterSelect({
     parseAsString.withDefault(defaultValue || "")
   );
 
-  useEffect(()=>{
-    if(defaultValue)  setValue(defaultValue)
-  },[defaultValue])
+  // useEffect(()=>{
+  //   if(defaultValue)  setValue(defaultValue)
+  // },[defaultValue])
 
   const { t } = useTranslation();
   

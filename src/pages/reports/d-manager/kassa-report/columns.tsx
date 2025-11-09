@@ -59,7 +59,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "owed",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#FF6600]"> {item?.filial?.owed} $</p>;
+      return <p className="text-[#FF6600]"> {item?.kassaReportStatus == 2? item?.filial?.owed : item?.dealer_frozen_owed} $</p>;
     },
   },
 

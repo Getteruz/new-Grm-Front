@@ -10,6 +10,7 @@ export interface TKassareportData {
   month: number;
   status: string;
   debt_sum?:number;
+  dealer_frozen_owed?:number;
   filial?: {
     id: string;
     title: string;

@@ -71,7 +71,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "expense",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className={ 'text-[#E38157]' }> {item?.owed} $</p>;
+      return <p className={ 'text-[#E38157]' }>  {item?.reportStatus == 2? item?.owed:  item?.dealer_frozen_owed} $</p>;
     },
   },
 

@@ -58,7 +58,7 @@ export const collactionColumns: ColumnDef<TransferData>[] = [
   {
     header: "Навар",
     cell: ({ row }) => (
-      <p className="w-[60px] py-2">{row?.original?.total_profit_sum} $</p>
+      <p className="w-[60px] text-nowrap py-2">{row?.original?.total_profit_sum} $</p>
     ),
   },
 

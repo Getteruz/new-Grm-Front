@@ -70,6 +70,7 @@ export default function TrasferDealerSinglePage() {
     setFilial(data?.id);
     navigate(`/d-manager/transfer?filial=${data?.id}`);
   };
+
   return (
     <div className="grid grid-cols-12 gap-2 h-full">
       <div className="col-span-2  max-h-[calc(100vh-100px)] scrollCastom flex gap-2">
@@ -100,7 +101,7 @@ export default function TrasferDealerSinglePage() {
         {mode == "collection" ? (
           <DataTable
             isLoading={isLoading}
-            className="max-h-[calc(100vh-140px)]  scrollCastom"
+            className="max-h-[calc(100vh-140px)]   scrollCastom"
             columns={collactionColumns}
             data={flatData as unknown as TransferCollectionDealerData[]}
             fetchNextPage={fetchNextPage}

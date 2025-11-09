@@ -43,7 +43,6 @@ export default function Page() {
 
   return (
     <>
-
     <CashierHeader>
       <Filters/>
     </CashierHeader>

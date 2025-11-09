@@ -26,7 +26,7 @@ const buildFlatList = (data:TransferData[]) => {
     result.push({
       ...item,
       number: counter, // add number field
-    });;
+    });
   }
 
   return result;

@@ -96,17 +96,17 @@ export default function Page() {
           ) : (
             ""
           )}
-          {sort === "open" ? (
+        
+        <div className={` ${(sort === "open" || Boolean(id)) ? meUser?.position?.role ==3 ? 'h-[calc(100vh-285px)] scrollCastom':'h-[calc(100vh-330px)] scrollCastom':""}  `}>
+        {sort === "open" ? (
             ""
           ) : (
-            <div className="px-4 pt-2 mb-1 w-full  sticky top-0">
-              <p className="text-sm font-medium ">
+            <div className="px-4 pt-2 mb-1 w-full bg-background  z-10 sticky top-0">
+              <p className="text-sm font-medium  ">
                 {format(new Date(), "dd-MMMM")}
               </p>
             </div>
           )}
-        <div className="h-[calc(100vh-285px)] scrollCastom ">
-
             {sort === "open" || Boolean(id) ? (
               <DataTable
                 columns={ReportColumns}

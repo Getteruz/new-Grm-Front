@@ -7,11 +7,11 @@ export default function Filters() {
         <SearchInput  className="w-[350px]"/>
 
         <FilterSelect
-        className="border-border max-w-[150px] w-full border-r"
-        disabled
+        className="border-border max-w-[150px] w-full "
+        // disabled
         options={[
           { label: "Коллекция", value: "collection" },
-          { label: "Листь", value: "list" },
+          { label: "Продукт", value: "list" },
         ]}
         defaultValue="collection"
         placeholder="Коллекция"

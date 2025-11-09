@@ -39,7 +39,7 @@ export default function Menu() {
           {meUser?.lastName?.[0]}
         </AvatarFallback>
       </Avatar>
-        <ScrollArea className={`h-[calc(100vh-190px)]  pt-15`}>
+        <ScrollArea className={`max-h-[calc(100vh-210px)]  pt-15`}>
           {meUser?.position?.role == 3 || meUser?.position?.role == 4 ? (
             ""
           ) : pathName.pathname.split("/").length > 3 || isBack ? (
@@ -86,9 +86,7 @@ export default function Menu() {
               </span>
             </div>
           ))}
-           <div className="flex items-center   mb-5 justify-center">
-            <NotePage/>
-            </div>
+        
           <div
             onClick={() => {
               removeToken();
@@ -103,6 +101,7 @@ export default function Menu() {
             </span>
           </div>
         </ScrollArea>
+        <NotePage/>
           <Weather />
     </div>
   );

@@ -43,7 +43,7 @@ export const ListColumns: ColumnDef<TransferDealerData>[] = [
           </div>
         );
       }
-      return <p>{row.index}</p>;
+      return <p>{row?.original?.number}</p>;
     },
   },
   {

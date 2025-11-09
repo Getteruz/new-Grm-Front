@@ -8,22 +8,23 @@ import { TransferCollectionDealerData, TransferDealerData } from "../../reports/
 import useTransferDealersFetch from "./queries";
 import {  useParams } from "react-router-dom";
 
-const buildFlatList = (data: TransferDealerData[]) => {
+const buildFlatList = (data:TransferDealerData[]) => {
   const result = [];
   let lastDate = null;
+  let counter = 0; 
 
   for (const item of data) {
     const group = item.group;
     if (group !== lastDate) {
-      result.push({
-        type: "header",
-        transferer: item?.transferer,
-        courier: item?.courier,
-        group: group,
-      });
+      result.push({ type: 'header',transferer:item?.transferer,courier:item?.courier ,group: group });
       lastDate = group;
+      counter = 0; 
     }
-    result.push(item);
+    counter++; 
+    result.push({
+      ...item,
+      number: counter, // add number field
+    });
   }
 
   return result;

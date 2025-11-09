@@ -10,27 +10,27 @@ import { TransferCollectionDealerData, TransferDealerData } from "../type";
 import useTransferDealersFetch from "./queries";
 import { useNavigate, useParams } from "react-router-dom";
 
-const buildFlatList = (data: TransferDealerData[]) => {
+const buildFlatList = (data:TransferDealerData[]) => {
   const result = [];
   let lastDate = null;
+  let counter = 0; 
 
   for (const item of data) {
     const group = item.group;
     if (group !== lastDate) {
-      result.push({
-        type: "header",
-        transferer: item?.transferer,
-        courier: item?.courier,
-        group: group,
-      });
+      result.push({ type: 'header',transferer:item?.transferer,courier:item?.courier ,group: group });
       lastDate = group;
+      counter = 0; 
     }
-    result.push(item);
+    counter++; 
+    result.push({
+      ...item,
+      number: counter, // add number field
+    });
   }
 
   return result;
 };
-
 export default function TrasferDealerSinglePage() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(50));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));

@@ -5,13 +5,9 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import TableAction from "@/components/table-action";
-import { AddData, UpdatePatchData } from "@/service/apiHelpers";
+import {  UpdatePatchData } from "@/service/apiHelpers";
 import { ColumnDef } from "@tanstack/react-table";
-import ActionBadge from "@/components/actionBadge";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { useParams } from "react-router-dom";
-import { Input } from "@/components/ui/input";
-import debounce from "@/utils/debounce";
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 
 export const ListColumns: ColumnDef<TransferDealerData>[] = [
@@ -23,7 +19,7 @@ export const ListColumns: ColumnDef<TransferDealerData>[] = [
       const group = row?.original?.group;
       if (row.original?.type === "header") {
         return (
-          <div className="absolute top-7 bg-sidebar left-0 px-2 gap-2 py-2 w-full  flex items-center ">
+          <div className="absolute top-2 bg-sidebar left-0 px-2 gap-2 py-2 w-full  flex items-center ">
             <TebleAvatar
               size={38}
               url={row?.original?.transferer?.avatar?.path}
@@ -42,8 +38,8 @@ export const ListColumns: ColumnDef<TransferDealerData>[] = [
             <p className="ml-auto">{group?.split("-")?.[3]} </p>
           </div>
         );
-      }
-      return <p>{row.index}</p>;
+      };
+      return <p>{row?.original?.number}</p>;
     },
   },
   {
@@ -94,19 +90,7 @@ export const ListColumns: ColumnDef<TransferDealerData>[] = [
     id: "product.bar_code.country.title",
     accessorKey: "product.bar_code.country.title",
   },
-  {
-    header: "Статус",
-    cell: ({ row }) => {
-      const status = row?.original?.progres;
 
-      if (row.original?.type === "header") {
-        return <div className="h-14"></div>;
-      }
-      return (
-        <ActionBadge status={status == "Accepted_F" ? "pending" : status} />
-      );
-    },
-  },
   {
     header: "count",
     cell: ({ row }) => {
@@ -214,50 +198,7 @@ export const collactionColumns: ColumnDef<TransferCollectionDealerData>[] = [
     },
   },
   
-  {
-    header: "Цена за м²",
-    cell: ({ row }) => {
-      const { package_id } = useParams();
-      const queryClient = useQueryClient();
-      const [, setLocalPrice] = useQueryState(
-        "localPrice",
-        parseAsInteger.withDefault(+row?.original?.comingPrice || 0)
-      );
-      const [, setChangeId] = useQueryState(
-        "changeId",
-        parseAsString
-      );
-    
-      const { mutate } = useMutation({
-        mutationFn: ({ price }: { price: number }) =>
-          AddData(apiRoutes.transferGivePrice,  {
-              collection: row?.original?.id,
-              price,
-              package_id,
-            },
-          ),
-        onSuccess: () => {
-          toast.success("changed");
-          queryClient.invalidateQueries({ queryKey: [apiRoutes.transferDealer] });
-        },
-      });
-      return (
-        <Input
-          defaultValue={row?.original?.comingPrice}
-          className="w-[120px]"
-          onChange={debounce((e) => {
-            mutate({
-              price: Number(e?.target.value),
-            });
-            setLocalPrice(Number(e?.target.value))
-            setChangeId(row?.original?.id)
-          }, 900)}
-          placeholder="0"
-          type="number"
-        />
-      );
-    },
-  },
+
 
 
 ];

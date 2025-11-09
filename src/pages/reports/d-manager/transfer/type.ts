@@ -18,6 +18,7 @@ export type TransferData = {
   total_count: number;
   status: string;
   title: string;
+  
   dealer: {
     dateOne: Date;
     dateTwo: Date;
@@ -115,6 +116,7 @@ export type TransferDealerData = {
     lastName: string;
     avatar: { path: string };
   };
+  number?:number;
   courier: {
     firstName: string;
     lastName: string;

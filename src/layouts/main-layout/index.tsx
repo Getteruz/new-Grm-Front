@@ -28,9 +28,9 @@ export default function MainLayout() {
   }, [token, meUser]);
 
   return (
-    <SidebarProvider>
+    <SidebarProvider className="px-2.5 gap-4">
       <Menu />
-      <SidebarInset>
+      <SidebarInset >
         {meUser?.position?.role === 3 ? (
           <div className="h-5"></div>
         ) : pathname.pathname == "/cashier/home" ? (

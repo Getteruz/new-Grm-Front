@@ -4,7 +4,6 @@ import {
   BuildingIcons,
   ClientsIcon,
   DataLibrary,
-  DeviceDesktopIcons,
   DiamondIcon,
   HikVision,
   HomeIcons,
@@ -43,76 +42,8 @@ import {
 // }
 
 export const DataMenu = {
-  admin: [
-    {
-      id: 1,
-      icons: () => HomeIcons(),
-      link: "/cashier/home",
-      text: "cashier",
-    },
-    {
-      id: 14,
-      icons: () => HomeIcons(),
-      link: "/transfers",
-      text: "Трансферы",
-    },
-
-    {
-      id: 13,
-      icons: () => HomeIcons(),
-      link: "/crops",
-      text: "crops",
-      items: [
-        {
-          id: 12,
-          link: "/crops",
-          text: "crops1",
-        },
-        {
-          id: 13,
-          link: "/crops/item-2",
-          text: "crops1",
-        },
-        {
-          id: 14,
-          link: "/crops/item-3",
-          text: "crops1",
-        },
-      ],
-    },
-    {
-      id: 12,
-      icons: () => HomeIcons(),
-      link: "/broned",
-      text: "broned",
-    },
-    {
-      id: 2,
-      icons: () => BuildingIcons(),
-      link: "/products",
-      text: "product",
-    },
-    {
-      id: 3,
-      icons: () => BuildingIcons(),
-      link: "/bugalteriya/data-library",
-      text: "bugalteriya",
-    },
-
-    {
-      id: 4,
-      link: "/parties",
-      icons: () => WareHouseIcons(),
-      text: "parties",
-    },
-  ],
   3: [
-    {
-      id: 1,
-      icons: () => DeviceDesktopIcons({ width: 28, height: 28 }),
-      link: "/cashier/home",
-      text: "Касса",
-    },
+   
     {
       id: 2,
       icons: () => ReportBottom({ width: 28, height: 28 }),
@@ -146,12 +77,7 @@ export const DataMenu = {
     },
   ],
   4: [
-    {
-      id: 1,
-      icons: () => DeviceDesktopIcons({ width: 28, height: 28 }),
-      link: "/cashier/home",
-      text: "Касса",
-    },
+   
     {
       id: 2,
       icons: () => ReportBottom({}),

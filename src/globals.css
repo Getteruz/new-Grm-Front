@@ -145,9 +145,7 @@ input::-webkit-inner-spin-button {
 .iconsColor svg path {
   stroke: var(--primary) !important;
 }
-.iconsColorHover:hover svg path {
-  stroke: var(--primary) !important;
-}
+
 
 
 /* Track */

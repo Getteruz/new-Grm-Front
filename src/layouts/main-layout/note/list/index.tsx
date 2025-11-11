@@ -37,14 +37,14 @@ export default function NotePage() {
   return (
     <div
       ref={noteRef}
-      className=" mx-auto text-center flex items-center justify-center  cursor-pointer z-20"
+      className=" mx-auto text-center flex my-5 items-center justify-center  cursor-pointer z-20"
     >
       <StickyNote
         onClick={(e) => {
           e.stopPropagation();
           setActive(!active);
         }}
-        className="w-5 h-5 "
+        className="w-5 h-5"
       />
       {active && (
         <div className="absolute bottom-8 py-[14px] px-5 left-16  z-1000 bg-card rounded-[12px] border w-[380px]  max-h-[600px] ">

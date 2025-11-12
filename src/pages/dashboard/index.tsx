@@ -1,38 +1,43 @@
 import { useMeStore } from "@/store/me-store";
 
 import MonitoringDashboard from "../hr-monitoring";
-import { DollarSign, Italic } from "lucide-react";
+import { SquareArrowOutUpRight } from "lucide-react";
 import DashboardCard from "@/components/cards/dashboard-card";
+import Filter from "./ui/filter";
+import Cards from "./ui/cards";
+import Kassa from "./ui/kassa";
+import { useState } from "react";
+import { SheetDashboar } from "./ui/drawer";
 
 export default function Dashboard() {
   const { meUser } = useMeStore();
+  const [open,setOpen] = useState(false)
 
   const role = meUser?.position.role;
   if (role === 11) {
     return <MonitoringDashboard />;
   }
+  if (role === 12) {
   return (
-    <div className="flex w-full mt-5 gap-2.5">
+    <div className="flex w-full  gap-2.5">
+        <Cards/>
       <div className="w-full ">
-        <h3 className="text-[72px] ml-[13px]">986 286 $</h3>
-        <p className="text-[17px] flex items-center gap-2 mb-10 -mt-2 ml-[20px]">
-          42 880 сум прибль из итогого
-          <Italic className="bg-white p-0.5 rounded-sm" />
-        </p>
-
+       <Filter/>
         <div className="grid grid-cols-3 gap-2.5">
-          <DashboardCard
-            title="Остатка"
-            icons={() => <DollarSign className="bg-gray-300 text-white w-[20px] h-[20px] p-1 rounded-full"/>}
-            price={"216 286 кв/м"}
-            price2={"11 316 286 $"}
+        <DashboardCard
+        onClick={()=>setOpen(true)}
+            title="Продажа в долг "
+            price={"-16 286 $  Возврат"}
+            price2={"86 286 $"}
           >
-            <div className="h-30"></div>
+           <SquareArrowOutUpRight className="mt-5 w-[20px] mb-[29px]"/>
           </DashboardCard>
         </div>
+        <Kassa/>
       </div>
-      <div className="w-full ">
-      </div>
+
+      <SheetDashboar open={open} onOpenChange={(value)=>setOpen(value)}/>
     </div>
-  );
+  );}
+  return<></>
 }

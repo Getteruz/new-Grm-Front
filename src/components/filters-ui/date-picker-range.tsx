@@ -57,9 +57,10 @@ export function DateRangePicker({
             <Calendar
               mode="single"
               className='rounded-xl'
+              //  captionLayout="dropdown"
               selected={fromDate || undefined}
               onSelect={(date) => (date ? setFromDate(date) : "")}
-              initialFocus
+              
               disabled={(date) => (toDate ? date > toDate : false)}
             />
           </PopoverContent>
@@ -88,10 +89,10 @@ export function DateRangePicker({
           <PopoverContent className="w-auto p-0">
             <Calendar
               mode="single"
+              //  captionLayout="dropdown"
                className='rounded-xl'
               selected={toDate || undefined}
               onSelect={(date) => (date ? setToDate(date) : "")}
-              initialFocus
               disabled={(date) => (fromDate ? date < fromDate : false)}
             />
           </PopoverContent>

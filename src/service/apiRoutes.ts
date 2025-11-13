@@ -99,5 +99,6 @@ export const apiRoutes = {
   factoryOrderReport:'/factory-report/order/monthly',
   modelsOrderReport:"/model/order/models-report",
   sizeOrderReport:"/size/order/reports",
-  cashflowDealerIncome:'/cashflow/dealer/income'
+  cashflowDealerIncome:'/cashflow/dealer/income',
+  reportsHomePageCurrentMonth:'/reports/home-page/current-month',
 } as const;

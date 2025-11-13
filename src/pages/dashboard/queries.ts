@@ -3,18 +3,19 @@ import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";
 import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
-import { AboutUsQuery, AboutUsResponse } from "./types";
+import { ReportsHomePageCurrentMonthQuery, ReportsHomePageCurrentMonthData } from "./types";
 
-interface IAboutUs {
-  options?: DefinedInitialDataOptions<AboutUsResponse>;
-  queries?: AboutUsQuery;
+interface IReportsHomePageCurrentMonth {
+  options?: DefinedInitialDataOptions<ReportsHomePageCurrentMonthData>;
+  queries?: ReportsHomePageCurrentMonthQuery;
 }
-const useProducts = ({ options, queries }: IAboutUs) =>
+export const useReportsHomePageCurrentMonth = ({ options, queries }: IReportsHomePageCurrentMonth) =>
   useQuery({
     ...options,
-    queryKey: ["products", queries],
+    queryKey: [apiRoutes.reportsHomePageCurrentMonth, queries],
     queryFn: () =>
-      getAllData<AboutUsResponse, AboutUsQuery>(apiRoutes.products, queries),
+      getAllData<ReportsHomePageCurrentMonthData, ReportsHomePageCurrentMonthQuery>(apiRoutes.reportsHomePageCurrentMonth, queries),
   });
 
-export default useProducts;
+
+  

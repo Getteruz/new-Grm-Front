@@ -1,29 +1,31 @@
+import { DateRangePicker } from "@/components/filters-ui/date-picker-range";
 import FilterSelect from "@/components/filters-ui/filter-select";
+import useDataFetch from "@/pages/filial/table/queries";
 
 export default function Filter() {
+  const { data } = useDataFetch({
+    queries: { type: "filial", limit: 50 },
+  });
+  const filialOption =
+    data?.pages[0]?.items?.map((e) => ({
+      label: e?.name,
+      value: e?.id,
+
+    })) || [];
+
   return (
     <>
      <div className="flex gap-1 mt-16">
-            <FilterSelect
-              className=" max-w-[180px] w-full bg-[#333333] text-white placeholder:text-white "
-              options={[
-                { label: "Накладной", value: "new" },
-                { label: "Оприходован", value: "переучет" },
-                { label: "Розница", value: "излишки" }, 
-              ]}
-              defaultValue="new"
-              placeholder="Накладной"
-              name="name"
-            />
-
-            <p className="p-4 text-[17px] bg-white border-border border text-[#000000] rounded-xl">1 Ноябрь 2025</p>
-            <p className="p-4 text-[17px] bg-white border-border border text-[#000000] rounded-xl">10 Ноябрь 2025</p>
+     <FilterSelect
+            placeholder="все"
+            defaultValue="clear"
+            className="w-[200px] h-[65px] bg-[#333333] text-white"
+            options={[{ value: "clear", label: "все" },{value:"#dealers",label:"Dealer"}, ...filialOption]}
+            name="filial"
+          />
+        <DateRangePicker  className="w-full" toPlaceholder="до" fromPlaceholder="от" />
         </div>
-        <div className="text-white flex items-center rounded-xl gap-3 bg-[#333333] my-2.5 p-4 pl-6">
-          <p className="text-[24px] mr-auto">Текущий месяц</p>
-          <p  className="text-[24px] opacity-50">16 033.20 м²</p>
-          <p className="text-[24px]">80 166.00 $</p>
-        </div>
+     
     </>
   )
 }

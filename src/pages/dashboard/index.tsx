@@ -1,43 +1,69 @@
 import { useMeStore } from "@/store/me-store";
 
 import MonitoringDashboard from "../hr-monitoring";
-import { SquareArrowOutUpRight } from "lucide-react";
+import { SquareArrowOutDownLeft, Tag } from "lucide-react";
 import DashboardCard from "@/components/cards/dashboard-card";
 import Filter from "./ui/filter";
 import Cards from "./ui/cards";
 import Kassa from "./ui/kassa";
 import { useState } from "react";
 import { SheetDashboar } from "./ui/drawer";
+import { useReportsHomePageCurrentMonth } from "./queries";
+import { useQueryState } from "nuqs";
 
 export default function Dashboard() {
   const { meUser } = useMeStore();
-  const [open,setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [startDate] = useQueryState("startDate");
+  const [endDate] = useQueryState("endDate");
+  const [filial] = useQueryState("filial");
+  const { data } = useReportsHomePageCurrentMonth({
+    queries: {
+      startDate: startDate || undefined,
+      endDate: endDate || undefined,
+      filial_id: filial || undefined,
+    },
+  });
 
   const role = meUser?.position.role;
   if (role === 11) {
     return <MonitoringDashboard />;
   }
   if (role === 12) {
-  return (
-    <div className="flex w-full  gap-2.5">
-        <Cards/>
-      <div className="w-full ">
-       <Filter/>
-        <div className="grid grid-cols-3 gap-2.5">
-        <DashboardCard
-        onClick={()=>setOpen(true)}
-            title="Продажа в долг "
-            price={"-16 286 $  Возврат"}
-            price2={"86 286 $"}
-          >
-           <SquareArrowOutUpRight className="mt-5 w-[20px] mb-[29px]"/>
-          </DashboardCard>
+    return (
+      <div className="flex w-full  gap-2.5">
+        <Cards />
+        <div className="w-full ">
+          <Filter />
+          <div className="text-white flex items-center rounded-xl gap-3 bg-[#333333] my-2.5 p-4 pl-6">
+          <p className="text-[24px] mr-auto">Текущий месяц</p>
+          <p  className="text-[24px] opacity-50">{data?.totals?.total_kv?.toFixed(2)} м²</p>
+          <p className="text-[24px]">{data?.totals?.total_profit_sum?.toFixed(2)} $</p>
         </div>
-        <Kassa/>
-      </div>
+          <div className="grid grid-cols-3 gap-2.5">
+            <DashboardCard
+              onClick={() => setOpen(true)}
+              title="Продажа в долг "
+              price={`${data?.debt_order?.total_profit_sum} $  Возврат`}
+              price2={`${data?.debt_order?.total_sum} $`}
+            >
+              <Tag  className="mt-5 text-[#FEDDCA] w-[20px] mb-[29px]" />
+            </DashboardCard>
+            <DashboardCard
+              onClick={() => setOpen(true)}
+              title="Прибыль "
+              price={`${data?.order?.total_profit_sum} $  Возврат`}
+              price2={`${data?.order?.total_sum} $`}
+            >
+              <SquareArrowOutDownLeft  className="mt-5 text-[#B1F0B3] w-[20px] mb-[29px]" />
+            </DashboardCard>
+          </div>
+          <Kassa data={data} />
+        </div>
 
-      <SheetDashboar open={open} onOpenChange={(value)=>setOpen(value)}/>
-    </div>
-  );}
-  return<></>
+        <SheetDashboar  open={open} onOpenChange={(value) => setOpen(value)} />
+      </div>
+    );
+  }
+  return <></>;
 }

@@ -26,7 +26,7 @@ export default function DashboardCard({
         </div>
         {children}
         <p className="text-[15px]">{price}</p>
-        <p className="text-[24px] mt-1">{price2}</p>
+        <p className="text-[24px] text-nowrap mt-1">{price2}</p>
     </div>
   )
 }

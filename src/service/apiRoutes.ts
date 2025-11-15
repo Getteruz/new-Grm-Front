@@ -101,4 +101,5 @@ export const apiRoutes = {
   sizeOrderReport:"/size/order/reports",
   cashflowDealerIncome:'/cashflow/dealer/income',
   reportsHomePageCurrentMonth:'/reports/home-page/current-month',
+  reportsHomePageCurrentLeft:'/reports/home-page/current-left'
 } as const;

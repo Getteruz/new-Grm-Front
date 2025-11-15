@@ -3,7 +3,7 @@ import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";
 import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
-import { ReportsHomePageCurrentMonthQuery, ReportsHomePageCurrentMonthData } from "./types";
+import { ReportsHomePageCurrentMonthQuery, ReportsHomePageCurrentMonthData,ReportsHomePageCurrentLeftData ,} from "./types";
 
 interface IReportsHomePageCurrentMonth {
   options?: DefinedInitialDataOptions<ReportsHomePageCurrentMonthData>;
@@ -18,4 +18,16 @@ export const useReportsHomePageCurrentMonth = ({ options, queries }: IReportsHom
   });
 
 
+  interface IReportsHomePageCurrentLeft {
+    options?: DefinedInitialDataOptions<ReportsHomePageCurrentLeftData>;
+    queries?: ReportsHomePageCurrentMonthQuery;
+  }
+  export const useReportsHomePageCurrentLeft = ({ options, queries }: IReportsHomePageCurrentLeft) =>
+    useQuery({
+      ...options,
+      queryKey: [apiRoutes.reportsHomePageCurrentLeft, queries],
+      queryFn: () =>
+        getAllData<ReportsHomePageCurrentLeftData, ReportsHomePageCurrentMonthQuery>(apiRoutes.reportsHomePageCurrentLeft, queries),
+    });
   
+

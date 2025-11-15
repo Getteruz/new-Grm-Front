@@ -20,11 +20,11 @@ export default function Filter() {
     
   return (
     <>
-     <div className="flex gap-1 mt-16">
+     <div className="flex gap-1 w-full mt-16">
      <FilterSelect
             placeholder="все"
             defaultValue="clear"
-            className="w-[200px] h-[65px] bg-[#333333] text-white"
+            className="w-[170px] h-[65px] bg-[#333333] text-white"
             options={[{ value: "clear", label: "все" },{value:"#dealers",label:"Dealer"}, ...filialOption]}
             name="filial"
           />
@@ -32,7 +32,7 @@ export default function Filter() {
           options={MonthsArray}
           defaultValue={getMonth(new Date()) + 1 + ""}
           name="month"
-          className="w-[120px]  px-2 h-[62px]  "
+          className="w-[170px]  px-2 h-[62px]  "
         />
         <DateRangePicker  defaultMonth={month as unknown as Date}  className="w-full" toPlaceholder="до" fromPlaceholder="от" />
         </div>

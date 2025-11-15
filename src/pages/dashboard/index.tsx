@@ -7,14 +7,15 @@ import Filter from "./ui/filter";
 import Cards from "./ui/cards";
 import Kassa from "./ui/kassa";
 import { useState } from "react";
-import { SheetDashboar } from "./ui/drawer";
 import { useReportsHomePageCurrentLeft, useReportsHomePageCurrentMonth } from "./queries";
 import { useQueryState } from "nuqs";
 import { getMonth, getYear } from "date-fns";
+import { SheetDashboar } from "./tables";
+import { formatNumber } from "@/utils/farmatNumber";
 
 export default function Dashboard() {
   const { meUser } = useMeStore();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<string | null>(null);
   const [startDate] = useQueryState("startDate");
   const [endDate] = useQueryState("endDate");
   const [filial] = useQueryState("filial");
@@ -40,44 +41,46 @@ export default function Dashboard() {
   if (role === 12) {
     return (
       <div className="flex w-full  gap-2.5">
-        <Cards  leftData={leftData}/>
+        <Cards  setOpen={setOpen} leftData={leftData}/>
         <div className="w-full ">
           <Filter />
           <div className="text-white flex items-center rounded-xl gap-3 bg-[#333333] my-2.5 p-4 pl-6">
           <p className="text-[24px] mr-auto">Текущий месяц</p>
-          <p  className="text-[24px] opacity-50">{data?.totals?.total_kv?.toFixed(2)} м²</p>
-          <p className="text-[24px]">{data?.totals?.total_profit_sum?.toFixed(2)} $</p>
+          <p  className="text-[24px] opacity-50">{formatNumber(data?.totals?.total_kv || 0) } м²</p>
+          <p className="text-[24px]">{formatNumber(data?.totals?.total_profit_sum || 0) } $</p>
         </div>
           <div className="grid grid-cols-3 gap-2.5">
             <DashboardCard
-              onClick={() => setOpen(true)}
-              title="Продажа в долг "
-              price={`${data?.debt_order?.total_profit_sum || 0} $  Возврат`}
+              onClick={() => setOpen("Продажа в долг")}
+              title="Продажа в долг"
+              price={`${data?.debt_order?.total_profit_sum || 0} $`}
+              priceText={`Возврат`}
               price2={`${data?.debt_order?.total_sum || 0} $`}
             >
               <Tag  className="mt-5 text-[#FEDDCA] w-[20px] mb-[29px]" />
             </DashboardCard>
             <DashboardCard
-              onClick={() => setOpen(true)}
+              onClick={() => setOpen("Прибыль")}
               title="Прибыль "
-              price={`Текущий месяц `}
+              price=""
+              priceText={`Текущий месяц `}
               price2={`${data?.order?.total_sum ||0} $`}
             >
               <SquareArrowOutDownLeft  className="mt-5 text-[#B1F0B3] w-[20px] mb-[29px]" />
             </DashboardCard>
             <DashboardCard
-              onClick={() => setOpen(true)}
+              onClick={() => setOpen("Расход")}
               title="Расход "
-              price={`${data?.boss?.boss_expense || 0} & Босс`}
+              price={`${data?.boss?.boss_expense || 0} $`}
+              priceText={`Босс`}
               price2={`${data?.boss?.total_expense ||0} $`}
             >
               <SquareArrowOutUpRight  className="mt-5 text-[#FFACAC] w-[20px] mb-[29px]" />
             </DashboardCard>
           </div>
-          <Kassa data={data} />
+          <Kassa setOpen={setOpen} data={data} />
         </div>
-
-        <SheetDashboar  open={open} onOpenChange={(value) => setOpen(value)} />
+        <SheetDashboar  openType={open} onOpenChange={() => setOpen(null)} />
       </div>
     );
   }

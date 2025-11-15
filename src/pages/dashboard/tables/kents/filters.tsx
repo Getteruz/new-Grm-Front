@@ -1,0 +1,48 @@
+import FilterSelect from "@/components/filters-ui/filter-select";
+import { MonthsArray } from "@/consts";
+import { usefilialWarehouseFetch } from "@/pages/warehouse/remaider/queries";
+
+export default function Filters() {
+  
+  const { data } = usefilialWarehouseFetch({
+    queries: { limit: 50 },
+  });
+  const filialOption =
+    data?.pages[0]?.items?.map((e) => ({
+      label: e?.name,
+      value: e?.id,
+    })) || [];
+
+  return (
+    <div className="flex gap-4">
+      <FilterSelect
+        placeholder="все"
+        defaultValue="clear"
+        className="w-full bg-[#333333] text-white placeholder:text-white "
+        options={[{ value: "clear", label: "все" }, ...filialOption]}
+        name="filialKents"
+      />
+      <FilterSelect
+        placeholder="все"
+        className=" p-2 border-border border w-full  placeholder:text-white "
+        defaultValue="none"
+        options={[
+          {
+            label: "Отчет об остатке",
+            value: "none",
+          },
+          {
+            label: "Отчет о продажах",
+            value: "other",
+          },
+        ]}
+        name="typeOther"
+      />
+      <FilterSelect
+        options={MonthsArray}
+        name="monthKents"
+        className=" p-2 border-border border w-full  placeholder:text-white "
+      />
+    </div>
+  );
+}

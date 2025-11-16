@@ -6,9 +6,9 @@ import DashboardCard from "@/components/cards/dashboard-card";
 import Filter from "./ui/filter";
 import Cards from "./ui/cards";
 import Kassa from "./ui/kassa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useReportsHomePageCurrentLeft, useReportsHomePageCurrentMonth } from "./queries";
-import { useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 import { getMonth, getYear } from "date-fns";
 import { SheetDashboar } from "./tables";
 import { formatNumber } from "@/utils/farmatNumber";
@@ -19,20 +19,28 @@ export default function Dashboard() {
   const [startDate] = useQueryState("startDate");
   const [endDate] = useQueryState("endDate");
   const [filial] = useQueryState("filial");
-  const [month] = useQueryState("month");
+  const [,setManagerId] = useQueryState("managerId");
+  const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1+""));
   
   const { data } = useReportsHomePageCurrentMonth({
     queries: {
       startDate: startDate || undefined,
       endDate: endDate || undefined,
       filial_id: filial || undefined,
-      month:month || getMonth(new Date()) + 1 + "",
+      month:month,
       year: getYear(new Date()) || undefined,
 
     },
   });
   const { data:leftData } = useReportsHomePageCurrentLeft({});
 
+  useEffect(()=>{
+    if(open == "Маруф касса"){
+      setManagerId(data?.manager?.id || "")
+    }else{
+      setManagerId(data?.accountant?.id||"" )
+    }
+  },[data,open])
 
   const role = meUser?.position.role;
   if (role === 11) {

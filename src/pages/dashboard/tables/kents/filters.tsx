@@ -1,15 +1,17 @@
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { MonthsArray } from "@/consts";
-import { usefilialWarehouseFetch } from "@/pages/warehouse/remaider/queries";
+import useDeblsData from "@/pages/debt/table/queries";
+import { getMonth } from "date-fns";
 
 export default function Filters() {
   
-  const { data } = usefilialWarehouseFetch({
+  const { data } =
+  useDeblsData({
     queries: { limit: 50 },
   });
   const filialOption =
     data?.pages[0]?.items?.map((e) => ({
-      label: e?.name,
+      label: e?.fullName,
       value: e?.id,
     })) || [];
 
@@ -20,27 +22,23 @@ export default function Filters() {
         defaultValue="clear"
         className="w-full bg-[#333333] text-white placeholder:text-white "
         options={[{ value: "clear", label: "все" }, ...filialOption]}
-        name="filialKents"
+        name="debls"
       />
       <FilterSelect
         placeholder="все"
         className=" p-2 border-border border w-full  placeholder:text-white "
-        defaultValue="none"
+        defaultValue="clear"
         options={[
-          {
-            label: "Отчет об остатке",
-            value: "none",
-          },
-          {
-            label: "Отчет о продажах",
-            value: "other",
-          },
+          { value: "clear", label: "все" },
+          { value: "Приход", label: "Приход" },
+          { value: "Расход", label: "Rasxod" },
         ]}
-        name="typeOther"
+        name="typeKents"
       />
       <FilterSelect
         options={MonthsArray}
         name="monthKents"
+        defaultValue={getMonth(new Date()) + 1 + ""}
         className=" p-2 border-border border w-full  placeholder:text-white "
       />
     </div>

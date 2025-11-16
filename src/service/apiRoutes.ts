@@ -42,6 +42,7 @@ export const apiRoutes = {
   cashflow: "/cashflow",
   cashflowForMainManager:'/cashflow/for/main-manager',
   cashflowTypes: "/cashflow-types",
+  cashflowTypesByManagers:'/cashflow-types/by/managers',
   cashflowFilial :'/cashflow/for/filial-manager',
   openKassa: "/kassa/open-kassa",
   qrBaseCode: "/qr-base/find-by",
@@ -101,5 +102,7 @@ export const apiRoutes = {
   sizeOrderReport:"/size/order/reports",
   cashflowDealerIncome:'/cashflow/dealer/income',
   reportsHomePageCurrentMonth:'/reports/home-page/current-month',
-  reportsHomePageCurrentLeft:'/reports/home-page/current-left'
+  reportsHomePageCurrentLeft:'/reports/home-page/current-left',
+  reportsHomePageCurrentMonthManagers:'/reports/home-page/current-month/managers',
+  reportsHomePageCurrentLefKents:'/reports/home-page/current-lef/kents'
 } as const;

@@ -7,10 +7,12 @@ export type ReportsHomePageCurrentMonthData = {
   };
   manager: {
     income: number;
+    id:string;
     expense: number;
   };
   accountant: {
     income: number;
+    id:string;
     expense: number;
   };
   order: {

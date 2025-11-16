@@ -8,13 +8,17 @@ import RemainderTable from "./remaider";
 import KentsTable from "./kents";
 import KassaManagerTable from "./kassaManager";
 import DilerTable from "./deller";
+import ExpenseTable from "./expense";
+import ProfitTable from "./profit";
 
 const componetObject = {
   "Остатка": RemainderTable,
   "Кенты":KentsTable,
   "Маруф касса":KassaManagerTable,
   "Мукаддас касса":KassaManagerTable,
-  "Дилер":DilerTable
+  "Дилер":DilerTable,
+  "Прибыль":ProfitTable,
+  "Расход":ExpenseTable,
 }
 export function SheetDashboar({
   openType,

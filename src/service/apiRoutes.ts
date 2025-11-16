@@ -43,6 +43,7 @@ export const apiRoutes = {
   cashflowForMainManager:'/cashflow/for/main-manager',
   cashflowTypes: "/cashflow-types",
   cashflowTypesByManagers:'/cashflow-types/by/managers',
+  cashflowTypesForCashier:"/cashflow-types/for/cashier",
   cashflowFilial :'/cashflow/for/filial-manager',
   openKassa: "/kassa/open-kassa",
   qrBaseCode: "/qr-base/find-by",
@@ -104,5 +105,6 @@ export const apiRoutes = {
   reportsHomePageCurrentMonth:'/reports/home-page/current-month',
   reportsHomePageCurrentLeft:'/reports/home-page/current-left',
   reportsHomePageCurrentMonthManagers:'/reports/home-page/current-month/managers',
+  reportsHomePageCurrentMonthExpense:'/reports/home-page/current-month/expense',
   reportsHomePageCurrentLefKents:'/reports/home-page/current-lef/kents'
 } as const;

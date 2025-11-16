@@ -37,7 +37,7 @@ export default function Dashboard() {
   useEffect(()=>{
     if(open == "Маруф касса"){
       setManagerId(data?.manager?.id || "")
-    }else{
+    }else if (open == "Мукаддас касса"){
       setManagerId(data?.accountant?.id||"" )
     }
   },[data,open])

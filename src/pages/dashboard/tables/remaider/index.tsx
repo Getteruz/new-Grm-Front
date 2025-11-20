@@ -37,6 +37,7 @@ export default function RemainderTable() {
             isRowClickble={false}
             hasHeader={false}
             ischeckble={false}
+            className="max-h-[calc(100vh-225px)]  scrollCastom"
             classNameBody="border-none"
             fetchNextPage={fetchNextPage}
             hasNextPage={hasNextPage ?? false}

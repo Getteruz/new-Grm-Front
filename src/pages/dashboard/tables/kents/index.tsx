@@ -52,6 +52,7 @@ export default function KentsTable() {
         columns={Columns}
         ischeckble={false}
         hasHeader={false}
+        className="max-h-[calc(100vh-225px)]  scrollCastom"
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}

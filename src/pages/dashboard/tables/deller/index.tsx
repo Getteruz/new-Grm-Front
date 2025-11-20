@@ -41,7 +41,7 @@ export default function DilerTable() {
       <div className="px-5 bg-card ">
         <DataTable
           isLoading={isLoading}
-          className="max-h-[calc(100vh-140px)]  scrollCastom"
+          className="max-h-[calc(100vh-225px)]  scrollCastom"
           classNameBody="border-none"
           columns={collactionColumns}
           data={flatData as unknown as TransferCollectionDealerData[]}

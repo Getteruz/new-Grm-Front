@@ -43,7 +43,7 @@ export const useDataCashflow = ({ queries ,enabled}: IData) =>
         limit: 10,
       }),
     getNextPageParam: (lastPage) => {
-      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+      if (lastPage.meta?.currentPage <= lastPage.meta?.totalPages) {
         return lastPage?.meta?.currentPage + 1;
       } else {
         return null;
@@ -63,7 +63,7 @@ export const useDataKassa = ({ queries ,enabled =true}: IKassaData) =>
         limit: 30,
       }),
     getNextPageParam: (lastPage) => {
-      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+      if (lastPage.meta?.currentPage <= lastPage.meta?.totalPages) {
         return lastPage?.meta?.currentPage + 1;
       } else {
         return null;

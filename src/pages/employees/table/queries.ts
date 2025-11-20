@@ -25,7 +25,7 @@ const useData = ({ options, queries }: ITransfers) =>
         limit: 100,
       }),
     getNextPageParam: (lastPage) => {
-      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+      if (lastPage.meta?.currentPage <= lastPage.meta?.totalPages) {
         return lastPage?.meta?.currentPage + 1;
       } else {
         return null;

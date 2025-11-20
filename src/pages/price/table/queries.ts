@@ -30,7 +30,7 @@ const useDataFetch = ({ options, queries, filialId,enabled=true }: ITransfers) =
       }),
       
     getNextPageParam: (lastPage) => {
-      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+      if (lastPage.meta?.currentPage <= lastPage.meta?.totalPages) {
         return lastPage?.meta?.currentPage + 1;
       } else {
         return null;

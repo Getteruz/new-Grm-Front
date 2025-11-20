@@ -38,6 +38,7 @@ export default function ExpenseTable() {
         isLoading={isLoading}
         columns={Columns}
         ischeckble={false}
+        className="max-h-[calc(100vh-225px)]  scrollCastom"
         hasHeader={false}
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}

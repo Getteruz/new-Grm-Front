@@ -43,7 +43,7 @@ import {
           limit: queries?.limit|| 10,
         }),
       getNextPageParam: (lastPage) => {
-        if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+        if (lastPage?.meta?.currentPage <= lastPage?.meta?.totalPages) {
           return lastPage?.meta?.currentPage + 1;
         } else {
           return null;

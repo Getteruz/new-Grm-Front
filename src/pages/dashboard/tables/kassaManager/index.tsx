@@ -40,6 +40,7 @@ export default function KassaManagerTable() {
         isRowClickble={false}
         isLoading={isLoading}
         columns={Columns}
+        className="max-h-[calc(100vh-225px)]  scrollCastom" 
         ischeckble={false}
         hasHeader={false}
         data={flatData ?? []}

@@ -56,6 +56,7 @@ export default function ProfitTable() {
                 ? FactoryColumns
                 : CollectionColumns
           }
+          className="max-h-[calc(100vh-225px)]  scrollCastom"
           classNameBody="border-none"
           hasHeader={false}
           data={collections || []}

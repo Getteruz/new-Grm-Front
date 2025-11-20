@@ -14,7 +14,7 @@ export const collactionColumns: ColumnDef<TransferCollectionDealerData>[] = [
     id: "total_count",
     accessorKey: "total_count",
     cell: ({ row }) => {
-      return <p>{row.original?.total_count}  шт</p>;
+      return <p className="py-4">{row.original?.total_count}  шт</p>;
     },
   },
 
@@ -43,6 +43,4 @@ export const collactionColumns: ColumnDef<TransferCollectionDealerData>[] = [
       return <p>{Number(row.original?.total_profit_sum).toFixed(2)} $</p>;
     },
   },
-
-
 ];

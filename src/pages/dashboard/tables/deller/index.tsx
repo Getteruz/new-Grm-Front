@@ -38,17 +38,20 @@ export default function DilerTable() {
           {data?.pages?.[0]?.totals?.total_profit_sum || 0} $
         </p>
       </div>
-      <DataTable
-        isLoading={isLoading}
-        className="max-h-[calc(100vh-140px)]  scrollCastom"
-        columns={collactionColumns}
-        data={flatData as unknown as TransferCollectionDealerData[]}
-        fetchNextPage={fetchNextPage}
-        hasNextPage={hasNextPage ?? false}
-        ischeckble={false}
-        hasHeader={false}
-        isFetchingNextPage={isFetchingNextPage}
-      />
+      <div className="px-5 bg-card ">
+        <DataTable
+          isLoading={isLoading}
+          className="max-h-[calc(100vh-140px)]  scrollCastom"
+          classNameBody="border-none"
+          columns={collactionColumns}
+          data={flatData as unknown as TransferCollectionDealerData[]}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage ?? false}
+          ischeckble={false}
+          hasHeader={false}
+          isFetchingNextPage={isFetchingNextPage}
+        />
+      </div>
     </>
   );
 }

@@ -31,7 +31,7 @@ function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
     <tbody
       data-slot="table-body"
       // className={cn("[&_tr:last-child]:border-0", className)}
-      className="w-full  rounded-[3px] border border-border"
+      className={`w-full  rounded-[3px] border border-border ${className && className}`}
       {...props}
     />
   );
@@ -55,7 +55,7 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "hover:bg-muted/50 text-primary data-[state=selected]:bg-muted  border-b border-border transition-colors",
+        "hover:bg-muted/50 text-primary data-[state=selected]:bg-muted  border-b border-border/60 transition-colors",
         className
       )}
       {...props}

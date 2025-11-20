@@ -4,11 +4,9 @@ import { parseAsString, useQueryState } from "nuqs";
 import { useFetchData } from "./queries";
 import { apiRoutes } from "@/service/apiRoutes";
 import { DataTable } from "@/components/ui/data-table";
-import { CountryColumns } from "@/pages/reports/m-manager/remaider/columns";
-import {
-  CollectionColumns,
-  FactoryColumns,
-} from "@/pages/warehouse/remaider/columns";
+import { CountryColumns  , CollectionColumns,
+  FactoryColumns,} from "./columns";
+
 
 export default function ProfitTable() {
   const [filial] = useQueryState("filial");
@@ -41,21 +39,33 @@ export default function ProfitTable() {
   return (
     <>
       <Filters />
-      <DataTable
-        columns={
-          typeProfit == "country"
-            ? CountryColumns
-            : typeProfit == "factory"
-              ? FactoryColumns
-              : CollectionColumns
-        }
-        data={collections || []}
-        isLoading={isLoading}
-        isRowClickble={false}
-        fetchNextPage={fetchNextPage}
-        hasNextPage={hasNextPage ?? false}
-        isFetchingNextPage={isFetchingNextPage}
-      />
+
+      <div className="bg-[#EEEEEE] flex">
+            <p className=" p-[25px]   text-[17px] w-full">Итого </p>
+            <p className=" p-[25px]  text-[17px] w-full">{data?.pages?.[0]?.meta.totals?.totalKv || 0} м² </p>
+            <p className=" p-[25px]  text-[17px] w-full">{data?.pages?.[0]?.meta.totals?.totalPrice || 0} $ </p>
+            <p className=" p-[25px]  text-[17px] w-full">{data?.pages?.[0]?.meta.totals?.totalNetProfitPrice || 0} $ </p>
+        </div> 
+      <div className="px-5 bg-card ">
+        <DataTable
+          ischeckble={false}
+          columns={
+            typeProfit == "country"
+              ? CountryColumns
+              : typeProfit == "factory"
+                ? FactoryColumns
+                : CollectionColumns
+          }
+          classNameBody="border-none"
+          hasHeader={false}
+          data={collections || []}
+          isLoading={isLoading}
+          isRowClickble={false}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage ?? false}
+          isFetchingNextPage={isFetchingNextPage}
+        />
+      </div>
     </>
   );
 }

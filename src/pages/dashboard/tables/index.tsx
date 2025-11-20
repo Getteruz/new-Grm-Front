@@ -30,9 +30,9 @@ export function SheetDashboar({
   
   return (
     <Sheet  open={Boolean(openType)} onOpenChange={onOpenChange}>
-      <SheetContent className="min-w-[680px]">
+      <SheetContent className="min-w-[680px] gap-0">
         <SheetHeader>
-          <SheetTitle>{openType}</SheetTitle>
+          <SheetTitle className="mx-4">{openType}</SheetTitle>
         </SheetHeader>
 
         { openType ? componetObject[openType as keyof typeof componetObject]?.() : "" }

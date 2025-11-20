@@ -15,7 +15,7 @@ export default function Filters() {
     })) || [];
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-1 px-5 my-4">
       <FilterSelect
         placeholder="все"
         defaultValue="clear"

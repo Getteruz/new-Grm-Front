@@ -15,13 +15,13 @@ export default function Filters() {
     })) || [];
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-1 px-5 my-4">
      <FilterSelect
         placeholder="все"
         defaultValue="clear"
         className="w-full h-[65px] bg-[#333333] text-white"
         options={[
-          { value: "clear", label: "все" },
+          { value: "clear", label: "Все филиал" },
           { value: "#dealers", label: "Dealer" },
           ...filialOption,
         ]}
@@ -35,7 +35,7 @@ export default function Filters() {
           },
           {
             value: "factory",
-            label: "Фабрика",
+            label: "Поставшик",
           },
           {
             value: "collection",

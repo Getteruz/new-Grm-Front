@@ -34,7 +34,7 @@ export default function ProfitTable() {
       enabled: true,
     });
 
-  const collections = data?.pages?.flatMap((page) => page?.data || []) || [];
+  const collections = data?.pages?.flatMap((page) => page?.data ||page?.items  || []) || [];
 
   return (
     <>

@@ -2,8 +2,12 @@ import DashboardCard from '@/components/cards/dashboard-card'
 import { DollarSign, Italic } from 'lucide-react'
 import { ReportsHomePageCurrentLeftData } from '../types'
 import { Progress } from '@/components/ui/progress'
+import { parseAsFloat, parseAsInteger, useQueryState } from 'nuqs'
 
 export default function Cards({leftData,setOpen}:{leftData:ReportsHomePageCurrentLeftData|undefined,setOpen:(value:string)=>void}) {
+  
+  const [,dellerowed] = useQueryState("dellerowed",parseAsFloat);
+  const [,dellergiven] = useQueryState("dellergiven",parseAsFloat);
   return (
     <div className="w-full ">
     <h3 className="text-[72px] ml-[13px]">{leftData?.totals?.total_sum} $</h3>
@@ -27,23 +31,27 @@ export default function Cards({leftData,setOpen}:{leftData:ReportsHomePageCurren
         onClick={()=>setOpen("Кенты")}
         icons={() => <DollarSign className="bg-gray-300 text-white w-[20px] h-[20px] p-1 rounded-full"/>}
         price={`+${leftData?.kents?.income} $`}
-        price2={`-${leftData?.kents?.income} $`} 
+        price2={`-${leftData?.kents?.debt_balance} $`} 
       >
         <div className="h-30"></div>
       </DashboardCard>
       <DashboardCard
         title="Дилер"
-        onClick={()=>setOpen("Дилер")}
+        onClick={()=>{
+          setOpen("Дилер")
+         dellerowed(leftData?.dealer?.total_owed||0) 
+          dellergiven(leftData?.dealer?.total_give||0)
+        }}
         icons={() => <DollarSign className="bg-gray-300 text-white w-[20px] h-[20px] p-1 rounded-full"/>}
-        price={`+${leftData?.dealer?.total_owed} $`}
-        price2={`-${leftData?.dealer?.total_give} $`} 
+        price={`+${leftData?.dealer?.total_give} $`}
+        price2={`-${leftData?.dealer?.total_owed}  $`} 
       >
         <div className="h-30"></div>
       </DashboardCard>
 
       <DashboardCard
         title="План филиалов"
-        onClick={()=>setOpen("План филиалов")}
+        // onClick={()=>setOpen("План филиалов")}
         icons={() => <DollarSign className="bg-gray-300 text-white w-[20px] h-[20px] p-1 rounded-full"/>}
         price={`${leftData?.filial_plan_totals?.details?.currentTotalSell} $`}
         price2={`${Number(leftData?.filial_plan_totals?.percent)} %`} 
@@ -53,7 +61,7 @@ export default function Cards({leftData,setOpen}:{leftData:ReportsHomePageCurren
       </DashboardCard>
       <DashboardCard
         title="План сотрудников"
-        onClick={()=>setOpen("План сотрудников")}
+        // onClick={()=>setOpen("План сотрудников")}
         icons={() => <DollarSign className="bg-gray-300 text-white w-[20px] h-[20px] p-1 rounded-full"/>}
         price={`${leftData?.user_plan_totals?.dailyCollected} $`}
         price2={`${leftData?.user_plan_totals?.gapPercent} %`} 

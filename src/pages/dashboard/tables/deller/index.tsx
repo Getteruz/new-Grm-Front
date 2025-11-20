@@ -1,57 +1,68 @@
+import { parseAsFloat, parseAsInteger, useQueryState } from "nuqs";
+
 import { DataTable } from "@/components/ui/data-table";
-import useTransferDealersFetch from "@/pages/deller/single/queries";
-import { parseAsInteger, useQueryState } from "nuqs";
-import { collactionColumns } from "./columns";
-import { TransferCollectionDealerData } from "@/pages/reports/d-manager/transfer/type";
-import Filters from "./filters";
+import ActionPageDealer from "@/pages/filial/formDealer";
+
+import { Columns } from "./columns";
+import useDataFetch from "@/pages/deller/table/queries";
+import DilerOneTable from "../deller-one";
+import { useState } from "react";
 
 export default function DilerTable() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
-  const [dellerFilial] = useQueryState("dellerFilial");
-
+  const [dellerFilial, setDellerFilial] = useState<string | null>(null);
+  const [dellerowed] = useQueryState("dellerowed",parseAsFloat);
+  const [dellergiven] = useQueryState("dellergiven",parseAsFloat);
+  // const [search ] = useQueryState("search");
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useTransferDealersFetch({
+    useDataFetch({
       queries: {
-        limit: limit,
-        page: page,
-        toId: dellerFilial || undefined,
-        mode: "collection",
+        limit,
+        page,
+        type: "dealer",
+        // search:search || undefined,
       },
     });
-
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
+
   return (
     <>
-      <Filters/>
-      <div className="bg-[#EEEEEE] flex">
-        <p className=" p-[25px] border-border border-r  text-[17px] w-full">
-          Итого
-        </p>
-        <p className=" p-[25px] border-border border-r  text-[17px] w-full">
-          {data?.pages?.[0]?.totals?.totalKv || 0} м² 
-        </p>
-        <p className=" p-[25px] border-border border-r  text-[17px] w-full">
-          {data?.pages?.[0]?.totals?.total_sum || 0} $
-        </p>
-        <p className=" p-[25px]  text-[17px] w-full">
-          {data?.pages?.[0]?.totals?.total_profit_sum || 0} $
-        </p>
-      </div>
-      <div className="px-5 bg-card ">
-        <DataTable
-          isLoading={isLoading}
-          className="max-h-[calc(100vh-225px)]  scrollCastom"
-          classNameBody="border-none"
-          columns={collactionColumns}
-          data={flatData as unknown as TransferCollectionDealerData[]}
-          fetchNextPage={fetchNextPage}
-          hasNextPage={hasNextPage ?? false}
-          ischeckble={false}
-          hasHeader={false}
-          isFetchingNextPage={isFetchingNextPage}
-        />
-      </div>
+      {!dellerFilial ? (
+        <>
+          {" "}
+          <div className="bg-[#EEEEEE] flex">
+            <p className=" p-[25px] border-border border-r  text-[17px] w-full">
+              Итого
+            </p>
+            <p className=" p-[25px] border-border border-r  text-[17px] w-full">
+             - {dellerowed} $
+            </p>
+            <p className=" p-[25px] border-border border-r  text-[17px] w-full">
+            + {dellergiven} $
+            </p>
+          </div>
+          <div className="px-5 bg-card ">
+            <DataTable
+              isRowClickble={false}
+              className="max-h-[calc(100vh-135px)]  scrollCastom"
+              classNameBody="border-none"
+              isLoading={isLoading}
+              columns={Columns}
+              ischeckble={false}
+              hasHeader={false}
+              data={flatData ?? []}
+              onRowClick={(row) => setDellerFilial(row?.id)}
+              fetchNextPage={fetchNextPage}
+              hasNextPage={hasNextPage ?? false}
+              isFetchingNextPage={isFetchingNextPage}
+            />
+            <ActionPageDealer />
+          </div>
+        </>
+      ) : (
+        <DilerOneTable setDellerFilial={setDellerFilial} dellerFilial={dellerFilial} />
+      )}
     </>
   );
 }

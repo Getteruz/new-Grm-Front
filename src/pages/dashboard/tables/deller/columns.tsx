@@ -1,46 +1,24 @@
-import { TransferCollectionDealerData } from "@/pages/reports/d-manager/transfer/type";
+import { TData } from "@/pages/deller/type";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const collactionColumns: ColumnDef<TransferCollectionDealerData>[] = [
+export const Columns: ColumnDef<TData>[] = [
  
   {
     header: "Название",
-    id: "title",
     accessorKey: "title",
+    id: "title",
   },
-
   {
-    header: "count",
-    id: "total_count",
-    accessorKey: "total_count",
-    cell: ({ row }) => {
-      return <p className="py-4">{row.original?.total_count}  шт</p>;
+    header: "Задолжность",
+    cell: ({row}) => {
+      return <p className="text-[#FF6600] py-4">{row?.original?.owed.toFixed(2) } $</p>;
+    },
+  },
+  {
+    header: "Дано",
+    cell: ({row}) => {
+      return <p className="text-[#89A143]">{row?.original?.given.toFixed(2)} $</p>;
     },
   },
 
-  {
-    header: "Обёm",
-    id: "total_kv",
-    cell: ({ row }) => {
-      return <p>{Number(row.original?.total_kv).toFixed(2)} м²</p>;
-    },
-  },
-  {
-    header: "Сумма",
-    cell: ({ row }) => {
-   
-      return (
-        <>
-          <p>{(Number(row?.original?.comingPrice) * Number(row.original?.total_kv)).toFixed(1)}$</p>
-        </>
-      );
-    },
-  },
-  {
-    header: "Нavar",
-    id: "total_profit_sum",
-    cell: ({ row }) => {
-      return <p>{Number(row.original?.total_profit_sum).toFixed(2)} $</p>;
-    },
-  },
 ];

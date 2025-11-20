@@ -200,4 +200,5 @@ export type TransferQuery = {
   progress?: object;
   mode?: string;
   toId?: string;
+  month?:string;
 };

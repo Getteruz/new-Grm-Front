@@ -47,6 +47,7 @@ export interface SalesData {
 }
 
 export interface ICountryReportData {
+  items: SalesData[]
   data: SalesData[];
   meta: Meta
 }

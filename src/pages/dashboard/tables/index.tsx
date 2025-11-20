@@ -4,12 +4,14 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import RemainderTable from "./remaider";
+import RemainderTable from "./remaider/index";
 import KentsTable from "./kents";
 import KassaManagerTable from "./kassaManager";
 import DilerTable from "./deller";
 import ExpenseTable from "./expense";
 import ProfitTable from "./profit";
+import SaleTable from "./saleTable";
+import SalesDebtTable from "./saleDebtTable";
 
 const componetObject = {
   "Остатка": RemainderTable,
@@ -19,6 +21,8 @@ const componetObject = {
   "Дилер":DilerTable,
   "Прибыль":ProfitTable,
   "Расход":ExpenseTable,
+  "Продажа":SaleTable,
+  "Продажа в долг":SalesDebtTable
 }
 export function SheetDashboar({
   openType,

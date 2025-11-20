@@ -23,7 +23,7 @@ export default function DashboardCard({
   return (
     <div onClick={onClick} className={`${className} p-[30px] rounded-2xl bg-white border-border border`}>
         <div className="flex items-center mb-auto justify-between"> 
-            <p className="text-[17px]">{title}</p>
+            <p className="text-[17px] text-nowrap">{title}</p>
             { icons&&icons()}
         </div>
         {children}

@@ -7,12 +7,12 @@ export type ReportsHomePageCurrentMonthData = {
   };
   manager: {
     income: number;
-    id:string;
+    id: string;
     expense: number;
   };
   accountant: {
     income: number;
-    id:string;
+    id: string;
     expense: number;
   };
   order: {
@@ -36,9 +36,9 @@ export type ReportsHomePageCurrentMonthData = {
 
 export type ReportsHomePageCurrentLeftData = {
   totals: {
-    total_sum:number;
+    total_sum: number;
     total_profit_sum: number;
-    total_kv:number;
+    total_kv: number;
     total_count: number;
   };
   dealer: {
@@ -55,6 +55,25 @@ export type ReportsHomePageCurrentLeftData = {
     income: number;
     expense: number;
     debt_balance: number;
+  };
+  user_plan_totals: {
+    dailyPlan: number;
+    dailyCollected:number;
+    performancePercent: number;
+    gapPercent:number;
+    trend: string;
+    message: string;
+  };
+  filial_plan_totals: {
+    trend: string;
+    percent: string;
+    message: string;
+    details: {
+      currentMonthAvg: string;
+      previousMonthAvg: string;
+      currentTotalSell: string;
+      previousTotalSell: string;
+    };
   };
 };
 

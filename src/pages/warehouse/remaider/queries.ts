@@ -21,12 +21,11 @@ interface IcountryReport {
   enabled: boolean;
 }
 
-interface IModelReport  {
+interface IModelReport {
   options?: DefinedInitialDataInfiniteOptions<IModelData>;
   queries?: TQuery;
   enabled: boolean;
 }
-
 
 export const usefilialWarehouseFetch = ({ options, queries }: ITransfers) =>
   useInfiniteQuery({
@@ -113,7 +112,34 @@ export const useCollectionReport = ({
     ...options,
     queryKey: [apiRoutes.collectionReportMonthly, queries],
     queryFn: ({ pageParam = 1 }) =>
-      getAllData<ICountryReportData, TQuery>(apiRoutes.collectionReportMonthly, {
+      getAllData<ICountryReportData, TQuery>(
+        apiRoutes.collectionReportMonthly,
+        {
+          ...queries,
+          page: pageParam as number,
+          limit: queries?.limit || 10,
+        }
+      ),
+    getNextPageParam: (lastPage) => {
+      if (
+        lastPage?.meta?.pagination?.page <=
+        lastPage?.meta?.pagination?.totalPages
+      ) {
+        return Number(lastPage?.meta?.pagination?.page) + 1;
+      } else {
+        return null;
+      }
+    },
+    enabled,
+    initialPageParam: 1,
+  });
+
+export const useModelReport = ({ options, enabled, queries }: IModelReport) =>
+  useInfiniteQuery({
+    ...options,
+    queryKey: [apiRoutes.modelReport, queries],
+    queryFn: ({ pageParam = 1 }) =>
+      getAllData<IModelData, TQuery>(apiRoutes.modelReport, {
         ...queries,
         page: pageParam as number,
         limit: queries?.limit || 10,
@@ -132,60 +158,26 @@ export const useCollectionReport = ({
     initialPageParam: 1,
   });
 
-  export const useModelReport = ({
-    options,
+export const useSizeReport = ({ options, enabled, queries }: IModelReport) =>
+  useInfiniteQuery({
+    ...options,
+    queryKey: [apiRoutes.SizeReport, queries],
+    queryFn: ({ pageParam = 1 }) =>
+      getAllData<IModelData, TQuery>(apiRoutes.SizeReport, {
+        ...queries,
+        page: pageParam as number,
+        limit: queries?.limit || 10,
+      }),
+    getNextPageParam: (lastPage) => {
+      if (
+        lastPage?.meta?.pagination?.page <=
+        lastPage?.meta?.pagination?.totalPages
+      ) {
+        return Number(lastPage?.meta?.pagination?.page) + 1;
+      } else {
+        return null;
+      }
+    },
     enabled,
-    queries,
-  }: IModelReport) =>
-    useInfiniteQuery({
-      ...options,
-      queryKey: [apiRoutes.modelReport, queries],
-      queryFn: ({ pageParam = 1 }) =>
-        getAllData<IModelData, TQuery>(apiRoutes.modelReport, {
-          ...queries,
-          page: pageParam as number,
-          limit: queries?.limit || 10,
-        }),
-      getNextPageParam: (lastPage) => {
-        if (
-          lastPage?.meta?.pagination?.page <=
-          lastPage?.meta?.pagination?.totalPages
-        ) {
-          return Number(lastPage?.meta?.pagination?.page) + 1;
-        } else {
-          return null;
-        }
-      },
-      enabled,
-      initialPageParam: 1,
-    });
-  
-
-    export const useSizeReport = ({
-      options,
-      enabled,
-      queries,
-    }: IModelReport) =>
-      useInfiniteQuery({
-        ...options,
-        queryKey: [apiRoutes.SizeReport, queries],
-        queryFn: ({ pageParam = 1 }) =>
-          getAllData<IModelData, TQuery>(apiRoutes.SizeReport, {
-            ...queries,
-            page: pageParam as number,
-            limit: queries?.limit || 10,
-          }),
-        getNextPageParam: (lastPage) => {
-          if (
-            lastPage?.meta?.pagination?.page <=
-            lastPage?.meta?.pagination?.totalPages
-          ) {
-            return Number(lastPage?.meta?.pagination?.page) + 1;
-          } else {
-            return null;
-          }
-        },
-        enabled,
-        initialPageParam: 1,
-      });
-    
+    initialPageParam: 1,
+  });

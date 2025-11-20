@@ -2,7 +2,7 @@ import DashboardCard from '@/components/cards/dashboard-card'
 import { DollarSign, Italic } from 'lucide-react'
 import { ReportsHomePageCurrentLeftData } from '../types'
 import { Progress } from '@/components/ui/progress'
-import { parseAsFloat, parseAsInteger, useQueryState } from 'nuqs'
+import { parseAsFloat, useQueryState } from 'nuqs'
 
 export default function Cards({leftData,setOpen}:{leftData:ReportsHomePageCurrentLeftData|undefined,setOpen:(value:string)=>void}) {
   

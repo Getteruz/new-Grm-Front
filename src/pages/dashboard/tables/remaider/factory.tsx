@@ -4,7 +4,6 @@ import { useFactoryReport } from "@/pages/reports/m-manager/remaider/queries";
 
 import { parseAsString, useQueryState } from "nuqs";
 import { Dispatch, SetStateAction } from "react";
-import {  useParams } from "react-router-dom";
 
 export default function FoctoryRemainderTable({
   setRemainder,

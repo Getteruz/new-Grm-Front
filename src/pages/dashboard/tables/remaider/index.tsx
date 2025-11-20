@@ -17,6 +17,8 @@ export default function RemainderTable() {
     factory: <FoctoryRemainderTable remainder={remainder} setRemainder={setRemainder} />,
   };
 
+  console.log(remainder)
+
   return (
     <>
       {remainderTable?.[remainder.name]}

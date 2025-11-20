@@ -1,6 +1,7 @@
 import { DataTable } from "@/components/ui/data-table";
 import { FactoryColumns } from "@/pages/reports/m-manager/remaider/columns";
 import { useFactoryReport } from "@/pages/reports/m-manager/remaider/queries";
+import { MoveLeft } from "lucide-react";
 
 import { parseAsString, useQueryState } from "nuqs";
 import { Dispatch, SetStateAction } from "react";
@@ -12,17 +13,19 @@ export default function FoctoryRemainderTable({
   setRemainder: Dispatch<
     SetStateAction<{
       id: string;
+      oldId : string;
       name: string;
     }>
   >;
   remainder?: {
     id: string;
+    oldId: string;
     name: string;
   };
 }) {
   const [filialId] = useQueryState("filial", parseAsString);
   const [month] = useQueryState("month", parseAsString);
-  
+
   const [typeOther] = useQueryState(
     "typeOther",
     parseAsString.withDefault("none")
@@ -42,6 +45,19 @@ export default function FoctoryRemainderTable({
 
   return (
     <>
+       <div className="flex gap-1 px-5  my-4">
+        <div
+          onClick={() => setRemainder({
+            id: remainder?.oldId || "",
+            oldId:"",
+            name: "country",
+          })}
+          className="bg-primary cursor-pointer p-4 w-[120px] rounded-2xl flex items-center gap-2 text-white"
+        >
+          <MoveLeft />
+          <p>назад</p>
+        </div>
+      </div>
       <div className="bg-[#EEEEEE] flex">
         <p className=" p-[25px] border-border border-r  text-[17px] w-full">
           Итого
@@ -56,28 +72,29 @@ export default function FoctoryRemainderTable({
           {data?.pages?.[0]?.meta.totals?.totalCount || 0} шт
         </p>
       </div>
-
+   
       <div className="px-5 bg-card ">
-          <DataTable
-            columns={FactoryColumns}
-            data={collections || []}
-            isLoading={isLoading}
-            isRowClickble={false}
-            hasHeader={false}
-            ischeckble={false}
-            onRowClick={(row) => { 
-              setRemainder({
-                id: row.id ||"",
-                name: "",
-              })
-            }}
-            className="max-h-[calc(100vh-135px)]  scrollCastom"
-            classNameBody="border-none"
-            fetchNextPage={fetchNextPage}
-            hasNextPage={hasNextPage ?? false}
-            isFetchingNextPage={isFetchingNextPage}
-          />
-        </div>
+        <DataTable
+          columns={FactoryColumns}
+          data={collections || []}
+          isLoading={isLoading}
+          isRowClickble={false}
+          hasHeader={false}
+          ischeckble={false}
+          onRowClick={(row) => {
+            setRemainder({
+              id: row?.factory?.id || "",
+              oldId: remainder?.id || "",
+              name: "collection",
+            });
+          }}
+          className="max-h-[calc(100vh-135px)]  scrollCastom"
+          classNameBody="border-none"
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage ?? false}
+          isFetchingNextPage={isFetchingNextPage}
+        />
+      </div>
     </>
   );
 }

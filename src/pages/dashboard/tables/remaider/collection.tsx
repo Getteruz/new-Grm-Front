@@ -1,11 +1,12 @@
-import { useCountryReport } from "@/pages/reports/m-manager/remaider/queries";
-import Filters from "./filters";
-import { parseAsString, useQueryState } from "nuqs";
 import { DataTable } from "@/components/ui/data-table";
-import { CountryColumns } from "../profit/columns";
+import { CollectionColumns } from "@/pages/reports/m-manager/remaider/columns";
+import { useCollectionReport } from "@/pages/reports/m-manager/remaider/queries";
+import { MoveLeft } from "lucide-react";
+
+import { parseAsString, useQueryState } from "nuqs";
 import { Dispatch, SetStateAction } from "react";
 
-export default function CountryRemainderTable({
+export default function CollectionTable({
   setRemainder,
   remainder,
 }: {
@@ -22,26 +23,44 @@ export default function CountryRemainderTable({
     name: string;
   };
 }) {
-  const [filialRemaider] = useQueryState("filialRemaider");
-  const [monthRemaider] = useQueryState("monthRemaider");
+  const [filialId] = useQueryState("filial", parseAsString);
+  const [month] = useQueryState("month", parseAsString);
+  const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
   const [typeOther] = useQueryState(
     "typeOther",
     parseAsString.withDefault("none")
   );
+
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useCountryReport({
+    useCollectionReport({
       queries: {
-        filialId: filialRemaider || undefined,
-        month: monthRemaider || undefined,
+        filialId: filialId || undefined,
+        month: month || undefined,
+        factory: remainder?.id || undefined,
         typeOther,
       },
-      enabled: true,
+      enabled: sort == "delears",
     });
 
   const collections = data?.pages?.flatMap((page) => page?.data || []) || [];
+
   return (
     <>
-      <Filters />
+      <div className="flex gap-1 px-5  my-4">
+        <div
+          onClick={() =>
+            setRemainder({
+              id: remainder?.oldId || "",
+              oldId: "",
+              name: "factory",
+            })
+          }
+          className="bg-primary cursor-pointer p-4 w-[120px] rounded-2xl flex items-center gap-2 text-white"
+        >
+          <MoveLeft />
+          <p>назад</p>
+        </div>
+      </div>
       <div className="bg-[#EEEEEE] flex">
         <p className=" p-[25px] border-border border-r  text-[17px] w-full">
           Итого
@@ -56,23 +75,24 @@ export default function CountryRemainderTable({
           {data?.pages?.[0]?.meta.totals?.totalCount || 0} шт
         </p>
       </div>
+
       <div className="px-5 bg-card ">
         <DataTable
-          columns={CountryColumns}
+          columns={CollectionColumns}
           data={collections || []}
           isLoading={isLoading}
           isRowClickble={false}
           hasHeader={false}
           ischeckble={false}
-          className="max-h-[calc(100vh-225px)]  scrollCastom"
+          // onRowClick={(row) => {
+          //   setRemainder({
+          //     id: row?.factory?.id || "",
+          //     oldId: remainder?.id || "",
+          //     name: "collection",
+          //   });
+          // }}
+          className="max-h-[calc(100vh-135px)]  scrollCastom"
           classNameBody="border-none"
-          onRowClick={(row)=>{
-            setRemainder({
-            id: row?.country?.id ||"",
-            oldId:remainder?.id ||"",
-            name: "factory",
-          })
-        }}
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage ?? false}
           isFetchingNextPage={isFetchingNextPage}

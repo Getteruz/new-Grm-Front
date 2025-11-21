@@ -1,6 +1,4 @@
 import { ColumnDef } from "@tanstack/react-table";
-import TableAction from "@/components/table-action";
-import { apiRoutes } from "@/service/apiRoutes";
 import { SalesData } from "./type";
 
 export const AllColumns: ColumnDef<SalesData>[] = [

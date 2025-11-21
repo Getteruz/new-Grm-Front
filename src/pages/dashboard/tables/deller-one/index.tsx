@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction } from "react";
 import { getMonth } from "date-fns";
 import { MonthsArray } from "@/consts";
 import FilterSelect from "@/components/filters-ui/filter-select";
-import { MoveLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 export default function DilerOneTable({dellerFilial,setDellerFilial}:{dellerFilial:string,setDellerFilial: Dispatch<SetStateAction<string | null>>}) {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -33,7 +33,7 @@ export default function DilerOneTable({dellerFilial,setDellerFilial}:{dellerFili
  
  <div className="flex gap-1 px-5  my-4">
       <div onClick={()=>setDellerFilial(null)} className="bg-primary cursor-pointer p-5 w-[120px] rounded-2xl flex items-center gap-2 text-white">
-        <MoveLeft/>
+        <ChevronLeft/>
         <p>назад</p>
       </div>
       <FilterSelect

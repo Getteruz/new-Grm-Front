@@ -29,12 +29,6 @@ export default function PageOrginal() {
         ...data,
         filialId: meUser?.position?.role == 4 ? meUser?.filial?.id : filial || undefined,
       };
-      // if (id)
-      //   return await UpdatePatchData<ReportFormType>(
-      //     apiRoutes.user,
-      //     id,
-      //     costomData as ReportFormType
-      //   );
       return await AddData<ReportFormType>(
         apiRoutes.paperReport,
         costomData as ReportFormType

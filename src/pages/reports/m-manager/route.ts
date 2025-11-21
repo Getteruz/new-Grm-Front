@@ -12,6 +12,7 @@ import FoctoryTable from "./remaider/factory-table";
 import CollectionTable from "./remaider/collection-table";
 import ModelTable from "./remaider/model-table";
 import SizeTable from "./remaider/size-table";
+import PageOrginalCopy from "../report-orginal/index-copy";
 
 const Route = [
   {
@@ -110,6 +111,11 @@ const Route = [
   {
     url: "/m-manager/report-orginal",
     Element: PageOrginal,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/m-manager/report-copy",
+    Element: PageOrginalCopy,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
 ];

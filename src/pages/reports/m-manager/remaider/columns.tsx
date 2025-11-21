@@ -32,27 +32,10 @@ export const AllColumns: ColumnDef<SalesData>[] = [
     header: "Кол-во ковров",
     accessorKey: "totalCount",
     cell: ({ row }) => {
-      return <p className="text-[14px] w-[200px] font-[500]">{row.original?.totalCount || 0} шт</p>;
+      return <p className="text-[14px] p-4 font-[500]">{row.original?.totalCount || 0} шт</p>;
     },
   },
  
-  {
-    id: "actions",  
-    enableHiding: true,
-    header: () => <div className="text-right">{"actions"}</div>,
-    size: 50,
-    cell: () => {
-      return (
-        <TableAction
-          url={apiRoutes.products}
-          ShowUpdate={false}
-          ShowDelete={false}
-          ShowPreview={false}
-          // id={row.original.id}
-        />
-      );
-    },
-  },
 ];
 
 export const CountryColumns: ColumnDef<SalesData>[] = [

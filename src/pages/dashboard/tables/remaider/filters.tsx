@@ -20,7 +20,7 @@ export default function Filters() {
         placeholder="все"
         defaultValue="clear"
         className="w-full bg-[#333333] text-white placeholder:text-white "
-        options={[{ value: "clear", label: "все" }, ...filialOption]}
+        options={[{ value: "clear", label:  "Все филиал" }, ...filialOption]}
         name="filialRemaider"
       />
       <FilterSelect
@@ -37,7 +37,7 @@ export default function Filters() {
             value: "other",
           },
         ]}
-        name="typeOther"
+        name="typeRemaiderOther"
       />
       <FilterSelect
         options={MonthsArray}

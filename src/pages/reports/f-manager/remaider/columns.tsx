@@ -23,7 +23,7 @@ export const AllColumns: ColumnDef<SalesData>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-[14px] font-[500]">
-         { (row.original?.totalPrice || row.original?.totalKvPrice)?.toFixed(2) || 0} $
+         { Number(row.original?.totalPrice || row.original?.totalKvPrice||0)?.toFixed(2) || 0} $
         </p>
       );
     },

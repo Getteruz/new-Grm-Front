@@ -42,7 +42,7 @@ export default function LeftConent() {
             placeholder="все"
             disabled={meUser?.position?.role == 4}
             className="w-[200px] rounded-lg px-2 h-[44px] bg-popover"
-            options={[{ value: "clear", label: "все" }, ...filialOption]}
+            options={[{ value: "clear", label: "все" },{value:"#dealers",label:"Dealer"}, ...filialOption]}
             name="filial"
             defaultValue={meUser?.filial?.id}
             icons={

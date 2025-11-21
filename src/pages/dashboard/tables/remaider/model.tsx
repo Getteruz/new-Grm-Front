@@ -1,55 +1,54 @@
 import { DataTable } from "@/components/ui/data-table";
-import { FactoryColumns } from "@/pages/reports/m-manager/remaider/columns";
-import { useFactoryReport } from "@/pages/reports/m-manager/remaider/queries";
-import { ChevronLeft } from "lucide-react";
 
 import { parseAsString, useQueryState } from "nuqs";
 import { Dispatch, SetStateAction } from "react";
 import { IRemainderTable } from ".";
+import { useModelReport } from "@/pages/reports/m-manager/remaider/queries";
+import { ChevronLeft } from "lucide-react";
+import { ModelColumns } from "@/pages/reports/m-manager/remaider/columns";
 
-export default function FoctoryRemainderTable({
+export default function ModelTable({
   setRemainder,
   remainder,
 }: {
-  setRemainder: Dispatch<
-    SetStateAction<IRemainderTable>
-  >;
-  remainder?:IRemainderTable;
+  setRemainder: Dispatch<SetStateAction<IRemainderTable>>;
+  remainder?: IRemainderTable;
 }) {
   const [filialId] = useQueryState("filialRemaider", parseAsString);
   const [month] = useQueryState("month", parseAsString);
-
   const [typeOther] = useQueryState(
     "typeRemaiderOther",
     parseAsString.withDefault("none")
   );
+
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useFactoryReport({
+    useModelReport({
       queries: {
         filialId: filialId || undefined,
         month: month || undefined,
-        country: remainder?.countryId,
+        collectionId: remainder?.collectionId || undefined,
         typeOther,
       },
       enabled: true,
     });
 
-  const collections = data?.pages?.flatMap((page) => page?.data || []) || [];
+  const Models = data?.pages?.flatMap((page) => page?.items || []) || [];
 
   return (
     <>
-       <div className="flex gap-1 px-5  my-4">
+      <div className="flex gap-1 px-5  my-4">
         <div
-          onClick={() => setRemainder({
-            ...remainder,
-            name: "country",
-          })}
+          onClick={() =>
+            setRemainder({
+              ...remainder,
+              name: "collection",
+            })
+          }
           className="bg-primary cursor-pointer p-4 w-[120px] rounded-2xl flex items-center gap-2 text-white"
         >
           <ChevronLeft />
           <p>назад</p>
         </div>
-        
       </div>
       <div className="bg-[#EEEEEE] flex">
         <p className=" p-[25px] border-border border-r  text-[17px] w-full">
@@ -65,11 +64,11 @@ export default function FoctoryRemainderTable({
           {data?.pages?.[0]?.meta.totals?.totalCount || 0} шт
         </p>
       </div>
-   
+    
       <div className="px-5 bg-card ">
         <DataTable
-          columns={FactoryColumns}
-          data={collections || []}
+          columns={ModelColumns}
+          data={Models || []}
           isLoading={isLoading}
           isRowClickble={false}
           hasHeader={false}
@@ -77,8 +76,8 @@ export default function FoctoryRemainderTable({
           onRowClick={(row) => {
             setRemainder({
               ...remainder,
-              factoryId: row?.factory?.id || "",
-              name: "collection",
+              name: "size",
+              modelId: row?.id || "",
             });
           }}
           className="max-h-[calc(100vh-135px)]  scrollCastom"

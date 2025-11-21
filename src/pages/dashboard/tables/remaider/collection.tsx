@@ -1,33 +1,25 @@
 import { DataTable } from "@/components/ui/data-table";
 import { CollectionColumns } from "@/pages/reports/m-manager/remaider/columns";
 import { useCollectionReport } from "@/pages/reports/m-manager/remaider/queries";
-import { MoveLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 import { parseAsString, useQueryState } from "nuqs";
 import { Dispatch, SetStateAction } from "react";
+import { IRemainderTable } from ".";
 
 export default function CollectionTable({
   setRemainder,
   remainder,
 }: {
   setRemainder: Dispatch<
-    SetStateAction<{
-      id: string;
-      oldId: string;
-      name: string;
-    }>
+    SetStateAction<IRemainderTable>
   >;
-  remainder?: {
-    id: string;
-    oldId: string;
-    name: string;
-  };
+  remainder?:IRemainderTable;
 }) {
-  const [filialId] = useQueryState("filial", parseAsString);
+  const [filialId] = useQueryState("filialRemaider", parseAsString);
   const [month] = useQueryState("month", parseAsString);
-  const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
   const [typeOther] = useQueryState(
-    "typeOther",
+    "typeRemaiderOther",
     parseAsString.withDefault("none")
   );
 
@@ -36,10 +28,10 @@ export default function CollectionTable({
       queries: {
         filialId: filialId || undefined,
         month: month || undefined,
-        factory: remainder?.id || undefined,
+        factory: remainder?.factoryId || undefined,
         typeOther,
       },
-      enabled: sort == "delears",
+      enabled: true,
     });
 
   const collections = data?.pages?.flatMap((page) => page?.data || []) || [];
@@ -50,14 +42,13 @@ export default function CollectionTable({
         <div
           onClick={() =>
             setRemainder({
-              id: remainder?.oldId || "",
-              oldId: "",
+              ...remainder,
               name: "factory",
             })
           }
-          className="bg-primary cursor-pointer p-4 w-[120px] rounded-2xl flex items-center gap-2 text-white"
+          className="bg-primary cursor-pointer p-4 w-[150px] rounded-2xl flex items-center gap-2 text-white"
         >
-          <MoveLeft />
+          <ChevronLeft />
           <p>назад</p>
         </div>
       </div>
@@ -84,13 +75,13 @@ export default function CollectionTable({
           isRowClickble={false}
           hasHeader={false}
           ischeckble={false}
-          // onRowClick={(row) => {
-          //   setRemainder({
-          //     id: row?.factory?.id || "",
-          //     oldId: remainder?.id || "",
-          //     name: "collection",
-          //   });
-          // }}
+          onRowClick={(row) => {
+            setRemainder({
+              ...remainder,
+              name: "model",
+              collectionId: row?.collection?.id || "",
+            });
+          }}
           className="max-h-[calc(100vh-135px)]  scrollCastom"
           classNameBody="border-none"
           fetchNextPage={fetchNextPage}

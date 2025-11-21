@@ -4,28 +4,21 @@ import { parseAsString, useQueryState } from "nuqs";
 import { DataTable } from "@/components/ui/data-table";
 import { CountryColumns } from "../profit/columns";
 import { Dispatch, SetStateAction } from "react";
+import { IRemainderTable } from ".";
 
 export default function CountryRemainderTable({
   setRemainder,
   remainder,
 }: {
   setRemainder: Dispatch<
-    SetStateAction<{
-      id: string;
-      oldId: string;
-      name: string;
-    }>
+    SetStateAction<IRemainderTable>
   >;
-  remainder?: {
-    id: string;
-    oldId: string;
-    name: string;
-  };
+  remainder?: IRemainderTable;
 }) {
   const [filialRemaider] = useQueryState("filialRemaider");
   const [monthRemaider] = useQueryState("monthRemaider");
   const [typeOther] = useQueryState(
-    "typeOther",
+    "typeRemaiderOther",
     parseAsString.withDefault("none")
   );
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -68,8 +61,8 @@ export default function CountryRemainderTable({
           classNameBody="border-none"
           onRowClick={(row)=>{
             setRemainder({
-            id: row?.country?.id ||"",
-            oldId:remainder?.id ||"",
+            ...remainder,
+            countryId:row?.country?.id,
             name: "factory",
           })
         }}

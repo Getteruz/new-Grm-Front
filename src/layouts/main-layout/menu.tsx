@@ -21,7 +21,7 @@ export default function Menu() {
   const [isBack] = useQueryState("isBack", parseAsBoolean.withDefault(false));
   return (
     <div
-      className={`${" min-w-[66px] "}  flex relative max-h-screen overflow-hidden flex-col  bg-background   `}
+      className={`${" min-w-[66px] "}  flex relative max-h-screen  flex-col  bg-background   `}
     >
       <div className="p-1 bg-white mx-auto mt-2.5 mb-8 rounded-2xl inline-block">
         <Avatar
@@ -65,7 +65,7 @@ export default function Menu() {
             className={`${pathName.pathname.includes("/cashier/home") ? "bg-background" : ""} rounded-2xl group  iconsColor border-transparent cursor-pointer  text-center flex items-center justify-center  p-5`}
           >
             <DeviceDesktopIcons width={28} height={28} />
-            <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-[#F0F0E5] border-[#CBCBC1] border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
+            <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-white border-border border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
               Касса
             </span>
           </div>
@@ -77,7 +77,7 @@ export default function Menu() {
             className={`${meUser?.position?.role === 11 ? "hidden" : ""} ${pathName.pathname.includes("/dashboard") ? "bg-background" : ""} rounded-2xl group  iconsColor border-transparent cursor-pointer  text-center flex items-center justify-center  p-5`}
           >
             <HomeIcons />
-            <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-[#F0F0E5] border-[#CBCBC1] border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
+            <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-white border-border border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
               Dashboard
             </span>
           </div>
@@ -95,7 +95,7 @@ export default function Menu() {
             key={e?.link}
           >
             {e?.icons()}
-            <span className="absolute hidden opacity-0 text-[15px] group-hover:opacity-100 group-hover:flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-white border-[#CBCBC1] border-1 text-md rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
+            <span className="absolute hidden opacity-0 text-[15px] group-hover:opacity-100 group-hover:flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-white border-border border-1 text-md rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
               {e?.text}
             </span>
           </div>
@@ -111,7 +111,7 @@ export default function Menu() {
           className={`group   cursor-pointer  text-center flex items-center justify-center p-5`}
         >
           <LogOut width={20} />
-          <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-[#F0F0E5] border-[#CBCBC1] border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
+          <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-[#F0F0E5] border-border border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
             Выйти
           </span>
         </div>

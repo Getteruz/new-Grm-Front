@@ -28,7 +28,7 @@ export default function MainLayout() {
   }, [token, meUser]);
 
   return (
-    <SidebarProvider className="px-2.5 gap-4">
+    <SidebarProvider className="px-2.5 gap-4 overflow-hidden">
       <Menu />
       <SidebarInset >
         {meUser?.position?.role === 3 ? (
@@ -39,7 +39,7 @@ export default function MainLayout() {
           <Header />
         )}
         <div
-          className={`${(meUser?.position?.role === 3 || pathname.pathname == "/cashier/home") ? "h-[calc(100vh-20px)] " : "h-[calc(100vh-68px)] "} scrollCastom`}
+          className={`${(meUser?.position?.role === 3 || pathname.pathname == "/cashier/home") ? "max-h-[calc(100vh-20px)] " : "max-h-[calc(100vh-68px)] "} scrollCastom`}
         >
           <Outlet />
         </div>

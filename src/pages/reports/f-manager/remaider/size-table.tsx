@@ -12,7 +12,7 @@ export default function SizeTable() {
   const [month] = useQueryState("month", parseAsString);
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
   const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
-    const {modelId} = useParams()
+    const {modelId,collectionId,factoryId,countryId} = useParams()
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useSizeReport({
@@ -20,6 +20,9 @@ export default function SizeTable() {
         filialId: meUser?.filial?.id || undefined,
         month: month || undefined,
         model:modelId,
+        collectionId:collectionId,
+        factory:factoryId,
+        country:countryId,
         typeOther
       },
       enabled: sort == "delears",

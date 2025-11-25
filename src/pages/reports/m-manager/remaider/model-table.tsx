@@ -12,14 +12,15 @@ export default function ModelTable() {
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
   const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
     const navigate = useNavigate()
-    const {collectionId} = useParams()
-
+    const {collectionId,factoryId,countryId} = useParams()
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useModelReport({
       queries: {
         filialId: filialId || undefined,
         month: month || undefined,
         collectionId:collectionId,
+        factory:factoryId,
+        country:countryId,
         typeOther
       },
       enabled: sort == "delears",

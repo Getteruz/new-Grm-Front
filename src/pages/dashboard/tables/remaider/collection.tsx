@@ -29,6 +29,7 @@ export default function CollectionTable({
         filialId: filialId || undefined,
         month: month || undefined,
         factory: remainder?.factoryId || undefined,
+        country: remainder?.countryId,
         typeOther,
       },
       enabled: true,

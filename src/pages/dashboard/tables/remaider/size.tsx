@@ -27,6 +27,9 @@ export default function SizeTable({
       filialId: filialId || undefined,
       month: month || undefined,
       model:remainder?.modelId || undefined,
+      collectionId:remainder?.collectionId,
+      factory:remainder?.factoryId,
+      country:remainder?.countryId,
       typeOther
     },
     enabled: true,

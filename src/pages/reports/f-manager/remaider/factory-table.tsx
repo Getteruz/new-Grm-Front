@@ -10,7 +10,7 @@ import { useMeStore } from "@/store/me-store";
 export default function FoctoryTable() {
   const {meUser} = useMeStore();
   const [month] = useQueryState("month", parseAsString);
-  const {countryId} = useParams()
+  const {countryId,factoryId} = useParams()
   const navigate = useNavigate()
   const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
 
@@ -20,6 +20,7 @@ export default function FoctoryTable() {
         filialId: meUser?.filial?.id || undefined,
         month: month || undefined,
         country:countryId,
+        factory:factoryId,
         typeOther
       },
       enabled: true,

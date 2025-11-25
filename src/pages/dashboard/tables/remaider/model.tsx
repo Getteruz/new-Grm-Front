@@ -27,6 +27,8 @@ export default function ModelTable({
         filialId: filialId || undefined,
         month: month || undefined,
         collectionId: remainder?.collectionId || undefined,
+        factory: remainder?.factoryId,
+        country: remainder?.countryId,
         typeOther,
       },
       enabled: true,

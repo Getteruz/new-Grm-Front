@@ -30,24 +30,21 @@ export default function Filters() {
       label: e?.name,
       value: e?.id,
     })) || [];
-
-  const { mutate: exelMudate, isPending: exelPending } = useMutation({
-    mutationFn: async () => {
-      const query = {
-        reportId: myCashFlow && !FManagerCashFlow ? id : undefined,
-        kassaReportId: FManagerCashFlow
-          ? kassaReportId || undefined
-          : undefined,
-        kassaId: myCashFlow ? undefined : id || undefined,
-      };
-      const params = query
-        ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
-        : "";
-
-      window.location.href =
-        import.meta.env.VITE_BASE_URL + apiRoutes.excelCashflowsExcel + params;
-    },
-  });
+    
+    const { mutate: exelMudate, isPending: exelPending } = useMutation({
+      mutationFn: async () => {
+        const query = {
+          reportId: myCashFlow && !FManagerCashFlow ? id : undefined,
+          kassaReportId: FManagerCashFlow ? kassaReportId || undefined : undefined,
+          kassaId: myCashFlow ? undefined : id || undefined,
+        };
+        const params = query
+          ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
+          : "";
+    
+        window.location.href = import.meta.env.VITE_BASE_URL+apiRoutes.excelCashflowsExcel + params;
+      },
+    });
 
   return (
     <div className=" px-[20px] h-[64px] items-center  flex gap-2 mb-2   ">
@@ -76,7 +73,8 @@ export default function Filters() {
           className="h-full  border-y-0 w-[140px]  ml-auto"
           variant={"outline"}
         >
-          {exelPending ? <Loader /> : <FileOutput />} Экспорт
+          {exelPending ? <Loader className="animate-spin"/>: <FileOutput />}
+          Экспорт
         </Button>
       ) : (
         ""

@@ -82,7 +82,7 @@ export default function FilterComboboxDemoInput<IData, TQuery>({
         meta: res.pages[res.pages.length - 1].meta,
       }),
       getNextPageParam: (lastPage) => {
-        if (lastPage?.meta?.currentPage <= lastPage?.meta?.totalPages) {
+        if (lastPage.meta?.currentPage <= lastPage.meta?.totalPages) {
           return lastPage?.meta?.currentPage + 1;
         } else {
           return null;

@@ -15,13 +15,15 @@ import { cn } from "@/lib/utils";
 interface DateRangePickerProps {
   fromPlaceholder?: string;
   toPlaceholder?: string;
-  className?:string
+  className?:string;
+  defaultMonth?:Date;
 }
 
 export function DateRangePicker({
   fromPlaceholder,
   toPlaceholder,
-  className
+  className,
+  defaultMonth,
   
 }: DateRangePickerProps) {
   const { t } = useTranslation();
@@ -57,9 +59,10 @@ export function DateRangePicker({
             <Calendar
               mode="single"
               className='rounded-xl'
+              //  captionLayout="dropdown"
               selected={fromDate || undefined}
               onSelect={(date) => (date ? setFromDate(date) : "")}
-              initialFocus
+              defaultMonth={defaultMonth}
               disabled={(date) => (toDate ? date > toDate : false)}
             />
           </PopoverContent>
@@ -88,10 +91,11 @@ export function DateRangePicker({
           <PopoverContent className="w-auto p-0">
             <Calendar
               mode="single"
+              //  captionLayout="dropdown"
                className='rounded-xl'
+               defaultMonth={defaultMonth}
               selected={toDate || undefined}
               onSelect={(date) => (date ? setToDate(date) : "")}
-              initialFocus
               disabled={(date) => (fromDate ? date < fromDate : false)}
             />
           </PopoverContent>

@@ -42,6 +42,8 @@ export const apiRoutes = {
   cashflow: "/cashflow",
   cashflowForMainManager:'/cashflow/for/main-manager',
   cashflowTypes: "/cashflow-types",
+  cashflowTypesByManagers:'/cashflow-types/by/managers',
+  cashflowTypesForCashier:"/cashflow-types/for/cashier",
   cashflowFilial :'/cashflow/for/filial-manager',
   openKassa: "/kassa/open-kassa",
   qrBaseCode: "/qr-base/find-by",
@@ -99,4 +101,12 @@ export const apiRoutes = {
   factoryOrderReport:'/factory-report/order/monthly',
   modelsOrderReport:"/model/order/models-report",
   sizeOrderReport:"/size/order/reports",
+  cashflowDealerIncome:'/cashflow/dealer/income',
+  reportsHomePageCurrentMonth:'/reports/home-page/current-month',
+  reportsHomePageCurrentLeft:'/reports/home-page/current-left',
+  reportsHomePageCurrentMonthManagers:'/reports/home-page/current-month/managers',
+  reportsHomePageCurrentMonthExpense:'/reports/home-page/current-month/expense',
+  reportsHomePageCurrentLefKents:'/reports/home-page/current-lef/kents',
+  reportsHomePageCurrentMonthProdaja:"/reports/home-page/current-month/prodaja",
+  reportsMonthlyV2:"/reports/monthly/v2"
 } as const;

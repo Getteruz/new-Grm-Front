@@ -148,6 +148,7 @@ export interface TKassareportData {
   filial?: {
     id: string;
     title: string;
+    owed?: number;
   };
   kassaReport?:TKassareportData[];
   reportStatus?:number;

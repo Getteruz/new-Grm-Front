@@ -14,6 +14,7 @@ export interface IData {
   type: string;
   plasticSum: number;
   discountSum: number;
+  isDebt: boolean;
   seller: {
     id: string;
     isActive: boolean;

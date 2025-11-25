@@ -22,6 +22,7 @@ export interface TData {
     name: string;
     telegram: string;
     address: string;
+    owed?:number;
     startWorkTime: string;
     endWorkTime: string;
     addressLink: string;

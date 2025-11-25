@@ -25,27 +25,7 @@ import { useEffect, useState } from "react";
 import { TResponse } from "@/types";
 import { format } from "date-fns";
 
-interface ICarpetCard {
-  id: string;
-  className?: string;
-  model: string;
-  size: string;
-  count: string;
-  img: string;
-  price: string;
-  plasticSum: string;
-  priceMitr: string;
-  color: string;
-  colaction: string;
-  discount: string;
-  tags: string[];
-  index: number;
-  date: string;
-  comment: string;
-  status?: string;
-  onCheckedChange: (e: boolean) => void;
-  seller: IData["seller"];
-}
+
 
 interface IDataCostom {
   dateOne: string;
@@ -74,6 +54,29 @@ interface IDataCostom {
   debt_sum: number;
   status: string;
   is_cancelled: boolean;
+
+}
+interface ICarpetCard {
+  id: string;
+  className?: string;
+  model: string;
+  size: string;
+  count: string;
+  img: string;
+  price: string;
+  plasticSum: string;
+  priceMitr: string;
+  color: string;
+  colaction: string;
+  discount: string;
+  tags: string[];
+  index: number;
+  date: string;
+  comment: string;
+  status?: string;
+  isDebt?:boolean;
+  onCheckedChange: (e: boolean) => void;
+  seller: IData["seller"];
 }
 
 export default function CarpetCashierCard({
@@ -95,6 +98,7 @@ export default function CarpetCashierCard({
   colaction,
   tags,
   date,
+  isDebt,
 }: ICarpetCard) {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
@@ -111,6 +115,8 @@ export default function CarpetCashierCard({
       .then(() => {
         toast.success("Подтверждено успешно");
         queryClient.invalidateQueries({ queryKey: [apiRoutes.orderByKassa] });
+        queryClient.invalidateQueries({ queryKey: [apiRoutes.openKassa] });
+        
       })
       .catch(() => toast.error("что-то пошло не так"))
       .finally(()=>setLoading(false));
@@ -149,7 +155,7 @@ export default function CarpetCashierCard({
 
   return (
       <label
-        className={`w-full flex   gap-4 relative p-1 rounded-[12px] bg-sidebar ${className && className}`}
+        className={`w-full flex   gap-4 relative p-1 rounded-[12px]  ${isDebt ?"bg-sidebar":"bg-sidebar" } ${className && className}`}
       >
         <Checkbox
           onCheckedChange={onCheckedChange}
@@ -319,6 +325,8 @@ export default function CarpetCashierCard({
               {comment && <MessageSquareText width={14} />}
               {comment}
             </p>
+            {/* FD6F33 */}
+            {isDebt && <p className="ml-auto text-[#EC6C49] text-[13px]">Продано в долг</p>}
             <p className="text-[13px]">{date}</p>
           </div>
         </div>

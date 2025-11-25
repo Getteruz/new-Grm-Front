@@ -106,11 +106,12 @@ export default function Filters({
       {sort === "open" || Boolean(id) ? (
         <Button
           onClick={() => exelMudate()}
+          disabled={exelPending}
           className="h-full ml-auto  bg-card hover:bg-card rounded-xl  text-primary justify-center gap-1 px-4 border-0"
           variant={"outline"}
-          disabled={exelPending}
         >
-          {exelPending ? <Loader /> : <FileOutput />} Экспорт
+          {exelPending ? <Loader className="animate-spin" /> : <FileOutput />}
+          Экспорт
         </Button>
       ) : (
         ""

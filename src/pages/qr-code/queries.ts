@@ -28,8 +28,8 @@ export const useQRCodesFetch = (queries: QRGeneratorQuery) => {
     ),
     getNextPageParam: (lastPage) => {
       // Check if there are more pages based on the meta information
-      if (lastPage.meta.currentPage < lastPage.meta.totalPages) {
-        return lastPage.meta.currentPage + 1;
+      if (lastPage.meta?.currentPage < lastPage.meta?.totalPages) {
+        return lastPage.meta?.currentPage + 1;
       }
       return undefined;
     },

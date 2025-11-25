@@ -13,6 +13,21 @@ import { KassaColumns, ReportColumns } from "./columns";
 import { parseAsString, useQueryState } from "nuqs";
 import CashierHeader from "@/layouts/main-layout/cashier-header";
 
+const tipFilter = {
+  income: "cashflow",
+  expense: "cashflow",
+  sale: "order",
+  return: "order",
+  terminal:"Терминал",
+  discount:"Скидка",
+  navar:"Навар",
+};
+const typeFilter = {
+  income: "Приход",
+  expense: "Расход",
+  sale: "Приход",
+  return: "Расход",
+};
 export default function Page() {
   const [selectedItems] = useState<number[]>([]);
   const { meUser } = useMeStore();
@@ -45,6 +60,7 @@ export default function Page() {
     },
     enabled: sort != "open" && !id,
   });
+  const [tip] = useQueryState("tip", parseAsString);
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataCashflow({
@@ -52,8 +68,11 @@ export default function Page() {
         kassaId: reportData?.id || id || "",
         limit: 10,
         page: 1,
-
-        type: sortSingle == "Все" ? undefined : sortSingle || undefined,
+        // @ts-ignore
+        tip: tipFilter[tip],
+        // @ts-ignore
+        type: sortSingle == "Все" ? typeFilter[tip as string] : sortSingle || typeFilter[tip as string],
+        cashflowSlug: tip == "collection" ? "Инкассация" : undefined,
       },
       enabled: !!reportData?.id || Boolean(id),
     });
@@ -77,17 +96,17 @@ export default function Page() {
           ) : (
             ""
           )}
-          {sort === "open" ? (
+        
+        <div className={` ${(sort === "open" || Boolean(id)) ? meUser?.position?.role ==3 ? 'h-[calc(100vh-285px)] scrollCastom':'h-[calc(100vh-330px)] scrollCastom':""}  `}>
+        {sort === "open" ? (
             ""
           ) : (
-            <div className="px-4 pt-2 mb-1 w-full  sticky top-0">
-              <p className="text-sm font-medium ">
+            <div className="px-4 pt-2 mb-1 w-full bg-background  z-10 sticky top-0">
+              <p className="text-sm font-medium  ">
                 {format(new Date(), "dd-MMMM")}
               </p>
             </div>
           )}
-        <div className="h-[calc(100vh-285px)] scrollCastom ">
-
             {sort === "open" || Boolean(id) ? (
               <DataTable
                 columns={ReportColumns}

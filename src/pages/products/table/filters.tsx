@@ -10,14 +10,12 @@ import { FileOutput, Loader } from "lucide-react";
 
 // /excel/product/excel/new
 export default function Filters() {
-  const { meUser } = useMeStore();
+const {meUser} = useMeStore()
+
 
   const { mutate: exelMudate, isPending: exelPending } = useMutation({
     mutationFn: async () => {
-      window.location.href =
-        import.meta.env.VITE_BASE_URL +
-        apiRoutes.excelProductExcelNew +
-        `?filialId=${meUser?.filial?.id}`;
+      window.location.href = import.meta.env.VITE_BASE_URL+apiRoutes.excelProductExcelNew +  `?filialId=${meUser?.filial?.id}`
     },
   });
   return (
@@ -53,13 +51,12 @@ export default function Filters() {
       />
       <Statistics />
       <Button
-        disabled={exelPending}
-        onClick={() => exelMudate()}
+      onClick={()=>exelMudate()}
+      disabled={exelPending}
         className="h-full border-0 bg-card rounded-xl hover:bg-card w-[140px]  ml-auto"
         variant={"outline"}
       >
-        {exelPending ? <Loader className="animate-spin" /> : <FileOutput />}{" "}
-        Экспорт
+       {exelPending? <Loader className="animate-spin"/>:<FileOutput />}   Экспорт
       </Button>
     </div>
   );

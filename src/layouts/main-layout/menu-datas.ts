@@ -4,7 +4,6 @@ import {
   BuildingIcons,
   ClientsIcon,
   DataLibrary,
-  DeviceDesktopIcons,
   DiamondIcon,
   HikVision,
   HomeIcons,
@@ -43,76 +42,8 @@ import {
 // }
 
 export const DataMenu = {
-  admin: [
-    {
-      id: 1,
-      icons: () => HomeIcons(),
-      link: "/cashier/home",
-      text: "cashier",
-    },
-    {
-      id: 14,
-      icons: () => HomeIcons(),
-      link: "/transfers",
-      text: "Трансферы",
-    },
-
-    {
-      id: 13,
-      icons: () => HomeIcons(),
-      link: "/crops",
-      text: "crops",
-      items: [
-        {
-          id: 12,
-          link: "/crops",
-          text: "crops1",
-        },
-        {
-          id: 13,
-          link: "/crops/item-2",
-          text: "crops1",
-        },
-        {
-          id: 14,
-          link: "/crops/item-3",
-          text: "crops1",
-        },
-      ],
-    },
-    {
-      id: 12,
-      icons: () => HomeIcons(),
-      link: "/broned",
-      text: "broned",
-    },
-    {
-      id: 2,
-      icons: () => BuildingIcons(),
-      link: "/products",
-      text: "product",
-    },
-    {
-      id: 3,
-      icons: () => BuildingIcons(),
-      link: "/bugalteriya/data-library",
-      text: "bugalteriya",
-    },
-
-    {
-      id: 4,
-      link: "/parties",
-      icons: () => WareHouseIcons(),
-      text: "parties",
-    },
-  ],
   3: [
-    {
-      id: 1,
-      icons: () => DeviceDesktopIcons({ width: 28, height: 28 }),
-      link: "/cashier/home",
-      text: "Касса",
-    },
+   
     {
       id: 2,
       icons: () => ReportBottom({ width: 28, height: 28 }),
@@ -146,12 +77,7 @@ export const DataMenu = {
     },
   ],
   4: [
-    {
-      id: 1,
-      icons: () => DeviceDesktopIcons({ width: 28, height: 28 }),
-      link: "/cashier/home",
-      text: "Касса",
-    },
+   
     {
       id: 2,
       icons: () => ReportBottom({}),
@@ -356,17 +282,17 @@ export const DataMenu = {
     {
       id: 14,
       icons: () => TransferIcons(),
-      link: "/transfers",
+      link: "/d-manager/transfer",
       text: "Трансферы",
     },
   ],
   7: [
-    {
-      id: 1,
-      icons: () => ReportBottom({}),
-      link: "/warehouse-report",
-      text: "Отчет об остатке",
-    },
+    // {
+    //   id: 1,
+    //   icons: () => ReportBottom({}),
+    //   link: "/warehouse-report",
+    //   text: "Отчет об остатке",
+    // },
     {
       id: 2,
       icons: () => PartiesIcons(),
@@ -550,6 +476,19 @@ export const DataMenu = {
       text: "Партии",
     },
     {
+      id: 2,
+      icons: () => ProductIcons(),
+      link: "/products",
+      text: "Продукты в продаже",
+    },
+    {
+      id: 32,
+      icons: () => TransferIcons(),
+      link: "/transfers",
+      text: "Трансферы",
+    },
+    
+    {
       id: 3,
       icons: () => BuildingIcons(),
       link: "/filial",
@@ -573,18 +512,7 @@ export const DataMenu = {
       link: "/price",
       text: "Цени и скидки",
     },
-    {
-      id: 32,
-      icons: () => TransferIcons(),
-      link: "/transfers",
-      text: "Трансферы",
-    },
-    {
-      id: 2,
-      icons: () => ProductIcons(),
-      link: "/products",
-      text: "Продукты в продаже",
-    },
+  
     {
       id: 37,
       icons: () => ClientsIcon(),
@@ -739,6 +667,7 @@ export const DataMenu = {
           link: "/m-manager/report-orginal",
           text: "Хисобот",
         },
+       
       ],
     },
     {
@@ -746,6 +675,12 @@ export const DataMenu = {
       icons: () => PartiesIcons(),
       link: "/parties",
       text: "Партии",
+    },
+    {
+      id: 4,
+      icons: () => UfoBottom(),
+      link: "/dealer",
+      text: "Дилеры",
     },
     {
       id: 2,

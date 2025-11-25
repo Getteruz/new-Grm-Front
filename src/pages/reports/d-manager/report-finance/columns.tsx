@@ -45,7 +45,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#89A143]"> {item?.totalIncome - item?.totalPlasticSum} $</p>;
+      return <p className="text-[#89A143]"> {item?.in_hand} $</p>;
     },
   },
 
@@ -57,13 +57,21 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       return <p className="text-[#58A0C6]"> {item?.totalPlasticSum} $</p>;
     },
   },
-
+  {
+    header: "Отправлено",
+    id: "debt_sum",
+    cell: ({ row }) => {
+      const item = row.original;
+      return <p className={ '' }> {item?.debt_sum} $</p>;
+    },
+  },
+  
   {
     header: "Итого задолжность",
     id: "expense",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className={ 'text-[#E38157]' }> {item?.totalExpense} $</p>;
+      return <p className={ 'text-[#E38157]' }>  {item?.reportStatus == 2? item?.owed:  item?.dealer_frozen_owed} $</p>;
     },
   },
 

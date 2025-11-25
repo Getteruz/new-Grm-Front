@@ -16,6 +16,7 @@ export interface IOpenKassa {
   status: "open" | "closed";
   orders: any[];
   cashflow: any[];
+  in_hand:number;
   filial: {
     id: string;
     title: string;

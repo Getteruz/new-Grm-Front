@@ -37,7 +37,7 @@ export const KassaColumns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <p className="text-[#89A143]">
+        <p className={ `${((item?.in_hand || 0) >= 0) ? "text-[#89A143]":"text-red-500"} `}>
           { (item?.in_hand || 0).toFixed(2)}
         </p>
       );

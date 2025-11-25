@@ -350,7 +350,7 @@ export default function CardSort({
                 {isReportLoading ? (
                   <Skeleton className="h-7 w-24 mt-1" />
                 ) : (
-                  <p className="text-[25px] font-bold text-foreground">
+                  <p className={`${((kassaId?.in_hand || KassaReport?.in_hand || 0) >= 0) ? "text-foreground":"text-red-500"} text-[25px] font-bold `}>
                     {formatPrice(
                       isOnlyCash
                         ? KassaReport?.managerSum ||
@@ -359,13 +359,14 @@ export default function CardSort({
                         : isOnlyTerminal
                           ? KassaReport?.accauntantSum || 0
                           : KassaReport?.in_hand ? KassaReport?.in_hand
-                            : kassaId?.in_hand || kassaId?.totalSum || 0
+                            : kassaId?.in_hand || 0 // kassaId?.totalSum removed
                       //  isOnlyTerminal ?(KassaReport?.accauntantSum || 0)  : KassaReport?.totalSum || kassaId?.totalSum || 0
                     )}
                   </p>
                 )}
               </div>
             </div>
+          
             {ClientdebtTotal ? (
               <>
                 <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
@@ -382,16 +383,29 @@ export default function CardSort({
                 </p>
               </>
             )  :  (
-              <>
+              <div className="w-1/2 inline-block">
                 <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
                   Продажа в долг:
                 </p>
                 <p className="text-[14px] text-[#E38157]  inline-block font-semibold">
                   {KassaReport?.debt_sum ? KassaReport?.debt_sum : kassaId?.debt_sum} $
                 </p>
-              </>
+              </div>
             )}
-            {/* debt_sum */}
+            {
+              (kassaId?.kassaReport?.filialType == "filial" || KassaReport?.filialType =="filial") ?<div className="1/2 inline-block">
+                 <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
+                  Сальдо баланс: 
+                </p>
+                {
+                  KassaReport ?  <p className={`text-[14px]   ${(KassaReport?.opening_balance || 0) >0 ? "text-[#89A143]" : (KassaReport?.opening_balance || 0) <0? "text-[#E38157]":"" } inline-block font-semibold`}>
+                  { KassaReport?.opening_balance} $
+                </p>:<p className={`text-[14px]   ${ (kassaId?.kassaReport?.opening_balance ||0) >0 ? "text-[#89A143]" : (kassaId?.kassaReport?.opening_balance || 0) <0? "text-[#E38157]":"" } inline-block font-semibold`}>
+                  { kassaId?.kassaReport?.opening_balance} $
+                </p>
+                }
+                </div>:""
+            }
           </div>
           <div className="grid row-start w-full  border-border  border-b grid-cols-4  ">
             {(column as unknown as TColumns[])?.map((e, index) => (

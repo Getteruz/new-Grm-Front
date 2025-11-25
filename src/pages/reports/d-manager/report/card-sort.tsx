@@ -12,7 +12,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import api from "@/service/fetchInstance";
 import { TKassareportData } from "@/pages/report/type";
-import { useDataCashflowTypes } from "@/pages/report/table/queries";
 
 export default function CardSort({kassaReportId,isAddable,SortData}:{kassaReportId?:string,isAddable?:boolean,SortData?:TKassareportData}) {
   const queryClient = useQueryClient();
@@ -27,11 +26,21 @@ export default function CardSort({kassaReportId,isAddable,SortData}:{kassaReport
 
   const columns = [
     {
+      title: "Объём",
+      price: isReportLoading ? (
+        <Skeleton className="h-5 w-12" />
+      ) :(
+        formatPrice(
+          SortData?.debt_kv || 0 )
+      ),
+    },
+    {
       title: "Отправлено",
       price: isReportLoading ? (
         <Skeleton className="h-5 w-12" />
       ) : (
-        formatPrice(0)
+        formatPrice(
+          SortData?.debt_sum || 0 )
       ),
     },
 
@@ -41,18 +50,10 @@ export default function CardSort({kassaReportId,isAddable,SortData}:{kassaReport
         <Skeleton className="h-5 w-12" />
       ) : (
         formatPrice(
-          SortData?.additionalProfitTotalSum || 0 )
+          SortData?.debt_profit_sum || 0 )
       ),
     },
-    {
-      title: "Обратно",
-      price: isReportLoading ? (
-        <Skeleton className="h-5 w-12" />
-      ) :(
-        formatPrice(
-          SortData?.totalSaleReturn || 0 )
-      ),
-    },
+    
     {
       title: "Получено",
       price: isReportLoading ? (
@@ -77,24 +78,12 @@ export default function CardSort({kassaReportId,isAddable,SortData}:{kassaReport
       ) : (
         (
           formatPrice(
-            SortData?.totalExpense || 0 )
+            SortData?.kassaReportStatus == 2? (SortData.filial?.owed || 0) : (SortData?.dealer_frozen_owed||0)
+             )
         )
-      ),
-      button: (
-        <div
-          onClick={() => setType("Расход")}
-          className="bg-[#F0F0E5] p-4 rounded-4xl"
-        >
-          <Plus size={20} color="#5d5d53" className="opacity-100" />
-        </div>
-      ),
+      )
     },
   ];
-
-  const { data: types } = useDataCashflowTypes({
-    queries: { limit: 20, page: 1, type: type == "Приход" ? "in" : "out" },
-    enabled: Boolean(dialogOpen),
-  });
 
 
   const handleSubmit = async () => {
@@ -104,17 +93,13 @@ export default function CardSort({kassaReportId,isAddable,SortData}:{kassaReport
         toast.error("Введите корректную сумму");
         return;
       }
-
       const body = {
-        type,
-        tip: "cashflow",
         comment,
         price,
-        kassaReport:kassaReportId,
+        kassa_report:kassaReportId,
         is_online:typePay =="cash"? false : true, 
-        cashflow_type:types?.[0]?.id  
       };
-      await api.post(apiRoutes.cashflow, body);
+      await api.post(apiRoutes.cashflowDealerIncome, body);
 
       toast.success(
         `${type === "Приход" ? "Приход" : "Задолжность"} успешно добавлен`
@@ -161,7 +146,7 @@ export default function CardSort({kassaReportId,isAddable,SortData}:{kassaReport
           <p className="text-[12px] mt-[15px] mb-1 text-[#5D5D53]">
             Объём долга:
           </p>
-          <p className="text-[14px] font-semibold">0 м²</p>
+          <p className="text-[14px] font-semibold">{SortData?.debt_kv} м²</p>
         </div>
         <div className="grid row-start w-full  grid-cols-3  ">
           {columns?.map((e) => (

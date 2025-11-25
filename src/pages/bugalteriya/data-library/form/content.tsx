@@ -39,7 +39,7 @@ const { data, isLoading, hasNextPage, fetchNextPage,isFetchingNextPage } = useIn
         }
       ),
     getNextPageParam: (lastPage) => {
-      if (lastPage.meta.currentPage <= lastPage.meta.totalPages) {
+      if (lastPage.meta?.currentPage <= lastPage.meta?.totalPages) {
         return lastPage?.meta?.currentPage + 1;
       } else {
         return null;
@@ -156,7 +156,7 @@ const { data, isLoading, hasNextPage, fetchNextPage,isFetchingNextPage } = useIn
             placeholder="collection"
           />
         )}
-        <div className="w-[95%]">
+        <div className="relative w-[95%]">
           {type === "size" ? (
             <div className="flex mb-3 m-1">
               <Input

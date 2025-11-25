@@ -39,7 +39,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       const isMy = row?.original?.status == "my";
       return (
-        <p className="text-[#89A143]">
+        <p className={ `${((item?.in_hand || 0) >= 0) ? "text-[#89A143]":"text-red-500"} `}>
           {isMy
             ? ""
             : (item?.in_hand || 0).toFixed(2)}

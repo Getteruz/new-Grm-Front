@@ -6,10 +6,12 @@ import ActionPageDealer from "@/pages/filial/formDealer";
 import { Columns } from "./columns";
 import Filter from "./filter";
 import useDataFetch from "./queries";
+import { useNavigate } from "react-router-dom";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
+  const navigate = useNavigate();
   // const [search ] = useQueryState("search");
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
@@ -28,9 +30,11 @@ export default function Page() {
       <DataTable
         isRowClickble={false}
         link="/report-monthly"
-     
         isLoading={isLoading}
         columns={Columns}
+        onRowClick={(item)=>{
+          navigate(`/dealer/${item?.id}`)
+        }}
         ischeckble={false}
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}

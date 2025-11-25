@@ -3,6 +3,8 @@
 import PageKassaReport from "./kassa-report";
 import ReportPage from "./report";
 import PageFinance from "./report-finance";
+import TrasferDealerSinglePage from "./transfer/single";
+import TrasferDealerPage from "./transfer/table";
 
 
 const Route = [
@@ -19,6 +21,17 @@ const Route = [
   {
     url: "/d-manager/report-monthly/:reportId/info/:id/info",
     Element: ReportPage,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/d-manager/transfer",
+    Element: TrasferDealerPage,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+ 
+  {
+    url: "/d-manager/transfer/:package_id",
+    Element: TrasferDealerSinglePage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
 ];

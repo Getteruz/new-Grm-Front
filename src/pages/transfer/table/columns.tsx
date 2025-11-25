@@ -59,7 +59,7 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
         });
         
         if (row.original?.type === "header") {
-          return <div className="absolute top-7 bg-sidebar left-0 px-2 gap-2 py-2 w-full  flex items-center ">
+          return <div className="absolute top-7 bg-background left-0 px-2 gap-2 py-2 w-full  flex items-center ">
             <TebleAvatar size={38} url={ row?.original?.transferer?.avatar?.path} name={row?.original?.transferer?.firstName} status="none"/>
             <RefreshCcw size={14}/>
             <TebleAvatar size={38} url={ row?.original?.courier?.avatar?.path} name={row.original?.courier?.firstName} status="none"/>
@@ -70,7 +70,7 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
            {type =="In" && <Button onClick={()=>mutate()} disabled={isPending} variant={"outline"} className="border ml-2 rounded-lg py-[6px] px-[12px] h-[26px] text-[12px] border-[#89A143] text-[#89A143]  ">Принять все </Button>}
           </div>;
         }
-        return <p>{row.index}</p>;
+        return <p>{row?.original?.number}</p>;
       }
     },
    

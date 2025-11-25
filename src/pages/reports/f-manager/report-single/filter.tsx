@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 
 export default function Filters() {
   const { id,report } = useParams();
+ 
 
   const { mutate: exelMudate, isPending: exelPending } = useMutation({
     mutationFn: async () => {
@@ -19,9 +20,8 @@ export default function Filters() {
       const params = query
         ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
         : "";
-
-      window.location.href =
-        import.meta.env.VITE_BASE_URL + apiRoutes.excelCashflowsExcel + params;
+  
+      window.location.href = import.meta.env.VITE_BASE_URL+apiRoutes.excelCashflowsExcel + params;
     },
   });
   
@@ -34,7 +34,7 @@ export default function Filters() {
         variant={"secondary"}
         disabled={exelPending}
       >
-       {exelPending? <Loader/>: <FileOutput />} Экспорт
+             {exelPending ? <Loader className="animate-spin"/>: <FileOutput />} Экспорт
       </Button>
 
     </div>

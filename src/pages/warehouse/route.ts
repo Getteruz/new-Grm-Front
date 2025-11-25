@@ -1,5 +1,9 @@
 import SinglePage from "../filial/single";
-import PageRemaider from "./remaider";
+import CollectionTable from "./remaider/collection-table";
+import CountryTable from "./remaider/county-table";
+import FoctoryTable from "./remaider/factory-table";
+import ModelTable from "./remaider/model-table";
+import SizeTable from "./remaider/size-table";
 import Page from "./table";
 
 const Route = [
@@ -8,9 +12,30 @@ const Route = [
     Element: Page,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+ 
   {
     url: "/warehouse-report",
-    Element: PageRemaider,
+    Element: CountryTable,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/warehouse-report/:countryId",
+    Element: FoctoryTable,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/warehouse-report/:countryId/:factoryId",
+    Element:CollectionTable,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/warehouse-report/:countryId/:factoryId/:collectionId",
+    Element:ModelTable,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/warehouse-report/:countryId/:factoryId/:collectionId/:modelId",
+    Element:SizeTable,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {

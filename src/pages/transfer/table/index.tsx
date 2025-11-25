@@ -13,21 +13,20 @@ import { TData } from "@/pages/deller/type";
 const buildFlatList = (data:TransferData[]) => {
   const result = [];
   let lastDate = null;
-
-
-  // const sorted = [...data].sort((a, b) =>{
-  //     return  b?.group?.localeCompare(a?.group || "ç")
-  // }
-  // );
-  // console.log(sorted)
+  let counter = 0; 
 
   for (const item of data) {
     const group = item.group;
     if (group !== lastDate) {
       result.push({ type: 'header',transferer:item?.transferer,courier:item?.courier ,group: group });
       lastDate = group;
+      counter = 0; 
     }
-    result.push(item);
+    counter++; 
+    result.push({
+      ...item,
+      number: counter, // add number field
+    });
   }
 
   return result;

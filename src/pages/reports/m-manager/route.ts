@@ -107,6 +107,11 @@ const Route = [
     Element: PageSellerCashFlow,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+  // {
+  //   url: "/m-manager/report-orginal",
+  //   Element: PageOrginal,
+  //   meta: { isAuth: true, role: new Set(["admin"]) },
+  // },
   {
     url: "/m-manager/report-orginal",
     Element: PageOrginal,

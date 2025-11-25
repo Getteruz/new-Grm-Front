@@ -16,6 +16,7 @@ type Meta = {
     totalSellCount: number;
     totalSellKv: number;
     totalSellPrice: number;
+    totalNetProfitPrice?:number;
   }
 }
 
@@ -42,9 +43,11 @@ export interface SalesData {
   totalSellCount: number;
   totalSellKv: number;
   totalSellPrice: number;
+  totalNetProfitPrice?:number;
 }
 
 export interface ICountryReportData {
+  items: SalesData[]
   data: SalesData[];
   meta: Meta
 }

@@ -8,8 +8,9 @@ import { TResponse } from "@/types";
 
 export default function TabsFilter() {
   const { data } = useQuery({
-    queryKey: ["/filial"],
-    queryFn: () => getAllData<TResponse<IData>, TQuery>("/filial"),
+    queryKey: ["/filial/warehouse-and-filial"],
+    queryFn: () =>
+      getAllData<TResponse<IData>, TQuery>("/filial/warehouse-and-filial"),
     select: (res) => ({
       data: res?.items
         .filter((i) => i.type !== "market")
@@ -24,13 +25,29 @@ export default function TabsFilter() {
   });
 
   const [filial, setFilial] = useQueryState("filial");
+
   return (
-    <div className="flex ">
+    <div className="flex border border-border overflow-x-auto">
+      {/* ✅ "All" tab */}
+      <p
+        className={`border-r border-border px-4 py-2.5 text-nowrap cursor-pointer ${
+          !filial ? "bg-primary text-sidebar" : "bg-background text-foreground"
+        }`}
+        onClick={() => setFilial(null)} // Clear filial param
+      >
+        All
+      </p>
+
+      {/* ✅ Other filial tabs */}
       {data?.data?.map((e) => (
         <p
-          className={`${filial == e?.id ? "bg-primary text-sidebar" : ""} border text-nowrap bg-background px-4 border-r border-border py-2.5 text-foreground cursor-pointer`}
-          onClick={() => setFilial(e?.id)}
           key={e?.id}
+          className={`border-r border-border px-4 py-2.5 text-nowrap cursor-pointer ${
+            filial === e?.id
+              ? "bg-primary text-sidebar"
+              : "bg-background text-foreground"
+          }`}
+          onClick={() => setFilial(e?.id)}
         >
           {e?.title}
         </p>

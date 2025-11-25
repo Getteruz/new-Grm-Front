@@ -18,7 +18,7 @@ export default function Filters() {
       {id || idLoc ? (
         <UploadExel />
       ) : (
-        meUser?.position.role !== 3 && (
+        meUser?.position.role == 9  && (
           <Button
             onClick={() => {
               navigate("new");

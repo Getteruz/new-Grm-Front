@@ -36,7 +36,7 @@ export default function PageFinanceFilial() {
 
   return (
     <>
-      <div className="h-[calc(100vh-140px)] scrollCastom">
+      <>
     
           <CardSort KassaReport={ KassaReportSingle} />
        
@@ -61,12 +61,13 @@ export default function PageFinanceFilial() {
                 setFManagerCashFlow(false)
               }
             }}
+            className="h-[calc(100vh-310px)] scrollCastom"
             fetchNextPage={KassafetchNextPage}
             hasNextPage={KassafhasNextPage ?? false}
             isFetchingNextPage={KassaisFetchingNextPage}
           />
        
-      </div>
+      </>
     </>
   );
 }

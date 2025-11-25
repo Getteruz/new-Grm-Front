@@ -32,6 +32,8 @@ const Route = [
     Element: SinglePage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+  // ShowDelete={row?.original?.tip != "order"}
+ 
   {
     url: "/f-manager/report-remaider",
     Element: CountryTable,

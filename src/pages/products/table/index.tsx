@@ -32,15 +32,14 @@ export default function Page() {
       limit,
       page,
       search: collection == "product"?  search  || undefined: undefined,
-      filialId:
-        filial ||
+      filialId:  
         meUser?.position?.role === 2 ||
         meUser?.position?.role === 3 ||
         meUser?.position?.role === 4 ||
         meUser?.position?.role === 5 ||
         meUser?.position?.role === 7
           ? meUser?.filial?.id
-          : undefined,
+          : filial|| undefined,
     },
     role: meUser?.position.role,
   });
@@ -53,7 +52,7 @@ export default function Page() {
     hasNextPage: hasNextCollectionsPage,
     isFetchingNextPage: isFetchingNextCollectionsPage
   } = useCollectionDataFetch({
-    filialId: meUser?.filial?.id,
+    filialId: filial || meUser?.filial?.id,
     search: collection == "product"?  undefined: search || undefined,
   });
 
@@ -69,14 +68,14 @@ export default function Page() {
   return (
     <>
       <Filters />
-      {meUser?.position?.role === 9 ||
-        (search && (
-          <div className="bg-sidebar scrollCastom   py-0.5 px-[50px]">
-            <TabsFilter />
-          </div>
-        ))}
+      
+      {
+        meUser?.position?.role ==9  ?   <div className="bg-sidebar scrollCastom   py-0.5 px-[50px]">
+        <TabsFilter />
+      </div>:""
+      }
       {showCardGrid && (
-        <div className="px-6 mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8 gap-4 pb-6">
+        <div className="px-6 mt-4 h-[calc(100vh-210px)] scrollCastom grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8 gap-4 pb-6">
           {productsFlat.map((item) => (
             <CarpetCard
             producdId={""}
@@ -108,7 +107,7 @@ export default function Page() {
       )}
 
       {showCollectionCards && (
-        <div className="px-6 mt-4 grid grid-cols-6 gap-4 pb-6">
+        <div className="px-6 mt-4 h-[calc(100vh-210px)] scrollCastom grid grid-cols-6 gap-4 pb-6">
           {collections.map((item) => (
             <div key={item.id} className="bg-transparent p-[15px] border-[1px] border-[#CBCBC14D]">
               <h2 className="mb-[8px] text-[#5D5D53] text-[18px] font-[500]">
@@ -130,6 +129,7 @@ export default function Page() {
           isLoading={isCollectionsLoading}
           columns={CollectionColumns}
           data={collections}
+          className="h-[calc(100vh-200px)] scrollCastom"
           fetchNextPage={fetchNextCollectionsPage}
           hasNextPage={hasNextCollectionsPage ?? false}
           isFetchingNextPage={isFetchingNextCollectionsPage}
@@ -141,6 +141,7 @@ export default function Page() {
           isLoading={isProductsLoading}
           columns={ProductColumns}
           data={productsFlat}
+          className="h-[calc(100vh-200px)] scrollCastom"
           fetchNextPage={fetchNextProductsPage}
           hasNextPage={hasNextProductsPage ?? false}
           isFetchingNextPage={isFetchingNextProductsPage}

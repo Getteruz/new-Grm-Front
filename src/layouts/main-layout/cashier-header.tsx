@@ -21,9 +21,9 @@ export default function CashierHeader({
 
   const filialId = meUser?.filial.id;
   const { data } = useQuery({
-    queryKey: [apiRoutes.filial, filialId],
+    queryKey: [apiRoutes.openKassa, filialId],
     queryFn: () =>
-      getByIdData<IOpenKassa, void>("/kassa/open-kassa", filialId || ""),
+      getByIdData<IOpenKassa, void>(apiRoutes.openKassa, filialId || ""),
     enabled: !!filialId,
   });
 
@@ -43,7 +43,7 @@ export default function CashierHeader({
               <div>
                 <p className="text-[12px] ext-primary ">Касса:</p>
                 <p className="text-[25px] font-bold text-primary">
-                  {data?.totalSum}
+                  {data?.in_hand}
                 </p>
               </div>
         </div>

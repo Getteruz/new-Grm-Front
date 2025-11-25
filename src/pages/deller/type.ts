@@ -68,3 +68,4 @@ export interface TQuery {
   page: number;
   type?: string;
 }
+

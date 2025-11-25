@@ -3,7 +3,7 @@ import { FileOutput, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { usefilialWarehouseFetch } from "./queries";
-import { MonthsArray } from "@/constants/index";
+import { MonthsArray } from "@/consts";
 import { getMonth } from "date-fns";
 import { useParams } from "react-router-dom";
 

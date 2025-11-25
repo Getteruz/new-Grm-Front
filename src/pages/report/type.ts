@@ -18,6 +18,10 @@ export interface TData {
   title: string;
   in_hand:number;
   debt_sum:number;
+  kassaReport?:{
+    opening_balance?:number
+    filialType?:string;
+  }
   icon: {
     id: string;
     path: string;
@@ -91,20 +95,26 @@ export interface TActionData {
   };
   code: string;
 }
-
 export interface TKassareportData {
   id: string;
   totalSellCount: number;
+  dealer_frozen_owed?:number;
   additionalProfitTotalSum: number;
   netProfitTotalSum: number;
   totalSize: number;
+  debt_profit_sum?:number;
+  debt_kv?:number;
   kassaReportStatus:number;
   year: number;
+  owed?:number;
+  opening_balance?:number;
+  filialType?:string;
   month: number;
   status: string;
   filial?: {
     id: string;
     title: string;
+    owed?:number;
   };
 
   in_hand?:number;
@@ -124,7 +134,6 @@ export interface TKassareportData {
   totalExpense: number;
   totalSum: number;
 }
-
 export interface TChaFlowData{
   expense: number,
   income: number
@@ -155,4 +164,4 @@ export interface TQuery {
   startDate?: Date | null;
   endDate?: Date | null;
   type?:string;
-}
+};

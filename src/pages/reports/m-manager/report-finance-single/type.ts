@@ -12,10 +12,13 @@ export interface TKassareportData {
   dealerReportId?: string;
   status: string;
   debt_sum?:number;
+  debt_profit_sum?:number;
+  debt_kv?:number;
   in_hand?:number;
   filial?: {
     id: string;
     title: string;
+    owed?: number;
   };
   isMManagerConfirmed?: boolean;
   isAccountantConfirmed?: boolean;

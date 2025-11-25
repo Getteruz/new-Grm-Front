@@ -4,20 +4,8 @@ import {  Store } from "lucide-react";
 import useDataFetch from "@/pages/filial/table/queries";
 import { useMeStore } from "@/store/me-store";
 
-const monthsArray = [
-  { label: "Январь", value: "1" },
-  { label: "Февраль", value: "2" },
-  { label: "Март", value: "3" },
-  { label: "Апрель", value: "4" },
-  { label: "Май", value: "5" },
-  { label: "Июнь", value: "6" },
-  { label: "Июль", value: "7" },
-  { label: "Август", value: "8" },
-  { label: "Сентябрь", value: "9" },
-  { label: "Октябрь", value: "10" },
-  { label: "Ноябрь", value: "11" },
-  { label: "Декабрь", value: "12" }
-]
+import {MonthsArray} from "@/consts";
+
 export default function Filters() {
   const { data } = useDataFetch({
     queries: { type: "filial", limit: 50 },
@@ -43,17 +31,12 @@ export default function Filters() {
             }
           />}
       <FilterSelect 
-        options={monthsArray}
+        options={MonthsArray}
         defaultValue={getMonth(new Date()) + 1 + ""  }
         name="month"
         className="w-[160px] px-2 h-[62px]  "
       />
 
-    
-     
-      {/* <Button className="h-full  border-y-0 w-[140px] " variant={"outline"}>
-        <FileOutput /> Экспорт
-      </Button> */}
     </div>
   );
 }

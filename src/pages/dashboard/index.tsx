@@ -48,16 +48,16 @@ export default function Dashboard() {
   }
   if (role === 12) {
     return (
-      <div className="flex w-full  gap-2.5">
+      <div className="flex w-full   gap-2.5">
         <Cards  setOpen={setOpen} leftData={leftData}/>
-        <div className="w-full ">
+        <div className="w-full mt-[27px] ">
           <Filter />
           <div onClick={()=>setOpen('Продажа')} className="text-white cursor-pointer flex items-center rounded-xl gap-3 bg-[#333333] my-2.5 p-4 pl-6">
             <p className="text-[24px] mr-auto">Текущий месяц</p>
             <p  className="text-[24px] opacity-50">{formatNumber(data?.totals?.total_kv || 0) } м²</p>
             <p className="text-[24px]">{formatNumber(data?.totals?.total_profit_sum || 0) } $</p>
           </div>
-          <div className="grid grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-3  gap-2.5">
             <DashboardCard
               onClick={() => setOpen("Продажа в долг")}
               title="Продажа в долг"
@@ -65,7 +65,7 @@ export default function Dashboard() {
               priceText={`Возврат`}
               price2={`${data?.debt_order?.total_sum || 0} $`}
             >
-              <Tag  className="mt-5 text-[#FEDDCA] w-[20px] mb-[29px]" />
+              <Tag  className="my-2 text-[#FEDDCA] w-[20px] " />
             </DashboardCard>
             <DashboardCard
               onClick={() => setOpen("Прибыль")}
@@ -74,16 +74,16 @@ export default function Dashboard() {
               priceText={`Текущий месяц `}
               price2={`${data?.order?.total_sum ||0} $`}
             >
-              <SquareArrowOutDownLeft  className="mt-5 text-[#B1F0B3] w-[20px] mb-[29px]" />
+              <SquareArrowOutDownLeft  className="my-2 text-[#B1F0B3] w-[20px] " />
             </DashboardCard>
             <DashboardCard
               onClick={() => setOpen("Расход")}
-              title="Расход "
+              title="Расход"
               price={`${data?.boss?.boss_expense || 0} $`}
               priceText={`Босс`}
               price2={`${data?.boss?.total_expense ||0} $`}
             >
-              <SquareArrowOutUpRight  className="mt-5 text-[#FFACAC] w-[20px] mb-[29px]" />
+              <SquareArrowOutUpRight  className="my-2 text-[#FFACAC] w-[20px]" />
             </DashboardCard>
           </div>
           <Kassa setOpen={setOpen} data={data} />

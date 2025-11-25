@@ -12,6 +12,7 @@ import { minio_img_url } from "@/constants";
 import NotePage from "./note/list";
 import Weather from "./weather";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { ThemeSwitcherDock } from "@/components/ThemeSwitcherDock";
 
 export default function Menu() {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ export default function Menu() {
         </Avatar>
       </div>
       <ScrollArea
-        className={`max-h-[calc(100vh-210px)]  bg-white mb-auto mx-auto rounded-2xl p-0.5 `}
+        className={`max-h-[calc(100vh-300px)]  bg-white mb-auto mx-auto rounded-2xl p-0.5 `}
       >
         {pathName.pathname.split("/").length > 3 || isBack ? (
           <div
@@ -117,6 +118,7 @@ export default function Menu() {
         </div>
       </ScrollArea>
 
+      <ThemeSwitcherDock/>
       <Weather />
     </div>
   );

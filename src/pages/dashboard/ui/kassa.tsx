@@ -8,7 +8,6 @@ export default function Kassa({
   data: ReportsHomePageCurrentMonthData | undefined,
   setOpen: (value: string) => void
 }) {
-  console.log((data?.accountant?.expense||0)/(data?.accountant?.income||0)*100)
   return (
     <div className="border border-border bg-white rounded-xl mt-2.5">
       <div onClick={()=>setOpen('Маруф касса')} className="hover:bg-[#F9F9F9] border-border   m-1 rounded-xl p-[25px]">

@@ -60,7 +60,7 @@ export default function Cards({leftData,setOpen}:{leftData:ReportsHomePageCurren
 
       </DashboardCard>
       <DashboardCard
-        title="План сотрудников"
+        title="Индикатор продаж"
         // onClick={()=>setOpen("План сотрудников")}
         icons={() => <DollarSign className="bg-gray-300 text-white w-[20px] h-[20px] p-1 rounded-full"/>}
         price={`${leftData?.user_plan_totals?.dailyCollected} $`}

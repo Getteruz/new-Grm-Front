@@ -27,8 +27,8 @@ export default function DashboardCard({
             { icons&&icons()}
         </div>
         {children}
-        <p className="text-[15px]">{price} 
-          <span className="inline-block text-[#333333] opacity-40">{priceText}</span>
+        <p className="text-[15px ">{price} 
+          <span className="inline-block text-[#333333] opacity-40 ml-1">  {priceText}</span>
         </p>
         <p className="text-[24px] text-nowrap mt-1">{price2}</p>
     </div>

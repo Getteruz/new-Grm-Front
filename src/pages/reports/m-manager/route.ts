@@ -6,13 +6,12 @@ import PageFinance from "./report-finance";
 import PageFinanceSingle from "./report-finance-single";
 import PageSellerReport from "../seller/seller-report";
 import PageSellerCashFlow from "../seller/seller-cashflow";
-import PageOrginal from "../report-orginal";
 import CountryTable from "./remaider/county-table";
 import FoctoryTable from "./remaider/factory-table";
 import CollectionTable from "./remaider/collection-table";
 import ModelTable from "./remaider/model-table";
 import SizeTable from "./remaider/size-table";
-import PageOrginalCopy from "../report-orginal/index-copy";
+import PageOrginal from "../report-orginal";
 
 const Route = [
   {
@@ -108,14 +107,14 @@ const Route = [
     Element: PageSellerCashFlow,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+  // {
+  //   url: "/m-manager/report-orginal",
+  //   Element: PageOrginal,
+  //   meta: { isAuth: true, role: new Set(["admin"]) },
+  // },
   {
     url: "/m-manager/report-orginal",
     Element: PageOrginal,
-    meta: { isAuth: true, role: new Set(["admin"]) },
-  },
-  {
-    url: "/m-manager/report-copy",
-    Element: PageOrginalCopy,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
 ];

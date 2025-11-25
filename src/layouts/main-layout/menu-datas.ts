@@ -667,11 +667,7 @@ export const DataMenu = {
           link: "/m-manager/report-orginal",
           text: "Хисобот",
         },
-        {
-          id: 26,
-          link: "/m-manager/report-copy",
-          text: "Report",
-        },
+       
       ],
     },
     {

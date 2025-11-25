@@ -108,4 +108,5 @@ export const apiRoutes = {
   reportsHomePageCurrentMonthExpense:'/reports/home-page/current-month/expense',
   reportsHomePageCurrentLefKents:'/reports/home-page/current-lef/kents',
   reportsHomePageCurrentMonthProdaja:"/reports/home-page/current-month/prodaja",
+  reportsMonthlyV2:"/reports/monthly/v2"
 } as const;

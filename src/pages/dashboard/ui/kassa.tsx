@@ -13,7 +13,7 @@ export default function Kassa({
     <div className="border border-border bg-white rounded-xl mt-2.5">
       <div onClick={()=>setOpen('Маруф касса')} className="hover:bg-[#F9F9F9] border-border   m-1 rounded-xl p-[25px]">
         <div className="flex items-center mb-2 gap-2 ">
-          <p className="mr-auto text-[17px] text-[#333333]">Маруф касса</p>
+          <p className="mr-auto text-[17px] text-[#333333]">Наличные</p>
           <p className=" text-[17px] opacity-30 text-[#333333]">Расход</p>
           <p className=" text-[17px] text-[#333333]">{data?.manager?.expense} $</p>
         </div>
@@ -23,7 +23,7 @@ export default function Kassa({
       <div className=" w-full h-[1px] bg-border"></div>
       <div onClick={()=>setOpen('Мукаддас касса')} className="hover:bg-[#F9F9F9] m-1 rounded-xl p-[25px]">
         <div className="flex items-center mb-2 gap-2 ">
-          <p className="mr-auto text-[17px] text-[#333333]">Мукаддас касса</p>
+          <p className="mr-auto text-[17px] text-[#333333]">Терминал</p>
           <p className=" text-[17px] opacity-30 text-[#333333]">Расход</p>
           <p className=" text-[17px] text-[#333333]">{data?.accountant?.expense} $</p>
         </div>

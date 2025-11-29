@@ -7,7 +7,6 @@ import {  parseAsIsoDate, parseAsString, useQueryState } from "nuqs";
 import { useParams } from "react-router-dom";
 import { Columns } from "./columns";
 import { useDataCashflow } from "./queries";
-import { useKassaReportSingle } from "../../m-manager/filial-report-finance/queries";
 
 const tipFilter = {
   income: "cashflow",
@@ -51,10 +50,10 @@ export default function SinglePage() {
       },
       enabled: Boolean(id),
     });
-    const { data: KassaReportSingle } = useKassaReportSingle({
-      id:report || undefined,
-      enabled: Boolean(report),
-    });
+    // const { data: KassaReportSingle } = useKassaReportSingle({
+    //   id:report || undefined,
+    //   enabled: Boolean(report),
+    // });
 
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
 
@@ -64,7 +63,9 @@ export default function SinglePage() {
       <div className="h-[calc(100vh-140px)] scrollCastom">
         <CardSort
         //  isAddible={Boolean(report && id == 'my')} 
-         KassaId={id != 'my'? id : undefined} kassaReportId={report} KassaReport={KassaReportSingle}/>
+         KassaId={id != 'my'? id : undefined} kassaReportId={report}
+          // KassaReport={KassaReportSingle}
+          />
         <DataTable
           columns={Columns}
           data={flatData || []}

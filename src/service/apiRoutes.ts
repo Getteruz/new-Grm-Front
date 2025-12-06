@@ -83,6 +83,7 @@ export const apiRoutes = {
   payrollsDealer:"/payrolls/get-for-managers",
   paperReport:'/paper-report',
   paperReportUniversalExcel:'/paper-report/universal-excel',
+  paperReportExportExcel:'/paper-report/export-excel',
   paperReportStatic:'/paper-report/stats',
   paperReportStaticExport:'/paper-report/export-excel',
   excelCashflowsExcel:'/excel/cashflows/excel',

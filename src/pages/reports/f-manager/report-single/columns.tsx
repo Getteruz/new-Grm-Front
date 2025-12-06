@@ -59,7 +59,7 @@ export const Columns: ColumnDef<TData>[] = [
           className={`font-bold text-[16px] ${item.type === "Приход" ? "text-[#89A143]" : "text-[#E38157]"}`}
         >
           {item?.type === "Приход" ? "+" : "-"}
-          {item?.tip == "order"
+          {item?.tip == "order"&& item?.type != "Расход"
             ? formatPrice(item?.order?.price || 0)
             : formatPrice(item?.price || 0)}
           $

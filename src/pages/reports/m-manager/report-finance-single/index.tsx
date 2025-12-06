@@ -13,6 +13,7 @@ import {  TKassareportData } from "./type";
 import { parseAsBoolean, useQueryState } from "nuqs";
 import { useMeStore } from "@/store/me-store";
 import { useMemo } from "react";
+import { MonthsArray } from "@/consts";
 
 export default function PageFinanceSingle() {
   const { meUser } = useMeStore();
@@ -107,6 +108,7 @@ export default function PageFinanceSingle() {
   return (
     <>
       <>
+      <p className="text-[#272727] text-[20px] m-4 mr-auto ">Финансовый учёт | {kassaData?.month && MonthsArray[(kassaData?.month ||1)-1].label}</p>
         <CardSort
           reportId={id}
           isUserSelectble={true}

@@ -41,7 +41,7 @@ export default function LeftConent() {
           <FilterSelect
             placeholder="все"
             disabled={meUser?.position?.role == 4}
-            className="w-[200px] rounded-lg px-2 h-[44px] bg-popover"
+            className="w-[200px] rounded-md px-2 h-[44px] bg-popover"
             options={[{ value: "clear", label: "все" },{value:"#dealers",label:"Dealer"}, ...filialOption]}
             name="filial"
             defaultValue={meUser?.filial?.id}
@@ -57,15 +57,15 @@ export default function LeftConent() {
         {monthsArray?.map((item) => (
           <p
             onClick={() => setMonth(item?.value)}
-            className={`${item?.value == month ? "bg-input" : ""} w-full text-[#272727] cursor-pointer rounded-md text-[16px] font-medium px-[26px] py-[12px] `}
+            className={`${item?.value == month ? "bg-card" : ""} w-full text-[#272727] cursor-pointer rounded-md text-[16px] font-medium px-[26px] py-[12px] `}
           >
             {item?.label}
           </p>
         ))}
       </div>
-      <p className="border-t mt-auto px-[31px] text-[#272727] py-[18px] border-border">
+      {/* <p className="border-t mt-auto px-[31px] text-[#272727] py-[18px] border-border">
         Годовой отчет
-      </p>
+      </p> */}
     </div>
   );
 }

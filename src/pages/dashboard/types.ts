@@ -20,6 +20,7 @@ export type ReportsHomePageCurrentMonthData = {
     total_profit_sum: number;
     total_kv: number;
     total_count: number;
+    total_return:number;
   };
   debt_order: {
     total_kv: number;

@@ -64,7 +64,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   },
 
   {
-    header: "Дебит",
+    header: "В долг",
     id: "debt_sum",
     cell: ({ row }) => {
       const item = row.original;

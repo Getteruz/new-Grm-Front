@@ -180,13 +180,13 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
 
               <RowUI
                 title={"Kelgan qarzlar"}
-                price={data?.kent_income?.price || 0}
-                kv={data?.kent_income?.kv || 0}
+                price={data?.owed_debt?.price || 0}
+                kv={data?.owed_debt?.kv || 0}
               />
               <RowUI
                 title={"Oldingi oydan o'tgan pul"}
-                price={data?.debt_trading?.price || 0}
-                kv={data?.debt_trading?.kv || 0}
+                price={data?.opening_balance?.price || 0}
+                kv={data?.opening_balance?.kv || 0}
               />
               <RowUI
                 title={"Filial balansi"}
@@ -201,8 +201,8 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
               {filial && (
                 <RowUI
                   title={"Navar"}
-                  price={data?.navar_expense?.price || 0}
-                  kv={data?.navar_expense?.kv || 0}
+                  price={data?.navar_income?.price || 0}
+                  kv={data?.navar_income?.kv || 0}
                 />
               )}
               {!filial && meUser?.position?.role != 4 && (

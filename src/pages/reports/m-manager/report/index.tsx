@@ -50,6 +50,7 @@ export default function ReportPage() {
   const [filial] = useQueryState("filial");
 
   const [tip] = useQueryState("tip", parseAsString);
+  const [cashflowSlug] = useQueryState("cashflowSlug", parseAsString);
 
   const [startDate] = useQueryState("startDate", parseAsIsoDate);
   const [endDate] = useQueryState("endDate", parseAsIsoDate);
@@ -76,7 +77,7 @@ export default function ReportPage() {
         type: typeFilter[tip as string],
         // @ts-ignore
         tip: tipFilter[tip],
-        cashflowSlug: tip == "collection" ? "Инкассация" : undefined,
+        cashflowSlug: tip == "collection" ? "Инкассация" : cashflowSlug|| undefined,
         fromDate: startDate || undefined,
         toDate: endDate || undefined,
         report: myCashFlow && !FManagerCashFlow ? id : undefined,
@@ -100,7 +101,7 @@ export default function ReportPage() {
 
   return (
     <>
-      <Filter />
+      <Filter month={KassaReportSingle?.month} filial={KassaReportSingle?.filial?.title} />
       < >
         {
           <CardSort

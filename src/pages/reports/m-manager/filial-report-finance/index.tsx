@@ -6,6 +6,7 @@ import { useCashflowFilial, useDataKassa, useKassaReportSingle } from "./queries
 import { KassaColumns } from "./columns";
 import { useNavigate, useParams } from "react-router-dom";
 import { parseAsBoolean, useQueryState } from "nuqs";
+import { MonthsArray } from "@/consts";
 
 export default function PageFinanceFilial() {
   const {id}  =useParams()
@@ -37,7 +38,7 @@ export default function PageFinanceFilial() {
   return (
     <>
       <>
-    
+      <p className="text-[#272727] text-[20px] m-4 mr-auto ">Финансовый учёт | {MonthsArray[(KassaReportSingle?.month ||1)-1].label} | {KassaReportSingle?.filial?.title}</p>
           <CardSort KassaReport={ KassaReportSingle} />
        
           <DataTable

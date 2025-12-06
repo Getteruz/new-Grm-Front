@@ -9,33 +9,20 @@ import TebleAvatar from "@/components/teble-avatar";
 import { useMeStore } from "@/store/me-store";
 import { toast } from "sonner";
 import ActionButton from "@/components/actionButton";
+import { MonthsArray } from "@/consts";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
     id: "startDate",
     header: "Дата",
     cell: ({ row }) => {
-      const month = [
-        "Январь",
-        "Февраль",
-        "Март",
-        "Апрель",
-        "Май",
-        "Июнь",
-        "Июль",
-        "Август",
-        "Сентябрь",
-        "Октябрь",
-        "Ноябрь",
-        "Декабрь",
-      ];
       const item = row.original;
       const isTrue = item?.kassaReportStatus == 2;
       return (
         <p className={`${isTrue ? "text-[#89A143]" : ""}`}>
           {isTrue
-            ? month[item?.month - 1] + "-Продалажется"
-            : month[item?.month - 1] || ""}
+            ? MonthsArray[item?.month - 1].label + "-Продалажется"
+            : MonthsArray[item?.month - 1].label|| ""}
         </p>
       );
     },

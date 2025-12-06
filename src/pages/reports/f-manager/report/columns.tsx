@@ -55,7 +55,7 @@ export const KassaColumns: ColumnDef<TData>[] = [
     },
   },
   {
-    header: "Дебит",
+    header: "В долг",
     id: "debt_sum",
     cell: ({ row }) => {
       const item = row.original;

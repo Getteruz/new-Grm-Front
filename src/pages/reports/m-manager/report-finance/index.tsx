@@ -24,6 +24,7 @@ export default function PageFinance() {
 
   return (
     <>
+       <p className="text-[#272727] text-[20px] m-4 mr-auto">Финансовый учёт</p>
         <CardSort
           KassaReport={undefined}
           isOnlyCash={Boolean(meUser?.position?.role == 9)}

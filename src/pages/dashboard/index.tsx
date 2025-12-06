@@ -55,13 +55,13 @@ export default function Dashboard() {
           <div onClick={()=>setOpen('Продажа')} className="text-white cursor-pointer flex items-center rounded-xl gap-3 bg-[#333333] my-2.5 p-4 pl-6">
             <p className="text-[24px] mr-auto">Текущий месяц</p>
             <p  className="text-[24px] opacity-50">{formatNumber(data?.totals?.total_kv || 0) } м²</p>
-            <p className="text-[24px]">{formatNumber(data?.totals?.total_profit_sum || 0) } $</p>
+            <p className="text-[24px]">{formatNumber(data?.totals?.total_sum || 0) } $</p>
           </div>
           <div className="grid grid-cols-3  gap-2.5">
             <DashboardCard
               onClick={() => setOpen("Продажа в долг")}
               title="Продажа в долг"
-              price={`${data?.debt_order?.total_profit_sum || 0} $`}
+              price={`${data?.order?.total_return || 0} $`}
               priceText={`Возврат`}
               price2={`${data?.debt_order?.total_sum || 0} $`}
             >
@@ -69,10 +69,10 @@ export default function Dashboard() {
             </DashboardCard>
             <DashboardCard
               onClick={() => setOpen("Прибыль")}
-              title="Прибыль "
+              title="Прибыль"
               price=""
               priceText={`Текущий месяц `}
-              price2={`${data?.order?.total_sum ||0} $`}
+              price2={`${data?.order?.total_profit_sum ||0} $`}
             >
               <SquareArrowOutDownLeft  className="my-2 text-[#B1F0B3] w-[20px] " />
             </DashboardCard>

@@ -10,6 +10,7 @@ import { useMeStore } from "@/store/me-store";
 import { IOpenKassa } from "@/types/api-type";
 
 import { CurrencyData } from "./types";
+import { useLocation } from "react-router-dom";
 
 export default function CashierHeader({
   children
@@ -18,6 +19,7 @@ export default function CashierHeader({
 }) {
   const { meUser } = useMeStore();
   const token = useAuthStore((state) => state.token);
+  const pathName = useLocation();
 
   const filialId = meUser?.filial.id;
   const { data } = useQuery({
@@ -31,7 +33,7 @@ export default function CashierHeader({
     queryKey: ["currency", token, meUser],
     queryFn: () => getAllData<CurrencyData, unknown>("currency"),
   });
-
+  // f-manager/report
 
 
   return (
@@ -47,7 +49,7 @@ export default function CashierHeader({
                 </p>
               </div>
         </div>
-        <div className="flex  items-center">
+       { pathName.pathname!= "/f-manager/report" && pathName.pathname != "/f-manager/reports" && <div className="flex  items-center">
           <p className="text-[14px] leading-[17px] font-semibold text-foreground mx-2">
             {currency?.items?.[0]?.usd.toLocaleString("uz-UZ")} $
           </p>
@@ -55,7 +57,7 @@ export default function CashierHeader({
           <p className="text-[14px] leading-[17px] font-semibold text-[#E38157]">
             {currency?.items?.[0]?.uzs?.toLocaleString("uz-UZ")} сум
           </p>
-        </div>
+        </div>}
       </div>
     </header>
   );

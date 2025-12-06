@@ -379,7 +379,7 @@ export default function CardSort({
                   }}
                   className="text-[14px] text-[#E38157] hover:underline inline-block font-semibold"
                 >
-                  {ClientdebtTotal?.totalDebt} $
+                  {ClientdebtTotal?.totalDebt} { ClientdebtTotal?.totalDebt ?"$":""}
                 </p>
               </>
             )  :  (
@@ -388,7 +388,7 @@ export default function CardSort({
                   Продажа в долг:
                 </p>
                 <p className="text-[14px] text-[#E38157]  inline-block font-semibold">
-                  {KassaReport?.debt_sum ? KassaReport?.debt_sum : kassaId?.debt_sum} $
+                  {KassaReport?.debt_sum ? KassaReport?.debt_sum : kassaId?.debt_sum} { KassaReport?.debt_sum || kassaId?.debt_sum ? "$":""} 
                 </p>
               </div>
             )}
@@ -399,9 +399,9 @@ export default function CardSort({
                 </p>
                 {
                   KassaReport ?  <p className={`text-[14px]   ${(KassaReport?.opening_balance || 0) >0 ? "text-[#89A143]" : (KassaReport?.opening_balance || 0) <0? "text-[#E38157]":"" } inline-block font-semibold`}>
-                  { KassaReport?.opening_balance} $
+                  { KassaReport?.opening_balance}  {KassaReport?.opening_balance? "$":""} 
                 </p>:<p className={`text-[14px]   ${ (kassaId?.kassaReport?.opening_balance ||0) >0 ? "text-[#89A143]" : (kassaId?.kassaReport?.opening_balance || 0) <0? "text-[#E38157]":"" } inline-block font-semibold`}>
-                  { kassaId?.kassaReport?.opening_balance} $
+                  { kassaId?.kassaReport?.opening_balance}  {kassaId?.kassaReport?.opening_balance? "$":""} 
                 </p>
                 }
                 </div>:""

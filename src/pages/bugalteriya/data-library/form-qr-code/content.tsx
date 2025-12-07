@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { generateRandomNumber } from "@/utils/generate";
 
 import Filters from "./filters";
+import { TFormData } from "../type";
 
 export default function FormContent() {
   const [id, setId] = useQueryState("id");
@@ -33,21 +34,15 @@ export default function FormContent() {
     <div className="w-full border-r border-border">
       <Filters />
       <div className="grid row-start  px-[40px] py-[20px] gap-2 lg:grid-cols-2">
-        <FormTextInput
-          classNameInput="h-[28px] p-2"
-          name="code"
-          placeholder="code"
-          label="code"
-          disabled={!editble}
-        />
-        <FormComboboxDemoInput
+      <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/country"
+          
           classNameChild="h-[28px] p-2"
           name="country"
           placeholder="country"
           label="country"
-          disabled={!editble}
+          disabled={true}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -56,12 +51,35 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="factory"
           label="factory"
+          disabled={true}
+        />
+        <FormTextInput
+          classNameInput="h-[28px] p-2"
+          name="code"
+          placeholder="code"
+          label="code"
           disabled={!editble}
         />
+       
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/collection"
           name="collection"
+          onLocalChange={(value)=>{
+            const costomValue = value as TFormData
+            setValue("country", {
+              value: costomValue?.country?.id,
+              label: costomValue?.country?.title,
+            })
+            setValue("factory", {
+              value: costomValue?.factory?.id,
+              label: costomValue?.factory?.title,
+            })
+            setValue("model", {
+              value: undefined,
+              label: "",
+            })
+          }}
           classNameChild="h-[28px] p-2"
           placeholder="collection"
           label="collection"

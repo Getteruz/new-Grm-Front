@@ -1,4 +1,4 @@
-import { DefinedInitialDataOptions, useInfiniteQuery } from "@tanstack/react-query";
+import { DefinedInitialDataOptions, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
@@ -9,6 +9,11 @@ import {  TKassareportData, TQuery } from "./type";
 interface IKassaReportData {
   options?: DefinedInitialDataOptions<TResponse<TKassareportData>>;
   queries?: TQuery;
+  enabled?: boolean
+}
+
+interface IreportsTotal {
+  queries?: object;
   enabled?: boolean
 }
 
@@ -32,3 +37,11 @@ export const useReports = ({ queries ,enabled}: IKassaReportData) =>
     initialPageParam: 1,
   });
 
+
+  export const useReportsTotal = ({ queries ,enabled}: IreportsTotal) =>
+    useQuery({
+      queryKey: [apiRoutes.reportsTotal,queries],
+      queryFn: () =>
+        getAllData<TKassareportData, object>(apiRoutes.reportsTotal ,queries),
+      enabled
+    });

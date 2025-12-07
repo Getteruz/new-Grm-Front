@@ -1,12 +1,11 @@
 import { DataTable } from "@/components/ui/data-table";
 
 import CardSort from "@/components/card-sort";
-import { useReports } from "./queries";
+import { useReports, useReportsTotal } from "./queries";
 import { KassaColumnsLoc } from "./columns";
-import { useMeStore } from "@/store/me-store";
-
+import { useYear } from "@/store/year-store";
 export default function PageFinance() {
-  const { meUser } = useMeStore();
+  const {year}= useYear()
   const {
     data: kassaData,
     isLoading: KassaLoading,
@@ -18,6 +17,12 @@ export default function PageFinance() {
       page: 1,
     },
   });
+  
+  const {data:ReportsTotal } = useReportsTotal({
+    queries:{
+      year
+    }
+  });
 
   const flatKasssaData =
     kassaData?.pages?.flatMap((page) => page?.items || []) || [];
@@ -26,16 +31,15 @@ export default function PageFinance() {
     <>
        <p className="text-[#272727] text-[20px] m-4 mr-auto">Финансовый учёт</p>
         <CardSort
-          KassaReport={undefined}
-          isOnlyCash={Boolean(meUser?.position?.role == 9)}
-          isOnlyTerminal={Boolean(meUser?.position?.role == 10)}
+        isTotalPage={true}
+          KassaReport={ReportsTotal}
         />
         <DataTable
           columns={KassaColumnsLoc || []}
           data={flatKasssaData}
           isLoading={KassaLoading}
           isRowClickble={true}
-          className="h-[calc(100vh-240px)] scrollCastom"
+          className="h-[calc(100vh-300px)] scrollCastom"
           fetchNextPage={KassafetchNextPage}
           hasNextPage={KassafhasNextPage ?? false}
           isFetchingNextPage={KassaisFetchingNextPage}

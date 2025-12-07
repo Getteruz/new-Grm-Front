@@ -14,9 +14,11 @@ import { parseAsBoolean, useQueryState } from "nuqs";
 import { useMeStore } from "@/store/me-store";
 import { useMemo } from "react";
 import { MonthsArray } from "@/consts";
+import { useYear } from "@/store/year-store";
 
 export default function PageFinanceSingle() {
   const { meUser } = useMeStore();
+  const {year}= useYear()
   const { id } = useParams();
   const navigate = useNavigate();
   const [, setMyCashFlow] = useQueryState("myCashFlow", parseAsBoolean);
@@ -24,6 +26,7 @@ export default function PageFinanceSingle() {
     id: id,
     enabled: Boolean(id),
     queries: {
+      year,
       page: 1,
     },
   });
@@ -122,7 +125,7 @@ export default function PageFinanceSingle() {
           data={ReportSingleData || []}
           isLoading={KassaLoading}
           isRowClickble={true}
-          className="h-[calc(100vh-310px)] scrollCastom"
+          className="max-h-[calc(100vh-365px)] scrollCastom"
           onRowClick={(item) => {
             if (item?.status == "my") {
               navigate(item?.status);

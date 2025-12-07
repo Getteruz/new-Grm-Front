@@ -38,6 +38,7 @@ export default function CardSort({
   isOnlyTerminal,
   isUserSelectble,
   ClientdebtTotal,
+  isTotalPage,
 }: {
   KassaId?: string;
   reportId?: string | undefined;
@@ -50,6 +51,7 @@ export default function CardSort({
   isUserSelectble?: boolean | undefined;
   ClientdebtTotal?: TTotalDebt;
   isKassa?: boolean | undefined;
+  isTotalPage?:boolean;
 }) {
   const navigate = useNavigate();
 
@@ -198,20 +200,6 @@ export default function CardSort({
             : kassaId?.cash_collection || 0
         )
       ),
-      // button:
-      //   meUser?.position.role === 3  || !kassaId ? (
-      //     ""
-      //   ) : (
-      //     <div
-      //       onClick={() => {
-      //         setType("Инкассация");
-      //         setDialogOpen(true);
-      //       }}
-      //       className="border-border   border p-4 rounded-4xl"
-      //       >
-      //         <Plus size={20} color={ sorttype == "Инкассация"? "#f0f0e5" :"#5D5D53"} />
-      //     </div>
-      //   ),
     },
     {
       title: "Скидка",
@@ -269,7 +257,6 @@ export default function CardSort({
     },
   ];
 
-  // Helper function to format price
   function formatPrice(price: number): string {
     return Number(price).toFixed(2);
   }
@@ -359,8 +346,7 @@ export default function CardSort({
                         : isOnlyTerminal
                           ? KassaReport?.accauntantSum || 0
                           : KassaReport?.in_hand ? KassaReport?.in_hand
-                            : kassaId?.in_hand || 0 // kassaId?.totalSum removed
-                      //  isOnlyTerminal ?(KassaReport?.accauntantSum || 0)  : KassaReport?.totalSum || kassaId?.totalSum || 0
+                            : (isTotalPage &&  KassaReport?.totalSale) ? KassaReport?.totalSale : kassaId?.in_hand ||0
                     )}
                   </p>
                 )}
@@ -382,7 +368,7 @@ export default function CardSort({
                   {ClientdebtTotal?.totalDebt} { ClientdebtTotal?.totalDebt ?"$":""}
                 </p>
               </>
-            )  :  (
+            )  :   isTotalPage ? "":(
               <div className="w-1/2 inline-block">
                 <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
                   Продажа в долг:

@@ -60,7 +60,7 @@ function Currency() {
                 <Input
                   onChange={(e) => setUSD(Number(e.target.value) || 0)}
                   type="number"
-                  className="!w-full font-semibold !text-xl mt-2 bg-[#F0F0E5]"
+                  className="!w-full font-semibold !text-xl mt-2 bg-card"
                 />
                 <p className="absolute right-2 top-2 font-bold capitalize text-xl">
                   $
@@ -73,7 +73,7 @@ function Currency() {
                 <Input
                   onChange={(e) => setUZS(Number(e.target.value) || 0)}
                   type="number"
-                  className="w-full font-semibold !text-xl  mt-2 bg-[#F0F0E5]"
+                  className="w-full font-semibold !text-xl  mt-2 bg-card"
                 />
                 <p className="absolute right-2 top-2 font-bold  text-xl">сум</p>
               </div>
@@ -82,7 +82,7 @@ function Currency() {
           <p className="text-[#5D5D53] font-semibold text-sm mt-5 mb-2">
             История изминении
           </p>
-          <div className="border border-border bg-[#F0F0E5] max-h-[200px] overflow-y-auto">
+          <div className="border border-border bg-card max-h-[200px] overflow-y-auto">
             {data?.items?.map((i) => (
               <div
                 key={i.id}

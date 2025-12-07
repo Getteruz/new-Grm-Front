@@ -6,9 +6,10 @@ import {
 import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useMeStore } from "@/store/me-store";
+import { useYear } from "@/store/year-store";
 import { Select } from "@radix-ui/react-select";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getMonth, getYear } from "date-fns";
+import { getMonth } from "date-fns";
 import { FileInput, Printer } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import qs from "qs";
@@ -21,6 +22,7 @@ type RightContentProps = {
 
 export default function RightConent({ printRef }: RightContentProps) {
   const { meUser } = useMeStore();
+  const {year,setYear}= useYear()
   const [month] = useQueryState(
     "month",
     parseAsString.withDefault(getMonth(new Date()) + 1 + "")
@@ -32,7 +34,7 @@ export default function RightConent({ printRef }: RightContentProps) {
       const query = {
         month: +month || undefined,
         tur: type =="all" ? undefined: type,
-        year: getYear(new Date()),
+        year:year,
         filialId:
           meUser?.position?.role == 4
             ? meUser?.filial?.id
@@ -70,6 +72,14 @@ export default function RightConent({ printRef }: RightContentProps) {
     removeAfterPrint: true,
   });
 
+  const startYear = 2024;
+  const currentYear = new Date().getFullYear();
+
+  const years = Array.from(
+    { length: currentYear - startYear + 1 },
+    (_, i) => currentYear - i
+  );
+
   return (
     <div className="w-[380px] h-full">
       <div className="p-1.5 pt-0 flex i gap-2 text-[#272727]">
@@ -79,11 +89,11 @@ export default function RightConent({ printRef }: RightContentProps) {
           }}
         >
           <SelectTrigger
-            className={`outline-none active:border-none w-full p-0 pr-2 border-none bg-white rounded-md `}
+            className={`outline-none active:border-none w-full p-0 pr-2 border-none bg-white rounded-lg `}
           >
             <div
               // onClick={() => mutate()}
-              className="flex cursor-pointer text-nowrap items-center py-[13px] px-[23px] rounded-md bg-white text-[16px] font-normal gap-2"
+              className="flex cursor-pointer text-nowrap items-center py-[13px] px-[23px] rounded-lg bg-white text-[16px] font-normal gap-2"
             >
               <FileInput size={20} />  Excel
             </div>
@@ -110,15 +120,25 @@ export default function RightConent({ printRef }: RightContentProps) {
         </Select>
         <div
           onClick={() => handlePrint()}
-          className="flex  cursor-pointer items-center p-2 px-5 rounded-md bg-white text-[16px] font-normal gap-1"
+          className="flex  cursor-pointer items-center p-2 px-5 rounded-lg bg-white text-[16px] font-normal gap-1"
         >
           <Printer size={20} />
         </div>
       </div>
 
-      <p className="border-t mt-auto h-[56px] px-[31px] text-[#272727] py-[18px] border-border">
+      <p className="border-t mt-auto text-[12px] h-[56px] px-[31px] text-[#272727] py-[18px] border-border">
         Годовой отчет
       </p>
+      <div className="p-1.5 pt-0 w-full">
+        {years?.map((item) => (
+          <p
+            onClick={() => setYear(item)}
+            className={`${year == item ? "bg-card" : ""} w-full text-[#272727] cursor-pointer rounded-lg text-[16px] font-medium px-[26px] py-[12px]  `}
+          >
+            {item}-yil hisoboti
+          </p>
+        ))} 
+      </div>
     </div>
   );
 }

@@ -40,14 +40,7 @@ export const Columns: ColumnDef<TData>[] = [
       return <>{row.original.volume}м²</>;
     },
   },
-  {
-    accessorKey: "Стоимость",
-    header: "Стоимость",
-    cell: () => {
-      return 0;
-    },
-  },
-
+ 
   {
     id: "expense",
     accessorKey: "expense",

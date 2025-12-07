@@ -1,10 +1,11 @@
 import { useMeStore } from "@/store/me-store";
-import { format, getMonth, getYear } from "date-fns";
+import { format, getMonth } from "date-fns";
 import { parseAsString, useQueryState } from "nuqs";
 import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
 import { forwardRef } from "react";
 import { useDataFetch } from "./queries";
+import { useYear } from "@/store/year-store";
 
 function RowUI({
   id,
@@ -81,13 +82,14 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
   );
 
   const [filial] = useQueryState("filial");
-
+  const {year}= useYear();
+  
   const { data } = useDataFetch({
     queries: {
       filialId:
         meUser?.position?.role == 4 ? meUser?.filial?.id : filial || undefined,
       month: +month || undefined,
-      year: getYear(new Date()),
+      year,
     },
   });
 
@@ -98,7 +100,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
     >
       <div className="flex items-center border-border border-b min-h-[56px] gap-[100px] justify-center">
         <p className="text-[13px] text-[#272727] font-semibold">
-          {format(new Date(2025, +month - 1, 1), "MMMM")} {getYear(new Date())}
+          {format(new Date(2025, +month - 1, 1), "MMMM")} {year}
         </p>
         <p className="text-[17px] text-[#272727] font-extrabold">
           {meUser?.position?.role == 4 ? meUser?.filial?.name : "Филиал"}

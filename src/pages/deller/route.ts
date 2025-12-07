@@ -15,7 +15,7 @@ const Route = [
   },
 
   {
-    url: "/dealer/:toId",
+    url: "/dealer/:toId/info",
     Element: TrasferDealerSinglePage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },

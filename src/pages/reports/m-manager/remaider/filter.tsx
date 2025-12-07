@@ -1,6 +1,5 @@
-import { FileOutput, Store } from "lucide-react";
+import {  Store } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { usefilialWarehouseFetch } from "./queries";
 import { MonthsArray } from "@/consts";
@@ -69,9 +68,9 @@ export default function Filters({
         name="month"
         className="w-[160px] px-2 h-[62px]  "
       />
-      <Button className="h-full  w-[140px]  " variant={"secondary"}>
+      {/* <Button className="h-full  w-[140px]  " variant={"secondary"}>
         <FileOutput /> Экспорт
-      </Button>
+      </Button> */}
     </div>
   );
 }

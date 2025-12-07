@@ -25,9 +25,9 @@ function ItemBottom({items}:{items:TReportData }){
           <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
             Сумма: { Number(items?.total)?.toFixed(2) || 0} $
           </div>
-          <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
+          {/* <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
             Расход: { Number(items?.expence)?.toFixed(2) || 0} $
-          </div>
+          </div> */}
     </div>
     )
 }
@@ -139,8 +139,8 @@ export default function ItemsPage() {
             isNumberble={true}
           className={
             tip == "излишки"
-              ? "h-[calc(50vh-110px)] scrollCastom"
-              : "h-[calc(100vh-175px)] scrollCastom"
+              ? "h-[calc(50vh-118px)] scrollCastom"
+              : "h-[calc(100vh-183px)] scrollCastom"
           }
           data={flatData || []}
           fetchNextPage={fetchNextPage}

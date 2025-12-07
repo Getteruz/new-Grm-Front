@@ -112,7 +112,7 @@ export default function Menu() {
           className={`group   cursor-pointer  text-center flex items-center justify-center p-5`}
         >
           <LogOut width={20} />
-          <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-[#F0F0E5] border-border border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
+          <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-card border-border border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
             Выйти
           </span>
         </div>

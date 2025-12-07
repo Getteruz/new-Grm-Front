@@ -75,6 +75,13 @@ export type BronedData = {
       };
     };
   };
+  seller:{
+    firstName:string;
+    lastName:string;
+    avatar:{
+      path:string;
+    }
+  }
 };
 
 

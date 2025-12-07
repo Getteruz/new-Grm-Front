@@ -24,11 +24,7 @@ const Route = [
     Element: ReportPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
-  {
-    url: "/m-manager/report-finance",
-    Element: PageFinance,
-    meta: { isAuth: true, role: new Set(["admin"]) },
-  },
+
   {
     url: "/m-manager/report-remaider",
     Element: CountryTable,
@@ -71,7 +67,11 @@ const Route = [
     Element: DealerReportPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
-
+  {
+    url: "/m-manager/report-finance",
+    Element: PageFinance,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
   {
     url: "/m-manager/report-finance/:id/info",
     Element: PageFinanceSingle,

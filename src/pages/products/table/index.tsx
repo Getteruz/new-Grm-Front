@@ -75,7 +75,7 @@ export default function Page() {
       </div>:""
       }
       {showCardGrid && (
-        <div className="px-6 mt-4 h-[calc(100vh-210px)] scrollCastom grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8 gap-4 pb-6">
+        <div className="px-6 mt-4 h-[calc(100vh-210px)] scrollCastom grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-6">
           {productsFlat.map((item) => (
             <CarpetCard
             producdId={""}
@@ -83,20 +83,14 @@ export default function Page() {
               id={item.id.toString()}
               isBron={false}
               carpetType="product"
-              user={{
-                firstName: meUser?.firstName || "",
-                lastName: meUser?.lastName || "",
-                avatar: {
-                  path: meUser?.avatar?.path || ""
-                }
-              }}
+              user={null}
               shape={item.bar_code?.shape?.title || ""}
               discount={"0"}
               img={{
-                path: item.bar_code?.imgUrl || ""
+                path: item.bar_code?.imgUrl?.path || ""
               }}
               model={item.bar_code?.model?.title || ""}
-              size={`${item.bar_code?.size?.x || 0}X${item.bar_code?.size?.y || 0}`}
+              size={`${(item.bar_code?.size?.x || 0) * 100}x${(item.bar_code?.size?.y || 0) *100 }`}
               count={(item.count || "0").toString()}
               price={(item.price || "0").toString()}
               colaction={item.bar_code?.collection?.title || ""}

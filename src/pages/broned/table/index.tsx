@@ -23,7 +23,7 @@ export default function Page() {
     <>
       <Filters />
       <BronModal />
-      <div className="px-2.5  mt-4 gap-2 grid row-start grid-cols-7  pb-[17px]">
+      <div className="px-2.5  mt-4 gap-2 grid row-start  grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6  pb-[17px]">
         {flatData.map((item) => (
           <CarpetCard
             key={item.id}
@@ -31,10 +31,10 @@ export default function Page() {
             isBron={true}
             producdId={item?.product?.id}
             user={{
-              firstName: meUser?.firstName || "",
-              lastName: meUser?.lastName || "",
+              firstName: item?.seller?.firstName || "",
+              lastName:  item?.seller?.lastName || "",
               avatar: {
-                path: meUser?.avatar?.path || ""
+                path:  item?.seller?.avatar?.path || ""
               }
             }}
             img={{

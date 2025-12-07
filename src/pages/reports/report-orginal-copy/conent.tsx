@@ -1,6 +1,6 @@
 import useDataFetch from "./queries";
 import { useMeStore } from "@/store/me-store";
-import { format, getMonth, getYear } from "date-fns";
+import { format, getMonth } from "date-fns";
 import { parseAsString, useQueryState } from "nuqs";
 import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
@@ -8,6 +8,7 @@ import { getAllData } from "@/service/apiHelpers";
 import { useQuery } from "@tanstack/react-query";
 import { TStaticData } from "./type";
 import { forwardRef } from "react";
+import { useYear } from "@/store/year-store";
 
 function RowUI({
   id,
@@ -26,6 +27,7 @@ function RowUI({
   price2?: number;
   isbordereble?: boolean;
 }) {
+
   return (
     <div
       className={`flex items-center w-full border-border/20 ${isbordereble ? "border-b" : ""}`}
@@ -83,13 +85,14 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
     parseAsString.withDefault(getMonth(new Date()) + 1 + "")
   );
   const [filial] = useQueryState("filial");
+  const {year}= useYear()
 
   const { data: StatucData } = useQuery({
     queryKey: [apiRoutes.paperReportStatic, meUser, filial, month],
     queryFn: () =>
       getAllData<TStaticData, object>(apiRoutes.paperReportStatic, {
         month: +month || undefined,
-        year: getYear(new Date()),
+        year,
         filialId:
           meUser?.position?.role == 4
             ? meUser?.filial?.id
@@ -102,7 +105,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
       filialId:
         meUser?.position?.role == 4 ? meUser?.filial?.id : filial || undefined,
       month: +month || undefined,
-      year: getYear(new Date()),
+      year,
     },
   });
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];
@@ -113,7 +116,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
     >
       <div className="flex items-center border-border border-b min-h-[56px] gap-[100px] justify-center">
         <p className="text-[13px] text-[#272727] font-semibold">
-          {format(new Date(2025, +month - 1, 1), "MMMM")} {getYear(new Date())}
+          {format(new Date(2025, +month - 1, 1), "MMMM")} {year}
         </p>
         <p className="text-[17px] text-[#272727] font-extrabold">
           {meUser?.position?.role == 4 ? meUser?.filial?.name : "Филиал"}

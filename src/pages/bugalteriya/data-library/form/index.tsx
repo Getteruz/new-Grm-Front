@@ -35,6 +35,10 @@ const queryClient = useQueryClient()
           label: "",
         })
       }
+        form.setValue('country',{
+          value: undefined,
+          label: "",
+        })
       setidMadal("new")
       if (idMadal == "new") {
         toast.success("savedSuccessfully");
@@ -47,6 +51,10 @@ const queryClient = useQueryClient()
   useEffect(()=>{
     form.setValue('title',"")
     form.setValue('collection',{
+      value: undefined,
+      label: "",
+    })
+    form.setValue('country',{
       value: undefined,
       label: "",
     })

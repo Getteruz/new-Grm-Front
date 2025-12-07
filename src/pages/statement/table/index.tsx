@@ -87,7 +87,7 @@ export default function Page() {
 
 
       <Dialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-        <DialogContent className="sm:max-w-[596px] p-0 bg-[#F0F0E5]">
+        <DialogContent className="sm:max-w-[596px] p-0 bg-card">
           <DialogHeader>
             <DialogTitle>Удалить ведомость</DialogTitle>
             <DialogDescription>

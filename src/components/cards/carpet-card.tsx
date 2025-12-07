@@ -2,7 +2,6 @@ import {
   Bookmark,
   Circle,
   RectangleVertical,
-  ShoppingCart,
 } from "lucide-react";
 import { useQueryState } from "nuqs";
 
@@ -30,7 +29,7 @@ interface ICarpetCard {
     avatar: {
       path: string;
     };
-  };
+  } | null;
   producdId:string;
   shape: string;
 }
@@ -86,7 +85,7 @@ export default function CarpetCard({
           src={img?.path ? minio_img_url + img?.path : "/images/default.svg"}
         />
 
-        <p className="text-primary absolute left-3 bottom-1">{color}</p>
+        <p className="text-primary absolute bg-card left-0.5 bottom-0.5 px-1.5">{color}</p>
       </div>
       <p className="flex gap-2 items-center px-1.5">
         {shape === "Rulo" && (
@@ -129,7 +128,7 @@ export default function CarpetCard({
         {shape === "Circle" && <Circle className="text-primary w-4" />}
         {price}$
       </p>
-      {discount ? (
+      {discount && user ? (
         <div className="absolute right-0 bottom-[46px] ">
           {user?.avatar?.path ? (
             <img
@@ -160,15 +159,16 @@ export default function CarpetCard({
           <p className="absolute top-0  text-white font-bold text-[12px] right-1">{count}</p>
         </div>
       ) : (
-        <div
-          //   onClick={(e) => {
-          //     e.stopPropagation();
-          //     setCarpetType(carpetType || null);
-          //   }}
-          className="w-[46px] cursor-pointer absolute right-0 bottom-0 bg-primary text-background h-[46px] flex items-center justify-center"
-        >
-          <ShoppingCart />
-        </div>
+        ""
+        // <div
+        //   //   onClick={(e) => {
+        //   //     e.stopPropagation();
+        //   //     setCarpetType(carpetType || null);
+        //   //   }}
+        //   className="w-[46px] cursor-pointer absolute right-0 bottom-0 bg-primary text-background h-[46px] flex items-center justify-center"
+        // >
+        //   <ShoppingCart />
+        // </div>
       )}
     </div>
   );

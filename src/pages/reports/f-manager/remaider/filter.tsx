@@ -1,6 +1,3 @@
-import { FileOutput } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { MonthsArray } from "@/consts";
 import { getMonth } from "date-fns";
@@ -48,9 +45,9 @@ export default function Filters({
         name="month"
         className="w-[160px]  px-2 h-[62px]  "
       />
-      <Button className="h-full  w-[140px]  " variant={"secondary"}>
+      {/* <Button className="h-full  w-[140px]  " variant={"secondary"}>
         <FileOutput /> Экспорт
-      </Button>
+      </Button> */}
     </div>
   );
 }

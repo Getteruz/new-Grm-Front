@@ -29,7 +29,7 @@ export const ClientsColumns: ColumnDef<TData>[] = [
     header: "Задолжность",
     accessorKey: "totalDebt",
       cell: ({ row }) => {
-        return <p className="text-[#FF6600]">{row.original?.totalDebt}</p>;
+        return <p className="text-[#FF6600]">{row.original?.owed}</p>;
     },
   },
 
@@ -38,6 +38,12 @@ export const ClientsColumns: ColumnDef<TData>[] = [
     accessorKey: "given",
       cell: ({ row }) => {
         return <p className="text-[#89A143]">{row.original?.given}</p>;
+    },
+  },
+  {
+    header: "Остаток долга",
+    cell: ({row}) => {
+      return <p className="text-[#FF6600]">{(row?.original?.owed - row?.original?.given).toFixed(2)} $</p>;
     },
   },
   {

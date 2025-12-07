@@ -4,19 +4,19 @@ export interface TKassareportData {
   additionalProfitTotalSum: number;
   netProfitTotalSum: number;
   totalSize: number;
-  kassaReportStatus:number;
-  isAccountantConfirmed:boolean;
-  isMManagerConfirmed:boolean;
+  kassaReportStatus: number;
+  isAccountantConfirmed: boolean;
+  isMManagerConfirmed: boolean;
   year: number;
-  managerSum:number;
+  managerSum: number;
   month: number;
   status: string;
   filial?: {
     id: string;
     title: string;
   };
-  kassaReport?:TKassareportData[];
-  reportStatus?:number;
+  kassaReport?: TKassareportData[];
+  reportStatus?: number;
   totalPlasticSum: number;
   totalInternetShopSum: number;
   totalSale: number;
@@ -28,9 +28,9 @@ export interface TKassareportData {
   totalSum: number;
 }
 
-export interface TChaFlowData{
-  expense: number,
-  income: number
+export interface TChaFlowData {
+  expense: number;
+  income: number;
 }
 
 export interface RemainingProductData {
@@ -39,13 +39,13 @@ export interface RemainingProductData {
   count: number;
 }
 export interface RemainingProductColactionData {
-    country: {
-        id: string;
-        title: string;
-    };
-    remainingSize: number;
-    remainingSum: number; 
-    count: number;
+  country: {
+    id: string;
+    title: string;
+  };
+  remainingSize: number;
+  remainingSum: number;
+  count: number;
 }
 export interface TQuery {
   search?: string | undefined;
@@ -56,5 +56,5 @@ export interface TQuery {
   id?: string;
   startDate?: Date | null;
   endDate?: Date | null;
-  type?:string;
+  type?: string;
 }

@@ -9,9 +9,10 @@ import Kassa from "./ui/kassa";
 import { useEffect, useState } from "react";
 import { useReportsHomePageCurrentLeft, useReportsHomePageCurrentMonth } from "./queries";
 import { parseAsString, useQueryState } from "nuqs";
-import { getMonth, getYear } from "date-fns";
+import { getMonth } from "date-fns";
 import { SheetDashboar } from "./tables";
 import { formatNumber } from "@/utils/farmatNumber";
+import { useYear } from "@/store/year-store";
 
 export default function Dashboard() {
   const { meUser } = useMeStore();
@@ -21,14 +22,15 @@ export default function Dashboard() {
   const [filial] = useQueryState("filial");
   const [,setManagerId] = useQueryState("managerId");
   const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1+""));
-  
+  const {year}= useYear()
+
   const { data } = useReportsHomePageCurrentMonth({
     queries: {
       startDate: startDate || undefined,
       endDate: endDate || undefined,
       filial_id: filial || undefined,
       month:month,
-      year: getYear(new Date()) || undefined,
+      year: year,
 
     },
   });

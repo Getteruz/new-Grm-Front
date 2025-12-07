@@ -24,6 +24,8 @@ export const useDataLibrary = ({
         ...data,
         collection:data?.collection?.value,
         country:data?.country?.value,
+        factory:data?.factory?.value,
+        // country:data?.country?.value,
       };
       if (id)
         return await UpdatePatchData<CropFormType>(url, id,  url == "/partiya-number" ? {title: data?.title+ "-partiya"}:costomData as CropFormType);

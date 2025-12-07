@@ -104,7 +104,7 @@ useEffect(()=>{
 
   return (
     <Dialog open={isOpen} onOpenChange={CloseFunc}>
-      <DialogContent className="sm:max-w-[568px] p-0 bg-[#F0F0E5]">
+      <DialogContent className="sm:max-w-[568px] p-0 bg-card">
         <DialogHeader className="p-4 border-b">
           <div className="flex justify-between items-center">
             <DialogTitle className="text-lg font-medium">
@@ -151,7 +151,7 @@ useEffect(()=>{
               <Button
                 type="button"
                 disabled={isLoading}
-                className="rounded-none w-[220px] h-[44px] bg-[#F0F0E5] border"
+                className="rounded-none w-[220px] h-[44px] bg-card border"
                 variant="outline"
                 onClick={CloseFunc}
               >

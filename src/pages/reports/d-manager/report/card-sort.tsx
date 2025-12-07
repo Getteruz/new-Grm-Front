@@ -65,7 +65,7 @@ export default function CardSort({kassaReportId,isAddable,SortData}:{kassaReport
       button: (
         <div
           onClick={() => setType("Приход")}
-          className="bg-[#F0F0E5] p-4 rounded-4xl"
+          className="bg-card p-4 rounded-4xl"
         >
           <Plus size={20} color="#5d5d53" className="opacity-100" />
         </div>

@@ -30,7 +30,7 @@ export const StatementEmployeeColumns = (): ColumnDef<Statement>[] => {
       accessorKey: "filial",
       cell: ({ row }) => {
         return (
-          <div className="bg-[#F0F0E5] py-[12px] px-[16px] rounded-full inline-block text-[#5D5D53] text-[12px]">
+          <div className="bg-card py-[12px] px-[16px] rounded-full inline-block text-[#5D5D53] text-[12px]">
             {row.original?.user?.filial}
           </div>
         );
@@ -107,7 +107,7 @@ export const StatementEmployeeColumns = (): ColumnDef<Statement>[] => {
       accessorKey: "plastic",
       cell: ({ row }) => {
         return (
-          <span className="p-2 border bg-[#F0F0E5]">
+          <span className="p-2 border bg-card">
             {row.original?.plastic} $
           </span>
         );

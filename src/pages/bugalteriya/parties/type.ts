@@ -30,6 +30,12 @@ export type TData = {
   updatedAt: string;
   updatedBy: string;
   variety: string;
+  factory?:{
+    title:string
+  }
+  partiya_no?:{
+    title:string
+  }
 };
 
 export interface TSingleData {

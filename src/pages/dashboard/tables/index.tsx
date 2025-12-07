@@ -16,8 +16,8 @@ import SalesDebtTable from "./saleDebtTable";
 const componetObject = {
   "Остатка": RemainderTable,
   "Кенты":KentsTable,
-  "Маруф касса":KassaManagerTable,
-  "Мукаддас касса":KassaManagerTable,
+  "Полученные кассовые деньги":KassaManagerTable,
+  "Р/с":KassaManagerTable,
   "Дилер":DilerTable,
   "Прибыль":ProfitTable,
   "Расход":ExpenseTable,

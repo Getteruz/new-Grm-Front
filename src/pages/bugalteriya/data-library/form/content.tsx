@@ -1,4 +1,8 @@
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { Check } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import { useFormContext } from "react-hook-form";
@@ -13,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { DeleteData, getAllData } from "@/service/apiHelpers";
 import { TResponse } from "@/types";
 
-import { TActionData } from "../type";
+import { TActionData, TFormData } from "../type";
 
 export default function FormContent({ isPending }: { isPending: boolean }) {
   const [type, settype] = useQueryState(
@@ -27,35 +31,36 @@ export default function FormContent({ isPending }: { isPending: boolean }) {
   const collectionId = watch()?.collection.value;
   const title = watch()?.title;
 
-
-const { data, isLoading, hasNextPage, fetchNextPage,isFetchingNextPage } = useInfiniteQuery({
-  queryKey: [type, collectionId],
-    queryFn: ({ pageParam = 1 }) =>
-      getAllData<TResponse<TActionData>, object>(
-        `/${collectionId && type == "model" ? `model/by-collection/${collectionId}` : type}`,
-        {
-          page: pageParam as number,
-          limit: 10,
+  const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [type, collectionId],
+      queryFn: ({ pageParam = 1 }) =>
+        getAllData<TResponse<TActionData>, object>(
+          `/${collectionId && type == "model" ? `model/by-collection/${collectionId}` : type}`,
+          {
+            page: pageParam as number,
+            limit: 10,
+          }
+        ),
+      getNextPageParam: (lastPage) => {
+        if (lastPage.meta?.currentPage <= lastPage.meta?.totalPages) {
+          return lastPage?.meta?.currentPage + 1;
+        } else {
+          return null;
         }
-      ),
-    getNextPageParam: (lastPage) => {
-      if (lastPage.meta?.currentPage <= lastPage.meta?.totalPages) {
-        return lastPage?.meta?.currentPage + 1;
-      } else {
-        return null;
-      }
-    },
-  select: (data) => ({
-    items: data.pages.flatMap(page => 
-      page.items.map(item => ({
-        value: item?.id,
-        label: item?.title,
-      }))
-    ),
-    meta: data.pages[data.pages.length - 1]?.meta,
-  }),
-  initialPageParam: 1,
-});
+      },
+      select: (data) => ({
+        items: data.pages.flatMap((page) =>
+          page.items.map((item) => ({
+            ...item,
+            value: item?.id,
+            label: item?.title,
+          }))
+        ),
+        meta: data.pages[data.pages.length - 1]?.meta,
+      }),
+      initialPageParam: 1,
+    });
 
   const { mutate } = useMutation({
     mutationFn: async (id: string) => {
@@ -63,11 +68,22 @@ const { data, isLoading, hasNextPage, fetchNextPage,isFetchingNextPage } = useIn
     },
     onSuccess: () => {
       toast.success(t("deleteToast"));
+      setValue("title", "");
+      setValue("collection", {
+        value: undefined,
+        label: "",
+      });
+      setValue("country", {
+        value: undefined,
+        label: "",
+      });
+      setValue("factory", {
+        value: undefined,
+        label: "",
+      });
       queryClient.invalidateQueries({ queryKey: [type] });
     },
   });
-
-
 
   return (
     <>
@@ -139,6 +155,27 @@ const { data, isLoading, hasNextPage, fetchNextPage,isFetchingNextPage } = useIn
         setValue={setValue}
         options={data?.items?.map((e) => ({
           onDelete: () => mutate(e?.value),
+          onUpdate: (e) => {
+            const value = e as TFormData
+            if (type == "factory") {
+              setValue("country", {
+                value: value?.country?.id,
+                label: value?.country?.title,
+              });
+            }
+            if (type == "model") {
+              setValue("country", {
+                value: value?.collection?.id,
+                label: value?.collection?.title,
+              });
+            }
+            if (type == "collection") {
+              setValue("country", {
+                value: value?.factory?.id,
+                label: value?.factory?.title,
+              });
+            }
+          },
           ...e,
         }))}
         fetchNextPage={fetchNextPage}
@@ -154,6 +191,26 @@ const { data, isLoading, hasNextPage, fetchNextPage,isFetchingNextPage } = useIn
             fieldNames={{ value: "id", label: "title" }}
             name="collection"
             placeholder="collection"
+          />
+        )}
+        {type === "factory" && (
+          <FormComboboxDemoInput
+            classNameChild="mb-3 m-1 w-[95%] rounded-none bg-transparent border border-border"
+            className="w-full"
+            fetchUrl="/country"
+            fieldNames={{ value: "id", label: "title" }}
+            name="country"
+            placeholder="country"
+          />
+        )}
+          {type === "collection" && (
+          <FormComboboxDemoInput
+            classNameChild="mb-3 m-1 w-[95%] rounded-none bg-transparent border border-border"
+            className="w-full"
+            fetchUrl="/factory"
+            fieldNames={{ value: "id", label: "title" }}
+            name="factory"
+            placeholder="factory"
           />
         )}
         <div className="relative w-[95%]">
@@ -177,7 +234,11 @@ const { data, isLoading, hasNextPage, fetchNextPage,isFetchingNextPage } = useIn
                 className="w-[66px] text-center  bg-transparent border-y border-border"
               />
               <Input
-                value={title?.split("x")[1]?.length ?title?.split("x")[1] :undefined }
+                value={
+                  title?.split("x")[1]?.length
+                    ? title?.split("x")[1]
+                    : undefined
+                }
                 onChange={(e) =>
                   setValue(
                     "title",

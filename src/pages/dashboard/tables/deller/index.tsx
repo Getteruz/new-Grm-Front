@@ -41,6 +41,9 @@ export default function DilerTable() {
             <p className=" p-[25px] border-border border-r  text-[17px] w-full">
             + {dellergiven} $
             </p>
+            <p className=" p-[25px] border-border border-r  text-[17px] w-full">
+             {(dellerowed ||0) -(dellergiven||0)} $
+            </p>
           </div>
           <div className="px-5 bg-card ">
             <DataTable

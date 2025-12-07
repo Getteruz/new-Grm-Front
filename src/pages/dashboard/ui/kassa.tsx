@@ -10,21 +10,21 @@ export default function Kassa({
 }) {
   return (
     <div className="border border-border bg-white rounded-xl mt-2.5">
-      <div onClick={()=>setOpen('Маруф касса')} className="hover:bg-[#F9F9F9] border-border   m-1 rounded-xl p-[25px]">
+      <div onClick={()=>setOpen('Полученные кассовые деньги')} className="hover:bg-[#F9F9F9] border-border   m-1 rounded-xl p-[25px]">
         <div className="flex items-center mb-2 gap-2 ">
-          <p className="mr-auto text-[17px] text-[#333333]">Наличные</p>
-          <p className=" text-[17px] opacity-30 text-[#333333]">Расход</p>
-          <p className=" text-[17px] text-[#333333]">{data?.manager?.expense} $</p>
+          <p className="mr-auto text-[17px] text-[#333333]">Полученные кассовые деньги</p>
+          {/* <p className=" text-[17px] opacity-30 text-[#333333]">Расход</p>
+          <p className=" text-[17px] text-[#333333]">{data?.manager?.expense} $</p> */}
         </div>
         <Progress  classNameIndicator="bg-[#FEDDCA]" className="bg-[#F3F3F3] rounded-none" value={((data?.manager?.expense ||0) >=(data?.manager?.income ||0) ?100: (data?.manager?.expense||0)/(data?.manager?.income||0)*100) } />
         <p className="text-[24px] mt-2">{data?.manager?.income} $</p> 
       </div>
       <div className=" w-full h-[1px] bg-border"></div>
-      <div onClick={()=>setOpen('Мукаддас касса')} className="hover:bg-[#F9F9F9] m-1 rounded-xl p-[25px]">
+      <div onClick={()=>setOpen('Р/с')} className="hover:bg-[#F9F9F9] m-1 rounded-xl p-[25px]">
         <div className="flex items-center mb-2 gap-2 ">
-          <p className="mr-auto text-[17px] text-[#333333]">Терминал</p>
-          <p className=" text-[17px] opacity-30 text-[#333333]">Расход</p>
-          <p className=" text-[17px] text-[#333333]">{data?.accountant?.expense} $</p>
+          <p className="mr-auto text-[17px] text-[#333333]">Р/с</p>
+          {/* <p className=" text-[17px] opacity-30 text-[#333333]">Расход</p>
+          <p className=" text-[17px] text-[#333333]">{data?.accountant?.expense} $</p> */}
         </div>
         <Progress classNameIndicator="bg-[#B8F2FD] " className="bg-[#F3F3F3] rounded-none" value={((data?.accountant?.expense ||0) >=(data?.accountant?.income ||0) ?100: (data?.accountant?.expense||0)/(data?.accountant?.income||0)*100) } />
         <p className="text-[24px] mt-2">{data?.accountant?.income} $</p>

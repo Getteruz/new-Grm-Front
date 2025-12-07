@@ -72,6 +72,7 @@ export default function FormComboboxDemoInput<IData, TQuery>({
       select: (res) => ({
         data: res.pages.flatMap((page) =>
           page.items.map((item) => ({
+            ...item,
             value: fieldNames?.value
               ? (item as Record<string, string>)[fieldNames.value]
               : String(item),

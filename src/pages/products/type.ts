@@ -4,7 +4,9 @@ export interface ProductsData {
   price: number;
   bar_code?: {
     code: string;
-    imgUrl: string;
+    imgUrl: {
+      path?:string
+    };
     collection: {
       title: string;
       collection_prices: {priceMeter:number}[]
@@ -37,7 +39,9 @@ export interface ProductsData {
   };
   // Collection fields
   title?: string;
-  imgUrl?: string;
+  imgUrl: {
+    path?:string
+  };
   model?: {
     title: string;
   };

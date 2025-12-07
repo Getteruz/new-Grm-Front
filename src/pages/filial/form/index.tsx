@@ -81,7 +81,7 @@ const ActionPage = () => {
         }
       }}
     >
-      <DialogContent className="sm:max-w-[796px] bg-[#F0F0E5]">
+      <DialogContent className="sm:max-w-[796px] bg-card">
         <FormProvider {...form}>
           <form
             onSubmit={form.handleSubmit((data) => {

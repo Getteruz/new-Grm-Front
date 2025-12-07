@@ -33,7 +33,7 @@ export default function Page() {
         isLoading={isLoading}
         columns={Columns}
         onRowClick={(item)=>{
-          navigate(`/dealer/${item?.id}`)
+          navigate(`/dealer/${item?.id}/info`)
         }}
         ischeckble={false}
         data={flatData ?? []}

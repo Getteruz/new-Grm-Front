@@ -49,7 +49,7 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "Задолжность",
     cell: ({row}) => {
-      return <p className="text-[#FF6600]">{row?.original?.owed.toFixed(2) } $</p>;
+      return <p >{row?.original?.owed.toFixed(2) } $</p>;
     },
   },
   {
@@ -58,7 +58,12 @@ export const Columns: ColumnDef<TData>[] = [
       return <p className="text-[#89A143]">{row?.original?.given.toFixed(2)} $</p>;
     },
   },
-
+  {
+    header: "Остаток долга",
+    cell: ({row}) => {
+      return <p className="text-[#FF6600]">{(row?.original?.owed - row?.original?.given).toFixed(2)} $</p>;
+    },
+  },
   {
     id: "actions",
     enableHiding: true,

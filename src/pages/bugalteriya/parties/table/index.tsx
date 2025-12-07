@@ -15,7 +15,7 @@ export default function Page() {
   const [factory] = useQueryState("factory");
   const [partiyaNumber] = useQueryState("partiya-number");
   const [search] = useQueryState("search");
-
+  const [,setItemName] = useQueryState("itemName")
 const {meUser} = useMeStore()
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -40,9 +40,12 @@ const {meUser} = useMeStore()
         isLoading={isLoading}
         columns={Columns}
         data={flatData ?? []}
-         className="h-[calc(100vh-140px)] scrollCastom"
+        className="h-[calc(100vh-140px)] scrollCastom"
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}
+        onRowClick={(row)=>{
+          setItemName(`${row?.factory?.title} ${row?.partiya_no?.title}`)
+        }}
         isRowClickble
         isFetchingNextPage={isFetchingNextPage}
       />

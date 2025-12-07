@@ -10,6 +10,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UpdatePatchData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useMemo } from "react";
+import { parseAsString, useQueryState } from "nuqs";
 
 export default function Filters({
   partiyaStatus = "new",
@@ -21,6 +22,7 @@ export default function Filters({
   const { id } = useParams();
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
+  const [tip] = useQueryState("tip", parseAsString.withDefault((meUser?.position?.role ==7 || meUser?.position.role == 4) ? "переучет": "new"));
 
   const changeStatus = useMemo(() => {
     if (partiyaStatus == "new") {
@@ -62,7 +64,7 @@ export default function Filters({
           { label: "Оприходован", value: "переучет" },
           { label: "Розница", value: "излишки" }, //дефицит
         ]}
-        defaultValue={meUser?.position?.role ==4 ? "переучет":"new"}
+        defaultValue={(meUser?.position?.role ==7 || meUser?.position.role == 4) ? "переучет":"new"}
         placeholder="Накладной"
         name="tip"
       />
@@ -76,7 +78,7 @@ export default function Filters({
         placeholder="Коллекция"
         name="type"
       />
-     { (meUser?.position?.role ==9  || meUser?.position?.role == 7 )? <FileExelUpload partiyaId={id || ""} />:""}
+     { (meUser?.position?.role == 9 || meUser?.position?.role == 7) && tip=="new" ? <FileExelUpload partiyaId={id || ""} />:""}
 
       {( meUser?.position.role == 4) ? (
         <Button

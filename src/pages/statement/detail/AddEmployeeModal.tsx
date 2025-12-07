@@ -93,7 +93,7 @@ export default function AddEmployeeModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={CloseFunc}>
-      <DialogContent className="sm:max-w-[796px] p-0 bg-[#F0F0E5]">
+      <DialogContent className="sm:max-w-[796px] p-0 bg-card">
         <DialogHeader className="p-4 border-b">
           <div className="flex justify-between items-center">
             <DialogTitle className="text-lg font-medium">
@@ -147,7 +147,7 @@ export default function AddEmployeeModal({
               </Button>
               <Button
                 type="button"
-                className="rounded-none h-12 w-[220px] border-l bg-[#F0F0E5]"
+                className="rounded-none h-12 w-[220px] border-l bg-card"
                 variant="outline"
                 onClick={CloseFunc}
               >

@@ -14,8 +14,8 @@ export default function CardSort({SortData}:{SortData?:TData}) {
       price:formatPrice( SortData?.given || 0 )
     },
     {
-      title: "",
-      price:""
+      title: "Остаток долга",
+      price:formatPrice( (SortData?.owed || 0) - (SortData?.given || 0)  )
     },
   ];
 

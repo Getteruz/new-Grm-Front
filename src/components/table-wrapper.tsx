@@ -11,6 +11,7 @@ interface iOpetion extends TSelectOption {
   onClick?: () => void;
   isActive?: boolean;
   onDelete?: () => void;
+  onUpdate?:(value:iOpetion) => void
 }
 
 interface ITableWrapper extends PropsWithChildren {
@@ -117,6 +118,7 @@ export default function TableWrapper({
                     onClick={() => {
                       setidMadal(String(e?.value));
                       if (setValue) setValue("title", e?.label);
+                      if(e?.onUpdate) e?.onUpdate(e)
                     }}
                     className=" p-0.5 text-[10px]"
                   >

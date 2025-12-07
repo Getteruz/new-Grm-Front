@@ -46,6 +46,21 @@ export interface TData {
   };
 }
 
+export type TFormData = {
+  country: {
+    id: string;
+    title: string;
+  },
+  factory:{
+    id: string;
+    title: string;
+  }
+  collection: {
+    id: string;
+    title: string;
+  }
+
+}
 export interface TActionData {
   title: string;
   id: string;

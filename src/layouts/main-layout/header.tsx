@@ -10,6 +10,7 @@ import { useMeStore } from "@/store/me-store";
 import Currency from "./currency";
 import { DataMenu } from "./menu-datas";
 import { CurrencyData } from "./types";
+import { useQueryState } from "nuqs";
 
 type Tmenu = {
   id: number;
@@ -25,6 +26,7 @@ type Tmenu = {
 export default function Header() {
   const token = useAuthStore((state) => state.token);
   const { meUser } = useMeStore();
+  const [itemName] = useQueryState("itemName")
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -56,11 +58,15 @@ export default function Header() {
                 className={ location.pathname.includes(e?.link) || location.pathname+ "s" == e?.link ?  "bg-primary  text-card flex items-center justify-center px-3  h-full rounded-xl" : "h-full flex items-center justify-center pl-3  last:pr-6"}
                 to={e?.link}
               >
-                {e.text}
+                {e.text} 
               </Link>
             ))
           ) : (
+            <div className="flex itmes-center gap-2">
+
             <Link to={oneMenu?.link || "/"}>{oneMenu?.text}</Link>
+             {itemName ? "/" :""} {itemName}
+            </div>
           )}
         </div>
       </div>

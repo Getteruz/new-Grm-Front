@@ -200,7 +200,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
                 price={data?.boss_income?.price || 0}
                 kv={data?.boss_income?.kv || 0}
               />
-              {filial && (
+              {(filial || meUser?.position?.role == 4)  && (
                 <RowUI
                   title={"Navar"}
                   price={data?.navar_income?.price || 0}
@@ -229,7 +229,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
                   kv={data?.kent_expense?.kv || 0}
                 />
               )}
-              {filial && (
+              {(filial || meUser?.position?.role == 4)  && (
                 <>
                   <RowUI
                     title={"Naqd kassa"}
@@ -278,7 +278,7 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
                 price={data?.return_orders?.price || 0}
                 kv={data?.return_orders?.kv || 0}
               />
-              {filial && (
+              {(filial || meUser?.position?.role == 4)  && (
                 <RowUI
                   title={"Navar Rasxod"}
                   isbordereble={false}

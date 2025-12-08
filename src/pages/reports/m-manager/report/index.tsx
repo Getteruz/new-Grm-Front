@@ -101,7 +101,7 @@ export default function ReportPage() {
 
   return (
     <>
-      <Filter month={KassaReportSingle?.month} filial={KassaReportSingle?.filial?.title} />
+      <Filter month={myCashFlow?myCashFlowReports?.month: KassaReportSingle?.month} filial={KassaReportSingle?.filial?.title} />
       < >
         {
           <CardSort

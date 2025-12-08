@@ -58,6 +58,10 @@ const queryClient = useQueryClient()
       value: undefined,
       label: "",
     })
+    form.setValue('factory',{
+      value: undefined,
+      label: "",
+    })
     setidMadal("new")
   },[type])
 

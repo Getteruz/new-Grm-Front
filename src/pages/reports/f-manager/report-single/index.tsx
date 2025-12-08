@@ -28,7 +28,7 @@ export default function SinglePage() {
   const { meUser } = useMeStore();
 
   const { id,report } = useParams();
-
+  const [cashflowSlug] = useQueryState("cashflowSlug", parseAsString);
   const [startDate] = useQueryState("startDate",parseAsIsoDate);
   const [endDate] = useQueryState("endDate",parseAsIsoDate);
   const [tip] = useQueryState("tip", parseAsString);
@@ -46,7 +46,7 @@ export default function SinglePage() {
        type: typeFilter[tip as string],
        // @ts-ignore
        tip: tipFilter[tip],
-       cashflowSlug: tip == "collection" ? "Инкассация" : undefined,
+       cashflowSlug: tip == "collection" ? "Инкассация" :cashflowSlug|| undefined,
       },
       enabled: Boolean(id),
     });

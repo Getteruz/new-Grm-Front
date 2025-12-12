@@ -2,14 +2,15 @@ import { DataTable } from "@/components/ui/data-table";
 
 import ActionPageQrCode from "../form";
 import { Columns, ColumnsColaction } from "./columns";
-import Filter from "./filter";
+// import Filter from "./filter";
 import { useParams } from "react-router-dom";
 import useDataFetch, { usePartiyaReport } from "./queries";
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { useMemo } from "react";
 import { useMeStore } from "@/store/me-store";
-import { usePartiyaById } from "../../form/actions";
+// import { usePartiyaById } from "../../form/actions";
 import { TReportData } from "../type";
+// import Filters from "./filter";
 
 function ItemBottom({ items }: { items: TReportData }) {
   return (
@@ -47,12 +48,12 @@ export default function ItemsPage() {
   const [, setCount] = useQueryState("count", parseAsInteger.withDefault(0));
   const [, setProductId] = useQueryState("productId");
 
-  const { data: onePartiya } = usePartiyaById({
-    id: id ? id : undefined,
-    queries: {
-      populate: "*",
-    },
-  });
+  // const { data: onePartiya } = usePartiyaById({
+  //   id: id ? id : undefined,
+  //   queries: {
+  //     populate: "*",
+  //   },
+  // });
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
       queries: {
@@ -117,10 +118,10 @@ export default function ItemsPage() {
     <div className="flex w-full">
       <ActionPageQrCode />
       <div className="w-2/3">
-        <Filter
+        {/* <Filters
           check={onePartiya?.check}
           partiyaStatus={onePartiya?.partiya_status}
-        />
+        /> */}
         <DataTable
           onRowClick={(e) => {
             if (type == "default") {

@@ -1,5 +1,5 @@
+import ItemsPage from "./re-register/table";
 import SingleReportPage from "./report";
-import SinglePage from "./single";
 import Page from "./table";
 
 const Route = [
@@ -13,14 +13,20 @@ const Route = [
     Element: Page,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+  // {
+  //   url: "/filial/:id/info",
+  //   Element: SinglePage,
+  //   meta: { isAuth: true, role: new Set(["admin"]) },
+  // },
   {
     url: "/filial/:id/info",
-    Element: SinglePage,
+    // url: "/filial/:id/info/get-report",
+    Element: SingleReportPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {
-    url: "/filial/:id/info/get-report",
-    Element: SingleReportPage,
+    url: "/filial/:id/info/:id/info",
+    Element: ItemsPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
 ];

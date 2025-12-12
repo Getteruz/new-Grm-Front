@@ -17,7 +17,7 @@ export const Columns: ColumnDef<FilialReportData>[] = [
     cell: ({ row }) => {
       return (
         <>
-          <p>{format(row.original?.date, "MM-dd-yyyy")}</p>
+          <p >{format(row.original?.dateOne, "MM-dd-yyyy")} ~ {(row.original.status == "Accepted" || row.original.status == "Open")? <p className="text-[#89A143]">Продолжается</p>: format(row.original?.dateTwo, "MM-dd-yyyy")}</p>
         </>
       );
     },
@@ -32,6 +32,12 @@ export const Columns: ColumnDef<FilialReportData>[] = [
     header: "Стоимость",
     cell: ({ row }) => {
       return <p>{row.original?.cost}$</p>;
+    },
+  },
+  {
+    header: "Штук",
+    cell: ({ row }) => {
+      return <p>{row.original?.count}шт</p>;
     },
   },
   {

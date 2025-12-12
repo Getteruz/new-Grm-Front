@@ -30,11 +30,14 @@ export enum FilialReportStatusEnum {
 export interface FilialReportData {
   id: string;
   date: string;
+  dateOne:Date;
+  dateTwo: Date;
   volume: number;
   cost: number;
   excel: string | null;
   status: FilialReportStatusEnum;
   filial: {};
+  count:number;
 }
 
 export interface ProductDataOrder {

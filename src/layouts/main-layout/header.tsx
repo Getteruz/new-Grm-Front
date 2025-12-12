@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ReactElement, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-import { Button } from "@/components/ui/button";
 import { getAllData } from "@/service/apiHelpers";
 import { useAuthStore } from "@/store/auth-store";
 import { useMeStore } from "@/store/me-store";
@@ -29,7 +28,6 @@ export default function Header() {
   const [itemName] = useQueryState("itemName")
 
   const location = useLocation();
-  const navigate = useNavigate();
   const { data: currency } = useQuery({
     queryKey: ["currency", token, meUser],
     queryFn: () => getAllData<CurrencyData, unknown>("currency"),
@@ -70,16 +68,7 @@ export default function Header() {
           )}
         </div>
       </div>
-      {meUser?.filial?.need_get_report && meUser.position.role == 4 && (
-        <Button onClick={() => navigate("/re-register")}>Переучёт</Button>
-      )}
-      {location.pathname.includes("filial") &&
-        location.pathname.includes("info") &&
-        !location.pathname.includes("get-report") && (
-          <Button onClick={() => navigate(location.pathname + "/get-report")}>
-            Переучёт
-          </Button>
-        )}
+    
       <div className=" w-full flex gap-2 max-w-[200px] ">
           <p className="text-[14px] leading-[17px] font-semibold text-foreground">
             {currency?.items?.[0]?.usd.toLocaleString("uz-UZ")} $

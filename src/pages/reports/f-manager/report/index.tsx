@@ -6,7 +6,7 @@ import Filter from "./filter";
 import  {  useDataKassa, useKassaReportTotal } from "./queries";
 import CardSort from "@/components/card-sort";
 import { KassaColumns } from "./columns";
-import {  parseAsIsoDate, useQueryState } from "nuqs";
+import {  parseAsInteger, parseAsIsoDate, useQueryState } from "nuqs";
 import { useParams } from "react-router-dom";
 import { useCashflowFilial, useKassaReportSingle } from "../../m-manager/filial-report-finance/queries";
 import { TData } from "./type";
@@ -17,7 +17,7 @@ export default function Page() {
 
   const [startDate] = useQueryState("startDate",parseAsIsoDate);
   const [endDate] = useQueryState("endDate",parseAsIsoDate);
-
+  const [,seMyMonth] = useQueryState("myMonth",parseAsInteger);
   
   const {data:KassaReport} = useKassaReportTotal({
     queries:{
@@ -53,7 +53,7 @@ const { data: KassaReportSingle } = useKassaReportSingle({
   
   return (
     <>
-      <Filter status={KassaReportSingle?.status || ""}/>
+      <Filter status={KassaReportSingle?.status || ""} month={id ?KassaReportSingle?.month : KassaReport?.month}/>
      <CardSort 
     //  isAddible={Boolean(id)}
       kassaReportId={id}  KassaReport={id ? KassaReportSingle: KassaReport }/>
@@ -69,6 +69,9 @@ const { data: KassaReportSingle } = useKassaReportSingle({
         }as TData, ...flatKasssaData]:flatKasssaData}
         isLoading={KassaLoading}
         isRowClickble={true}
+        onRowClick={() => {
+          seMyMonth(id ?(KassaReportSingle?.month ||1)  : (KassaReport?.month||1))
+        }}
 
         fetchNextPage={KassafetchNextPage}
         hasNextPage={KassafhasNextPage ?? false}

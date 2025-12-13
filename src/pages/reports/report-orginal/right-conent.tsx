@@ -3,6 +3,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
+import { Years } from "@/consts";
 import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useMeStore } from "@/store/me-store";
@@ -72,13 +73,7 @@ export default function RightConent({ printRef }: RightContentProps) {
     removeAfterPrint: true,
   });
 
-  const startYear = 2024;
-  const currentYear = new Date().getFullYear();
-
-  const years = Array.from(
-    { length: currentYear - startYear + 1 },
-    (_, i) => currentYear - i
-  );
+ 
 
   return (
     <div className="w-[380px] h-full">
@@ -130,7 +125,7 @@ export default function RightConent({ printRef }: RightContentProps) {
         Годовой отчет
       </p>
       <div className="p-1.5 pt-0 w-full">
-        {years?.map((item) => (
+        {Years?.map((item) => (
           <p
             onClick={() => setYear(item)}
             className={`${year == item ? "bg-card" : ""} w-full text-[#272727] cursor-pointer rounded-lg text-[16px] font-medium px-[26px] py-[12px]  `}

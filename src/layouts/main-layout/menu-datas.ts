@@ -1,5 +1,4 @@
 import {
-  BrCodeIcons,
   BronedIcons,
   BuildingIcons,
   ClientsIcon,
@@ -14,7 +13,6 @@ import {
   PriceIcons,
   ProductCharacteristics,
   ProductIcons,
-  ProductsCheck,
   ProductsOnSaleIcon,
   QRCodeIcon,
   ReportBottom,
@@ -57,12 +55,12 @@ export const DataMenu = {
       text: "Продукты",
     },
 
-    {
-      id: 5,
-      icons: () => BrCodeIcons({ width: 28, height: 28 }),
-      link: "/product-check",
-      text: "Проверка продукта",
-    },
+    // {
+    //   id: 5,
+    //   icons: () => BrCodeIcons({ width: 28, height: 28 }),
+    //   link: "/product-check",
+    //   text: "Проверка продукта",
+    // },
     {
       id: 6,
       icons: () => PriceIcons({ width: 28, height: 28 }),
@@ -154,12 +152,12 @@ export const DataMenu = {
       link: "/price",
       text: "Цени и скидки",
     },
-    {
-      id: 3,
-      icons: () => ProductsCheck(),
-      link: "/product-check",
-      text: "Проверка продукта",
-    },
+    // {
+    //   id: 3,
+    //   icons: () => ProductsCheck(),
+    //   link: "/product-check",
+    //   text: "Проверка продукта",
+    // },
     {
       id: 3,
       icons: () => ClientsIcon(),
@@ -240,12 +238,12 @@ export const DataMenu = {
       link: "/price",
       text: "Цени и скидки",
     },
-    {
-      id: 3,
-      icons: () => ProductsCheck(),
-      link: "/product-check",
-      text: "Проверка продукта",
-    },
+    // {
+    //   id: 3,
+    //   icons: () => ProductsCheck(),
+    //   link: "/product-check",
+    //   text: "Проверка продукта",
+    // },
 
     {
       id: 4,
@@ -335,12 +333,12 @@ export const DataMenu = {
       link: "/price",
       text: "Цени и скидки",
     },
-    {
-      id: 9,
-      icons: () => ProductsCheck(),
-      link: "/product-check",
-      text: "Проверка продукта",
-    },
+    // {
+    //   id: 9,
+    //   icons: () => ProductsCheck(),
+    //   link: "/product-check",
+    //   text: "Проверка продукта",
+    // },
     {
       id: 10,
       icons: () => QRCodeIcon(),

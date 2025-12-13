@@ -31,7 +31,7 @@ export default function Filters({
 
   return (
     <div className="px-[20px] h-[64px] items-center mb-2 flex justlfe">
-        <p className="text-[#272727] text-[20px]">Ежемесячный отчет</p>
+         <p className="text-[#272727] text-[20px] m-4 mr-auto ">Ежемесячный отчет  </p>
       {/* <Button
         className="h-full  border-y-0 w-[140px]  ml-auto"
         variant={"outline"}

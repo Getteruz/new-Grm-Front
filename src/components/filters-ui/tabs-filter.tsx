@@ -1,12 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 
 import { IData } from "@/pages/cashier/home/type";
 import { TQuery } from "@/pages/employees/type";
 import { getAllData } from "@/service/apiHelpers";
 import { TResponse } from "@/types";
+import { useMeStore } from "@/store/me-store";
 
 export default function TabsFilter() {
+  const {meUser} = useMeStore()
   const { data } = useQuery({
     queryKey: ["/filial/warehouse-and-filial"],
     queryFn: () =>
@@ -24,28 +26,28 @@ export default function TabsFilter() {
     }),
   });
 
-  const [filial, setFilial] = useQueryState("filial");
+  const [filial, setFilial] = useQueryState("filial",parseAsString.withDefault(meUser?.filial?.id || "") );
+
+
 
   return (
-    <div className="flex border border-border overflow-x-auto">
-      {/* ✅ "All" tab */}
-      <p
+    <div className="flex  gap-1 ">
+     {!meUser?.filial?.id ? <p
         className={`border-r border-border px-4 py-2.5 text-nowrap cursor-pointer ${
           !filial ? "bg-primary text-sidebar" : "bg-background text-foreground"
         }`}
         onClick={() => setFilial(null)} // Clear filial param
       >
         All
-      </p>
+      </p>:""}
 
-      {/* ✅ Other filial tabs */}
       {data?.data?.map((e) => (
         <p
           key={e?.id}
-          className={`border-r border-border px-4 py-2.5 text-nowrap cursor-pointer ${
+          className={` rounded-lg px-4 py-2.5 text-nowrap cursor-pointer ${
             filial === e?.id
               ? "bg-primary text-sidebar"
-              : "bg-background text-foreground"
+              : "bg-card "
           }`}
           onClick={() => setFilial(e?.id)}
         >

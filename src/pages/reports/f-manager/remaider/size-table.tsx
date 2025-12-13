@@ -6,10 +6,12 @@ import { parseAsString, useQueryState } from "nuqs";
 import { useSizeReport } from "./queries";
 import {  useParams } from "react-router-dom";
 import { useMeStore } from "@/store/me-store";
+import { useYear } from "@/store/year-store";
 
 export default function SizeTable() {
   const {meUser} = useMeStore();
   const [month] = useQueryState("month", parseAsString);
+  const {year}= useYear()
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
   const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
     const {modelId,collectionId,factoryId,countryId} = useParams()
@@ -20,6 +22,7 @@ export default function SizeTable() {
         filialId: meUser?.filial?.id || undefined,
         month: month || undefined,
         model:modelId,
+        year,
         collectionId:collectionId,
         factory:factoryId,
         country:countryId,

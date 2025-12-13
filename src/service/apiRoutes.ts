@@ -109,6 +109,9 @@ export const apiRoutes = {
   reportsHomePageCurrentMonthExpense:'/reports/home-page/current-month/expense',
   reportsHomePageCurrentLefKents:'/reports/home-page/current-lef/kents',
   reportsHomePageCurrentMonthProdaja:"/reports/home-page/current-month/prodaja",
+  reportsHomePageCurrentMonthSellDebt:"/reports/home-page/current-month/sell/debt",
   reportsMonthlyV2:"/reports/monthly/v2",
-  reportsTotal:'/reports/total'
+  reportsTotal:'/reports/total',
+  reInventoryGetByFilialReport:'/re-inventory/get-by/filial-report',
+  reInventoryGetByFilialReportTotals:'/re-inventory/get-by/filial-report/totals'
 } as const;

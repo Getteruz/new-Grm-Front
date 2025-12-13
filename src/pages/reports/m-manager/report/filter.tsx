@@ -11,6 +11,7 @@ import { parseAsBoolean, parseAsString, useQueryState } from "nuqs";
 import { MonthsArray } from "@/consts";
 import { getAllData } from "@/service/apiHelpers";
 import { CashflowType } from "@/components/adding-parish-flow";
+import SearchInput from "@/components/filters-ui/search-input";
 
 export default function Filters({month,filial}:{month:number |undefined,filial:string| undefined}) {
   const { id, kassaReportId } = useParams();
@@ -83,10 +84,12 @@ export default function Filters({month,filial}:{month:number |undefined,filial:s
       )}
       {id || kassaReportId  ? (
         <>
-      
+       <SearchInput
+        className="w-[250px] h-[65px] px-3 ml-auto"
+        />
         <FilterSelect
             placeholder="все"
-            className="w-[140px] h-[65px] px-3  ml-auto"
+            className="w-[160px] h-[65px] px-3  "
             options={
               cashflowTypesResponse ? [{ value: "clear", label: "все" } ,...cashflowTypesResponse] : []
             }

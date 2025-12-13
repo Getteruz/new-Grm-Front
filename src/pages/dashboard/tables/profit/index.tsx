@@ -6,6 +6,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { DataTable } from "@/components/ui/data-table";
 import { CountryColumns  , CollectionColumns,
   FactoryColumns,} from "./columns";
+import { useYear } from "@/store/year-store";
 
 
 export default function ProfitTable() {
@@ -18,11 +19,13 @@ export default function ProfitTable() {
     "month",
     parseAsString.withDefault(getMonth(new Date()) + 1 + "")
   );
+  const {year}= useYear()
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useFetchData({
       queries: {
         filialId: filial || undefined,
-        month: month || undefined,
+        month,
+        year,
         typeOther: "other",
       },
       api:

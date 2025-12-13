@@ -5,8 +5,10 @@ import Filter from "./filter";
 import { parseAsString, useQueryState } from "nuqs";
 import { useModelReport } from "./queries";
 import { useNavigate, useParams } from "react-router-dom";
+import { useYear } from "@/store/year-store";
 
 export default function ModelTable() {
+  const {year}= useYear();
   const [filialId] = useQueryState("filial", parseAsString);
   const [month] = useQueryState("month", parseAsString);
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
@@ -16,6 +18,7 @@ export default function ModelTable() {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useModelReport({
       queries: {
+        year,
         filialId: filialId || undefined,
         month: month || undefined,
         collectionId:collectionId,

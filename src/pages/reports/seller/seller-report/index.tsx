@@ -7,10 +7,13 @@ import {  parseAsString, useQueryState } from "nuqs";
 import { useDataSellerReports } from "./queries";
 import { getMonth } from "date-fns";
 import { useMeStore } from "@/store/me-store";
+import { useYear } from "@/store/year-store";
 
 export default function PageSellerReport() {
-  const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1 + "" ));
   const {meUser} = useMeStore();
+  const {year} = useYear()
+
+  const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1 + "" ));
   const [,setUserName] = useQueryState("userName", parseAsString.withDefault(""));
   const [filial] = useQueryState("filial");
   const {
@@ -24,7 +27,8 @@ export default function PageSellerReport() {
       filialId: meUser?.position?.role == 4 ? meUser?.filial?.id :filial || undefined,
       page: 1,
       limit: 10,
-      month:month,
+      month,
+      year
     },
   });
 

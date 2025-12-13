@@ -23,8 +23,6 @@ export default function MonitoringDashboard() {
   const [filialId, setFilialId] = useState<string | undefined>(undefined);
   const [type, setType] = useState<string | undefined>(undefined);
   
-//   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
-//   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   
   const { data: monitoringData, isLoading } = useMonitoringItems({
     employeeId,
@@ -33,7 +31,6 @@ export default function MonitoringDashboard() {
   
   return (
     <div className="flex flex-col h-full">
-      {/* Filters */}
       <div className="bg-sidebar border-border border-b px-6 h-[64px] flex items-center">
         <Select value={filialId} onValueChange={setFilialId}>
           <SelectTrigger className="w-[200px] h-9 mr-2">

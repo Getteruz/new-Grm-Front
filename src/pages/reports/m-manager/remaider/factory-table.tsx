@@ -5,8 +5,10 @@ import Filter from "./filter";
 import { parseAsString, useQueryState } from "nuqs";
 import {  useFactoryReport } from "./queries";
 import { useNavigate, useParams } from "react-router-dom";
+import { useYear } from "@/store/year-store";
 
 export default function FoctoryTable() {
+  const {year}= useYear();
   const [filialId] = useQueryState("filial", parseAsString);
   const [month] = useQueryState("month", parseAsString);
   const {countryId} = useParams()
@@ -18,6 +20,7 @@ export default function FoctoryTable() {
       queries: {
         filialId: filialId || undefined,
         month: month || undefined,
+        year,
         country:countryId,
         typeOther
       },

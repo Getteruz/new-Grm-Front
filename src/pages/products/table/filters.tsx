@@ -21,7 +21,7 @@ const {meUser} = useMeStore()
       <FilterSelect 
         placeholder="Продукт"
         className=" w-[150px]"
-        defaultValue="collections"
+        defaultValue="product"
         options={[
           { label: "Продукт", value: "product" },
           { label: "Коллекция", value: "collections" },
@@ -33,7 +33,7 @@ const {meUser} = useMeStore()
         placeholder="Лист" 
         className="w-[150px]" 
         name="card"
-        defaultValue="list"
+        defaultValue="card"
         options={[
           { label: "Лист", value: "list" },
           { label: "Карточкы", value: "card" },

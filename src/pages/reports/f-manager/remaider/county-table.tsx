@@ -6,10 +6,12 @@ import { parseAsString, useQueryState } from "nuqs";
 import { useCountryReport } from "./queries";
 import { useNavigate } from "react-router-dom";
 import { useMeStore } from "@/store/me-store";
+import { useYear } from "@/store/year-store";
 
 export default function CountryTable() {
   const {meUser} = useMeStore()
   const [month] = useQueryState("month", parseAsString);
+  const {year}= useYear()
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
     const navigate = useNavigate()
     const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
@@ -19,6 +21,7 @@ export default function CountryTable() {
       queries: {
         filialId: meUser?.filial?.id || undefined,
         month: month || undefined,
+        year,
         typeOther
       },
       enabled: sort == "delears",

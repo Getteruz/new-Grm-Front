@@ -5,10 +5,12 @@ import Filter from "./filter";
 import { parseAsString, useQueryState } from "nuqs";
 import { useCountryReport } from "./queries";
 import { useNavigate } from "react-router-dom";
+import { useYear } from "@/store/year-store";
 
 export default function CountryTable() {
   const [filialId] = useQueryState("filial", parseAsString);
   const [month] = useQueryState("month", parseAsString);
+  const {year}= useYear();
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
   const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
     const navigate = useNavigate()
@@ -18,6 +20,7 @@ export default function CountryTable() {
       queries: {
         filialId: filialId || undefined,
         month: month || undefined,
+        year,
         typeOther,
       },
       enabled: sort == "delears",

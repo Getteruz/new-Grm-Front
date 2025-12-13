@@ -4,6 +4,7 @@ import { DataTable } from "@/components/ui/data-table";
 import useDataFetch from "./queries";
 import { getMonth } from "date-fns";
 import { Columns } from "./colums";
+import { useYear } from "@/store/year-store";
 
 export default function ExpenseTable() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -11,6 +12,7 @@ export default function ExpenseTable() {
 
   const [filial] = useQueryState("filial");
   const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1+""));
+  const {year}= useYear()
   const [typeExpense] = useQueryState("typeExpense");
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -19,7 +21,8 @@ export default function ExpenseTable() {
         limit,
         page,
         filial_id:filial || undefined,
-        month:month,
+        month,
+        year,
         cashflow_type:typeExpense == "clear" ? undefined: typeExpense || undefined,
       },
     });

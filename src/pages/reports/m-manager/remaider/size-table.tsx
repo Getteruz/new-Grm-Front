@@ -5,8 +5,10 @@ import Filter from "./filter";
 import { parseAsString, useQueryState } from "nuqs";
 import { useSizeReport } from "./queries";
 import {  useParams } from "react-router-dom";
+import { useYear } from "@/store/year-store";
 
 export default function SizeTable() {
+  const {year}= useYear();
   const [filialId] = useQueryState("filial", parseAsString);
   const [month] = useQueryState("month", parseAsString);
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
@@ -16,6 +18,7 @@ export default function SizeTable() {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useSizeReport({
       queries: {
+        year,
         filialId: filialId || undefined,
         month: month || undefined,
         model:modelId,

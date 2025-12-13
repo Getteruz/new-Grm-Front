@@ -40,7 +40,8 @@ export default function PageFinance() {
 
   return (
     <>
-      <Filter setSeleted={setSeleted} />
+    
+      <Filter  setSeleted={setSeleted} />
       <div className="h-[calc(100vh-140px)] scrollCastom">
         <CardSort KassaReport={KassaReport} ClientdebtTotal={ClientdebtTotal} />
         <DataTable

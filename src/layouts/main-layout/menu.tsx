@@ -58,7 +58,7 @@ export default function Menu() {
           >
             <ChevronLeft />
           </div>
-        ) : meUser?.position?.role == 3 || meUser?.position?.role == 4 ? (
+        ) : meUser?.position?.role == 3|| meUser?.position?.role == 4 ? (
           <div
             onClick={() => {
               navigate("/cashier/home");

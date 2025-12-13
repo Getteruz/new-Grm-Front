@@ -5,6 +5,7 @@ import useDataFetch from "./queries";
 import { getMonth } from "date-fns";
 import { Columns, DealerColumns } from "./colums";
 import {  TData } from "./type";
+import { useYear } from "@/store/year-store";
 
 
 export default function SaleTable() {
@@ -13,6 +14,7 @@ export default function SaleTable() {
 
   const [filial] = useQueryState("filial");
   const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1+""));
+  const {year}= useYear()
   const [typeSale] = useQueryState("typeSale");
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -21,7 +23,8 @@ export default function SaleTable() {
         limit,
         page,
         filial:filial || undefined,
-        month:month,
+        month,
+        year,
         type:typeSale == "clear" ? undefined: typeSale || undefined,
       },
     });

@@ -10,6 +10,8 @@ import useDataFetch from "./queries";
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [,setItemName] = useQueryState("itemName")
+
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
@@ -30,6 +32,9 @@ export default function Page() {
         isRowClickble
         isLoading={isLoading}
         columns={FilialColumns}
+        onRowClick={(row)=>{
+          setItemName(`${row?.name}`)
+        }}
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}

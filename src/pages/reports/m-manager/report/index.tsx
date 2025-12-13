@@ -54,6 +54,7 @@ export default function ReportPage() {
 
   const [startDate] = useQueryState("startDate", parseAsIsoDate);
   const [endDate] = useQueryState("endDate", parseAsIsoDate);
+  const [search] = useQueryState("search", parseAsString);
 
   const { data: KassaReport } = useKassaReportTotal({
     queries: {
@@ -77,6 +78,7 @@ export default function ReportPage() {
         type: typeFilter[tip as string],
         // @ts-ignore
         tip: tipFilter[tip],
+        search: search || undefined,
         cashflowSlug: tip == "collection" ? "Инкассация" : cashflowSlug|| undefined,
         fromDate: startDate || undefined,
         toDate: endDate || undefined,

@@ -67,6 +67,7 @@ export interface TQuery {
   page?: number;
   id?: string;
   month?:string;
+  year?:number;
   startDate?: Date | null;
   endDate?: Date | null;
   to?: Date | null;

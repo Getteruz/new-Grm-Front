@@ -64,13 +64,14 @@ const ActionPageQrCode = () => {
   const [idLoc, setId] = useQueryState("id");
   const { id } = useParams();
   const [barcode, setBarcode] = useQueryState("barcode");
-  const [productId] = useQueryState("productId");
-  // const [auto, setAuto] = useQueryState("auto", parseAsBoolean);
   const resetForm = () => {
     form.reset({
       code: "",
-      isMetric: "",
-      count: 0,
+      isMetric: {
+        value: "",
+        label: "",
+      },
+      value: 0,
       country: {
         value: "",
         label: "",
@@ -157,8 +158,11 @@ const ActionPageQrCode = () => {
     if (qrBaseOne) {
       form.reset({
         code: qrBaseOne?.code || "",
-        isMetric: qrBaseOne?.isMetric ? "Метражный" : "Штучный",
-        count: count,
+        isMetric: {
+          value: qrBaseOne?.isMetric ? "true" : "false",
+          label: qrBaseOne?.isMetric ? "Метражный" : "Штучный",
+        },
+        value: count,
         country: {
           value: qrBaseOne?.country?.id,
           label: qrBaseOne?.country?.title,
@@ -193,6 +197,7 @@ const ActionPageQrCode = () => {
         },
       });
     }
+    
   }, [qrBaseOne]);
 
   return (
@@ -203,15 +208,10 @@ const ActionPageQrCode = () => {
           if (e.key === "Enter") e.preventDefault();
         }}
         onSubmit={form.handleSubmit((data) => {
-          mutate({
-            partiyaId: barcode == "new" || barcode == undefined ?id || "" : productId || "" ,
-            isMetric: Boolean(qrBaseOne?.isMetric),
+           mutate({
+            id: id || "",
             isUpdate: barcode == "new" || barcode == undefined ? false : true,
-            data: {
-              code: qrBaseOne?.code || "",
-              tip: tip != "new" ? tip : undefined,
-              y: data?.count,
-            },
+            data:data
           });
         })}
       >

@@ -220,7 +220,7 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
           refetchUrl={apiRoutes.cashflow}
           id={row?.original?.id + ""}
         >
-        { row?.original?.tip == "order" &&  <DropdownMenuItem className="text-center flex items-center justify-center pt-[14px] pb-[8px]">
+        { (row?.original?.tip == "order" && row?.original?.type!="Расход") &&  <DropdownMenuItem className="text-center flex items-center justify-center pt-[14px] pb-[8px]">
               <div
                 onClick={loading ? ()=>{} :() => RejectFunt()}
                 className="w-full text-center"

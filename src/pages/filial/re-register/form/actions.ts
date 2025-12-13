@@ -9,6 +9,7 @@ import { AddData, getByIdData, UpdateData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import {  TData, TQuery } from "../type";
+import { CropFormType } from "./schema";
 
 interface IData {
   options?: DefinedInitialDataOptions<TData>;
@@ -17,14 +18,9 @@ interface IData {
 }
 
 interface IMuteCheck {
-  data: {
-    code:string,
-    y:number,
-    tip:string| undefined,
-  }
-  isMetric:boolean,
+  data:CropFormType
   isUpdate:boolean,
-  partiyaId:string
+  id:string 
 }
 
 export const useProdcutCheck = ({
@@ -32,17 +28,23 @@ export const useProdcutCheck = ({
 }: UseMutationOptions<object, Error, IMuteCheck, unknown>) =>
   useMutation({
     ...options,
-    mutationFn: async ({ partiyaId, data, isMetric, isUpdate }) => {
+    mutationFn: async ({  data,id, isUpdate }) => {
+      const costomData: object = {
+        ...data,
+        countryId: data?.country?.value,
+        collectionId :data?.collection?.value,
+        sizeId: data?.size?.value,
+        shapeId:data?.shape?.value,
+        styleId:data?.style?.value,
+        colorId:data?.color?.value,
+        modelId:data?.model?.value,
+        factoryId:data?.factory?.value,
+        isMetric:data?.isMetric?.value === "true" ? true : false,
+      };
       if(isUpdate){
-        return await UpdateData(apiRoutes.excelSingle, partiyaId,  
-          data?.tip == "переучет" ?{
-          check_count:data?.y
-        }: {
-          count:isMetric? undefined: data?.y,
-          y:isMetric? (data?.y / 100): undefined,
-        });
+        return await UpdateData(apiRoutes.excelSingle, id,  costomData);
       }else{
-        return await AddData(apiRoutes.excelProduct + "/" + partiyaId, data);
+        return await AddData(apiRoutes.excelProduct + "/" + id, costomData);
       }
     },
   });

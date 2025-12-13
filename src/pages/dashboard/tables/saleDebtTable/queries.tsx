@@ -17,9 +17,9 @@ interface ITransfers {
 const useDataFetch = ({ options, queries }: ITransfers) =>
   useInfiniteQuery({
     ...options,
-    queryKey: [apiRoutes.reportsHomePageCurrentMonthProdaja, queries],
+    queryKey: [apiRoutes.reportsHomePageCurrentMonthSellDebt, queries],
     queryFn: ({ pageParam = 10 }) =>
-      getAllData<TResponse<TData>  & ITotal, TQuery>(apiRoutes.reportsHomePageCurrentMonthProdaja, {
+      getAllData<TResponse<TData>  & ITotal, TQuery>(apiRoutes.reportsHomePageCurrentMonthSellDebt, {
         ...queries,
         page: pageParam as number,
         limit: queries?.limit|| 10,

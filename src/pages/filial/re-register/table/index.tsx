@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import { useMeStore } from "@/store/me-store";
 // import { usePartiyaById } from "../../form/actions";
 import { TReportData } from "../type";
-// import Filters from "./filter";
+import Filters from "./filter";
 
 function ItemBottom({ items }: { items: TReportData }) {
   return (
@@ -24,9 +24,6 @@ function ItemBottom({ items }: { items: TReportData }) {
       <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
         Сумма: {Number(items?.total)?.toFixed(2) || 0} $
       </div>
-      {/* <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
-            Расход: { Number(items?.expence)?.toFixed(2) || 0} $
-          </div> */}
     </div>
   );
 }
@@ -43,6 +40,7 @@ export default function ItemsPage() {
         : "new"
     )
   );
+
   const [type] = useQueryState("type", parseAsString.withDefault("default"));
   const [, setBarCode] = useQueryState("barcode");
   const [, setCount] = useQueryState("count", parseAsInteger.withDefault(0));
@@ -54,15 +52,17 @@ export default function ItemsPage() {
   //     populate: "*",
   //   },
   // });
+
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
+      id: id || "",
       queries: {
         search: search || undefined,
-        partiyaId: id || "",
-        type: type || "default",
-        tip: tip == "new" ? undefined : tip || undefined,
+        // type: type || "default",
+        type: tip == "new" ? undefined : tip || undefined,
       },
-    });
+  });
+
   const {
     data: BottomData,
     isLoading: BottomIsLoading,
@@ -70,26 +70,26 @@ export default function ItemsPage() {
     hasNextPage: BottomHasNextPage,
     isFetchingNextPage: BottomIsFetchingNextPage,
   } = useDataFetch({
+    id: id || "",
     queries: {
       search: search || undefined,
-      partiyaId: id || "",
-      type: type || "default",
-      tip: "дефицит",
+      // type: tip || "default",
+      type: "дефицит",
     },
     enabled: Boolean(tip == "излишки"),
   });
 
   const { data: PartiyaReportData } = usePartiyaReport({
+    id: id || "",
     queries: {
-      partiyaId: id || "",
-      tip: tip == "new" ? undefined : tip || undefined,
+      type: tip == "new" ? undefined : tip || undefined,
     },
   });
 
   const { data: BootomPartiyaReportData } = usePartiyaReport({
+    id: id || "",
     queries: {
-      partiyaId: id || "",
-      tip: "дефицит",
+      type: "дефицит",
     },
     enabled: Boolean(tip == "излишки"),
   });
@@ -118,10 +118,7 @@ export default function ItemsPage() {
     <div className="flex w-full">
       <ActionPageQrCode />
       <div className="w-2/3">
-        {/* <Filters
-          check={onePartiya?.check}
-          partiyaStatus={onePartiya?.partiya_status}
-        /> */}
+        <Filters />
         <DataTable
           onRowClick={(e) => {
             if (type == "default") {

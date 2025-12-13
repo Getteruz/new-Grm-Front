@@ -32,6 +32,7 @@ export default function SinglePage() {
   const [startDate] = useQueryState("startDate",parseAsIsoDate);
   const [endDate] = useQueryState("endDate",parseAsIsoDate);
   const [tip] = useQueryState("tip", parseAsString);
+  const [search] = useQueryState("search", parseAsString);
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataCashflow({
       queries: {
@@ -46,6 +47,7 @@ export default function SinglePage() {
        type: typeFilter[tip as string],
        // @ts-ignore
        tip: tipFilter[tip],
+       search: search || undefined,
        cashflowSlug: tip == "collection" ? "Инкассация" :cashflowSlug|| undefined,
       },
       enabled: Boolean(id),

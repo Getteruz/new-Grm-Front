@@ -5,6 +5,7 @@ import useDataFetch from "./queries";
 import { getMonth } from "date-fns";
 import { Columns, DealerColumns } from "./colums";
 import {  TData } from "./type";
+import { useYear } from "@/store/year-store";
 
 
 export default function SaleDebtTable() {
@@ -13,6 +14,7 @@ export default function SaleDebtTable() {
 
   const [filial] = useQueryState("filial");
   const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1+""));
+  const {year}= useYear()
   const [typeSaledebt] = useQueryState("typeSaleDebt",parseAsString.withDefault("debt"));
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -23,6 +25,7 @@ export default function SaleDebtTable() {
         filial:filial || undefined,
         month:month,
         type: typeSaledebt || undefined,
+        year
       },
     });
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];

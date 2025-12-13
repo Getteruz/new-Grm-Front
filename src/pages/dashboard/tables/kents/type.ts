@@ -35,7 +35,7 @@ export interface TQuery {
   type?: string;
   debt_id?: string;
   month?: string;
-  year?: string;
+  year?: number;
 }
 
 export interface ITotal {

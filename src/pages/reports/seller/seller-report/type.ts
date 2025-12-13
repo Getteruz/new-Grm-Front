@@ -21,6 +21,7 @@ export interface TQuery {
   limit: number;
   page: number;
   month?: string;
+  year?: number;
 }
 
 export interface User {

@@ -6,10 +6,12 @@ import { parseAsString, useQueryState } from "nuqs";
 import { useCollectionReport } from "./queries";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMeStore } from "@/store/me-store";
+import { useYear } from "@/store/year-store";
 
 export default function CollectionTable() {
  const {meUser} = useMeStore()
   const [month] = useQueryState("month", parseAsString);
+  const {year}= useYear()
   const [sort] = useQueryState("sort", parseAsString.withDefault("delears"));
   const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
     const navigate = useNavigate()
@@ -20,6 +22,7 @@ export default function CollectionTable() {
       queries: {
         filialId: meUser?.filial?.id || undefined,
         month: month || undefined,
+        year,
         factory:factoryId,
         typeOther
       },

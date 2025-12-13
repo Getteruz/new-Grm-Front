@@ -82,6 +82,7 @@ type?: string;
 user_id?: string;
 filial?: string;
 month?: string;
+year?: number | undefined;
 }
 
 export interface ITotal {

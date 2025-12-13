@@ -3,9 +3,10 @@ import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 import { useMeStore } from "@/store/me-store";
+import { useYear } from "@/store/year-store";
 import { Select } from "@radix-ui/react-select";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getMonth, getYear } from "date-fns";
+import { getMonth } from "date-fns";
 import { FileInput, Printer } from "lucide-react";
 import { parseAsString, useQueryState } from "nuqs";
 import qs from "qs";
@@ -18,6 +19,8 @@ type RightContentProps = {
 
 export default function RightConent({printRef}:RightContentProps) {
   const { meUser } = useMeStore();
+const {year} = useYear()
+
   const [month] = useQueryState(
     "month",
     parseAsString.withDefault(getMonth(new Date()) + 1 + "")
@@ -29,7 +32,7 @@ export default function RightConent({printRef}:RightContentProps) {
       const query = {
         month: +month || undefined,
         tur:type,
-        year: getYear(new Date()),
+        year,
         filialId:
           meUser?.position?.role == 4
             ? meUser?.filial?.id

@@ -4,6 +4,7 @@ import { DataTable } from "@/components/ui/data-table";
 import useDataFetch from "./queries";
 import { getMonth } from "date-fns";
 import { Columns } from "./colums";
+import { useYear } from "@/store/year-store";
 
 export default function KassaManagerTable() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -14,6 +15,7 @@ export default function KassaManagerTable() {
   const [typeKassamanager] = useQueryState("typeKassamanager");
   const [typeCashflow] = useQueryState("typeCashflow");
   const [managerId] = useQueryState("managerId");
+  const {year}= useYear()
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
@@ -23,7 +25,8 @@ export default function KassaManagerTable() {
         user_id:managerId || undefined,
         type:  typeKassamanager == "clear" ? undefined:typeKassamanager || undefined,
         filial_id:filial || undefined,
-        month:month,
+        month,
+        year,
         cashflow_type:typeCashflow == "clear" ? undefined: typeCashflow || undefined,
       },
     });

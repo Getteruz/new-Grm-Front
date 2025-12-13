@@ -20,7 +20,7 @@ export default function MainLayout() {
       window.location.replace("/login");
     } else if (pathname.pathname == "/") {
       if (meUser?.position?.role === 3) {
-        navigate("/cashier/home");
+        navigate("/products");
       } else {
         navigate("/dashboard");
       }

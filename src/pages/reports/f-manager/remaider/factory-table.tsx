@@ -6,10 +6,12 @@ import { parseAsString, useQueryState } from "nuqs";
 import {  useFactoryReport } from "./queries";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMeStore } from "@/store/me-store";
+import { useYear } from "@/store/year-store";
 
 export default function FoctoryTable() {
   const {meUser} = useMeStore();
   const [month] = useQueryState("month", parseAsString);
+  const {year}= useYear()
   const {countryId,factoryId} = useParams()
   const navigate = useNavigate()
   const [typeOther] = useQueryState("typeOther", parseAsString.withDefault("none"));
@@ -19,6 +21,7 @@ export default function FoctoryTable() {
       queries: {
         filialId: meUser?.filial?.id || undefined,
         month: month || undefined,
+        year,
         country:countryId,
         factory:factoryId,
         typeOther

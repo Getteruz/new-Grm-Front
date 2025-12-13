@@ -29,7 +29,7 @@ export default function Dashboard() {
       startDate: startDate || undefined,
       endDate: endDate || undefined,
       filial_id: filial || undefined,
-      month:month,
+      month,
       year: year,
 
     },

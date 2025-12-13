@@ -8,6 +8,7 @@ import { getMonth } from "date-fns";
 import { MonthsArray } from "@/consts";
 import FilterSelect from "@/components/filters-ui/filter-select";
 import { ChevronLeft } from "lucide-react";
+import { useYear } from "@/store/year-store";
 
 export default function DilerOneTable({dellerFilial,setDellerFilial}:{dellerFilial:string,setDellerFilial: Dispatch<SetStateAction<string | null>>}) {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -16,6 +17,7 @@ export default function DilerOneTable({dellerFilial,setDellerFilial}:{dellerFili
     "month",
     parseAsString.withDefault(getMonth(new Date()) + 1 + "")
   );
+  const {year}= useYear()
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useTransferDealersFetch({
       queries: {
@@ -23,7 +25,8 @@ export default function DilerOneTable({dellerFilial,setDellerFilial}:{dellerFili
         page: page,
         toId: dellerFilial || undefined,
         mode: "collection",
-        month:month,
+        month,
+        year
       },
     });
 

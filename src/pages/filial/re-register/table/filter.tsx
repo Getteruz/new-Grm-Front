@@ -16,8 +16,8 @@ export default function Filters({
   partiyaStatus = "new",
   check,
 }: {
-  partiyaStatus: string | undefined;
-  check: boolean | undefined;
+  partiyaStatus?: string ;
+  check?: boolean ;
 }) {
   const { id } = useParams();
   const { meUser } = useMeStore();
@@ -68,7 +68,7 @@ export default function Filters({
         placeholder="Накладной"
         name="tip"
       />
-      <FilterSelect
+      {/* <FilterSelect
         className="border-border max-w-[150px] w-full border-r"
         options={[
           { label: "Коллекция", value: "collection" },
@@ -77,7 +77,7 @@ export default function Filters({
         defaultValue="default"
         placeholder="Коллекция"
         name="type"
-      />
+      /> */}
      { meUser?.position?.role == 9 && tip=="new" ? <FileExelUpload partiyaId={id || ""} />:""}
 
       {(meUser?.position?.role == 7 || meUser?.position.role == 4) ? (

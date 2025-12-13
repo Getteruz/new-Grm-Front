@@ -4,7 +4,7 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 
-import { getAllData } from "@/service/apiHelpers";
+import {  getByIdData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
@@ -13,21 +13,23 @@ import { TData, TQuery, TReportData } from "../type";
 interface ITransfers {
   options?: DefinedInitialDataInfiniteOptions<TResponse<TData>>;
   queries?: TQuery;
-  enabled?:boolean
+  enabled?:boolean;
+  id:string;
 }
 interface IPartiyaReport {
   options?: DefinedInitialDataInfiniteOptions<TReportData>;
   queries?: TQuery;
-  enabled?:boolean
+  enabled?:boolean;
+  id:string;
 }
 
-const useDataFetch = ({ options, queries,enabled=true }: ITransfers) =>
+const useDataFetch = ({ options,id, queries,enabled=true }: ITransfers) =>
 useInfiniteQuery({
   ...options,
   enabled,
-  queryKey: [apiRoutes.excelProducts, queries],
+  queryKey: [apiRoutes.reInventoryGetByFilialReport, id,queries],
   queryFn: ({ pageParam = 10 }) =>
-    getAllData<TResponse<TData>, TQuery>(apiRoutes.excelProducts, {
+    getByIdData<TResponse<TData>, TQuery>(apiRoutes.reInventoryGetByFilialReport,id, {
       ...queries,
       page: pageParam as number,
       limit: 10,
@@ -42,10 +44,14 @@ useInfiniteQuery({
   initialPageParam: 1,
 })
 
-export const usePartiyaReport = ({  queries,enabled=true }: IPartiyaReport) => useQuery({
-    queryKey: [apiRoutes.excelProductsReport,queries],
+export const usePartiyaReport = ({  queries,id,enabled=true }: IPartiyaReport) => useQuery({
+    queryKey: [apiRoutes.reInventoryGetByFilialReportTotals,id,queries],
     enabled,
-    queryFn: () => getAllData<TReportData, TQuery>(apiRoutes.excelProductsReport,queries),
+    queryFn: () => getByIdData<TReportData, TQuery>(apiRoutes.reInventoryGetByFilialReportTotals,id, {
+      ...queries,
+      page:1,
+      limit: 10,
+    }),
 })
 
 export default useDataFetch;

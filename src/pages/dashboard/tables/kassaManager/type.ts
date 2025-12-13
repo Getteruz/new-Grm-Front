@@ -33,6 +33,7 @@ export interface TQuery {
   user_id?: string;
   filial_id?: string;
   month?: string;
+  year?: number;
   cashflow_type?: string;
 }
 

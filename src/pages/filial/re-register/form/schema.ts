@@ -10,8 +10,9 @@ export const CropSchema = z.object({
     color: z.object({value: z.string(),label: z.string()}),
     model: z.object({value: z.string(),label: z.string()}),
     factory:z.object({value: z.string().optional(),label: z.string().optional(),}).optional(),
-    count: z.number(),
-    isMetric:z.string().optional(),
+    value: z.number(),
+    isMetric:z.object({value: z.string().optional(),label: z.string().optional(),}).optional(),
 });
 
 export type CropFormType = z.infer<typeof CropSchema>;
+

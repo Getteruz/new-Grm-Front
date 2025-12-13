@@ -80,30 +80,11 @@ export default function PageFinanceSingle() {
       isMManagerConfirmed: ReportDealer?.[0]?.isMManagerConfirmed,
     } as TKassareportData;
   }, [ReportDealer]);
-  // const PayrollsDealerData = useMemo(() => {
-  //   return {
-  //     payrollsDealerId:PayrollsDealer?.data?.id,
-  //     totalSum: PayrollsDealer?.data?.total || 0,
-  //     totalPlasticSum: PayrollsDealer?.data?.plastic || 0,
-  //     status:
-  //       (PayrollsDealer?.data?.isMManagerConfirmed &&
-  //       PayrollsDealer?.data?.isAccountantConfirmed)
-  //         ? PayrollsDealer?.data?.status
-  //         : PayrollsDealer?.data?.isMManagerConfirmed
-  //           ? "m_manager_confirmed"
-  //           : PayrollsDealer?.data?.isAccountantConfirmed
-  //             ? "accountant_confirmed"
-  //             : PayrollsDealer?.data?.status || "open",
-  //     isAccountantConfirmed: PayrollsDealer?.data?.isAccountantConfirmed,
-  //     isMManagerConfirmed:PayrollsDealer?.data?.isMManagerConfirmed,
-  //   } as TKassareportData;
-  // }, [PayrollsDealer]);
 
 
   const ReportSingleData = useMemo(() => {
     return kassaData?.kassaReport
       ? [myData,
-        // PayrollsDealerData,
          DealerData, ...(kassaData?.kassaReport as TKassareportData[])]
       : [myData];
   }, [kassaData, myData, DealerData]);

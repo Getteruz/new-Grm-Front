@@ -1,4 +1,4 @@
-import { parseAsInteger, useQueryState } from "nuqs";
+import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { useLocation } from "react-router-dom";
 
 import TabsFilter from "@/components/filters-ui/tabs-filter";
@@ -16,8 +16,8 @@ export default function Page() {
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [filial] = useQueryState("filial");
   const [search] = useQueryState("search");
-  const [card] = useQueryState("card");
-  const [collection] = useQueryState("collection");
+  const [card] = useQueryState("card",parseAsString.withDefault("card"));
+  const [collection] = useQueryState("collection",parseAsString.withDefault("product"));
   const { meUser } = useMeStore();
 
   // Product data fetch
@@ -43,8 +43,7 @@ export default function Page() {
     },
     role: meUser?.position.role,
   });
-
-  // Collection data fetch
+  
   const { 
     data: collectionsData,
     isLoading: isCollectionsLoading,
@@ -69,13 +68,11 @@ export default function Page() {
     <>
       <Filters />
       
-      {
-        meUser?.position?.role ==9  ?   <div className="bg-sidebar scrollCastom   py-0.5 px-[50px]">
+     <div className="scrollCastom ml-5">
         <TabsFilter />
-      </div>:""
-      }
+      </div>
       {showCardGrid && (
-        <div className="px-6 mt-4 h-[calc(100vh-210px)] scrollCastom grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-6">
+        <div className="px-6 mt-4 h-[calc(100vh-163px)] scrollCastom grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-6">
           {productsFlat.map((item) => (
             <CarpetCard
             producdId={""}

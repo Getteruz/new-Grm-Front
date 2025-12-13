@@ -82,6 +82,7 @@ export interface TQuery {
   user_id?: string;
   filial?: string;
   month?: string;
+  year?: number;
 }
 
 export interface ITotal {

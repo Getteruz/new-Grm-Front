@@ -4,6 +4,7 @@ import { getMonth } from "date-fns";
 import useDataFetch from "./queries";
 import { DataTable } from "@/components/ui/data-table";
 import { Columns } from "./colums";
+import { useYear } from "@/store/year-store";
 
 export default function KentsTable() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -14,6 +15,7 @@ export default function KentsTable() {
     "monthKents",
     parseAsString.withDefault(getMonth(new Date()) + 1 + "")
   );
+  const {year}= useYear()
   const [typeKents] = useQueryState("typeKents");
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -23,7 +25,8 @@ export default function KentsTable() {
         page,
         type: typeKents == "clear" ? undefined : typeKents || undefined,
         debt_id: debls || undefined,
-        month: month,
+        month,
+        year,
       },
     });
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];

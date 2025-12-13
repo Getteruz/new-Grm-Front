@@ -201,4 +201,5 @@ export type TransferQuery = {
   mode?: string;
   toId?: string;
   month?:string;
+  year?:number
 };

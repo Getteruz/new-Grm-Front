@@ -13,26 +13,22 @@ export default function FormContent() {
 
   const [editble] = useState<boolean>(true);
   const [barcode, setBarCode] = useQueryState("barcode");
-  const { watch } = useFormContext();
+  const { watch,setValue } = useFormContext();
   const isMetric = watch("isMetric");
   const [tip] = useQueryState(
     "tip",
-    parseAsString.withDefault((meUser?.position?.role == 7 ||meUser?.position.role == 4)? "переучет" : "new")
+    parseAsString.withDefault(
+      meUser?.position?.role == 7 || meUser?.position.role == 4
+        ? "переучет"
+        : "new"
+    )
   );
 
   return (
     <div className="w-full max-h-[calc(100vh-66px)] scrollCastom border-border border-r ">
       <Filters />
       <div className="grid row-start  px-[40px] py-[20px] gap-2 lg:grid-cols-2">
-        <FormTextInput
-          classNameInput="h-[28px] p-2"
-          name="code"
-          placeholder="code"
-          localChange={() => {
-            setBarCode("new");
-          }}
-          label="code"
-        />
+        
 
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -52,36 +48,73 @@ export default function FormContent() {
           label="factory"
           disabled={true}
         />
-        <FormComboboxDemoInput
+        
+        <FormTextInput
+          classNameInput="h-[28px] p-2"
+          name="code"
+          placeholder="code"
+          localChange={() => {
+            setBarCode("new");
+          }}
+          label="code"
+        />
+         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/collection"
           name="collection"
-          disabled={true}
+          onLocalChange={(value)=>{
+            const costomValue = value as {
+              country: {
+                id: string;
+                title: string;
+              };
+              factory: {
+                id: string;
+                title: string;
+              };
+            };
+            setValue("country", {
+              value: costomValue?.country?.id,
+              label: costomValue?.country?.title,
+            })
+            setValue("factory", {
+              value: costomValue?.factory?.id,
+              label: costomValue?.factory?.title,
+            })
+            setValue("model", {
+              value: undefined,
+              label: "",
+            })
+          }}
           classNameChild="h-[28px] p-2"
           placeholder="collection"
           label="collection"
+          disabled={!editble}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl={`/model`}
           name="model"
-          disabled={true}
           classNameChild="h-[28px] p-2"
           placeholder="model"
           label="model"
         />
-        <FormTextInput
-          classNameInput="h-[28px] p-2"
+      <FormComboboxDemoInput
+          fieldNames={{ value: "id", label: "title" }}
+          option={[
+            { value: "true", label: "Метражный" },
+            { value: "false", label: "Штучный" },
+          ]}
           name="isMetric"
+          classNameChild="h-[28px] p-2"
           placeholder="isMetric"
-          disabled={true}
           label="isMetric"
+          disabled={!editble}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/shape"
           name="shape"
-          disabled={true}
           classNameChild="h-[28px] p-2"
           placeholder="shape"
           label="shape"
@@ -90,7 +123,6 @@ export default function FormContent() {
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/size"
           name="size"
-          disabled={true}
           classNameChild="h-[28px] p-2"
           placeholder="size"
           label="size"
@@ -98,7 +130,7 @@ export default function FormContent() {
         <FormTextInput
           type="number"
           classNameInput="h-[28px] p-2"
-          name="count"
+          name="value"
           placeholder={isMetric == "Метражный" ? "Длина" : "count"}
           disabled={!editble}
           label={isMetric == "Метражный" ? "Длина" : "count"}
@@ -109,7 +141,6 @@ export default function FormContent() {
           name="color"
           classNameChild="h-[28px] p-2"
           placeholder="color"
-          disabled={true}
           label="color"
         />
         <FormComboboxDemoInput
@@ -118,7 +149,6 @@ export default function FormContent() {
           name="style"
           classNameChild="h-[28px] p-2"
           placeholder="style"
-          disabled={true}
           label="style"
         />
       </div>
@@ -136,7 +166,8 @@ export default function FormContent() {
         )}
         {(meUser?.position.role == 9 && tip == "new") ||
         meUser?.position.role === 5 ||
-        ((meUser?.position.role == 7 || meUser?.position.role == 4) && tip == "переучет") ? (
+        ((meUser?.position.role == 7 || meUser?.position.role == 4) &&
+          tip == "переучет") ? (
           <Button
             className={`h-full w-1/2 text-primary justify-center font-[16px] gap-1.5  border-none`}
             variant={"outline"}

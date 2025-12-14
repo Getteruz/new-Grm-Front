@@ -8,62 +8,33 @@ import FormContent from "./content";
 import { CropFormType, CropSchema } from "./schema";
 import { useQueryClient } from "@tanstack/react-query";
 import { apiRoutes } from "@/service/apiRoutes";
-import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 import { useParams } from "react-router-dom";
 import useDebounce from "@/hooks/useDebounce";
 import { useMeStore } from "@/store/me-store";
 
 const ActionPageQrCode = () => {
   const { meUser } = useMeStore();
+  const { filialReportId, filialId } = useParams();
   const form = useForm<CropFormType>({
     resolver: zodResolver(CropSchema),
     defaultValues: {
-      country: {
-        value: undefined,
-        label: "",
-      },
-      factory: {
-        value: undefined,
-        label: "",
-      },
-      collection: {
-        value: undefined,
-        label: "",
-      },
-      size: {
-        value: undefined,
-        label: "",
-      },
-      shape: {
-        value: undefined,
-        label: "",
-      },
-      style: {
-        value: undefined,
-        label: "",
-      },
-      color: {
-        value: undefined,
-        label: "",
-      },
-      model: {
-        value: undefined,
-        label: "",
-      },
+      filialReportId: filialReportId || "",
+      filialId: filialId || "",
     },
   });
 
-  const [count, setCount] = useQueryState(
-    "count",
-    parseAsInteger.withDefault(0)
-  );
   const [tip] = useQueryState(
     "tip",
-    parseAsString.withDefault((meUser?.position?.role == 7 || meUser?.position.role == 4) ? "переучет" : "new")
+    parseAsString.withDefault(
+      meUser?.position?.role == 7 || meUser?.position.role == 4
+        ? "переучет"
+        : "new"
+    )
   );
-  const [idLoc, setId] = useQueryState("id");
-  const { id } = useParams();
+
   const [barcode, setBarcode] = useQueryState("barcode");
+  const [productId] = useQueryState("productId");
   const resetForm = () => {
     form.reset({
       code: "",
@@ -71,7 +42,7 @@ const ActionPageQrCode = () => {
         value: "",
         label: "",
       },
-      value: 0,
+      value: undefined,
       country: {
         value: "",
         label: "",
@@ -136,23 +107,9 @@ const ActionPageQrCode = () => {
         queryKey: [apiRoutes.excelProductsReport],
       });
 
-      if (idLoc == "new") {
-        setId("new");
-        toast.success("Продукт добавлено успешно");
-      } else {
-        toast.success("Продукт добавлено успешно");
-      }
+      toast.success("Продукт добавлено успешно");
     },
   });
-  useEffect(() => {
-    if (barcode == "new" || barcode == undefined) {
-      setCount(
-        qrBaseOne?.count || qrBaseOne?.isMetric
-          ? (qrBaseOne?.size?.y || 0) * 100
-          : 1
-      );
-    }
-  }, [qrBaseOne, barcode]);
 
   useEffect(() => {
     if (qrBaseOne) {
@@ -162,7 +119,7 @@ const ActionPageQrCode = () => {
           value: qrBaseOne?.isMetric ? "true" : "false",
           label: qrBaseOne?.isMetric ? "Метражный" : "Штучный",
         },
-        value: count,
+        value: undefined,
         country: {
           value: qrBaseOne?.country?.id,
           label: qrBaseOne?.country?.title,
@@ -197,7 +154,6 @@ const ActionPageQrCode = () => {
         },
       });
     }
-    
   }, [qrBaseOne]);
 
   return (
@@ -208,10 +164,15 @@ const ActionPageQrCode = () => {
           if (e.key === "Enter") e.preventDefault();
         }}
         onSubmit={form.handleSubmit((data) => {
-           mutate({
-            id: id || "",
+          console.log(data);
+          mutate({
+            id: productId || "",
             isUpdate: barcode == "new" || barcode == undefined ? false : true,
-            data:data
+            data: {
+              // filialReportId: filialReportId || "",
+              filialId: filialId || "",
+              ...data,
+            },
           });
         })}
       >

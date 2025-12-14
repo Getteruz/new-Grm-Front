@@ -60,9 +60,9 @@ export default function Filters({
       <FilterSelect
         className="border-border max-w-[150px] w-full border-r"
         options={[
-          { label: "Накладной", value: "new" },
-          { label: "Оприходован", value: "переучет" },
-          { label: "Розница", value: "излишки" }, //дефицит
+          { label: "Остатка", value: "new" },
+          { label: "Переучёт", value: "переучет" },
+          { label: "Розница", value: "излишки" }, 
         ]}
         defaultValue={(meUser?.position?.role ==7 || meUser?.position.role == 4) ? "переучет":"new"}
         placeholder="Накладной"

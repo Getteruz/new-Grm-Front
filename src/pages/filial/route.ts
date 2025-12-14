@@ -25,7 +25,7 @@ const Route = [
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
   {
-    url: "/filial/:id/info/:id/info",
+    url: "/filial/:filialId/info/:filialReportId/info",
     Element: ItemsPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },

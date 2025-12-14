@@ -33,7 +33,7 @@ export default function Page() {
         hasNextPage={hasNextPage ?? false}
         isFetchingNextPage={isFetchingNextPage}
       />
-      <ActionPage />
+      <ActionPage type="warehouse" />
     </>
   );
 }

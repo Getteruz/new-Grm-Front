@@ -5,7 +5,7 @@ import { Columns, ColumnsColaction } from "./columns";
 // import Filter from "./filter";
 import { useParams } from "react-router-dom";
 import useDataFetch, { usePartiyaReport } from "./queries";
-import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
+import {  parseAsString, useQueryState } from "nuqs";
 import { useMemo } from "react";
 import { useMeStore } from "@/store/me-store";
 // import { usePartiyaById } from "../../form/actions";
@@ -30,7 +30,7 @@ function ItemBottom({ items }: { items: TReportData }) {
 
 export default function ItemsPage() {
   const [search] = useQueryState("search");
-  const { id } = useParams();
+  const { filialReportId } = useParams();
   const { meUser } = useMeStore();
   const [tip] = useQueryState(
     "tip",
@@ -43,7 +43,6 @@ export default function ItemsPage() {
 
   const [type] = useQueryState("type", parseAsString.withDefault("default"));
   const [, setBarCode] = useQueryState("barcode");
-  const [, setCount] = useQueryState("count", parseAsInteger.withDefault(0));
   const [, setProductId] = useQueryState("productId");
 
   // const { data: onePartiya } = usePartiyaById({
@@ -55,7 +54,7 @@ export default function ItemsPage() {
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
-      id: id || "",
+      id: filialReportId || "",
       queries: {
         search: search || undefined,
         // type: type || "default",
@@ -70,7 +69,7 @@ export default function ItemsPage() {
     hasNextPage: BottomHasNextPage,
     isFetchingNextPage: BottomIsFetchingNextPage,
   } = useDataFetch({
-    id: id || "",
+    id: filialReportId || "",
     queries: {
       search: search || undefined,
       // type: tip || "default",
@@ -80,14 +79,14 @@ export default function ItemsPage() {
   });
 
   const { data: PartiyaReportData } = usePartiyaReport({
-    id: id || "",
+    id: filialReportId || "",
     queries: {
       type: tip == "new" ? undefined : tip || undefined,
     },
   });
 
   const { data: BootomPartiyaReportData } = usePartiyaReport({
-    id: id || "",
+    id: filialReportId || "",
     queries: {
       type: "дефицит",
     },
@@ -124,13 +123,6 @@ export default function ItemsPage() {
             if (type == "default") {
               setBarCode(e?.bar_code?.code);
               setProductId(e?.id);
-
-              if (tip == "переучет") {
-                setCount(e?.bar_code?.isMetric ? e?.y * 100 : e?.check_count);
-              } else {
-                setCount(e?.bar_code?.isMetric ? e?.y * 100 : e?.count);
-              }
-              // setCount()
             }
           }}
           isLoading={isLoading}

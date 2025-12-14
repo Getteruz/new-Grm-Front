@@ -5,7 +5,7 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 
-import { AddData, getByIdData, UpdateData } from "@/service/apiHelpers";
+import { AddData, getByIdData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import {  TData, TQuery } from "../type";
@@ -30,7 +30,11 @@ export const useProdcutCheck = ({
     ...options,
     mutationFn: async ({  data,id, isUpdate }) => {
       const costomData: object = {
-        ...data,
+        code:data?.code,
+        filialReportId: data?.filialReportId,
+        filialId: data?.filialId,
+        value:data?.value,
+        ...(isUpdate && { id }),
         countryId: data?.country?.value,
         collectionId :data?.collection?.value,
         sizeId: data?.size?.value,
@@ -41,11 +45,9 @@ export const useProdcutCheck = ({
         factoryId:data?.factory?.value,
         isMetric:data?.isMetric?.value === "true" ? true : false,
       };
-      if(isUpdate){
-        return await UpdateData(apiRoutes.excelSingle, id,  costomData);
-      }else{
-        return await AddData(apiRoutes.excelProduct + "/" + id, costomData);
-      }
+      
+        return await AddData(apiRoutes.reInventoryProcess  , costomData);
+      
     },
   });
 

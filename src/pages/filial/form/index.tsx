@@ -13,7 +13,7 @@ import { useFilialById, useFilialMutation } from "./actions";
 import FormContent from "./content";
 import { FilialFormType, FilialSchema } from "./schema";
 
-const ActionPage = () => {
+const ActionPage = ({type = "filial"}:{type?:string}) => {
   const pathName = useLocation();
 
   const form = useForm<FilialFormType>({
@@ -38,7 +38,7 @@ const ActionPage = () => {
       phone1: "",
       startWorkTime: "",
       endWorkTime: "",
-      type: "filial",
+      type,
     });
   };
   const { mutate } = useFilialMutation({
@@ -66,7 +66,7 @@ const ActionPage = () => {
         phone1: data?.phone1 || "",
         startWorkTime: data?.startWorkTime || "",
         endWorkTime: data?.endWorkTime || "",
-        type: "filial",
+        type,
       });
     }
   }, [data]);

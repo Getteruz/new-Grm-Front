@@ -55,6 +55,7 @@ export default function ReportPage() {
   const [startDate] = useQueryState("startDate", parseAsIsoDate);
   const [endDate] = useQueryState("endDate", parseAsIsoDate);
   const [search] = useQueryState("search", parseAsString);
+  const [typesManage] = useQueryState("typesManage", parseAsString);
 
   const { data: KassaReport } = useKassaReportTotal({
     queries: {
@@ -73,7 +74,7 @@ export default function ReportPage() {
           id === "undefined" || !id || myCashFlow || FManagerCashFlow
             ? undefined
             : id,
-        casherId: id === "undefined" ? meUser?.id : undefined,
+        casherId:myCashFlow?  typesManage || undefined:  id === "undefined" ? meUser?.id : undefined,
         // @ts-ignore
         type: typeFilter[tip as string],
         // @ts-ignore

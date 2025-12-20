@@ -143,20 +143,22 @@ export const Columns: ColumnDef<TData>[] = [
       const queryClient = useQueryClient();
       const [tip] = useQueryState("tip", parseAsString.withDefault((meUser?.position?.role ==7 ||meUser?.position.role == 4) ? "переучет": "new"));
       return (
-     tip != "излишки" ?  
+     tip == "переучет"  ?  
       <TableAction
-          url={apiRoutes.excelProducts}
+          url={apiRoutes.reInventoryGetByFilialReport}
           ShowPreview={false}
           ShowUpdate={false}
           costomDelete={()=>{
-            PatchData(`/excel/change-count/${row?.original?.id}${tip =="new"?"" :`?tip=${tip}`}`,{} )
+            PatchData(`/product/${row?.original?.id}`,{
+              check_count:0
+            } )
             .then(()=>{
-             queryClient.invalidateQueries({ queryKey: [apiRoutes?.excelProductsReport] });
-             queryClient.invalidateQueries({ queryKey: [apiRoutes?.excelProducts] });
+             queryClient.invalidateQueries({ queryKey: [apiRoutes?.reInventoryGetByFilialReport] });
+             queryClient.invalidateQueries({ queryKey: [apiRoutes?.reInventoryGetByFilialReportTotals] });
             })
           }}
           id={row.original?.id}
-          refetchUrl={apiRoutes.excelProducts}
+          refetchUrl={apiRoutes.reInventoryGetByFilialReport}
         />:""
 
         

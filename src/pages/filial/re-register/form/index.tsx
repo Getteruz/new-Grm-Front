@@ -102,7 +102,8 @@ const ActionPageQrCode = () => {
       if (codeInput) {
         (codeInput as HTMLInputElement).select();
       }
-      queryClient.invalidateQueries({ queryKey: [apiRoutes.excelProducts] });
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.reInventoryGetByFilialReport] });
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.reInventoryGetByFilialReportTotals] });
       queryClient.invalidateQueries({
         queryKey: [apiRoutes.excelProductsReport],
       });

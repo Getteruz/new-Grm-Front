@@ -11,6 +11,7 @@ export default function SingleReportPage() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [search] = useQueryState("search");
+  const [,setReportStatus] = useQueryState("reportStatus");
   const { id } = useParams();
   const { data, isLoading } = useDataFetch({
     queries: {
@@ -27,6 +28,7 @@ export default function SingleReportPage() {
       <DataTable
         isRowClickble={true}
         isLoading={isLoading}
+        onRowClick={(row:{status:string})=>setReportStatus(row?.status.toLocaleLowerCase())}
         columns={Columns}
         data={data?.items || []}
       />

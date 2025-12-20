@@ -14,13 +14,14 @@ import Filters from "./filter";
 
 function ItemBottom({ items }: { items: TReportData }) {
   return (
-    <div className="w-full flex items-center  justify-end pr-10 border-border border-t  bg-sidebar">
+    <div className="w-full flex items-center  justify-start pr-10 border-border border-t  bg-sidebar">
+        <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
+        Количество: {Number(items?.count)?.toFixed(0) || 0}
+      </div>
       <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
         Объем: {Number(items?.volume)?.toFixed(2) || 0} м²
       </div>
-      <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
-        Количество: {Number(items?.count)?.toFixed(0) || 0}
-      </div>
+    
       <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
         Сумма: {Number(items?.total)?.toFixed(2) || 0} $
       </div>
@@ -32,6 +33,7 @@ export default function ItemsPage() {
   const [search] = useQueryState("search");
   const { filialReportId } = useParams();
   const { meUser } = useMeStore();
+  const [reportStatus] = useQueryState("reportStatus");
   const [tip] = useQueryState(
     "tip",
     parseAsString.withDefault(
@@ -117,7 +119,7 @@ export default function ItemsPage() {
     <div className="flex w-full">
       <ActionPageQrCode />
       <div className="w-2/3">
-        <Filters />
+        <Filters partiyaStatus={reportStatus ||undefined} />
         <DataTable
           onRowClick={(e) => {
             if (type == "default") {

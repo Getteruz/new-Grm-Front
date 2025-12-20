@@ -12,6 +12,7 @@ export default function FormContent() {
 
   
   const [barcode, setBarCode] = useQueryState("barcode");
+  const [reportStatus] = useQueryState("reportStatus");
   const { watch,setValue } = useFormContext();
   const isMetric = watch("isMetric");
   const [tip] = useQueryState(
@@ -55,7 +56,7 @@ export default function FormContent() {
             setBarCode("new");
           }}
           label="code"
-          disabled={tip !== "переучет"}
+          disabled={tip !== "переучет" || reportStatus == "closed"}
         />
          <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -88,7 +89,7 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="collection"
           label="collection"
-          disabled={tip !== "переучет"}
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -97,7 +98,7 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="model"
           label="model"
-          disabled={tip !== "переучет"}
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
         />
       <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -109,7 +110,7 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="isMetric"
           label="isMetric"
-          disabled={tip !== "переучет"}
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -118,7 +119,7 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="shape"
           label="shape"
-          disabled={tip !== "переучет"}
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -127,14 +128,14 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="size"
           label="size"
-          disabled={tip !== "переучет"}
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
         />
         <FormTextInput
           type="number"
           classNameInput="h-[28px] p-2"
           name="value"
           placeholder={isMetric == "Метражный" ? "Длина" : "count"}
-          disabled={tip !== "переучет"}
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
           label={isMetric == "Метражный" ? "Длина" : "count"}
         />
         <FormComboboxDemoInput
@@ -144,7 +145,7 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="color"
           label="color"
-          disabled={tip !== "переучет"}
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -153,11 +154,11 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="style"
           label="style"
-          disabled={tip !== "переучет"}
+          disabled={tip !== "переучет" || reportStatus == "closed"}
         />
       </div>
       <div className="bg-sidebar border-y text-primary border-border  h-[44px]  flex  items-center justify-end  ">
-        {tip == "переучет" &&<>
+        {tip == "переучет" && reportStatus !== "closed"  &&<>
           <Button
             className={`h-full w-1/2 text-primary justify-center font-[16px] gap-1.5  border-none`}
             variant={"outline"}

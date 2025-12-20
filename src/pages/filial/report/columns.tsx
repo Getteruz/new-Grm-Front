@@ -23,6 +23,12 @@ export const Columns: ColumnDef<FilialReportData>[] = [
     },
   },
   {
+    header: "Штук",
+    cell: ({ row }) => {
+      return <p>{row.original?.count}шт</p>;
+    },
+  },
+  {
     header: "Обьём",
     cell: ({ row }) => {
       return <p>{row.original?.volume}м²</p>;
@@ -34,12 +40,7 @@ export const Columns: ColumnDef<FilialReportData>[] = [
       return <p>{row.original?.cost}$</p>;
     },
   },
-  {
-    header: "Штук",
-    cell: ({ row }) => {
-      return <p>{row.original?.count}шт</p>;
-    },
-  },
+  
   {
     header: "Статус пратии",
     cell: ({ row }) => {

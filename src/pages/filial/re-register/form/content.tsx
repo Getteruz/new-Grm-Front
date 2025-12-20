@@ -3,7 +3,6 @@ import Filters from "./filters";
 import BarcodeQenerat from "@/components/barcode-generat";
 import FormComboboxDemoInput from "@/components/forms/FormCombobox";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { parseAsString, useQueryState } from "nuqs";
 import { useMeStore } from "@/store/me-store";
@@ -11,8 +10,8 @@ import { useMeStore } from "@/store/me-store";
 export default function FormContent() {
   const { meUser } = useMeStore();
 
-  const [editble] = useState<boolean>(true);
   const [barcode, setBarCode] = useQueryState("barcode");
+  const [reportStatus] = useQueryState("reportStatus");
   const { watch,setValue } = useFormContext();
   const isMetric = watch("isMetric");
   const [tip] = useQueryState(
@@ -57,6 +56,7 @@ export default function FormContent() {
             setBarCode("new");
           }}
           label="code"
+          disabled={tip !== "переучет" || reportStatus == "closed"}
         />
          <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -89,7 +89,7 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="collection"
           label="collection"
-          disabled={!editble}
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -98,6 +98,7 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="model"
           label="model"
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
         />
       <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -109,7 +110,7 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="isMetric"
           label="isMetric"
-          disabled={!editble}
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -118,6 +119,7 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="shape"
           label="shape"
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -126,13 +128,14 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="size"
           label="size"
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
         />
         <FormTextInput
           type="number"
           classNameInput="h-[28px] p-2"
           name="value"
           placeholder={isMetric == "Метражный" ? "Длина" : "count"}
-          disabled={!editble}
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
           label={isMetric == "Метражный" ? "Длина" : "count"}
         />
         <FormComboboxDemoInput
@@ -142,6 +145,7 @@ export default function FormContent() {
           classNameChild="h-[28px] p-2"
           placeholder="color"
           label="color"
+          disabled={tip !== "переучет"|| reportStatus == "closed"}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -153,7 +157,9 @@ export default function FormContent() {
         />
       </div>
       <div className="bg-sidebar border-y text-primary border-border  h-[44px]  flex  items-center justify-end  ">
-        {meUser?.position.role == 9 && tip != "излишки" ? (
+        {
+           tip == "переучет"&&
+          <>
           <Button
             className={`h-full w-1/2 text-primary justify-center font-[16px] gap-1.5  border-none`}
             variant={"outline"}
@@ -161,13 +167,8 @@ export default function FormContent() {
           >
             Изменить
           </Button>
-        ) : (
-          ""
-        )}
-        {(meUser?.position.role == 9 && tip == "new") ||
-        meUser?.position.role === 5 ||
-        ((meUser?.position.role == 7 || meUser?.position.role == 4) &&
-          tip == "переучет") ? (
+      
+       
           <Button
             className={`h-full w-1/2 text-primary justify-center font-[16px] gap-1.5  border-none`}
             variant={"outline"}
@@ -175,9 +176,8 @@ export default function FormContent() {
           >
             Добавить
           </Button>
-        ) : (
-          ""
-        )}
+          </>
+      }
       </div>
       <BarcodeQenerat />
     </div>

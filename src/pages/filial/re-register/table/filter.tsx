@@ -2,56 +2,45 @@ import { FileCheck, FileOutput, Loader } from "lucide-react";
 import FilterSelect from "@/components/filters-ui/filter-select";
 import SearchInput from "@/components/filters-ui/search-input";
 import { Button } from "@/components/ui/button";
-import FileExelUpload from "@/components/file-upload";
 import { useParams } from "react-router-dom";
 import { useMeStore } from "@/store/me-store";
 import { toast } from "sonner";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { UpdatePatchData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
-import { useMemo } from "react";
-import { parseAsString, useQueryState } from "nuqs";
 
 export default function Filters({
   partiyaStatus = "new",
-  check,
 }: {
-  partiyaStatus?: string ;
-  check?: boolean ;
+  partiyaStatus?: string;
+  check?: boolean;
 }) {
-  const { id } = useParams();
+  const { filialId } = useParams();
   const { meUser } = useMeStore();
-  const queryClient = useQueryClient();
-  const [tip] = useQueryState("tip", parseAsString.withDefault((meUser?.position?.role ==7 || meUser?.position.role == 4) ? "переучет": "new"));
-
-  const changeStatus = useMemo(() => {
-    if (partiyaStatus == "new") {
-      return "pending"; // panding by M-Manager(9) 
-    } else if (partiyaStatus == "pending" && !check) {
-      return "closed"; // close my w-manager(7)
-    } else if (partiyaStatus == "closed" && check) {
-      return "finished"; // finish after closing by M-Manager(9) 
-    }
-  }, [partiyaStatus]);
 
   const StatusText = {
-    new: "Отправить на приходование",
-    pending: "Принимается...",
-    close: "Закрыть Партие",
-    closed: "Закрыто",
+    open: "Отправить на подтверждение",
+    accepted: "В ожидании...",
+    closed: "Принято",
   };
 
-  const { mutate,isPending } = useMutation({
+  const StatusMManaerText = {
+    open: "Принимается",
+    accepted: "Принять переучёт",
+    closed: "Принято",
+  };
+
+  const { mutate, isPending } = useMutation({
     mutationFn: async () => {
       return await UpdatePatchData(
-        apiRoutes.partiesChanngeStatus,
-        id + "/" + changeStatus,
+        partiyaStatus == "open"? apiRoutes.productAcceptReport: apiRoutes.productCloseReport,
+        filialId || "",
         {}
       );
     },
     onSuccess: () => {
-      toast.success("Partiya closed");
-      queryClient.invalidateQueries({ queryKey: [apiRoutes.parties] });
+      toast.success("closed");
+      // queryClient.invalidateQueries({ queryKey: [apiRoutes.parties] });
     },
   });
   return (
@@ -60,11 +49,15 @@ export default function Filters({
       <FilterSelect
         className="border-border max-w-[150px] w-full border-r"
         options={[
-          { label: "Накладной", value: "new" },
-          { label: "Оприходован", value: "переучет" },
-          { label: "Розница", value: "излишки" }, //дефицит
+          { label: "Остатка", value: "new" },
+          { label: "Переучёт", value: "переучет"},
+          { label: "Розница", value: "излишки"},
         ]}
-        defaultValue={(meUser?.position?.role ==7 || meUser?.position.role == 4) ? "переучет":"new"}
+        defaultValue={
+          meUser?.position?.role == 7 || meUser?.position.role == 4
+            ? "переучет"
+            : "new"
+        }
         placeholder="Накладной"
         name="tip"
       />
@@ -78,31 +71,30 @@ export default function Filters({
         placeholder="Коллекция"
         name="type"
       /> */}
-     { meUser?.position?.role == 9 && tip=="new" ? <FileExelUpload partiyaId={id || ""} />:""}
 
-      {(meUser?.position?.role == 7 || meUser?.position.role == 4) ? (
+      {meUser?.position?.role == 9 ? (
         <Button
-          onClick={() => mutate()}
-          disabled={check || isPending}
-          variant={check? "outline":"default"}
-          className="h-full ml-auto  border-y-0  "
+          disabled={partiyaStatus != "accepted"}
+          onClick={() => (partiyaStatus == "accepted" ? mutate() : {})}
+          variant={"outline"}
+          className="h-full ml-auto  border-y-0"
         >
           <FileCheck />
-          {check? "Отправлено": "Подтвердить оприходование"}
+          {/* @ts-ignore */}
+          {StatusMManaerText[partiyaStatus]}
         </Button>
       ) : (
         <Button
-          onClick={() => mutate()}
-          disabled={(partiyaStatus == "pending" && check) || isPending}
+          onClick={() => (partiyaStatus == "open" ? mutate() : {})}
+          disabled={
+            partiyaStatus != "open" || isPending
+          }
           className="h-full ml-auto  border-y-0"
-          variant={(partiyaStatus == "new" || partiyaStatus == "closed")  ?"default": "outline"}
+          variant={partiyaStatus != "open" ? "outline" : "default"}
         >
-        { isPending ? <Loader className="animate-spin"/> :  <FileOutput />}
-
-
+          {isPending ? <Loader className="animate-spin" /> : <FileOutput />}
           {/* @ts-ignore */}
-          
-          { StatusText[(check && partiyaStatus == "pending") ? "closed" : check ? "close"  : partiyaStatus]}
+          { StatusText[partiyaStatus]}
         </Button>
       )}
     </div>

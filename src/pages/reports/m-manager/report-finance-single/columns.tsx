@@ -22,9 +22,9 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     cell: ({ row }) => {
       const isMy = row?.original?.status == "my";
       return (
-        <p className={isMy ? "text-[#89A143]" : ""}>
+        <p className={isMy ? "text-[#89A143] py-2" : ""}>
           {isMy
-            ? "Мои приходы и расходы"
+            ? "Бизнес приходы и расходы"
             : row?.original?.isDealer
               ? "Dealer-manager"
               : row?.original?.payrollsDealerId ? "Ведомость": row?.original?.filial?.title}

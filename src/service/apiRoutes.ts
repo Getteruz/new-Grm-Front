@@ -113,5 +113,10 @@ export const apiRoutes = {
   reportsMonthlyV2:"/reports/monthly/v2",
   reportsTotal:'/reports/total',
   reInventoryGetByFilialReport:'/re-inventory/get-by/filial-report',
-  reInventoryGetByFilialReportTotals:'/re-inventory/get-by/filial-report/totals'
+  
+  reInventoryGetByFilialReportTotals:'/re-inventory/get-by/filial-report/totals',
+  reInventoryProcess:'/re-inventory/process',
+  filialEndReport:'/filial/end-report',
+  productAcceptReport:'/product/accept-report',
+  productCloseReport:'/product/close-report'
 } as const;

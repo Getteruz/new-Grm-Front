@@ -68,7 +68,6 @@ export const FilialColumns: ColumnDef<TData>[] = [
                   {}
                 )
                   .then(() => toast.success("Переучёт отправлен"))
-                  .catch(() => toast.error("что-то пошло не так"));
               }}
             >
               Запросить переучёт

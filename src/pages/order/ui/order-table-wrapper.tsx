@@ -11,20 +11,20 @@ export default function OrderTableWrapper({
   return (
     <div
       className={clsx(
-        "w-full bg-[#DBDAD1] border-[#CBCBC1]  border",
+        "w-full bg-card rounded-md",
         className
       )}
     >
-      <p className="text-[12px] leading-[14px] text-[#212121] py-[9px] px-[11px]">
+      <p className="text-[12px] leading-[14px] text-primaty py-[9px] px-[11px]">
         {title}
       </p>
       <ul className="w-full">
         {Colms && (
-          <li className="w-full flex gap-2 items-center px-[11px] py-[3px] border-[#CBCBC1] bg-[#E0DFD6]  border-y">
+          <li className="w-full flex gap-2 items-center px-[11px] py-[3px]  bg-card  border-b">
             {Colms.map((e: string, i: number) => (
               <p
                 key={i}
-                className="text-[#A4A398] text-[12px] leading-[14px] w-full"
+                className="text-primaty text-[12px] leading-[14px] w-full"
               >
                 {e}
               </p>

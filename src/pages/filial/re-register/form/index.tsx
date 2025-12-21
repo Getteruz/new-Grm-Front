@@ -15,11 +15,11 @@ import { useMeStore } from "@/store/me-store";
 
 const ActionPageQrCode = () => {
   const { meUser } = useMeStore();
-  const { filialReportId, filialId } = useParams();
+  const {  filialId } = useParams();
   const form = useForm<CropFormType>({
     resolver: zodResolver(CropSchema),
     defaultValues: {
-      filialReportId: filialReportId || "",
+      // filialReportId: filialReportId || "",
       filialId:   filialId == "my-filial" ?meUser?.filial?.id ||"" :filialId || "",
     },
   });

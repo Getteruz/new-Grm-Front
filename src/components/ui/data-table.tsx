@@ -161,7 +161,7 @@ export function DataTable<TData, TValue>({
         <TableLoading limit={15} table={table} />
       ) : (
         <>
-          <Table >
+          <Table className="rounded-md" >
             {hasHeader ? (
               <TableHeader className={`border-border  border  ${borderClass}`}>
                 {table.getHeaderGroups().map((headerGroup) => (

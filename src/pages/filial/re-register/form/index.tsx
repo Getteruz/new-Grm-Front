@@ -20,7 +20,7 @@ const ActionPageQrCode = () => {
     resolver: zodResolver(CropSchema),
     defaultValues: {
       filialReportId: filialReportId || "",
-      filialId: filialId || "",
+      filialId:   filialId == "my-filial" ?meUser?.filial?.id ||"" :filialId || "",
     },
   });
 
@@ -171,7 +171,7 @@ const ActionPageQrCode = () => {
             isUpdate: barcode == "new" || barcode == undefined ? false : true,
             data: {
               // filialReportId: filialReportId || "",
-              filialId: filialId || "",
+              filialId: filialId == "my-filial" ?meUser?.filial?.id ||"" :filialId || "",
               ...data,
             },
           });

@@ -13,17 +13,13 @@ const Route = [
     Element: Page,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
-  // {
-  //   url: "/filial/:id/info",
-  //   Element: SinglePage,
-  //   meta: { isAuth: true, role: new Set(["admin"]) },
-  // },
   {
     url: "/filial/:id/info",
-    // url: "/filial/:id/info/get-report",
     Element: SingleReportPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
+
+
   {
     url: "/filial/:filialId/info/:filialReportId/info",
     Element: ItemsPage,

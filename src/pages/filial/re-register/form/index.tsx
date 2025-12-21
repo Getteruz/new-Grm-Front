@@ -15,41 +15,12 @@ import { useMeStore } from "@/store/me-store";
 
 const ActionPageQrCode = () => {
   const { meUser } = useMeStore();
+  const { filialId } = useParams();
   const form = useForm<CropFormType>({
     resolver: zodResolver(CropSchema),
     defaultValues: {
-      country: {
-        value: undefined,
-        label: "",
-      },
-      factory: {
-        value: undefined,
-        label: "",
-      },
-      collection: {
-        value: undefined,
-        label: "",
-      },
-      size: {
-        value: undefined,
-        label: "",
-      },
-      shape: {
-        value: undefined,
-        label: "",
-      },
-      style: {
-        value: undefined,
-        label: "",
-      },
-      color: {
-        value: undefined,
-        label: "",
-      },
-      model: {
-        value: undefined,
-        label: "",
-      },
+      // filialReportId: filialReportId || "",
+      filialId:   filialId == "my-filial" ?meUser?.filial?.id ||"" :filialId || "",
     },
   });
 
@@ -212,7 +183,11 @@ const ActionPageQrCode = () => {
            mutate({
             id: id || "",
             isUpdate: barcode == "new" || barcode == undefined ? false : true,
-            data:data
+            data: {
+              // filialReportId: filialReportId || "",
+              filialId: filialId == "my-filial" ?meUser?.filial?.id ||"" :filialId || "",
+              ...data,
+            },
           });
         })}
       >

@@ -170,7 +170,12 @@ export const DataMenu = {
       link: "/data-library",
       text: "data-library",
     },
-   
+    {
+      id: 3,
+      icons: () => ClientsIcon(),
+      link: "/filial/my-filial/info",
+      text: "переучет",
+    },
   ],
   5: [
     {

@@ -34,7 +34,7 @@ export default function Filters({
     mutationFn: async () => {
       return await UpdatePatchData(
         partiyaStatus == "open"? apiRoutes.productAcceptReport: apiRoutes.productCloseReport,
-        filialId || "",
+        filialId == "my-filial" ?meUser?.filial?.id ||"" :filialId || "",
         {}
       );
     },

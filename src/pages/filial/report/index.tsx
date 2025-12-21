@@ -6,6 +6,7 @@ import { Columns } from "./columns";
 import useDataFetch from "./queries";
 import { useParams } from "react-router-dom";
 import Filters from "./filter";
+import { useMeStore } from "@/store/me-store";
 
 export default function SingleReportPage() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -13,12 +14,13 @@ export default function SingleReportPage() {
   const [search] = useQueryState("search");
   const [,setReportStatus] = useQueryState("reportStatus");
   const { id } = useParams();
+  const {meUser} = useMeStore()
   const { data, isLoading } = useDataFetch({
     queries: {
       limit,
       page,
       search: search || undefined,
-      filialId: id || undefined,
+      filialId: id == "my-filial" ?meUser?.filial?.id:id || undefined,
     },
   });
 

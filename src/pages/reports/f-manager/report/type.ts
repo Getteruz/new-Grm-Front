@@ -166,7 +166,7 @@ export interface TQuery {
   search?: string | undefined;
   filial?: string;
   limit: number;
-  year: number;
+  year?: number;
   report?: string;
   page: number;
   startDate?: Date | null;

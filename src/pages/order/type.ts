@@ -14,4 +14,5 @@ export interface TData {
 export  interface TQuery {
   limit?: number;
   page?: number;
+  type?: string;
 }

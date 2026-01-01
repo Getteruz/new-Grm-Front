@@ -38,6 +38,7 @@ export interface TQuery {
   startDate?: Date | null;
   endDate?: Date | null;
   type?:string;
+  year?:number;
 }
 
 

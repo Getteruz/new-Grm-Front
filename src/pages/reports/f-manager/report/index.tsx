@@ -10,10 +10,12 @@ import {  parseAsInteger, parseAsIsoDate, useQueryState } from "nuqs";
 import { useParams } from "react-router-dom";
 import { useCashflowFilial, useKassaReportSingle } from "../../m-manager/filial-report-finance/queries";
 import { TData } from "./type";
+import { useYear } from "@/store/year-store";
 
 export default function Page() {
   const { meUser } = useMeStore();
   const {id} = useParams()
+  const {year} = useYear()
 
   const [startDate] = useQueryState("startDate",parseAsIsoDate);
   const [endDate] = useQueryState("endDate",parseAsIsoDate);
@@ -37,6 +39,7 @@ const { data: KassaReportSingle } = useKassaReportSingle({
       filial: meUser?.filial?.id || undefined,
       page: 1,
       limit:10,
+      year,
       report:id || undefined,
       startDate:startDate || undefined ,
       endDate:endDate|| undefined,

@@ -98,17 +98,11 @@ export default function NotPublishedPage() {
 
   return (
     <>
-      <Filters 
-        isNotPublished={true} 
-        selectedProducts={selectedProducts}
-        clearSelection={clearSelection}
-      />
-      {meUser?.position?.role === 9 ||
-        (search && (
-          <div className="bg-sidebar py-0.5 px-[50px]">
+      <Filters />
+    
+      <div className="scrollCastom ml-5 mb-3">
             <TabsFilter />
           </div>
-        ))}
       <DataTable
         isLoading={isLoading}
         columns={columnsWithSelection}

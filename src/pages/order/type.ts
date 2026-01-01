@@ -6,3 +6,8 @@ export interface IOrderTable {
   children: ReactNode;
   className?: string;
 }
+export interface TData {
+  title: string;
+  id: string;
+}
+

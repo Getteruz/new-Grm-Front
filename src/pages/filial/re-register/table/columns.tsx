@@ -7,7 +7,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { TData } from "../type";
 import { Input } from "@/components/ui/input";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {  PatchData, UpdateData } from "@/service/apiHelpers";
+import { PatchData, UpdateData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import debounce from "@/utils/debounce";
 import { useParams } from "react-router-dom";
@@ -45,7 +45,14 @@ export const Columns: ColumnDef<TData>[] = [
     header: "count",
     cell: ({ row }) => {
       const { meUser } = useMeStore();
-      const [tip] = useQueryState("tip", parseAsString.withDefault((meUser?.position?.role ==7 || meUser?.position.role == 4) ? "переучет": "new"));
+      const [tip] = useQueryState(
+        "tip",
+        parseAsString.withDefault(
+          meUser?.position?.role == 7 || meUser?.position.role == 4
+            ? "переучет"
+            : "new"
+        )
+      );
       return (
         <p>
           {row.original?.bar_code?.isMetric ? (
@@ -53,8 +60,10 @@ export const Columns: ColumnDef<TData>[] = [
               row.original?.check_count - row.original?.y * 100
             ) : tip === "дефицит" ? (
               row.original?.y * 100 - row.original?.check_count
-            ) : (
+            ) : tip === "new" ? (
               row.original?.y * 100
+            ) : (
+              row.original?.check_count
             )
           ) : (
             <>
@@ -75,23 +84,37 @@ export const Columns: ColumnDef<TData>[] = [
   {
     header: "Обём",
     cell: ({ row }) => {
+      const { meUser } = useMeStore();
+      const [tip] = useQueryState(
+        "tip",
+        parseAsString.withDefault(
+          meUser?.position?.role == 7 || meUser?.position.role == 4
+            ? "переучет"
+            : "new"
+        )
+      );
       return (
         <>
-          {/* {row.original?.bar_code?.isMetric && ( */}
-          <p>
-            {Number(row.original?.bar_code?.size?.kv).toFixed(1)}
-            м²
-          </p>
-          {/* )}
-          {!row.original?.bar_code?.isMetric && (
-            <p>
-              {Math.ceil(
-                Number(row.original?.bar_code?.size?.x) *
-                  Number( row.original?.bar_code?.size?.y)
-              )}
-              м²
-            </p>
-          )} */}
+          {row.original?.bar_code?.isMetric
+            ? ((tip === "излишки"
+                ? row.original?.check_count - row.original?.y * 100
+                : tip === "дефицит"
+                  ? row.original?.y * 100 - row.original?.check_count
+                  : tip === "new"
+                    ? row.original?.y * 100
+                    : row.original?.check_count) /
+                100) *
+              (row?.original?.bar_code?.size?.x || 1)
+            : (tip === "переучет"
+              ? row.original?.check_count
+              : tip === "дефицит"
+                ? row.original?.count - row.original?.check_count
+                : tip === "излишки"
+                  ? row.original?.check_count - row.original?.count
+                  : tip === "new"
+                    ? row.original?.count
+                    : 0) * (row?.original?.bar_code?.size?.x||0)  *(row?.original?.bar_code?.size?.y||0)  }
+          м²
         </>
       );
     },
@@ -141,27 +164,36 @@ export const Columns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       const { meUser } = useMeStore();
       const queryClient = useQueryClient();
-      const [tip] = useQueryState("tip", parseAsString.withDefault((meUser?.position?.role ==7 ||meUser?.position.role == 4) ? "переучет": "new"));
-      return (
-     tip == "переучет"  ?  
-      <TableAction
+      const [tip] = useQueryState(
+        "tip",
+        parseAsString.withDefault(
+          meUser?.position?.role == 7 || meUser?.position.role == 4
+            ? "переучет"
+            : "new"
+        )
+      );
+      return tip == "переучет" ? (
+        <TableAction
           url={apiRoutes.reInventoryGetByFilialReport}
           ShowPreview={false}
           ShowUpdate={false}
-          costomDelete={()=>{
-            PatchData(`/product/${row?.original?.id}`,{
-              check_count:0
-            } )
-            .then(()=>{
-             queryClient.invalidateQueries({ queryKey: [apiRoutes?.reInventoryGetByFilialReport] });
-             queryClient.invalidateQueries({ queryKey: [apiRoutes?.reInventoryGetByFilialReportTotals] });
-            })
+          costomDelete={() => {
+            PatchData(`/product/${row?.original?.id}`, {
+              check_count: 0,
+            }).then(() => {
+              queryClient.invalidateQueries({
+                queryKey: [apiRoutes?.reInventoryGetByFilialReport],
+              });
+              queryClient.invalidateQueries({
+                queryKey: [apiRoutes?.reInventoryGetByFilialReportTotals],
+              });
+            });
           }}
           id={row.original?.id}
           refetchUrl={apiRoutes.reInventoryGetByFilialReport}
-        />:""
-
-        
+        />
+      ) : (
+        ""
       );
     },
   },
@@ -251,7 +283,9 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
           ]),
         onSuccess: () => {
           toast.success("changed");
-          queryClient.invalidateQueries({ queryKey: [apiRoutes.excelProductsReport] });
+          queryClient.invalidateQueries({
+            queryKey: [apiRoutes.excelProductsReport],
+          });
           // queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
         },
       });
@@ -286,18 +320,27 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
     size: 50,
     cell: ({ row }) => {
       const { meUser } = useMeStore();
-      const [tip] = useQueryState("tip", parseAsString.withDefault((meUser?.position?.role ==7 || meUser?.position.role == 4) ? "переучет": "new"));
-      return (
-     tip != "излишки" ?   <TableAction
+      const [tip] = useQueryState(
+        "tip",
+        parseAsString.withDefault(
+          meUser?.position?.role == 7 || meUser?.position.role == 4
+            ? "переучет"
+            : "new"
+        )
+      );
+      return tip != "излишки" ? (
+        <TableAction
           url={apiRoutes.excelProducts}
           ShowPreview={false}
           ShowUpdate={false}
-          costomDelete={()=>PatchData(`/excel/change-count/${row?.original?.id}?tip${tip}`,{} )}
+          costomDelete={() =>
+            PatchData(`/excel/change-count/${row?.original?.id}?tip${tip}`, {})
+          }
           id={row.original?.id}
           refetchUrl={apiRoutes.excelProducts}
-        />:""
-
-        
+        />
+      ) : (
+        ""
       );
     },
   },

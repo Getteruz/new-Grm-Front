@@ -11,7 +11,7 @@ export const CropSchema = z.object({
     model: z.object({value: z.string(),label: z.string()}),
     factory:z.object({value: z.string().optional(),label: z.string().optional(),}).optional(),
     value: z.number(),
-    filialId: z.string(),
+    filialId: z.string().optional(),
     isMetric:z.object({value: z.string().optional(),label: z.string().optional(),}).optional(),
 });
 

@@ -170,7 +170,7 @@ const ActionPageQrCode = () => {
             isUpdate: barcode == "new" || barcode == undefined ? false : true,
             data: {
               // filialReportId: filialReportId || "",
-              // filialId: filialId == "my-filial" ?meUser?.filial?.id ||"" :filialId || "",
+              filialId: filialId == "my-filial" ?meUser?.filial?.id ||"" :filialId || "",
               ...data,
             },
           });

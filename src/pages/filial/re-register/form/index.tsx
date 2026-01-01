@@ -165,7 +165,6 @@ const ActionPageQrCode = () => {
           if (e.key === "Enter") e.preventDefault();
         }}
         onSubmit={form.handleSubmit((data) => {
-          console.log(data);
           mutate({
             id: productId || "",
             isUpdate: barcode == "new" || barcode == undefined ? false : true,

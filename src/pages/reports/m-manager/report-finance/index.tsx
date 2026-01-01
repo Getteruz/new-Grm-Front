@@ -15,6 +15,7 @@ export default function PageFinance() {
   } = useReports({
     queries: {
       page: 1,
+      year,
     },
   });
   

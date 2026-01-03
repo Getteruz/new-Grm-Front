@@ -20,6 +20,16 @@ const {meUser} = useMeStore()
   return (
     <div className=" gap-2 mb-4 px-[20px] h-[64px] flex ">
       <SearchInput />
+      {/* <FilterSelect 
+        placeholder="Продукт"
+        className=" w-[150px]"
+        defaultValue="product"
+        options={[
+          { label: "Продукт", value: "product"},
+          { label: "Коллекция", value: "collections" }
+        ]}
+        name="collection" 
+      /> */}
 
       <FilterSelect 
         placeholder="Лист" 

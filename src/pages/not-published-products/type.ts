@@ -1,30 +1,39 @@
-export type ProductsData = {
-    id: string;
-    code: string;
-    model: {
-      id: string;
-      title: string;
-      collection: {
-        id: string;
-        title: string;
-      };
-    };
-    bar_code: { size: { x: number } };
-    y: number;
-    priceMeter: number;
-    size: string;
-    count: string;
-    shape: string;
-    style: string;
-    color: {
-      id: string;
-      title: string;
-      code: string;
-    };
-    price: string;
-    isPublished?: boolean; // Added isPublished property
-  };
-  
+export interface qrBaseIMarkerData {
+  isMetric: boolean;
+  id: string;
+  code: string;
+  status: "draft" | "published" | "archived";
+  i_price: number;
+  date: string; // ISO date
+  other_images: string[];
+
+  country: BaseEntity;
+  collection: BaseEntity;
+  model: BaseEntity;
+  style: BaseEntity;
+  size: Size;
+  shape: BaseEntity;
+  factory: BaseEntity;
+  color: BaseEntity;
+
+  imgUrl: string | null;
+  videoUrl: string | null;
+  productsCount: number;
+}
+
+export interface BaseEntity {
+  id: string;
+  title: string;
+  dateOne: string;
+  dateTwo: string;
+  deletedDate: string | null;
+}
+
+export interface Size extends BaseEntity {
+  x: number;
+  y: number;
+  kv: number;
+}
   export type ProductsQuery = {
     search?: string | undefined;
     filialId?: string | undefined;
@@ -32,3 +41,15 @@ export type ProductsData = {
     page: number;
     isPublished?: boolean; // Added isPublished property to query
   };
+  export type qrBaseIMarkerQuery = {
+    search?: string | undefined;
+    filialId?: string | undefined;
+    filial?: string | undefined;
+    country?: string | undefined;
+    startDate?: Date | null;
+    endDate?: Date | null;
+    limit?: number;
+    page?: number;
+    status?: string | undefined;
+  };
+  

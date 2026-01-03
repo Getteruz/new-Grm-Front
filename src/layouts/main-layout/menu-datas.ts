@@ -368,7 +368,7 @@ export const DataMenu = {
     {
       id: 1,
       icons: () => ProductsOnSaleIcon(),
-      link: "/products",
+      link: "/i-products",
       text: "Продукты в продаже",
     },
     {

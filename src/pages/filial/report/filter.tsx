@@ -15,7 +15,7 @@ export default function Filters() {
     <div className="  px-[20px] h-[64px]   bg-background  flex w-full  gap-2 mb-2  sticky top-0 z-50">
       <SearchInput  className="mr-auto"/>
       {/* <FilterSelect placeholder="Фильтр" name="news" /> */}
-    {meUser?.position?.role !=4  && <Button
+    {meUser?.position?.role !=4 && meUser?.position?.role !=7  && <Button
         className="h-full  bg-white   hover:bg-white"
         variant={"secondary"}
         onClick={() => 

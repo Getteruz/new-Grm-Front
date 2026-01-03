@@ -18,8 +18,6 @@ const Route = [
     Element: SingleReportPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
-
-
   {
     url: "/filial/:filialId/info/:filialReportId/info",
     Element: ItemsPage,

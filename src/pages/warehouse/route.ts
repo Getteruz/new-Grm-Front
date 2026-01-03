@@ -1,4 +1,6 @@
-import SinglePage from "../filial/single";
+
+import ItemsPage from "../filial/re-register/table";
+import SingleReportPage from "../filial/report";
 import CollectionTable from "./remaider/collection-table";
 import CountryTable from "./remaider/county-table";
 import FoctoryTable from "./remaider/factory-table";
@@ -38,14 +40,21 @@ const Route = [
     Element:SizeTable,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
-  {
-    url: "/warehouse/:id/info",
-    Element: SinglePage,
-    meta: { isAuth: true, role: new Set(["admin"]) },
-  },
+
   {
     url: "/warehouse/:id",
     Element: Page,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+
+  {
+    url: "/warehouse/:id/info",
+    Element: SingleReportPage,
+    meta: { isAuth: true, role: new Set(["admin"]) },
+  },
+  {
+    url: "/warehouse/:filialId/info/:filialReportId/info",
+    Element: ItemsPage,
     meta: { isAuth: true, role: new Set(["admin"]) },
   },
 ];

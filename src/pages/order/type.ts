@@ -11,3 +11,8 @@ export interface TData {
   id: string;
 }
 
+export  interface TQuery {
+  limit?: number;
+  page?: number;
+  type?: string;
+}

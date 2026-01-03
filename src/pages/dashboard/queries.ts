@@ -8,11 +8,13 @@ import { ReportsHomePageCurrentMonthQuery, ReportsHomePageCurrentMonthData,Repor
 interface IReportsHomePageCurrentMonth {
   options?: DefinedInitialDataOptions<ReportsHomePageCurrentMonthData>;
   queries?: ReportsHomePageCurrentMonthQuery;
+  enabled?:boolean
 }
-export const useReportsHomePageCurrentMonth = ({ options, queries }: IReportsHomePageCurrentMonth) =>
+export const useReportsHomePageCurrentMonth = ({ options,enabled, queries }: IReportsHomePageCurrentMonth) =>
   useQuery({
     ...options,
     queryKey: [apiRoutes.reportsHomePageCurrentMonth, queries],
+    enabled,
     queryFn: () =>
       getAllData<ReportsHomePageCurrentMonthData, ReportsHomePageCurrentMonthQuery>(apiRoutes.reportsHomePageCurrentMonth, queries),
   });
@@ -21,10 +23,12 @@ export const useReportsHomePageCurrentMonth = ({ options, queries }: IReportsHom
   interface IReportsHomePageCurrentLeft {
     options?: DefinedInitialDataOptions<ReportsHomePageCurrentLeftData>;
     queries?: ReportsHomePageCurrentMonthQuery;
+    enabled?:boolean
   }
-  export const useReportsHomePageCurrentLeft = ({ options, queries }: IReportsHomePageCurrentLeft) =>
+  export const useReportsHomePageCurrentLeft = ({ options,enabled, queries }: IReportsHomePageCurrentLeft) =>
     useQuery({
       ...options,
+      enabled,
       queryKey: [apiRoutes.reportsHomePageCurrentLeft, queries],
       queryFn: () =>
         getAllData<ReportsHomePageCurrentLeftData, ReportsHomePageCurrentMonthQuery>(apiRoutes.reportsHomePageCurrentLeft, queries),

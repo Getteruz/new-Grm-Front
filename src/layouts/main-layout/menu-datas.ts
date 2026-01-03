@@ -357,6 +357,12 @@ export const DataMenu = {
       link: "/data-library",
       text: "data-library",
     },
+    {
+      id: 23,
+      icons: () => ClientsIcon(),
+      link: "/filial/my-filial/info",
+      text: "переучет",
+    },
   ],
   8: [
     {

@@ -15,6 +15,7 @@ import { useParams } from "react-router-dom";
 import { useMeStore } from "@/store/me-store";
 import { useKassaReportSingle } from "../filial-report-finance/queries";
 import { useReportsSingle } from "../report-finance-single/queries";
+import { useYear } from "@/store/year-store";
 
 export default function ReportPage() {
   const tipFilter = {
@@ -47,6 +48,7 @@ export default function ReportPage() {
   );
 
   const { meUser } = useMeStore();
+  const {year} = useYear()
   const [filial] = useQueryState("filial");
 
   const [tip] = useQueryState("tip", parseAsString);
@@ -69,6 +71,7 @@ export default function ReportPage() {
       queries: {
         limit: 10,
         page: 1,
+        year,
         filialId: filial || undefined,
         kassaId:
           id === "undefined" || !id || myCashFlow || FManagerCashFlow

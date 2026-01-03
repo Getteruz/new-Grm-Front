@@ -9,9 +9,11 @@ import CardSort from "@/components/card-sort";
 import { useClientdebtTotal, useKassaReports } from "./queries";
 import { useState } from "react";
 import { useKassaReportTotal } from "../report/queries";
+import { useYear } from "@/store/year-store";
 
 export default function PageFinance() {
   const { meUser } = useMeStore();
+  const { year } = useYear();
   const [filial] = useQueryState("filial");
   const [seleted, setSeleted] = useState<string[]>([]);
   const { data: KassaReport } = useKassaReportTotal({
@@ -24,6 +26,7 @@ export default function PageFinance() {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useKassaReports({
       queries: {
+        year: year || undefined,
         filialId:
           meUser?.position?.role == 10 || meUser?.position?.role == 9
             ? filial || undefined

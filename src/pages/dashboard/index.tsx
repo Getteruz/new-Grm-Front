@@ -23,6 +23,7 @@ export default function Dashboard() {
   const [,setManagerId] = useQueryState("managerId");
   const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1+""));
   const {year}= useYear()
+  const role = meUser?.position.role;
 
   const { data } = useReportsHomePageCurrentMonth({
     queries: {
@@ -31,10 +32,12 @@ export default function Dashboard() {
       filial_id: filial || undefined,
       month,
       year: year,
-
     },
+    enabled:role === 12
   });
-  const { data:leftData } = useReportsHomePageCurrentLeft({});
+  const { data:leftData } = useReportsHomePageCurrentLeft({
+    enabled:role === 12
+  });
 
   useEffect(()=>{
     if(open == "Полученные кассовые деньги"){
@@ -44,7 +47,7 @@ export default function Dashboard() {
     }
   },[data,open])
 
-  const role = meUser?.position.role;
+
   if (role === 11) {
     return <MonitoringDashboard />;
   }

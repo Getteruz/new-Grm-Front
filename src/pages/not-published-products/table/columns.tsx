@@ -3,6 +3,7 @@ import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { qrBaseIMarkerData } from "../type";
+import PublishButton from "../PublishButton";
 
 
 
@@ -99,6 +100,16 @@ export const ProductColumns: ColumnDef<qrBaseIMarkerData>[] = [
         </p>
       );
     },
+  },
+  {
+    id:"Publish",
+    header: "Опубликовать",
+    size: 50,
+    cell: ({ row }) => {
+      return (
+          <PublishButton id={row.original?.id} />
+      )
+    }
   },
   {
     id: "actions",

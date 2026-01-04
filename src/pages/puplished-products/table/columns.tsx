@@ -193,3 +193,5 @@ export const ProductColumns: ColumnDef<qrBaseIMarkerData>[] = [
     },
   },
 ];
+
+

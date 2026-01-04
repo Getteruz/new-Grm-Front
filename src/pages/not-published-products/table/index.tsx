@@ -32,10 +32,7 @@ export default function Page() {
     },
   });
   
-  
   const productsFlat = productsData?.pages?.flatMap((page) => page?.items || []) || [];
-  
-
 
   const showProductTable = card !== "card";
   const showCardGrid =  card === "card";

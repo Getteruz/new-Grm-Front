@@ -36,7 +36,6 @@ export default function Page() {
         columns={ClientsColumns}
         isRowClickble={false}
         // className={'max-h-screen overflow-y-scroll'}
-          // @ts-ignore
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}

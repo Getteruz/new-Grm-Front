@@ -5,7 +5,7 @@ import { MoreHorizontal } from "lucide-react";
 import { TKassareportData } from "./type";
 import ActionBadge from "@/components/actionBadge";
 import TebleAvatar from "@/components/teble-avatar";
-import { useMeStore } from "@/store/me-store";
+
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
@@ -26,8 +26,8 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       return (
         <p className="text-[#89A143]">
-          {(item?.totalIncome || item?.totalPlasticSum) &&
-            (item?.totalIncome - item?.totalPlasticSum).toFixed(2) + " $"}
+          {
+            (item?.in_hand).toFixed(2) + " $"}
         </p>
       );
     },
@@ -53,11 +53,10 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
     header: "D-менеджер",
     cell: ({row}) => {
-      const  {meUser}= useMeStore()
       const item = row.original;
       return (
         <div className="flex gap-2 items-center">
-          <TebleAvatar status={item?.status  == "open"? "panding":item?.status  == "rejected" ? "fail":"success"}  url={meUser?.avatar?.path} name={meUser?.firstName || "A"}/>
+          <TebleAvatar status={item?.status  == "open"? "panding":item?.status  == "rejected" ? "fail":"success"}   name={ "D"}/>
         </div>
       ) 
     },

@@ -118,5 +118,6 @@ export const apiRoutes = {
   reInventoryProcess:'/re-inventory/process',
   filialEndReport:'/filial/end-report',
   productAcceptReport:'/product/accept-report',
-  productCloseReport:'/product/close-report'
+  productCloseReport:'/product/close-report',
+  qrBaseIMarker:'/qr-base/i-market'
 } as const;

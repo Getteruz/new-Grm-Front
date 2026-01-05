@@ -54,7 +54,7 @@ export default function CarpetCard({
   // const navigate = useNavigate();
   return (
     <div
-      className={`w-full relative bg-sidebar border-border   rounded-lg border ${className && className}`}
+      className={`w-full relative bg-sidebar border-border   max-h-[500px] rounded-lg border ${className && className}`}
     >
       <div className="flex border-b border-border ">
         <p className="p-2 w-full text-[12px] text-primary text-center border-border border-r">

@@ -5,10 +5,12 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useReportsSingle } from "../report-finance-single/queries";
 import CardSort from "../../d-manager/report/card-sort";
+import { useYear } from "@/store/year-store";
 
 export default function PageDealerKassaReport() {
   const {id}  =useParams()
   const [seleted, setSeleted] = useState<string[]>([]);
+  const {year} = useYear()
   const {
     data: ReportsSingle,
     // isLoading: ReportsSingleLoading,
@@ -23,6 +25,7 @@ export default function PageDealerKassaReport() {
     useKassaReports({
       queries: {
         reportId:id ,
+        year
       },
       enabled: Boolean(id  && id != "undefined"),
     });

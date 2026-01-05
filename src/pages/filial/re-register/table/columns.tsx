@@ -60,7 +60,7 @@ export const Columns: ColumnDef<TData>[] = [
               row.original?.check_count - row.original?.y * 100
             ) : tip === "дефицит" ? (
               row.original?.y * 100 - row.original?.check_count
-            ) : tip === "new" ? (
+            ): tip === "new" ? (
               row.original?.y * 100
             ) : (
               row.original?.check_count
@@ -69,9 +69,9 @@ export const Columns: ColumnDef<TData>[] = [
             <>
               {tip === "переучет" && row.original?.check_count}
               {tip === "дефицит" &&
-                row.original?.count - row.original?.check_count}
+               ( row.original?.count - row.original?.check_count)}
               {tip === "излишки" &&
-                row.original?.check_count - row.original?.count}
+                (row.original?.check_count - row.original?.count)}
               {tip === "new" && row.original?.count}
             </>
           )}
@@ -93,27 +93,28 @@ export const Columns: ColumnDef<TData>[] = [
             : "new"
         )
       );
+      const volume =row.original?.bar_code?.isMetric
+      ? ((tip === "излишки"
+          ? row.original?.check_count - (row.original?.y * 100)
+          : tip === "дефицит"
+            ? row.original?.y * 100 - row.original?.check_count
+            : tip === "new"
+              ? row.original?.y * 100
+              : row.original?.check_count) /
+          100) *
+        (row?.original?.bar_code?.size?.x || 1)
+      : (tip === "переучет"
+        ? row.original?.check_count
+        : tip === "дефицит"
+          ? row.original?.count - row.original?.check_count
+          : tip === "излишки"
+            ? row.original?.check_count - row.original?.count
+            : tip === "new"
+              ? row.original?.count
+              : 0) * (row?.original?.bar_code?.size?.x||0)  *(row?.original?.bar_code?.size?.y||0);
       return (
         <>
-          {row.original?.bar_code?.isMetric
-            ? ((tip === "излишки"
-                ? row.original?.check_count - row.original?.y * 100
-                : tip === "дефицит"
-                  ? row.original?.y * 100 - row.original?.check_count
-                  : tip === "new"
-                    ? row.original?.y * 100
-                    : row.original?.check_count) /
-                100) *
-              (row?.original?.bar_code?.size?.x || 1)
-            : (tip === "переучет"
-              ? row.original?.check_count
-              : tip === "дефицит"
-                ? row.original?.count - row.original?.check_count
-                : tip === "излишки"
-                  ? row.original?.check_count - row.original?.count
-                  : tip === "new"
-                    ? row.original?.count
-                    : 0) * (row?.original?.bar_code?.size?.x||0)  *(row?.original?.bar_code?.size?.y||0)  }
+          {volume?.toFixed(2)  }
           м²
         </>
       );

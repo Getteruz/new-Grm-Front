@@ -3,9 +3,11 @@ import { DataTable } from "@/components/ui/data-table";
 import { useReports } from "./queries";
 import { KassaColumnsLoc } from "./columns";
 import CardSort from "../report/card-sort";
+import { useYear } from "@/store/year-store";
 
 
 export default function PageFinance() {
+  const{ year} = useYear()
   const {
     data: kassaData,
     isLoading: KassaLoading,
@@ -15,7 +17,8 @@ export default function PageFinance() {
   } = useReports({
     queries: {
       page: 1,
-      filialType:"dealer"
+      filialType:"dealer",
+      year,
     },
   })
 

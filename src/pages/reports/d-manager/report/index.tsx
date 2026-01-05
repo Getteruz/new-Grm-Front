@@ -15,6 +15,7 @@ export default function DealerReportPage() {
   const [startDate] = useQueryState("startDate", parseAsIsoDate);
   const [endDate] = useQueryState("endDate", parseAsIsoDate);
 
+  
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataCashflow({
       queries: {

@@ -24,6 +24,7 @@ export interface TKassareportData {
   totalIncome: number;
   totalExpense: number;
   totalSum: number;
+  in_hand: number;
 }
 
 export interface TQuery {
@@ -34,6 +35,7 @@ export interface TQuery {
   limit?: number;
   page?: number;
   id?: string;
+  year?: number;
   startDate?: Date | null;
   endDate?: Date | null;
   type?:string;

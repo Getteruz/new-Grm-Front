@@ -58,11 +58,6 @@ const Route = [
   },
   
   {
-    url: "/m-manager/d-manager/report-monthly/:id/info",
-    Element: PageDealerKassaReport,
-    meta: { isAuth: true, role: new Set(["admin"]) },
-  },
-  {
     url: "/m-manager/d-manager/report-monthly/:reportId/info/:id/info",
     Element: DealerReportPage,
     meta: { isAuth: true, role: new Set(["admin"]) },

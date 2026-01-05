@@ -9,7 +9,6 @@ import { useMeStore } from "@/store/me-store";
 
 export default function FormContent() {
   const { meUser } = useMeStore();
-
   
   const [barcode, setBarCode] = useQueryState("barcode");
   const [reportStatus] = useQueryState("reportStatus");
@@ -93,8 +92,9 @@ export default function FormContent() {
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
-          fetchUrl={`/model`}
+          fetchUrl={`/model/by-collection/${watch("collection")?.value}`}
           name="model"
+         
           classNameChild="h-[28px] p-2"
           placeholder="model"
           label="model"
@@ -134,9 +134,10 @@ export default function FormContent() {
           type="number"
           classNameInput="h-[28px] p-2"
           name="value"
-          placeholder={isMetric == "Метражный" ? "Длина" : "count"}
+          placeholder={isMetric?.value === "true"   ? "Длина" : "count"}
           disabled={tip !== "переучет"|| reportStatus == "closed"}
-          label={isMetric == "Метражный" ? "Длина" : "count"}
+          label={isMetric?.value === "true" ? "Длина" : "count"}
+          
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}

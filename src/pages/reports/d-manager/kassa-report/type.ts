@@ -38,6 +38,7 @@ export interface TQuery {
   limit?: number;
   page?: number;
   id?: string;
+  year?: number;
   startDate?: Date | null;
   endDate?: Date | null;
   type?:string;

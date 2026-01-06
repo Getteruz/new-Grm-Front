@@ -5,9 +5,12 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useReportsSingle } from "../../m-manager/report-finance-single/queries";
 import CardSort from "./card-sort";
+import { useYear } from "@/store/year-store";
 
 export default function PageKassaReport() {
   const {id}  =useParams()
+
+  const {year} = useYear()
   const [seleted, setSeleted] = useState<string[]>([]);
   const {
     data: ReportsSingle,
@@ -23,6 +26,7 @@ export default function PageKassaReport() {
     useKassaReports({
       queries: {
         reportId:id,
+        year
       },
     });
 

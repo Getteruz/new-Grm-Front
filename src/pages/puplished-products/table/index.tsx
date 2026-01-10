@@ -77,7 +77,7 @@ export default function Page() {
               shape={item?.shape?.title || ""}
               discount={"0"}
               img={{
-                path: item?.imgUrl || ""
+                path: item?.imgUrl?.path || ""
               }}
               model={item?.model?.title || ""}
               size={`${(item?.size?.x || 0) * 100}x${(item?.size?.y || 0) *100 }`}

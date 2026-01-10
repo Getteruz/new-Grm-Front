@@ -39,6 +39,7 @@ export const apiRoutes = {
   filialMakeReport: "/filial/maker-report",
   filialReport: "/filial-report",
   qrBase: "/qr-base",
+  qrBaseInternet:"/qr-base/internet-shop",
   cashflow: "/cashflow",
   cashflowForMainManager:'/cashflow/for/main-manager',
   cashflowTypes: "/cashflow-types",

@@ -7,6 +7,7 @@ import { ProductColumns } from "./columns";
 import Filters from "./filters";
 import useDataFetch from "./queries";
 import CarpetCard from "@/components/cards/carpet-card";
+import PulishMadal from "../publish-madal";
 
 export default function Page() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
@@ -57,7 +58,7 @@ export default function Page() {
               shape={item?.shape?.title || ""}
               discount={"0"}
               img={{
-                path: item?.imgUrl || ""
+                path: item?.imgUrl?.path || ""
               }}
               model={item?.model?.title || ""}
               size={`${(item?.size?.x || 0) * 100}x${(item?.size?.y || 0) *100 }`}
@@ -75,12 +76,15 @@ export default function Page() {
           isLoading={isProductsLoading}
           columns={ProductColumns}
           data={productsFlat}
+          isRowClickble={false}
           className="h-[calc(100vh-200px)] scrollCastom"
           fetchNextPage={fetchNextProductsPage}
           hasNextPage={hasNextProductsPage ?? false}
           isFetchingNextPage={isFetchingNextProductsPage}
         />
       )}
+
+      <PulishMadal/>
     </>
   );
 }

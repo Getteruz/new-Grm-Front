@@ -102,7 +102,7 @@ export const DeleteData = async (url: string, id: string) => {
   }
 };
 
-export const UploadFile = async (url: string, data: FormData) => {
+export const UploadFile = async (url:string,data: FormData) => {
   try {
     const res = await api.post(url, data);
     return res.data;

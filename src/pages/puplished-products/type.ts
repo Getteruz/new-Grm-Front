@@ -16,7 +16,9 @@ export interface qrBaseIMarkerData {
   factory: BaseEntity;
   color: BaseEntity;
 
-  imgUrl: string | null;
+  imgUrl: {
+    path:string;
+  };
   videoUrl: string | null;
   productsCount: number;
 }

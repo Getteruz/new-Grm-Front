@@ -1,7 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
 
-import TableAction from "@/components/table-action";
-import { apiRoutes } from "@/service/apiRoutes";
 
 import { TData } from "../type";
 import ActionBadge from "@/components/actionBadge";
@@ -14,117 +12,97 @@ export const FilialColumns: ColumnDef<TData>[] = [
     },
   },
   {
-    id: "title",
+    id: "buyer",
     header: "Покупатель",
-    accessorKey: "title",
-    cell: () => {
-      return <p>Аббос Жанизаков</p>;
+    accessorKey: "user.firstName",
+    cell: ({ row }) => {
+      return <p>{row.original.user?.firstName} {row.original.user?.lastName}</p>;
     },
   },
- 
+
   {
-    id: "title",
+    id: "phone",
     header: "Номер",
-    accessorKey: "title",
-    cell: () => {
-      return <p>+94 609-34-44</p>;
+    accessorKey: "user.phone",
+    cell: ({ row }) => {
+      return <p>{row.original.user?.phone}</p>;
     },
   },
   {
-    id: "title",
+    id: "totalPrice",
     header: "Стоимость заказа",
-    accessorKey: "title",
-    cell: () => {
-      return <p className="text-[#E38157]">7 690 000 сум</p>;
+    accessorKey: "totalPrice",
+    cell: ({ row }) => {
+      return <p className="text-[#E38157]">{row.original.totalPrice?.toLocaleString()} сум</p>;
     },
   },
   {
-    id: "title",
+    id: "payment_type",
     header: "Тип оплаты",
-    accessorKey: "title",
-    cell: () => {
-      return <p className="text-[#58A0C6]">Наличные</p>;
+    accessorKey: "payment_type",
+    cell: ({ row }) => {
+      return <p className="text-[#58A0C6]">{row.original.payment_type}</p>;
     },
   },
   {
-    id: "title",
+    id: "payment_status",
     header: "Статус оплаты",
-    accessorKey: "title",
-    cell: () => {
-      return <p className="text-[#58A0C6]">Наличные</p>;
+    accessorKey: "payment_status",
+    cell: ({ row }) => {
+      return <p className="text-[#58A0C6]">{row.original.payment_status}</p>;
     },
   },
   {
-    id: "title",
+    id: "pre_payment",
     header: "Оплачено",
-    accessorKey: "title",
-    cell: () => {
-      return <p >0~ сум</p>;
+    accessorKey: "pre_payment",
+    cell: ({ row }) => {
+      return <p >{row.original.pre_payment} сум</p>;
     },
   },
   {
-    id: "title",
+    id: "promo",
     header: "Промокод",
-    accessorKey: "title",
     cell: () => {
       return <p >нет</p>;
     },
   },
   {
-    id: "title",
+    id: "discount",
     header: "Скидка",
-    accessorKey: "title",
     cell: () => {
-      return <p className="text-[#F05B58]">-7 690 000 сум</p>;
+      return <p className="text-[#F05B58]">0 сум</p>;
     },
   },
   {
-    id: "title",
+    id: "order_status",
     header: "Статус заказа",
-    accessorKey: "title",
-    cell: () => {
-      return <ActionBadge status="inprogress"/>
-    },
-  },
-  {
-    id: "title",
-    header: "Время",
-    accessorKey: "title",
-    cell: () =><p>21.12.2025 -10:47</p>
-  },
-   
-  {
-    id: "actions",
-    enableHiding: true,
-    header: () => <div className="text-right">{"actions"}</div>,
-    size: 50,
+    accessorKey: "order_status",
     cell: ({ row }) => {
-      return (
-        <TableAction
-          url={apiRoutes.filial}
-          ShowPreview
-          id={row.original?.id}
-        >
-          {/* {row.original?.need_get_report ? (
-            <>
-              <DropdownMenuItem>Переучёт отправлен</DropdownMenuItem>
-            </>
-          ) : (
-            <DropdownMenuItem
-              onClick={() => {
-                UpdatePatchData(
-                  apiRoutes.filialMakeReport,
-                  row.original?.id,
-                  {}
-                )
-                  .then(() => toast.success("Переучёт отправлен"))
-              }}
-            >
-              Запросить переучёт
-            </DropdownMenuItem>
-          )} */}
-        </TableAction>
-      );
+      return <ActionBadge status={row.original.order_status} />
     },
   },
+  {
+    id: "date",
+    header: "Время",
+    accessorKey: "date",
+    cell: ({ row }) => <p>{row.original.date}</p>
+  },
+
+  // {
+  //   id: "actions",
+  //   enableHiding: true,
+  //   header: () => <div className="text-right">{"actions"}</div>,
+  //   size: 50,
+  //   cell: ({ row }) => {
+  //     return (
+  //       <TableAction
+  //         url={apiRoutes.filial}
+  //         ShowPreview
+  //         id={row.original?.id}
+  //       >
+  //       </TableAction>
+  //     );
+  //   },
+  // },
 ];

@@ -9,14 +9,14 @@ import FormTextInput from "@/components/forms/FormTextInput";
 import FormFileUpload from "@/components/forms/FormFileUpload";
 
 export default function FormContent() {
-  const { watch,setValue } = useFormContext();
+  const { watch, setValue } = useFormContext();
   return (
     <>
       <DialogHeader>
         <DialogTitle>Публикация продукта</DialogTitle>
       </DialogHeader>
       <div className="grid px-14 py-8 row-start   mb-2 gap-2 lg:grid-cols-4">
-      <FormTextInput
+        <FormTextInput
           label="Баркод"
           className="w-full"
           name="code"
@@ -24,7 +24,7 @@ export default function FormContent() {
           classNameInput="rounded-none"
           placeholder="Баркод"
         />
-      <FormComboboxDemoInput
+        <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/country"
           name="country"
@@ -32,22 +32,22 @@ export default function FormContent() {
           label="country"
           disabled={true}
         />
-        
+
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/factory"
           name="factory"
-          
+
           placeholder="factory"
           label="factory"
           disabled={true}
         />
-        
-         <FormComboboxDemoInput
+
+        <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/collection"
           name="collection"
-          onLocalChange={(value)=>{
+          onLocalChange={(value) => {
             const costomValue = value as {
               country: {
                 id: string;
@@ -71,7 +71,7 @@ export default function FormContent() {
               label: "",
             })
           }}
-          
+
           placeholder="collection"
           label="collection"
           disabled={true}
@@ -80,8 +80,8 @@ export default function FormContent() {
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl={`/model/by-collection/${watch("collection")?.value}`}
           name="model"
-         
-          
+
+
           placeholder="model"
           label="model"
           disabled={true}
@@ -90,7 +90,7 @@ export default function FormContent() {
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/shape"
           name="shape"
-          
+
           placeholder="shape"
           label="shape"
           disabled={true}
@@ -103,7 +103,7 @@ export default function FormContent() {
           label="size"
           disabled={true}
         />
-      
+
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
           fetchUrl="/color"
@@ -122,7 +122,7 @@ export default function FormContent() {
         />
 
         <FormComboboxDemoInput
-        
+
           option={[
             {
               label: "extraSmall",
@@ -139,7 +139,7 @@ export default function FormContent() {
             {
               label: "large",
               value: "large",
-            }, 
+            },
             {
               label: "extraLarge",
               value: "extraLarge",
@@ -162,23 +162,23 @@ export default function FormContent() {
           className="w-full rounded-none col-span-2"
           name="internetInfo"
         />
-          <FormFileUpload
+        <FormFileUpload
           name="imgUrl"
           folder="products"
-          className="col-span-4 max-w-[300px]"
+          className="col-span-4 max-w-[120px]"
           acceptTypes="image/*"
           label="Primary photo"
           text="text"
         />
-      </div>      
-      
+      </div>
+
       <DialogFooter className="!justify-start mt-2 flex">
-        <Button type="submit" onClick={()=>setValue("status","draft")} className="w-[220px] h-[44px]">
-        Толька сохранить
+        <Button type="submit" onClick={() => setValue("status", "draft")} className="w-[220px] h-[44px]">
+          Толька сохранить
         </Button>
         <Button
           type="submit"
-          onClick={()=>setValue("status","published")}
+          onClick={() => setValue("status", "published")}
           className="bg-[#89A143] hover:bg-[#89A143] h-[44px]"
         >
           Сохранить и опубликовть для продажи

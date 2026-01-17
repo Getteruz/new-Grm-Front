@@ -17,9 +17,9 @@ interface ITransfers {
 const useDataFetch = ({ options, queries }: ITransfers) =>
   useInfiniteQuery({
     ...options,
-    queryKey: [apiRoutes.filial, queries],
+    queryKey: [apiRoutes.clientOrders, queries],
     queryFn: ({ pageParam = 1 }) =>
-      getAllData<TResponse<TData>, TQuery>(apiRoutes.filial, {
+      getAllData<TResponse<TData>, TQuery>(apiRoutes.clientOrders, {
         ...queries,
         page: pageParam as number,
         limit: queries?.limit || 10,
@@ -34,6 +34,6 @@ const useDataFetch = ({ options, queries }: ITransfers) =>
     initialPageParam: 1,
   });
 
-  
+
 
 export default useDataFetch;

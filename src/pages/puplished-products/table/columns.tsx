@@ -55,7 +55,7 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
     header: "Кас-цена",
     accessorKey: "price",
     cell: ({ row }) => {
-      const price = row.original.collectionPrices?.[0]?.priceMeter;
+      const price = row.original?.i_price;
       return (
         <p className="text-[14px] font-[500] text-[#E38157]">
           {price ? `${price}$` : '-'}
@@ -64,7 +64,7 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
     },
   },
   {
-    id: "actions",  
+    id: "actions",
     enableHiding: true,
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
@@ -110,7 +110,7 @@ export const ProductColumns: ColumnDef<qrBaseIMarkerData>[] = [
     header: "size",
     cell: ({ row }) => {
       return (
-        <p>{`${(row.original?.size?.x || 0) * 100}X${((row.original?.size?.y || 0) * 100).toFixed(2)}`}</p>
+        <p>{`${(row.original?.size?.x || 0) * 100}X${((row.original?.size?.y || 0) * 100)}`}</p>
       );
     },
   },
@@ -120,7 +120,7 @@ export const ProductColumns: ColumnDef<qrBaseIMarkerData>[] = [
       const volume = (row.original?.size?.x || 0) * (row.original?.size?.y || 0);
       const count = 1;
       const totalVolume = volume * count;
-      
+
       return (
         <p className="text-[14px] font-[500]">
           {`${totalVolume.toFixed(2)}`} м²
@@ -158,20 +158,15 @@ export const ProductColumns: ColumnDef<qrBaseIMarkerData>[] = [
     id: "partiya_no.title",
     accessorKey: "partiya_no.title",
   },
-  {
-    header: "count",
-    cell: () => {
-      return <p>0 x</p>;
-    },
-  },
+
   {
     header: "Кас-цена",
     accessorKey: "price",
     cell: ({ row }) => {
-      
+
       return (
         <p className="text-[14px] font-[500] text-[#E38157]">
-          {`${row?.original?.i_price}$` }
+          {`${row?.original?.i_price}$`}
         </p>
       );
     },

@@ -15,7 +15,6 @@ export default function Page() {
       queries: {
         limit,
         page,
-        type: "filial",
       },
     });
   const flatData = data?.pages?.flatMap((page) => page?.items || []) || [];

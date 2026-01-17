@@ -1,5 +1,5 @@
 import { CloudUpload, Eye, LoaderCircle, Trash2 } from "lucide-react";
-import {  useState } from "react";
+import { useState } from "react";
 import {
   ControllerRenderProps,
   FieldValues,
@@ -44,7 +44,7 @@ export default function FormFileUpload({
     const formData = new FormData();
 
     formData.append("image", file);
-    formData.append("type",  folder);
+    formData.append("type", folder);
 
     try {
       const response = await fetch(
@@ -58,18 +58,18 @@ export default function FormFileUpload({
         }
       );
       const contentType = response.headers.get("content-type");
-    
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(`Server error: ${response.status} - ${errorText}`);
       }
-    
+
       if (contentType && contentType.includes("application/json")) {
         const data = await response.json();
-      
+
         field.onChange({
-          id: data?.id||data?.[0]?.id,
-          url: data?.path||data?.[0]?.path,
+          id: data?.id || data?.[0]?.id,
+          url: data?.path || data?.[0]?.path,
         });
       };
       setLoadingFile(false)
@@ -92,11 +92,11 @@ export default function FormFileUpload({
             {t(label)}
           </p>
           {field?.value?.url ? (
-            <div className="aspect-video w-full group relative overflow-hidden">
+            <div className="aspect-[2/3] w-full group relative overflow-hidden">
               <img
                 src={"https://s3.gilam-market.uz" + field?.value?.url}
                 alt="image"
-                className="aspect-video w-full"
+                className="w-full h-full object-cover"
               />
               <div className="absolute -bottom-[300px] gap-2 group-hover:bottom-0 left-0 w-full flex items-center justify-center h-full z-10 bg-black/80">
                 <span onClick={() => hendleRemove(field)}>
@@ -107,7 +107,7 @@ export default function FormFileUpload({
             </div>
           ) : (
             <label
-              className={`flex items-center justify-center aspect-video text-center p-auto w-full cursor-pointer p-[21px] bg-[#F5F5F5] rounded-lg mt-1.5`}
+              className={`flex items-center justify-center aspect-[2/3] text-center p-auto w-full cursor-pointer p-[21px] bg-[#F5F5F5] rounded-lg mt-1.5`}
             >
               <div className="text-center">
                 {loadingFile ? (

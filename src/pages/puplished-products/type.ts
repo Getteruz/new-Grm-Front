@@ -17,7 +17,7 @@ export interface qrBaseIMarkerData {
   color: BaseEntity;
 
   imgUrl: {
-    path:string;
+    path: string;
   };
   videoUrl: string | null;
   productsCount: number;
@@ -37,6 +37,7 @@ export interface Size extends BaseEntity {
   kv: number;
 }
 export interface CollectionData {
+  i_price: any;
   id: string;
   title: string;
   totalCount: number;

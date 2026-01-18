@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import Filters from "./filters";
 import ItemsLeft from "./ui/items-left";
 import OrderTableWrapper from "./ui/order-table-wrapper";
 import { useGetOrderById, useGetOrderItems, useUpdateOrder } from "./table/queries";

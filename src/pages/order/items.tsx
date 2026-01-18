@@ -2,8 +2,10 @@ import { useParams } from "react-router-dom";
 import Filters from "./filters";
 import ItemsLeft from "./ui/items-left";
 import OrderTableWrapper from "./ui/order-table-wrapper";
-import { useGetOrderById, useGetOrderItems } from "./table/queries";
+import { useGetOrderById, useGetOrderItems, useUpdateOrder } from "./table/queries";
 import { minio_img_url } from "@/constants";
+import ShadcnSelect from "@/components/Select";
+import { OrderStatusEnum } from "./type";
 
 const infoColms: string[] = [
   "Дата заказа:",
@@ -31,6 +33,7 @@ export default function Items() {
   const { id } = useParams();
   const { data: orderData } = useGetOrderById({ id });
   const { data: itemsData } = useGetOrderItems({ id });
+  const { mutate, isPending } = useUpdateOrder();
 
   const infoValue: string[] = [
     orderData?.date || "-",
@@ -39,9 +42,54 @@ export default function Items() {
     orderData?.full_address || "-",
   ];
 
+  const statusOptions = Object.values(OrderStatusEnum).map((status) => ({
+    label: status,
+    value: status,
+  }));
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case OrderStatusEnum.NEW:
+        return "bg-[#EFF8FF] text-[#175CD3]";
+      case OrderStatusEnum.IN_PROCESS:
+        return "bg-[#FFFAEB] text-[#B42318]";
+      case OrderStatusEnum.DONE:
+        return "bg-[#ECFDF3] text-[#027A48]";
+      case OrderStatusEnum.CANCELLED:
+        return "bg-[#FEF3F2] text-[#B42318]";
+      default:
+        return "bg-gray-100 text-gray-700";
+    }
+  };
+
   return (
     <div>
-      <Filters />
+      <div className="flex px-[20px] h-[64px] items-center gap-2">
+        <div className="flex items-center justify-between gap-2 w-full">
+          <div className="flex items-center gap-2">
+            <p className="text-xl font-bold text-[#212121]">
+              №{orderData?.sequence || "-"}
+            </p>
+          </div>
+          {orderData && (
+            <div className="w-[200px]">
+              <ShadcnSelect
+                value={orderData?.order_status}
+                onChange={(val) => {
+                  if (val && id) {
+                    mutate({ id: id, data: { order_status: val } });
+                  }
+                }}
+                options={statusOptions}
+                disabled={isPending}
+                placeholder="Выберите статус"
+                className={` h-[64px] rounded-[8px] w-full  border-none ${getStatusColor(orderData?.order_status)}`}
+                classNameValue="text-current"
+              />
+            </div>
+          )}
+        </div>
+      </div>
       <div className="p-[13px] flex gap-[10px] w-full h-full ">
         <div className="w-full">
           <OrderTableWrapper
@@ -121,7 +169,7 @@ export default function Items() {
             ))}
           </OrderTableWrapper>
         </div>
-        <ItemsLeft data={orderData} />
+        <ItemsLeft data={orderData} items={itemsData?.items} />
       </div>
     </div>
   );

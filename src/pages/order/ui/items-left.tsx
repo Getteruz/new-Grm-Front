@@ -1,8 +1,8 @@
 import { Calendar, Clock } from "lucide-react";
 import OrderTableWrapper from "./order-table-wrapper";
-import { TData } from "../type";
+import { TData, IOrderItem } from "../type";
 
-export default function ItemsLeft({ data }: { data?: TData }) {
+export default function ItemsLeft({ data, items }: { data?: TData; items?: IOrderItem[] }) {
   return (
     <div className="w-full max-w-[275px]">
       <OrderTableWrapper className="mb-[10px]" title="Тулов малумолтари (Чек)">
@@ -20,16 +20,39 @@ export default function ItemsLeft({ data }: { data?: TData }) {
             </p>
           </div>
           <ul className="border-border w-full border-t border-dotted py-3">
-            {/* Note: Items list here was hardcoded. If we want to show items summary in receipt, 
-                 we would need the items list passed here too. 
-                 For now, I'll keep the structure but maybe hide or comment out the hardcoded items 
-                 if they are not available in TData directly, or just leave the hardcoded static list as placeholder? 
-                 The user asked to get data for THIS component from `orderData`. 
-                 `orderData` (TData) has `totalPrice`, `payment_status` etc. 
-                 It does NOT seem to have the list of items inside `TData` based on the previous view of `type.ts`.
-                 The items list is fetched separately in `items.tsx`. 
-                 I will map the totals and payment info for now. */}
+            <li className="w-full flex items-center gap-1 mb-[10px]">
+              <p className="text-[12px] min-w-[73px] leading-[14px] text-[#6F6F63] w-full">
+                Заказы
+              </p>
+              <p className="text-[12px] leading-[14px] text-[#6F6F63] w-full">
+                Размер
+              </p>
+              <p className="text-[12px] leading-[14px] text-center text-[#6F6F63] w-full">
+                Кол-во
+              </p>
+              <p className="text-[12px] leading-[14px] text-end text-[#6F6F63] w-full">
+                Сумма
+              </p>
+            </li>
+            {items?.map((item) => (
+              <li key={item.id} className="w-full flex items-center gap-1 mb-2">
+                <p className="text-[12px] min-w-[73px] leading-[14px] text-[#212121] w-full font-medium truncate">
+                  {item.product?.collection?.title || "-"}
+                </p>
+                <p className="text-[12px] leading-[14px] text-[#212121] w-full font-medium">
+                  {item.product?.size?.title || "-"}
+                </p>
+                <p className="text-[12px] leading-[14px] text-center text-[#212121] w-full font-medium">
+                  {item.count}x
+                </p>
+                <p className="text-[12px] leading-[14px] text-end text-[#212121] w-full font-medium">
+                  {(Number(item.price) * item.count).toLocaleString()}
+                </p>
+              </li>
+            ))}
+          </ul>
 
+          <ul className="border-border w-full border-t border-dotted py-3">
             <li className="w-full flex items-center gap-1 mb-[10px]">
               <p className="text-[12px] leading-[14px] text-[#6F6F63] w-full">
                 Итого
@@ -45,7 +68,7 @@ export default function ItemsLeft({ data }: { data?: TData }) {
               </p>
 
               <p className="text-[12px] leading-[14px] w-[80px] text-[#212121] text-end font-medium">
-                {data?.pre_payment}
+                {data?.pre_payment?.toLocaleString()}
               </p>
             </li>
             <li className="w-full flex items-center mb-1s gap-1">
@@ -55,7 +78,7 @@ export default function ItemsLeft({ data }: { data?: TData }) {
               </p>
 
               <p className="text-[12px] leading-[14px] w-[80px] text-[#212121] text-end font-medium">
-                {/*  Payme/Cash etc is usually in payment_type? */}
+
               </p>
             </li>
           </ul>

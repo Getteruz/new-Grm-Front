@@ -1,5 +1,6 @@
 import { Bookmark, Circle, RectangleVertical } from "lucide-react";
 import { useQueryState } from "nuqs";
+import { Button } from "@/components/ui/button";
 
 import { minio_img_url } from "@/constants";
 
@@ -28,6 +29,8 @@ interface ICarpetCard {
   } | null;
   producdId: string;
   shape: string;
+  onPublish?: () => void;
+  actionLabel?: string;
 }
 
 export default function CarpetCard({
@@ -47,6 +50,8 @@ export default function CarpetCard({
   colaction,
   color,
   shape,
+  onPublish,
+  actionLabel = "Publish",
 }: ICarpetCard) {
   const [, setCarpetType] = useQueryState("carpetType");
   const [, setOpenBronId] = useQueryState("openBronId");
@@ -141,6 +146,17 @@ export default function CarpetCard({
         </div>
       ) : (
         ""
+      )}
+
+      {onPublish && (
+        <div onClick={(e) => {
+          e.stopPropagation();
+          onPublish();
+        }} className="absolute bottom-2 right-2 z-10">
+          <Button size="sm" className="bg-primary text-white hover:bg-primary/90">
+            {actionLabel}
+          </Button>
+        </div>
       )}
 
       {isBron ? (

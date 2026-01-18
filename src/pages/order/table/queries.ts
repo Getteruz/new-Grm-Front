@@ -36,4 +36,34 @@ const useDataFetch = ({ options, queries }: ITransfers) =>
 
 
 
+
 export default useDataFetch;
+
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { UpdateData, getByIdData } from "@/service/apiHelpers";
+import { IOrderItemsResponse } from "../type";
+
+export const useUpdateOrder = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: Partial<TData> }) =>
+      UpdateData(apiRoutes.clientOrders, id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.clientOrders] });
+    },
+  });
+};
+
+export const useGetOrderById = ({ id }: { id?: string }) =>
+  useQuery({
+    queryKey: [apiRoutes.clientOrders, id],
+    queryFn: () => getByIdData<TData, any>(apiRoutes.clientOrders, id!),
+    enabled: !!id,
+  });
+
+export const useGetOrderItems = ({ id }: { id?: string }) =>
+  useQuery({
+    queryKey: [apiRoutes.clientOrderItems, id],
+    queryFn: () => getByIdData<IOrderItemsResponse, any>(apiRoutes.clientOrderItems, id!),
+    enabled: !!id,
+  });

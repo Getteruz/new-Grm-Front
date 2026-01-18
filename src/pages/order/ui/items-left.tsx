@@ -1,7 +1,8 @@
 import { Calendar, Clock } from "lucide-react";
 import OrderTableWrapper from "./order-table-wrapper";
+import { TData } from "../type";
 
-export default function ItemsLeft() {
+export default function ItemsLeft({ data }: { data?: TData }) {
   return (
     <div className="w-full max-w-[275px]">
       <OrderTableWrapper className="mb-[10px]" title="Тулов малумолтари (Чек)">
@@ -15,67 +16,46 @@ export default function ItemsLeft() {
           <div className="flex items-center  justify-between mt-[4px] mb-[11px]">
             <p className="text-[12px] leading-[14px] text-[#6F6F63]">Заказ:</p>
             <p className="text-[12px] leading-[14px] text-[#212121] font-medium text-end">
-              №245 12.02.2024 20:46
+              №{data?.sequence} {data?.date}
             </p>
           </div>
           <ul className="border-border w-full border-t border-dotted py-3">
-            <li className="w-full flex items-center gap-1 mb-[10px]">
-              <p className="text-[12px] min-w-[73px] leading-[14px] text-[#6F6F63] w-full">
-                Заказы
-              </p>
-              <p className="text-[12px] leading-[14px] text-[#6F6F63] w-full">
-                Размер
-              </p>
-              <p className="text-[12px] leading-[14px] text-center text-[#6F6F63] w-full">
-                Кол-во
-              </p>
-              <p className="text-[12px] leading-[14px] text-end text-[#6F6F63] w-full">
-                Сумма
-              </p>
-            </li>
-            <li className="w-full flex items-center gap-1">
-              <p className="text-[12px] min-w-[73px] leading-[14px] text-[#212121] w-full font-medium">
-                Sanat Kalipso
-              </p>
-              <p className="text-[12px] leading-[14px] text-[#212121] w-full font-medium">
-                200x300
-              </p>
-              <p className="text-[12px] leading-[14px] text-center text-[#212121] w-full font-medium">
-                2х
-              </p>
-              <p className="text-[12px] leading-[14px] text-end text-[#212121] w-full font-medium">
-                931
-              </p>
-            </li>
-          </ul>
+            {/* Note: Items list here was hardcoded. If we want to show items summary in receipt, 
+                 we would need the items list passed here too. 
+                 For now, I'll keep the structure but maybe hide or comment out the hardcoded items 
+                 if they are not available in TData directly, or just leave the hardcoded static list as placeholder? 
+                 The user asked to get data for THIS component from `orderData`. 
+                 `orderData` (TData) has `totalPrice`, `payment_status` etc. 
+                 It does NOT seem to have the list of items inside `TData` based on the previous view of `type.ts`.
+                 The items list is fetched separately in `items.tsx`. 
+                 I will map the totals and payment info for now. */}
 
-          <ul className="border-border w-full border-t border-dotted py-3">
             <li className="w-full flex items-center gap-1 mb-[10px]">
               <p className="text-[12px] leading-[14px] text-[#6F6F63] w-full">
                 Итого
               </p>
               <p className="text-[12px] leading-[14px] w-[80px] text-end text-[#6F6F63] ">
-                5 255 775
+                {data?.totalPrice?.toLocaleString()}
               </p>
             </li>
             <li className="w-full flex items-center mb-1 gap-1">
               <p className="text-[12px] leading-[14px] flex items-center gap-1 text-[#212121] w-full font-medium">
                 <span className="font-normal w-full">Статус оплаты:</span>
-                <span className="w-full"> Предоплата</span>
+                <span className="w-full"> {data?.payment_status}</span>
               </p>
 
               <p className="text-[12px] leading-[14px] w-[80px] text-[#212121] text-end font-medium">
-                931
+                {data?.pre_payment}
               </p>
             </li>
             <li className="w-full flex items-center mb-1s gap-1">
               <p className="text-[12px] leading-[14px] flex items-center gap-1 text-[#212121] w-full font-medium">
                 <span className="font-normal w-full">Тип оплаты:</span>
-                <span className="w-full"> Онлайн</span>
+                <span className="w-full"> {data?.payment_type}</span>
               </p>
 
               <p className="text-[12px] leading-[14px] w-[80px] text-[#212121] text-end font-medium">
-                Payme
+                {/*  Payme/Cash etc is usually in payment_type? */}
               </p>
             </li>
           </ul>
@@ -91,13 +71,13 @@ export default function ItemsLeft() {
         </p>
         <div className="row-start w-full grid grid-cols-2 gap-[5px] px-3 mb-3 ">
           <p className="p-[9px]  text-[12px]  px-[11px] border-border border rounded-md">
-          г.Ташкент
+            {data?.city || "-"}
           </p>
           <p className="p-[9px]  text-[12px]  px-[11px]   border-border border rounded-md">
-          р.Мирабадский
+            {data?.district || "-"}
           </p>
           <p className="p-[9px] col-span-2 text-[12px]  px-[11px] w-full  border-border border rounded-md">
-          ул.Ахмад Дониш квартира 65 1А
+            {data?.full_address || "-"}
           </p>
         </div>
         <p className="text-[12px] p-3  pb-2 leading-[14px]  text-[#6F6F63]">
@@ -105,18 +85,18 @@ export default function ItemsLeft() {
         </p>
         <div className="px-3">
           <p className="p-[9px] text-[12px] px-[11px] w-full border-border border rounded-md">
-            Илтимос сешанба кунигача олиб келиб берила пожалуста
+            {data?.delivery_comment || "-"}
           </p>
         </div>
         <p className="text-[12px] p-3 pb-2 leading-[14px]  text-[#6F6F63]">
-        Дата доставки:
+          Дата доставки:
         </p>
         <div className="px-3 pb-3 gap-1 grid row-start w-full  grid-cols-3">
           <p className="p-[9px] flex  items-center gap-1 text-[12px] col-span-2 px-[11px] w-full border-border border rounded-md">
-          <Calendar className="w-[10px]"/> 12-Февраль. 2025
+            <Calendar className="w-[10px]" /> {data?.startDate ? new Date(data.startDate).toLocaleDateString() : "-"}
           </p>
-          <p className="p-[9px] flex items-center gap-1  text-[12px] px-[11px] w-full border-border border rounded-md">
-          <Clock className="w-[10px]"/> 10:40
+          <p className="p-[9px] text-nowrap flex items-center gap-1  text-[12px] px-[11px] w-full border-border border rounded-md">
+            <Clock className="w-[10px]" /> {data?.startDate ? new Date(data.startDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "-"}
           </p>
         </div>
       </OrderTableWrapper>

@@ -56,3 +56,66 @@ export interface TQuery {
   page?: number;
   type?: string;
 }
+
+export enum OrderStatusEnum {
+  NEW = 'NEW',
+  IN_PROCESS = 'IN_PROCESS',
+  CANCELLED = 'CANCELLED',
+  DONE = 'DONE',
+}
+
+export enum PaymentStatusEnum {
+  PAID = 'payed',
+  UNPAID = 'UN_PAYED',
+}
+
+interface BaseEntity {
+  id: string;
+  title: string;
+  dateOne?: string;
+  dateTwo?: string;
+  deletedDate?: string | null;
+}
+
+interface ProductDetails {
+  id: string;
+  code: string;
+  internetInfo: string;
+  is_active: boolean;
+  status: string;
+  i_price: number;
+  sizeType: string;
+  date: string;
+  imgUrl?: { path: string };
+  collection: BaseEntity;
+  model: BaseEntity;
+  size: BaseEntity & { x: number; y: number; kv: number };
+  style: BaseEntity;
+  factory: BaseEntity;
+  country: BaseEntity;
+  shape: BaseEntity;
+  color: BaseEntity;
+}
+
+export interface IOrderItem {
+  id: string;
+  count: number;
+  price: string;
+  product: ProductDetails;
+  filials: {
+    id: string;
+    name: string;
+    count: number;
+  }[];
+}
+
+export interface IOrderItemsResponse {
+  items: IOrderItem[];
+  meta: {
+    totalItems: number;
+    itemCount: number;
+    itemsPerPage: number;
+    totalPages: number;
+    currentPage: number;
+  };
+}

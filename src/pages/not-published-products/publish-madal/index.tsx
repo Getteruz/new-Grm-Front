@@ -20,12 +20,12 @@ const PulishMadal = () => {
   const { data } = useQrBaseById({
     id: id != "new" ? id || undefined : undefined,
   });
- 
+
   const queryQrBase = useQueryClient();
   const resetForm = () => {
     form.reset({
       code: "",
-      imgUrl:{
+      imgUrl: {
         id: "",
         url: "",
       },
@@ -57,7 +57,7 @@ const PulishMadal = () => {
         value: "",
         label: "",
       },
-      sizeType:{
+      sizeType: {
         value: "",
         label: "",
       }
@@ -88,7 +88,7 @@ const PulishMadal = () => {
           value: data?.collection?.id,
           label: data?.collection?.title,
         },
-        sizeType:{
+        sizeType: {
           value: data?.sizeType,
           label: data?.sizeType,
         },
@@ -116,6 +116,12 @@ const PulishMadal = () => {
           value: data?.factory?.id,
           label: data?.factory?.title,
         },
+        i_price: data?.i_price,
+        internetInfo: data?.internetInfo,
+        imgUrl: {
+          id: data?.imgUrl?.id,
+          url: data?.imgUrl?.path,
+        }
       });
     }
   }, [data]);

@@ -15,9 +15,11 @@ export interface qrBaseIMarkerData {
   shape: BaseEntity;
   factory: BaseEntity;
   color: BaseEntity;
-  sizeType:string;
-  imgUrl:  {
-    path?:string
+  sizeType: string;
+  internetInfo: string;
+  imgUrl: {
+    path?: string
+    id?: string
   };
   videoUrl: string | null;
   productsCount: number;
@@ -36,22 +38,21 @@ export interface Size extends BaseEntity {
   y: number;
   kv: number;
 }
-  export type ProductsQuery = {
-    search?: string | undefined;
-    filialId?: string | undefined;
-    limit: number;
-    page: number;
-    isPublished?: boolean; // Added isPublished property to query
-  };
-  export type qrBaseIMarkerQuery = {
-    search?: string | undefined;
-    filialId?: string | undefined;
-    filial?: string | undefined;
-    country?: string | undefined;
-    startDate?: Date | null;
-    endDate?: Date | null;
-    limit?: number;
-    page?: number;
-    status?: string | undefined;
-  };
-  
+export type ProductsQuery = {
+  search?: string | undefined;
+  filialId?: string | undefined;
+  limit: number;
+  page: number;
+  isPublished?: boolean; // Added isPublished property to query
+};
+export type qrBaseIMarkerQuery = {
+  search?: string | undefined;
+  filialId?: string | undefined;
+  filial?: string | undefined;
+  country?: string | undefined;
+  startDate?: Date | null;
+  endDate?: Date | null;
+  limit?: number;
+  page?: number;
+  status?: string | undefined;
+};

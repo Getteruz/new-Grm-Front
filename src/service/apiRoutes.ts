@@ -120,5 +120,6 @@ export const apiRoutes = {
   productAcceptReport: '/product/accept-report',
   productCloseReport: '/product/close-report',
   qrBaseIMarker: '/qr-base/i-market',
-  clientOrders: '/client-orders'
+  clientOrders: '/client-orders',
+  clientOrderItems: '/client-order-items'
 } as const;

@@ -174,6 +174,7 @@ export default function FormContent() {
 
       <DialogFooter className="!justify-start mt-2 flex">
         <Button type="submit" onClick={() => setValue("status", "draft")} className="w-[220px] h-[44px]">
+          {/* Снять с публикации */}
           Толька сохранить
         </Button>
         <Button

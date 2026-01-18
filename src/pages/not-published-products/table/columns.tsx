@@ -4,6 +4,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 
 import { qrBaseIMarkerData } from "../type";
 import PublishButton from "../PublishButton";
+import { minio_img_url } from "@/constants";
 
 
 
@@ -14,6 +15,16 @@ export const ProductColumns: ColumnDef<qrBaseIMarkerData>[] = [
     size: 50,
     cell: ({ row }) => {
       return <p>{row.index + 1}</p>;
+    },
+  },
+  {
+    header: "rasm",
+    id: "imgUrl",
+    accessorKey: "imgUrl",
+    cell: ({ row }) => {
+      return (
+        <img src={minio_img_url + row.original?.imgUrl?.path} alt="" />
+      );
     },
   },
   {
@@ -45,7 +56,7 @@ export const ProductColumns: ColumnDef<qrBaseIMarkerData>[] = [
       const volume = (row.original?.size?.x || 0) * (row.original?.size?.y || 0);
       const count = 1;
       const totalVolume = volume * count;
-      
+
       return (
         <p className="text-[14px] font-[500]">
           {`${totalVolume.toFixed(2)}`} м²
@@ -93,21 +104,21 @@ export const ProductColumns: ColumnDef<qrBaseIMarkerData>[] = [
     header: "Кас-цена",
     accessorKey: "price",
     cell: ({ row }) => {
-      
+
       return (
         <p className="text-[14px] font-[500] text-[#E38157]">
-          {`${row?.original?.i_price}$` }
+          {`${row?.original?.i_price}$`}
         </p>
       );
     },
   },
   {
-    id:"Publish",
+    id: "Publish",
     header: "Опубликовать",
     size: 50,
     cell: ({ row }) => {
       return (
-          <PublishButton id={row.original?.id} />
+        <PublishButton id={row.original?.id} />
       )
     }
   },

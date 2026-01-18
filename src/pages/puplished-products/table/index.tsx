@@ -1,7 +1,7 @@
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { useLocation } from "react-router-dom";
 
-import TabsFilter from "@/components/filters-ui/tabs-filter";
+// import TabsFilter from "@/components/filters-ui/tabs-filter";
 import { DataTable } from "@/components/ui/data-table";
 import { useMeStore } from "@/store/me-store";
 
@@ -9,6 +9,7 @@ import { ProductColumns, CollectionColumns } from "./columns";
 import Filters from "./filters";
 import useDataFetch, { useCollectionDataFetch } from "./queries";
 import CarpetCard from "@/components/cards/carpet-card";
+import PulishMadal from "../../not-published-products/publish-madal";
 
 export default function Page() {
   const location = useLocation();
@@ -16,28 +17,29 @@ export default function Page() {
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [filial] = useQueryState("filial");
   const [search] = useQueryState("search");
-  const [card] = useQueryState("card",parseAsString.withDefault("card"));
-  const [collection] = useQueryState("collection",parseAsString.withDefault("product"));
+  const [card] = useQueryState("card", parseAsString.withDefault("card"));
+  const [collection] = useQueryState("collection", parseAsString.withDefault("product"));
+  const [, setId] = useQueryState("id");
   const { meUser } = useMeStore();
 
   // Product data fetch
-  const { 
-    data: productsData, 
-    isLoading: isProductsLoading, 
+  const {
+    data: productsData,
+    isLoading: isProductsLoading,
     fetchNextPage: fetchNextProductsPage,
     hasNextPage: hasNextProductsPage,
-    isFetchingNextPage: isFetchingNextProductsPage 
+    isFetchingNextPage: isFetchingNextProductsPage
   } = useDataFetch({
     queries: {
       limit,
       page,
-      status:"published",
-      search: collection == "product"?  search  || undefined: undefined,
+      status: "published",
+      search: collection == "product" ? search || undefined : undefined,
       // filialId:  filial|| undefined,
     },
   });
-  
-  const { 
+
+  const {
     data: collectionsData,
     isLoading: isCollectionsLoading,
     fetchNextPage: fetchNextCollectionsPage,
@@ -45,7 +47,7 @@ export default function Page() {
     isFetchingNextPage: isFetchingNextCollectionsPage
   } = useCollectionDataFetch({
     filialId: filial || meUser?.filial?.id,
-    search: collection == "product"?  undefined: search || undefined,
+    search: collection == "product" ? undefined : search || undefined,
   });
 
   const productsFlat = productsData?.pages?.flatMap((page) => page?.items || []) || [];
@@ -60,10 +62,10 @@ export default function Page() {
   return (
     <>
       <Filters />
-      
-     <div className="scrollCastom ml-5">
+
+      {/* <div className="scrollCastom ml-5">
         <TabsFilter />
-      </div>
+      </div> */}
       {showCardGrid && (
         <div className="px-6 mt-4 h-[calc(100vh-163px)] scrollCastom grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-6">
           {productsFlat.map((item) => (
@@ -80,13 +82,34 @@ export default function Page() {
                 path: item?.imgUrl?.path || ""
               }}
               model={item?.model?.title || ""}
-              size={`${(item?.size?.x || 0) * 100}x${(item?.size?.y || 0) *100 }`}
+              size={`${(item?.size?.x || 0) * 100}x${(item?.size?.y || 0) * 100}`}
               count={(1).toString()}
               price={(item.i_price || "0").toString()}
               colaction={item?.collection?.title || ""}
               color={item?.color?.title || ""}
+              onPublish={() => setId(item.id.toString())}
+              actionLabel="Edit"
             />
           ))}
+
+          {/* Intersection Observer Target */}
+          <div
+            ref={(ref) => {
+              if (ref) {
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    if (entries[0].isIntersecting && hasNextProductsPage) {
+                      fetchNextProductsPage();
+                    }
+                  },
+                  { threshold: 1 }
+                );
+                observer.observe(ref);
+                return () => observer.disconnect();
+              }
+            }}
+            className="col-span-full h-10 w-full"
+          />
         </div>
       )}
 
@@ -107,7 +130,7 @@ export default function Page() {
           ))}
         </div>
       )}
-      
+
       {showCollectionTable && (
         <DataTable
           isLoading={isCollectionsLoading}
@@ -119,7 +142,7 @@ export default function Page() {
           isFetchingNextPage={isFetchingNextCollectionsPage}
         />
       )}
-      
+
       {showProductTable && (
         <DataTable
           isLoading={isProductsLoading}
@@ -131,6 +154,7 @@ export default function Page() {
           isFetchingNextPage={isFetchingNextProductsPage}
         />
       )}
+      <PulishMadal />
     </>
   );
 }

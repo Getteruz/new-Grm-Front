@@ -3,6 +3,7 @@ import TableAction from "@/components/table-action";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { qrBaseIMarkerData, CollectionData } from "../type";
+import { minio_img_url } from "@/constants";
 
 export const CollectionColumns: ColumnDef<CollectionData>[] = [
   {
@@ -89,6 +90,16 @@ export const ProductColumns: ColumnDef<qrBaseIMarkerData>[] = [
     size: 50,
     cell: ({ row }) => {
       return <p>{row.index + 1}</p>;
+    },
+  },
+  {
+    header: "rasm",
+    id: "imgUrl",
+    accessorKey: "imgUrl",
+    cell: ({ row }) => {
+      return (
+        <img className="w-7 h-10 object-cover" src={minio_img_url + row.original?.imgUrl?.path} alt="" />
+      );
     },
   },
   {
@@ -180,7 +191,7 @@ export const ProductColumns: ColumnDef<qrBaseIMarkerData>[] = [
       return (
         <TableAction
           url={apiRoutes.products}
-          ShowUpdate={false}
+          // ShowUpdate={false}
           ShowDelete={false}
           id={row.original?.id?.toString()}
         />

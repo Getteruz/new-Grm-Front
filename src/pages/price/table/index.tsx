@@ -1,9 +1,10 @@
+import { useMemo } from "react";
 import { parseAsInteger, useQueryState } from "nuqs";
 
 import { DataTable } from "@/components/ui/data-table";
 import { useMeStore } from "@/store/me-store";
 
-import { AColumns, Columns, IManagerColumns } from "./columns";
+import { getColumns } from "./columns";
 import Filters from "./filters";
 import useDataFetch from "./queries";
 
@@ -12,6 +13,9 @@ export default function Page() {
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [search] = useQueryState("search");
   const me = useMeStore();
+
+  const role = me.meUser?.position?.role;
+  const columns = useMemo(() => getColumns(role), [role]);
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
@@ -29,15 +33,7 @@ export default function Page() {
       <Filters />
       <DataTable
         isLoading={isLoading}
-        columns={
-          me.meUser?.position.role === 8 ||
-          me.meUser?.position.role === 10 ||
-          me.meUser?.position.role === 3
-            ? IManagerColumns
-            : me.meUser?.position.role === 9 ||  me.meUser?.position.role === 12
-              ? Columns
-              : AColumns
-        }
+        columns={columns}
         data={flatData ?? []}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}

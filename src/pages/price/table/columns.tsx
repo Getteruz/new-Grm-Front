@@ -1,7 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { useQueryState } from "nuqs";
 
-import TableAction from "@/components/table-action";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,51 +15,8 @@ import debounce from "@/utils/debounce";
 import { ProductsData } from "../type";
 import { ChevronDown } from "lucide-react";
 
-export const IManagerColumns: ColumnDef<ProductsData>[] = [
-  {
-    header: "Заголовок",
-   accessorKey:"title"
-  },
-  {
-    header: "Объём",
-    cell: ({row}) => {
-      return (
-        <p className="p-2.5 text-primary font-medium text-[14px]">{row.original?.totalKv} м²</p>
-      );
-    },
-  },
- 
-  {
-    header: "Цена",
-    cell: ({row}) => {
-      return (
-        <p className="p-2.5 text-primary font-medium text-[14px]">
-          {row.original?.collection_prices?.[0]?.priceMeter} $
-        </p>
-      );
-    },
-  },
 
-  {
-    id: "actions",
-    enableHiding: true,
-    header: () => <div className="text-right">{"actions"}</div>,
-    size: 50,
-    cell: ({ row }) => {
-      return (
-        <TableAction
-          url={""}
-          ShowUpdate={false}
-          ShowDelete={false}
-          ShowPreview={false}
-          id={row.original?.id}
-        />
-      );
-    },
-  },
-];
-
-export const Columns: ColumnDef<ProductsData>[] = [
+export const getColumns = (role?: number): ColumnDef<ProductsData>[] => [
   {
     header: "Коллекция",
     cell: ({ row }) => {
@@ -180,7 +136,7 @@ export const Columns: ColumnDef<ProductsData>[] = [
     },
   },
   {
-    header: "Зав-цена за м²",
+    header: role === 8 ? "Касса нархи" : "Зав-цена за м²",
     cell: ({ row }) => {
       const [editId] = useQueryState("editId");
       const changePrices = (val: number, id: string) => {
@@ -196,7 +152,7 @@ export const Columns: ColumnDef<ProductsData>[] = [
       return (
         <div className="relative max-w-[90px]">
           <Input
-            disabled={editId!= row?.original?.id}
+            disabled={editId != row?.original?.id}
             className={`border-border bg-card border rounded-[5px] `}
             defaultValue={row?.original?.collection_prices?.[0]?.comingPrice}
             placeholder="0"
@@ -227,7 +183,7 @@ export const Columns: ColumnDef<ProductsData>[] = [
       return (
         <div className="relative max-w-[90px]">
           <Input
-          disabled={editId!= row?.original?.id}
+            disabled={editId != row?.original?.id}
             className={`border-border bg-card border rounded-[5px] `}
             defaultValue={row?.original?.collection_prices?.[0]?.priceMeter}
             placeholder="0"
@@ -245,75 +201,13 @@ export const Columns: ColumnDef<ProductsData>[] = [
     id: "actions",
     header: "actions",
     size: 50,
-    cell: ({row}) => {
-      const [editId,seEditId] = useQueryState("editId");
+    cell: ({ row }) => {
+      const [editId, seEditId] = useQueryState("editId");
       return (
-        <p onClick={()=>seEditId(editId== row?.original?.id ? null :row?.original?.id )} className={`${editId== row?.original?.id ? "bg-primary text-background":"bg-background "}  inline-block  py-[6px]  text-[12px] px-[10px] rounded-[4px]`}>
-        {editId ==row?.original?.id ? "сохранить":"изменить"} 
-      </p>
+        <p onClick={() => seEditId(editId == row?.original?.id ? null : row?.original?.id)} className={`${editId == row?.original?.id ? "bg-primary text-background" : "bg-background "}  inline-block  py-[6px]  text-[12px] px-[10px] rounded-[4px]`}>
+          {editId == row?.original?.id ? "сохранить" : "изменить"}
+        </p>
       )
     }
-  },
-];
-export const AColumns: ColumnDef<ProductsData>[] = [
-  {
-    header: "Коллекция",
-    cell: ({ row }) => {
-      return <p>{row.original?.title}</p>;
-    },
-  },
-
-  {
-    header: "Обём",
-    cell: ({ row }) => {
-      return (
-        <p>
-          {row.original?.totalKv}
-          м²
-        </p>
-      );
-    },
-  },
-  {
-    header: "Акция",
-    cell: () => {
-      return <p className="">~</p>;
-    },
-  },
-  {
-    header: "Бонусы",
-    cell: () => {
-      return <p className="">~</p>;
-    },
-  },
-  {
-    header: "Промокоды",
-    cell: () => {
-      return <p className="">~</p>;
-    },
-  },
-  {
-    header: "Скидка",
-    cell: () => {
-      return <p className="">~</p>;
-    },
-  },
-  // {
-  //   header: "Зав-цена за м² ($)",
-  //   cell: ({ row }) => {
-  //     return <>{row?.original?.collection_prices?.[0]?.comingPrice}</>;
-  //   },
-  // },
-  {
-    header: "Цена за м² ($)",
-    cell: ({ row }) => {
-      return <>{row?.original?.collection_prices?.[0]?.priceMeter}</>;
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: true,
-    header: () => <div className="text-right">{"actions"}</div>,
-    size: 50,
   },
 ];

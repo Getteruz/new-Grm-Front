@@ -41,7 +41,7 @@ import {
 
 export const DataMenu = {
   3: [
-   
+
     // {
     //   id: 2,
     //   icons: () => ReportBottom({ width: 28, height: 28 }),
@@ -75,7 +75,7 @@ export const DataMenu = {
     },
   ],
   4: [
-   
+
     {
       id: 2,
       icons: () => ReportBottom({}),
@@ -107,7 +107,7 @@ export const DataMenu = {
           link: "/f-manager/report-orginal",
           text: "Хисобот",
         },
-       
+
       ],
     },
     // {
@@ -270,16 +270,16 @@ export const DataMenu = {
       link: "/d-manager/report-monthly",
       text: "Отчеты",
       // items: [
-        // {
-        //   id: 22,
-        //   link: "/d-manager/reports",
-        //   text: "Отчёт",
-        // },
-        // {
-        //   id: 23,
-        //   link: "/d-manager/report-monthly",
-        //   text: "Ежемесячный отчет",
-        // },
+      // {
+      //   id: 22,
+      //   link: "/d-manager/reports",
+      //   text: "Отчёт",
+      // },
+      // {
+      //   id: 23,
+      //   link: "/d-manager/report-monthly",
+      //   text: "Ежемесячный отчет",
+      // },
       // ],
     },
     {
@@ -496,7 +496,7 @@ export const DataMenu = {
       link: "/transfers",
       text: "Трансферы",
     },
-    
+
     {
       id: 3,
       icons: () => BuildingIcons(),
@@ -521,7 +521,7 @@ export const DataMenu = {
       link: "/price",
       text: "Цени и скидки",
     },
-  
+
     {
       id: 37,
       icons: () => ClientsIcon(),
@@ -644,7 +644,7 @@ export const DataMenu = {
       text: "Бонусы",
     },
   ],
-  12:[
+  12: [
     {
       id: 2,
       icons: () => ReportBottom({}),
@@ -676,7 +676,7 @@ export const DataMenu = {
           link: "/m-manager/report-orginal",
           text: "Хисобот",
         },
-       
+
       ],
     },
     {

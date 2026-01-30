@@ -10,6 +10,7 @@ import { UpdatePatchData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 
 import { FilialReportData } from "../type";
+import { useMeStore } from "@/store/me-store";
 
 export const Columns: ColumnDef<FilialReportData>[] = [
   {
@@ -17,7 +18,7 @@ export const Columns: ColumnDef<FilialReportData>[] = [
     cell: ({ row }) => {
       return (
         <>
-          <p >{format(row.original?.dateOne, "MM-dd-yyyy")} ~ {(row.original.status == "Accepted" || row.original.status == "Open")? <p className="text-[#89A143]">Продолжается</p>: format(row.original?.dateTwo, "MM-dd-yyyy")}</p>
+          <p >{format(row.original?.dateOne, "MM-dd-yyyy")} ~ {(row.original.status == "Accepted" || row.original.status == "Open") ? <p className="text-[#89A143]">Продолжается</p> : format(row.original?.dateTwo, "MM-dd-yyyy")}</p>
         </>
       );
     },
@@ -40,11 +41,12 @@ export const Columns: ColumnDef<FilialReportData>[] = [
       return <p>{row.original?.cost}$</p>;
     },
   },
-  
+
   {
     header: "Статус пратии",
     cell: ({ row }) => {
-      if (row.original.status == "Accepted") {
+      const { meUser } = useMeStore()
+      if (row.original.status == "Accepted" && meUser?.position?.role != 4) {
         const navigate = useNavigate();
         const { id } = useParams();
         return (

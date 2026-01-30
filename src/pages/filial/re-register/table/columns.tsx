@@ -144,19 +144,6 @@ export const Columns: ColumnDef<TData>[] = [
       return <p>{row.original?.bar_code?.country?.title}</p>;
     },
   },
-  // {
-  //   header: "factory",
-  //   cell: ({ row }) => {
-  //     return <p>{row.original?.factory?.title }</p>;
-  //   },
-  // },
-
-  // {
-  //   header: "price",
-  //   cell: ({ row }) => {
-  //     return <p>{row.original?.collection_price?.priceMeter}$</p>;
-  //   },
-  // },
   {
     id: "actions",
     enableHiding: true,

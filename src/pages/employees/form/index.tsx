@@ -93,7 +93,7 @@ const ActionPage = () => {
         }
       }}
     >
-      <DialogContent className="sm:max-w-[796px]">
+      <DialogContent className="sm:max-w-[796px] max-h-[80vh] overflow-y-auto">
         <FormProvider {...form}>
           <form
             onSubmit={form.handleSubmit((data) => {

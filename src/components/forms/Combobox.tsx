@@ -38,7 +38,7 @@ type ComboboxDemoProps = {
   disabled?: boolean;
   onFilter?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  onOpenChange?: (isopen:boolean) => void;
+  onOpenChange?: (isopen: boolean) => void;
   isFetchingNextPage?: boolean;
   hasNextPage?: boolean;
   fetchNextPage?: () => void;
@@ -93,7 +93,7 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover modal={true} open={open} onOpenChange={setOpen}>
       <PopoverTrigger className={`w-full ${className && className}`} asChild>
         <Button
           variant="outline"
@@ -114,7 +114,11 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className=" p-0" align="start">
+      <PopoverContent
+        className="p-0 z-[60]"
+        align="start"
+        onWheel={(e) => e.stopPropagation()}
+      >
         <Command className="w-full">
           <div className="w-full flex items-center relative">
             <Search className="absolute top-2 w-4 opacity-60 left-2 " />
@@ -129,7 +133,7 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
               ""
             )}
           </div>
-          <CommandList className="w-full bg-sidebar">
+          <CommandList className="w-full bg-sidebar max-h-[300px] overflow-y-auto">
             {isLoading ? (
               <CommandLoading>
                 <Skeleton className="h-7 m-2 " />
@@ -164,7 +168,7 @@ export function ComboboxDemo(props: ComboboxDemoProps) {
                 </CommandGroup>
               </>
             )}
-               {hasNextPage && (
+            {hasNextPage && (
               <div
                 className="text-center w-full  h-10 flex items-center justify-center"
                 ref={loadMoreRef}

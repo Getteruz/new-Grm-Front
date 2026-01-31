@@ -12,12 +12,12 @@ import { TData } from "./type";
 
 const EditablePriceInput = ({ item, year }: { item: TData; year: string | number }) => {
   const [isEditable, setIsEditable] = useState(false);
-  const [price, setPrice] = useState(item.plan_price);
+  const [price, setPrice] = useState(item?.plan_price);
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    setPrice(item.plan_price);
-  }, [item.plan_price]);
+    setPrice(item?.plan_price);
+  }, [item?.plan_price]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: (newPrice: string) =>
@@ -97,7 +97,7 @@ export default function PlanYears() {
       <Filters />
       <div className="bg-[#EEEEEE] flex">
         <p className=" p-[25px] border-border border-r  text-[17px] w-full">
-          Планка{" "}
+          Планка
           <span className="font-bold ml-2">
             {new Intl.NumberFormat("ru-RU")
               .format(
@@ -106,18 +106,18 @@ export default function PlanYears() {
                   0
                 )
               )
-              .replace(/,/g, " ")}{" "}
+              .replace(/,/g, " ")}
             $
           </span>
         </p>
         <p className=" p-[25px] border-border border-r  text-[17px] w-full">
-          Сделанный{" "}
+          Сделанный
           <span className="font-bold ml-2">
             {new Intl.NumberFormat("ru-RU")
               .format(
-                flatData.reduce((acc, curr) => acc + Number(curr.earn || 0), 0)
+                flatData.reduce((acc, curr) => acc + Number(curr?.earn || 0), 0)
               )
-              .replace(/,/g, " ")}{" "}
+              .replace(/,/g, " ")}
             $
           </span>
         </p>
@@ -131,14 +131,6 @@ export default function PlanYears() {
             <div className="flex justify-between items-center">
               <div className="flex flex-col gap-2">
                 <h3 className="font-bold text-xl">{item.filialTitle}</h3>
-                {/* <div className="flex gap-2">
-                  <span className="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded">
-                    19:06 7 Июнь 2025
-                  </span>
-                  <span className="bg-[#E7F6E7] text-[#22C55E] text-xs px-2 py-1 rounded">
-                    До сегодняшнего дня
-                  </span>
-                </div> */}
               </div>
               <div className="flex gap-4 items-center">
                 <EditablePriceInput item={item} year={year || 2026} />
@@ -147,7 +139,7 @@ export default function PlanYears() {
                   <span className="font-bold text-[#89A143] text-lg">
                     {new Intl.NumberFormat("ru-RU")
                       .format(Number(item.earn || 0))
-                      .replace(/,/g, " ")}{" "}
+                      .replace(/,/g, " ")}
                     $
                   </span>
                 </div>

@@ -11,6 +11,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 
 import { FilialReportData } from "../type";
 import { useMeStore } from "@/store/me-store";
+import { useState } from "react";
 
 export const Columns: ColumnDef<FilialReportData>[] = [
   {
@@ -45,29 +46,45 @@ export const Columns: ColumnDef<FilialReportData>[] = [
   {
     header: "Статус пратии",
     cell: ({ row }) => {
+
+      const StatusText = {
+        open: "Отправить на подтверждение",
+        accepted: "В ожидании...",
+        closed: "Принято",
+      };
+
+      const StatusMManaerText = {
+        open: "Принимается",
+        accepted: "Принять переучёт",
+        closed: "Принято",
+      };
       const { meUser } = useMeStore()
-      if (row.original.status == "Accepted" && meUser?.position?.role != 4) {
+      const [status, setStatus] = useState<string>(row.original.status)
+      if (status == "Accepted" && meUser?.position?.role != 4) {
         const navigate = useNavigate();
         const { id } = useParams();
         return (
           <p
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
               UpdatePatchData("product/close-report", id || "", {})
                 .then(() => {
                   navigate(`/filial/${id}/info`);
                   toast.success("Переучёт Принять");
+                  setStatus("closed")
                 })
                 .catch(() => toast.error("что-то пошло не так"));
             }}
             className="px-4 py-3 rounded-[1000px] inline-block text-[#F0F0E5] bg-[#89A143]"
           >
             Принять
+
           </p>
         );
       } else {
         return (
           <p className="px-4 py-3 rounded-[1000px] inline-block  border-border border">
-            {row.original.status}
+            {status ? meUser?.position?.role == 4 ? StatusText[status?.toLowerCase() as unknown as keyof typeof StatusText] : StatusMManaerText[status?.toLowerCase() as unknown as keyof typeof StatusMManaerText] : ""}
           </p>
         );
       }

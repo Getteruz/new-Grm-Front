@@ -5,7 +5,7 @@ import { Columns, ColumnsColaction } from "./columns";
 // import Filter from "./filter";
 import { useParams } from "react-router-dom";
 import useDataFetch, { usePartiyaReport } from "./queries";
-import {  parseAsString, useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 import { useMemo } from "react";
 import { useMeStore } from "@/store/me-store";
 // import { usePartiyaById } from "../../form/actions";
@@ -15,13 +15,13 @@ import Filters from "./filter";
 function ItemBottom({ items }: { items: TReportData }) {
   return (
     <div className="w-full flex items-center  justify-start pr-10 border-border border-t  bg-sidebar">
-        <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
+      <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
         Количество: {Number(items?.count)?.toFixed(0) || 0}
       </div>
       <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
         Объем: {Number(items?.volume)?.toFixed(2) || 0} м²
       </div>
-    
+
       <div className="py-[14px] text-[#5D5D53] text-[13px] font-normal  border-border border-l px-[18px]">
         Сумма: {Number(items?.total)?.toFixed(2) || 0} $
       </div>
@@ -33,7 +33,6 @@ export default function ItemsPage() {
   const [search] = useQueryState("search");
   const { filialReportId } = useParams();
   const { meUser } = useMeStore();
-  const [reportStatus] = useQueryState("reportStatus");
   const [tip] = useQueryState(
     "tip",
     parseAsString.withDefault(
@@ -62,7 +61,7 @@ export default function ItemsPage() {
         // type: type || "default",
         type: tip == "new" ? undefined : tip || undefined,
       },
-  });
+    });
 
   const {
     data: BottomData,
@@ -119,7 +118,7 @@ export default function ItemsPage() {
     <div className="flex w-full">
       <ActionPageQrCode />
       <div className="w-2/3">
-        <Filters partiyaStatus={reportStatus ||undefined} />
+        <Filters />
         <DataTable
           onRowClick={(e) => {
             if (type == "default") {

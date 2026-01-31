@@ -15,12 +15,12 @@ import { useMeStore } from "@/store/me-store";
 
 const ActionPageQrCode = () => {
   const { meUser } = useMeStore();
-  const {  filialId } = useParams();
+  const { filialId } = useParams();
   const form = useForm<CropFormType>({
     resolver: zodResolver(CropSchema),
     defaultValues: {
       // filialReportId: filialReportId || "",
-      filialId:   filialId == "my-filial" ?meUser?.filial?.id ||"" :filialId || "",
+      filialId: filialId == "my-filial" ? meUser?.filial?.id || "" : filialId || "",
     },
   });
 
@@ -42,7 +42,7 @@ const ActionPageQrCode = () => {
         value: "",
         label: "",
       },
-      value: undefined,
+      value: "" as unknown as number,
       country: {
         value: "",
         label: "",
@@ -120,7 +120,7 @@ const ActionPageQrCode = () => {
           value: qrBaseOne?.isMetric ? "true" : "false",
           label: qrBaseOne?.isMetric ? "Метражный" : "Штучный",
         },
-        value: undefined,
+        value: "" as unknown as number,
         country: {
           value: qrBaseOne?.country?.id,
           label: qrBaseOne?.country?.title,
@@ -170,7 +170,7 @@ const ActionPageQrCode = () => {
             isUpdate: barcode == "new" || barcode == undefined ? false : true,
             data: {
               // filialReportId: filialReportId || "",
-              filialId: filialId == "my-filial" ?meUser?.filial?.id ||"" :filialId || "",
+              filialId: filialId == "my-filial" ? meUser?.filial?.id || "" : filialId || "",
               ...data,
             },
           });

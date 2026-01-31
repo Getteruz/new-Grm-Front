@@ -38,7 +38,7 @@ export const getByIdData = async <T, Q>(
       ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
       : "";
 
-    const res = await api.get(`${url}/${id}${params}`);
+    const res = await api.get(`${url}/${encodeURIComponent(id)}${params}`);
     return res.data;
   } catch (error) {
     handleError(error as iError);
@@ -56,7 +56,7 @@ export const AddData = async <D extends object>(url: string, data: D) => {
   }
 };
 export const PatchData = async <D extends object>(url: string, data: D) => {
-  try { 
+  try {
     const res = await api.patch(url, data);
     return res.data;
   } catch (error) {
@@ -71,7 +71,7 @@ export const UpdateData = async <D extends object>(
   data: D
 ) => {
   try {
-    const res = await api.put(`${url}/${id}`, data);
+    const res = await api.put(`${url}/${encodeURIComponent(id)}`, data);
     return res.data;
   } catch (error) {
     handleError(error as iError);
@@ -84,7 +84,7 @@ export const UpdatePatchData = async <D extends object>(
   data: D
 ) => {
   try {
-    const res = await api.patch(`${url}/${id}`, data);
+    const res = await api.patch(`${url}/${encodeURIComponent(id)}`, data);
     return res.data;
   } catch (error) {
     handleError(error as iError);
@@ -94,7 +94,7 @@ export const UpdatePatchData = async <D extends object>(
 
 export const DeleteData = async (url: string, id: string) => {
   try {
-    const res = await api.delete(`${url}/${id}`);
+    const res = await api.delete(`${url}/${encodeURIComponent(id)}`);
     return res.data;
   } catch (error) {
     handleError(error as iError);
@@ -102,7 +102,7 @@ export const DeleteData = async (url: string, id: string) => {
   }
 };
 
-export const UploadFile = async (url:string,data: FormData) => {
+export const UploadFile = async (url: string, data: FormData) => {
   try {
     const res = await api.post(url, data);
     return res.data;
@@ -117,6 +117,6 @@ const handleError = (error: iError) => {
   if (error.status == 401) {
     removeToken();
   }
-  
+
   toast.error(error?.response?.data?.message);
 };

@@ -9,7 +9,7 @@ import { DataMenu } from "./menu-datas";
 import { parseAsBoolean, useQueryState } from "nuqs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { minio_img_url } from "@/constants";
-import NotePage from "./note/list";
+// import NotePage from "./note/list";
 import Weather from "./weather";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ThemeSwitcherDock } from "@/components/ThemeSwitcherDock";
@@ -30,9 +30,9 @@ export default function Menu() {
           onClick={
             meUser?.position?.role == 3
               ? () => {
-                  window.location.replace("/cashier/home");
-                }
-              : () => {}
+                window.location.replace("/cashier/home");
+              }
+              : () => { }
           }
         >
           <AvatarImage src={minio_img_url + meUser?.avatar?.path} />
@@ -102,7 +102,7 @@ export default function Menu() {
           </div>
         ))}
 
-        <NotePage />
+        {/* <NotePage /> */}
         <div
           onClick={() => {
             removeToken();
@@ -118,7 +118,7 @@ export default function Menu() {
         </div>
       </ScrollArea>
 
-      <ThemeSwitcherDock/>
+      <ThemeSwitcherDock />
       <Weather />
     </div>
   );

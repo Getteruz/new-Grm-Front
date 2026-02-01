@@ -10,7 +10,7 @@ import { parseAsString, useQueryState } from "nuqs";
 
 import ActionButton from "@/components/actionButton";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {  UpdateData, UpdatePatchData } from "@/service/apiHelpers";
+import { UpdateData, UpdatePatchData } from "@/service/apiHelpers";
 import { toast } from "sonner";
 import { useMeStore } from "@/store/me-store";
 import ActionBadge from "@/components/actionBadge";
@@ -20,14 +20,14 @@ import TebleAvatar from "@/components/teble-avatar";
 import { Button } from "@/components/ui/button";
 // import { useTranslation } from "react-i18next";
 // flatDataFilial
-export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[] => {
+export const paymentColumns = (flatDataFilial: TData[]): ColumnDef<TransferData>[] => {
   return [
     {
       accessorKey: "id",
       header: "№",
       size: 50,
       cell: ({ row }) => {
-        const group= row?.original?.group
+        const group = row?.original?.group
         const [type] = useQueryState("type", parseAsString.withDefault("In"));
         const [filial] = useQueryState(
           "filial",
@@ -45,10 +45,10 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
         const queryClient = useQueryClient();
         const { mutate, isPending } = useMutation({
           mutationFn: () =>
-            UpdateData(apiRoutes.transferAccept , "", {
-              from: meUser?.position.role === 9 ? filial : type=="In" ? filial : meUser?.filial?.id ,
-              to: meUser?.position.role === 9 ? filialTo : type=="In" ? meUser?.filial?.id : filial ,
-               include: [`${group}=group`], exclude: [] ,
+            UpdateData(apiRoutes.transferAccept, "", {
+              from: meUser?.position.role === 9 ? filial : type == "In" ? filial : meUser?.filial?.id,
+              to: meUser?.position.role === 9 ? filialTo : type == "In" ? meUser?.filial?.id : filial,
+              include: [`${group}=group`], exclude: [],
             }),
           onSuccess: () => {
             toast.success("Accepted");
@@ -57,29 +57,29 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
 
           },
         });
-        
+
         if (row.original?.type === "header") {
           return <div className="absolute top-7 bg-background left-0 px-2 gap-2 py-2 w-full  flex items-center ">
-            <TebleAvatar size={38} url={ row?.original?.transferer?.avatar?.path} name={row?.original?.transferer?.firstName} status="none"/>
-            <RefreshCcw size={14}/>
-            <TebleAvatar size={38} url={ row?.original?.courier?.avatar?.path} name={row.original?.courier?.firstName} status="none"/>
+            <TebleAvatar size={38} url={row?.original?.transferer?.avatar?.path} name={row?.original?.transferer?.firstName} status="none" />
+            <RefreshCcw size={14} />
+            <TebleAvatar size={38} url={row?.original?.courier?.avatar?.path} name={row.original?.courier?.firstName} status="none" />
             {/* <p>{ group?.split('-')?.[0]}</p> */}
-            <p className="ml-8 ">{ group?.split('-')?.[1]} шт</p>
-            <p >{ Number(group?.split('-')?.[2] || 0)?.toFixed(2)} м²</p>
-            <p className="ml-auto">{ group?.split('-')?.[3]} </p>
-           {type =="In" && <Button onClick={()=>mutate()} disabled={isPending} variant={"outline"} className="border ml-2 rounded-lg py-[6px] px-[12px] h-[26px] text-[12px] border-[#89A143] text-[#89A143]  ">Принять все </Button>}
+            <p className="ml-8 ">{group?.split('-')?.[1]} шт</p>
+            <p >{Number(group?.split('-')?.[2] || 0)?.toFixed(2)} м²</p>
+            <p className="ml-auto opacity-40">{group?.split('-')?.[3]} </p>
+            {type == "In" && <Button onClick={() => mutate()} disabled={isPending} variant={"outline"} className="border ml-2 rounded-lg py-[6px] px-[12px] h-[26px] text-[12px] border-[#89A143] text-[#89A143]  ">Принять все </Button>}
           </div>;
         }
         return <p>{row?.original?.number}</p>;
       }
     },
-   
-  
+
+
     {
       header: "collection",
       id: "product.bar_code.collection.title",
       accessorKey: "product.bar_code.collection.title",
-    
+
     },
     {
       header: "model",
@@ -107,7 +107,7 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
         );
       },
     },
-  
+
     {
       header: "shape",
       id: "product.bar_code.shape.title",
@@ -137,7 +137,7 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
         return <p >{row.original.count} x</p>;
       },
     },
-  
+
     {
       header: "Статус",
       cell: ({ row }) => {
@@ -160,13 +160,13 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
         const { meUser } = useMeStore();
         const queryClient = useQueryClient();
         const status = row?.original?.progres;
-  
+
         const { mutate, isPending } = useMutation({
           mutationFn: () =>
-            UpdateData(apiRoutes.transferAccept , "", {
-              from: meUser?.position.role === 9 ? filial : type=="In" ? filial : meUser?.filial?.id ,
-              to: meUser?.position.role === 9 ? filialTo : type=="In" ? meUser?.filial?.id : filial ,
-               include: [row?.original?.id], exclude: [] ,
+            UpdateData(apiRoutes.transferAccept, "", {
+              from: meUser?.position.role === 9 ? filial : type == "In" ? filial : meUser?.filial?.id,
+              to: meUser?.position.role === 9 ? filialTo : type == "In" ? meUser?.filial?.id : filial,
+              include: [row?.original?.id], exclude: [],
             }),
           onSuccess: () => {
             toast.success("Accepted");
@@ -175,7 +175,7 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
 
           },
         });
-  
+
         const isRejected = status === "Rejected";
         const isAccepted = status === "Accepted";
         const isRole9 = meUser?.position?.role === 9;
@@ -184,23 +184,23 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
         if (isRejected) {
           return <ActionBadge status="rejected" />;
         }
-        
+
         if (isRole9) {
           const role9Status = isAccepted ? "accepted" : "inProgress";
           return <ActionBadge status={role9Status} />;
         }
-        
-        if (isAccepted && type != "Out" ) {
+
+        if (isAccepted && type != "Out") {
           return <ActionBadge status="accepted" />;
         }
-        
-        if (isAcceptedFinalIn ) {
-          return <ActionButton onClick={()=>mutate()} isLoading={isPending} status={"accept"} btnText={"Принять"} />;
+
+        if (isAcceptedFinalIn) {
+          return <ActionButton onClick={() => mutate()} isLoading={isPending} status={"accept"} btnText={"Принять"} />;
         }
-        
+
         return <ActionBadge status="inProgress" />;
-        
-  
+
+
       },
     },
     {
@@ -215,7 +215,7 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
         const queryClient = useQueryClient();
         const { mutate, isPending } = useMutation({
           mutationFn: () =>
-          UpdatePatchData(apiRoutes.transferReject,row?.original?.id,{}),
+            UpdatePatchData(apiRoutes.transferReject, row?.original?.id, {}),
           onSuccess: () => {
             toast.success("canceled");
             queryClient.invalidateQueries({ queryKey: [apiRoutes.transfers] });
@@ -227,10 +227,10 @@ export const paymentColumns =(flatDataFilial:TData[]): ColumnDef<TransferData>[]
             id={row.original?.id}
             ShowDelete={false}
             ShowUpdate={false}
-            
+
           >
-              <DropdownMenuItem disabled={isPending} onClick={() =>mutate()}>
-              {isPending?<Loader/>:"" }Отменить
+            <DropdownMenuItem disabled={isPending} onClick={() => mutate()}>
+              {isPending ? <Loader /> : ""}Отменить
             </DropdownMenuItem>
           </TableAction>
         );

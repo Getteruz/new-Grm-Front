@@ -34,7 +34,7 @@ export default function Filters() {
           Баркод
         </Button>
       )}
-      <SearchInput className="w-full max-w-[300px]" />
+      <SearchInput className="w-full max-w-[300px] mr-auto" />
       <div className="border-x border-border flex items-center w-full max-w-[160px]">
         <FilterSelect
           name="progress"

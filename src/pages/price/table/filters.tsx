@@ -10,7 +10,7 @@ export default function Filters() {
   const [, setId] = useQueryState("id");
   const pathName = useLocation().pathname;
   return (
-    <div className=" flex justify-between px-[20px] h-[64px] mb-3">
+    <div className=" flex justify-between  h-[64px] mb-3">
       <div className="flex  w-full gap-2 ">
         <SearchInput className="min-w-[300px]" />
         <div className={`bg-white flex gap-2 p-0.5 w-full max-w-[636px] rounded-[16px]`}>
@@ -36,7 +36,7 @@ export default function Filters() {
           ))}
         </div>
 
-        {pathName === "/discount" && <Button onClick={() => setId("new")} className="h-full ml-auto  w-[200px]  " variant={"secondary"} ><Plus size={24} /> Добавить</Button>}
+        {pathName === "/discount" && <Button onClick={() => setId("new")} className="h-full ml-auto  bg-white hover:bg-white rounded-[16px] w-[140px]  " variant={"secondary"} ><Plus size={24} /> Добавить</Button>}
       </div>
     </div>
   );

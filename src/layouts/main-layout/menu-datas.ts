@@ -16,7 +16,6 @@ import {
   ProductsOnSaleIcon,
   QRCodeIcon,
   ReportBottom,
-  SettingsIcon,
   StatementIcon,
   TransferIcons,
   UfoBottom,
@@ -437,12 +436,12 @@ export const DataMenu = {
       link: "/transfers",
       text: "Трансферы",
     },
-    {
-      id: 10,
-      icons: () => SettingsIcon(),
-      link: "/settings",
-      text: "Настройка",
-    },
+    // {
+    //   id: 10,
+    //   icons: () => SettingsIcon(),
+    //   link: "/settings",
+    //   text: "Настройка",
+    // },
   ],
   9: [
     {

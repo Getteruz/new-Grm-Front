@@ -111,10 +111,10 @@ export default function Page() {
               {meUser?.position.role === 9 ? "Из филиал" : "Филиалы"}
             </h4>
           </div>
-          <div className="max-h-[calc(100vh-140px)] scrollCastom">
+          <div className="h-[calc(100vh-140px)] scrollCastom">
 
             {meUser?.position.role !== 6 && (
-              <div className="p-3 px-0 mx-3 border-b border-border  pb-5">
+              <div className="p-1 px-0 mx-3 border-b border-border  pb-5">
                 {flatDataFilial
                   ?.filter((i) => i.type === "filial")
                   ?.filter((i) => i.id !== meUser?.filial?.id)
@@ -123,7 +123,7 @@ export default function Page() {
                       key={e?.id}
                       disabled={meUser?.position.role === 9 ? filialTo === e.id : false}
                       onClick={() => onSelectFilial(e)}
-                      className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-2.5`}
+                      className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-1`}
                     >
                       {e.title}
                     </button>
@@ -131,7 +131,7 @@ export default function Page() {
               </div>
             )}
             {meUser?.position.role !== 6 && (
-              <div className="p-3 px-0 mx-3 border-b border-border">
+              <div className="p-1 px-0 mx-3 border-b border-border">
                 {flatDataFilial
                   ?.filter((i) => i.type === "market")
                   .map((e) => (
@@ -139,14 +139,14 @@ export default function Page() {
                       key={e?.id}
                       disabled={meUser?.position.role === 9 ? filialTo === e.id : false}
                       onClick={() => onSelectFilial(e)}
-                      className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-2.5`}
+                      className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-1`}
                     >
                       {e.title}
                     </button>
                   ))}
               </div>
             )}
-            <div
+            {meUser?.position.role != 8 ? <div
               className={`p-3 px-0 mx-3 ${meUser?.position.role !== 6 && "border-b border-border"} `}
             >
               {flatDataFilial
@@ -156,12 +156,12 @@ export default function Page() {
                     key={e?.id}
                     disabled={filialTo === e.id}
                     onClick={() => onSelectFilial(e)}
-                    className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-2.5`}
+                    className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-1`}
                   >
                     {e.title}
                   </button>
                 ))}
-            </div>
+            </div> : ""}
             {meUser?.position.role !== 6 && (
               <div className="p-3 px-0 mx-3 ">
                 {flatDataFilial
@@ -171,7 +171,7 @@ export default function Page() {
                       key={e?.id}
                       disabled={filialTo === e.id}
                       onClick={() => onSelectFilial(e)}
-                      className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-2.5`}
+                      className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-1`}
                     >
                       {e.title}
                     </button>
@@ -189,7 +189,7 @@ export default function Page() {
             </div>
             <div className="max-h-[calc(100vh-140px)] scrollCastom">
 
-              <div className="p-3 px-0 mx-3 border-b border-border pb-5">
+              <div className="p-1 px-0 mx-3 border-b border-border pb-1">
                 {flatDataFilial
                   ?.filter((i) => i.type === "filial")
                   .map((e) => (
@@ -197,13 +197,13 @@ export default function Page() {
                       key={e?.id}
                       disabled={filial === e.id}
                       onClick={() => setFilialTo(e?.id)}
-                      className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-2.5`}
+                      className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-1`}
                     >
                       {e.title}
                     </button>
                   ))}
               </div>
-              <div className="p-3 px-0 mx-3 border-b border-border">
+              <div className="p-1 px-0 mx-3 border-b border-border">
                 {flatDataFilial
                   ?.filter((i) => i.type === "market")
                   .map((e) => (
@@ -211,13 +211,13 @@ export default function Page() {
                       key={e?.id}
                       disabled={filial === e.id}
                       onClick={() => setFilialTo(e?.id)}
-                      className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-2.5`}
+                      className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-1`}
                     >
                       {e.title}
                     </button>
                   ))}
               </div>
-              <div className="p-3 px-0 mx-3 border-b border-border">
+              <div className="p-1 px-0 mx-3 border-b border-border">
                 {flatDataFilial
                   ?.filter((i) => i.type === "dealer")
                   .map((e) => (
@@ -225,7 +225,7 @@ export default function Page() {
                       key={e?.id}
                       disabled={filial === e.id}
                       onClick={() => setFilialTo(e?.id)}
-                      className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-2.5`}
+                      className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-1`}
                     >
                       {e.title}
                     </button>
@@ -239,7 +239,7 @@ export default function Page() {
                       key={e?.id}
                       disabled={filial === e.id}
                       onClick={() => setFilialTo(e?.id)}
-                      className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-2.5`}
+                      className={`${filialTo === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-1`}
                     >
                       {e.title}
                     </button>
@@ -267,7 +267,7 @@ export default function Page() {
                     setType(e?.id)
                     setProgressStatus('all')
                   }}
-                  className={`${type === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-2.5`}
+                  className={`${type === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-1`}
                 >
                   {e.name}
                 </button>

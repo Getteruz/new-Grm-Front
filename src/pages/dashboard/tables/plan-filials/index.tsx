@@ -79,7 +79,6 @@ const EditablePriceInput = ({ item, year }: { item: TData; year: string | number
 
 import PlanSellers from "./plan-sellers";
 
-// ... previous imports
 
 export default function PlanYears() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(20));

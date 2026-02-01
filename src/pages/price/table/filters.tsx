@@ -6,43 +6,47 @@ export default function Filters() {
 
   return (
     <div className=" flex justify-between px-[20px] h-[64px] mb-3">
-      <div className="flex  gap-2 ">
-        <SearchInput className="w-full min-w-[200px]"/>
-        <Button
-          className="h-full   px-[50px] w-full max-w-[160px]"
-          variant="secondary"
-        >
-          <Tag />
-          Цены
-        </Button>
-        <Button
-          variant="secondary"
-          className="h-full  px-[50px] w-full max-w-[160px]"
-        >
-          <BadgePercent />
-          Скидки
-        </Button>
-        <Button
-          variant="secondary"
-          className="h-full   px-[50px] w-full max-w-[160px]"
-        >
-          <Gift />
-          Акции
-        </Button>
-        <Button
-          variant="secondary"
-          className="h-full  px-[50px] w-full max-w-[160px]"
-        >
-          <Tag />
-          Бонусы
-        </Button>
-        <Button
-          variant="secondary"
-          className="h-full  px-[50px] w-full max-w-[160px]"
-        >
-          <Ticket />
-          Промокоды
-        </Button>
+      <div className="flex  w-full gap-2 ">
+        <SearchInput className="min-w-[300px]" />
+        <div className="bg-white flex gap-2 p-0.5 w-full rounded-[16px]">
+          <Button
+            className="h-full  bg-white w-full max-w-[120px]"
+            variant="secondary"
+          >
+            <Tag />
+            Цены
+          </Button>
+
+          <Button
+            variant="secondary"
+            className="h-full  bg-white w-full max-w-[120px]"
+          >
+            <Gift />
+            Акции
+          </Button>
+
+          <Button
+            variant="secondary"
+            className="h-full bg-white w-full max-w-[120px]"
+          >
+            <Tag />
+            Бонусы
+          </Button>
+          <Button
+            variant="secondary"
+            className="h-full bg-white w-full max-w-[120px]"
+          >
+            <Ticket />
+            Промокоды
+          </Button>
+          <Button
+            variant="secondary"
+            className="h-full bg-white w-full max-w-[120px]"
+          >
+            <BadgePercent />
+            Скидки
+          </Button>
+        </div>
       </div>
     </div>
   );

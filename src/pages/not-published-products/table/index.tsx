@@ -10,7 +10,7 @@ import CarpetCard from "@/components/cards/carpet-card";
 import PulishMadal from "../publish-madal";
 
 export default function Page() {
-  const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
+  const [limit] = useQueryState("limit", parseAsInteger.withDefault(20));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [search] = useQueryState("search");
   const [card] = useQueryState("card", parseAsString.withDefault("card"));
@@ -62,7 +62,7 @@ export default function Page() {
                 path: item?.imgUrl?.path || ""
               }}
               model={item?.model?.title || ""}
-              size={`${(item?.size?.x || 0) * 100}x${((item?.size?.y || 0) * 100).toFixed()}`}
+              size={`${(item?.size?.x || 0) * 100}x${((item?.size?.y || 0) * 100).toFixed(0)}`}
               count={(1).toString()}
               price={(item.i_price || "0").toString()}
               colaction={item?.collection?.title || ""}

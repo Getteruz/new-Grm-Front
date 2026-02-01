@@ -13,7 +13,7 @@ import PulishMadal from "../../not-published-products/publish-madal";
 
 export default function Page() {
   const location = useLocation();
-  const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
+  const [limit] = useQueryState("limit", parseAsInteger.withDefault(20));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [filial] = useQueryState("filial");
   const [search] = useQueryState("search");
@@ -53,7 +53,6 @@ export default function Page() {
   const productsFlat = productsData?.pages?.flatMap((page) => page?.items || []) || [];
   const collections = collectionsData?.pages?.flatMap((page) => page?.items || []) || [];
 
-
   const showProductTable = collection === "product" && card !== "card";
   const showCardGrid = collection === "product" && card === "card";
   const showCollectionCards = card === "card" && collection !== "product";
@@ -82,7 +81,7 @@ export default function Page() {
                 path: item?.imgUrl?.path || ""
               }}
               model={item?.model?.title || ""}
-              size={`${(item?.size?.x || 0) * 100}x${(item?.size?.y || 0) * 100}`}
+              size={`${(item?.size?.x || 0) * 100}x${((item?.size?.y || 0) * 100).toFixed(0)}`}
               count={(1).toString()}
               price={(item.i_price || "0").toString()}
               colaction={item?.collection?.title || ""}

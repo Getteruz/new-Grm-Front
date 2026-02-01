@@ -74,7 +74,6 @@ export default function FormContent() {
 
           placeholder="collection"
           label="collection"
-          disabled={true}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -84,7 +83,6 @@ export default function FormContent() {
 
           placeholder="model"
           label="model"
-          disabled={true}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -93,7 +91,6 @@ export default function FormContent() {
 
           placeholder="shape"
           label="shape"
-          disabled={true}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -101,7 +98,6 @@ export default function FormContent() {
           name="size"
           placeholder="size"
           label="size"
-          disabled={true}
         />
 
         <FormComboboxDemoInput
@@ -110,7 +106,6 @@ export default function FormContent() {
           name="color"
           placeholder="color"
           label="color"
-          disabled={true}
         />
         <FormComboboxDemoInput
           fieldNames={{ value: "id", label: "title" }}
@@ -118,7 +113,6 @@ export default function FormContent() {
           name="style"
           placeholder="style"
           label="style"
-          disabled={true}
         />
 
         <FormComboboxDemoInput

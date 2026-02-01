@@ -30,11 +30,20 @@ export const useQrBaseMutation = ({
     ...options,
     mutationFn: async ({ data, id }) => {
       const costomData: object = {
-          internetInfo: data?.internetInfo,
-          imgUrl: data?.imgUrl?.id,
-          status: data?.status,
-          i_price: data?.i_price,
-          sizeType: data?.sizeType?.value
+        internetInfo: data?.internetInfo,
+        imgUrl: data?.imgUrl?.id,
+        status: data?.status,
+        i_price: data?.i_price,
+        sizeType: data?.sizeType?.value,
+        // code: data?.code,
+        country: data?.country?.value,
+        collection: data?.collection?.value,
+        factory: data?.factory?.value,
+        size: data?.size?.value,
+        shape: data?.shape?.value,
+        style: data?.style?.value,
+        color: data?.color?.value,
+        model: data?.model?.value,
       };
       if (id)
         return await UpdateData<QrBaseFormType>(

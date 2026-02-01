@@ -12,6 +12,7 @@ import { apiRoutes } from "@/service/apiRoutes";
 import api from "@/service/fetchInstance";
 import debounce from "@/utils/debounce";
 
+import useDiscountDataFetch from "../discount-table/queries";
 import { ProductsData } from "../type";
 import { ChevronDown } from "lucide-react";
 
@@ -41,9 +42,10 @@ export const getColumns = (role?: number): ColumnDef<ProductsData>[] => [
       return (
         <>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <p className="p-2.5 flex justify-between items-center text-primary font-medium text-[14px] border border-border rounded-[5px]">
-                Акция <ChevronDown width={20} />
+            <DropdownMenuTrigger disabled asChild>
+              <p className="p-1  opacity-50 px-2.5 flex justify-between items-center text-primary font-medium text-[14px] border border-border rounded-[5px]">
+                Акция
+                {/* <ChevronDown width={20} /> */}
               </p>
             </DropdownMenuTrigger>
 
@@ -53,7 +55,7 @@ export const getColumns = (role?: number): ColumnDef<ProductsData>[] => [
             </DropdownMenuContent>
           </DropdownMenu>
         </>
-        // <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
+        // <p className="p-1  px-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
         //   Акция
         // </p>
       );
@@ -65,9 +67,10 @@ export const getColumns = (role?: number): ColumnDef<ProductsData>[] => [
       return (
         <>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <p className="p-2.5 flex justify-between items-center text-primary font-medium text-[14px] border border-border rounded-[5px]">
-                Бонусы <ChevronDown width={20} />
+            <DropdownMenuTrigger disabled asChild>
+              <p className="p-1   opacity-50 px-2.5 flex justify-between items-center text-primary font-medium text-[14px] border border-border rounded-[5px]">
+                Бонусы
+                {/* <ChevronDown width={20} /> */}
               </p>
             </DropdownMenuTrigger>
 
@@ -77,7 +80,7 @@ export const getColumns = (role?: number): ColumnDef<ProductsData>[] => [
             </DropdownMenuContent>
           </DropdownMenu>
         </>
-        // <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
+        // <p className="p-1  px-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
         //   Бонусы
         // </p>
       );
@@ -89,9 +92,10 @@ export const getColumns = (role?: number): ColumnDef<ProductsData>[] => [
       return (
         <>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <p className="p-2.5 flex justify-between items-center text-primary font-medium text-[14px] border border-border rounded-[5px]">
-                Промокоды <ChevronDown width={20} />
+            <DropdownMenuTrigger disabled asChild>
+              <p className="p-1    opacity-50 px-2.5 flex justify-between items-center text-primary font-medium text-[14px] border border-border rounded-[5px]">
+                Промокоды
+                {/* <ChevronDown width={20} /> */}
               </p>
             </DropdownMenuTrigger>
 
@@ -101,7 +105,7 @@ export const getColumns = (role?: number): ColumnDef<ProductsData>[] => [
             </DropdownMenuContent>
           </DropdownMenu>
         </>
-        // <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
+        // <p className="p-1  px-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
         //   Промокоды
         // </p>
       );
@@ -110,28 +114,28 @@ export const getColumns = (role?: number): ColumnDef<ProductsData>[] => [
   {
     header: "Скидка",
     cell: () => {
-      return (
-        <>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <p className="p-2.5 flex justify-between items-center text-primary font-medium text-[14px] border border-border rounded-[5px]">
-                Скидка <ChevronDown width={20} />
-              </p>
-            </DropdownMenuTrigger>
+      const { data } = useDiscountDataFetch({
+        queries: { page: 1, limit: 100 },
+      });
+      const discounts = data?.pages.flatMap((page) => page?.items) || [];
 
-            <DropdownMenuContent align="center">
-              <DropdownMenuItem className="text-[#E38157]">
-                -5%
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <p className="p-1 px-2.5 flex justify-between items-center text-primary font-medium text-[14px] border border-border rounded-[5px]">
+              Скидка <ChevronDown width={20} />
+            </p>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="center">
+            <DropdownMenuItem key="noDiscount" >Без скидки</DropdownMenuItem>
+            {discounts?.map((item) => (
+              <DropdownMenuItem key={item?.id} >
+                {item?.title}  <p className="text-[#E38157]">(-{item?.discountPercentage}%)</p>
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-[#E38157]">
-                -10%
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </>
-        // <p className="p-2.5 text-primary font-medium text-[14px] border border-border rounded-[5px]">
-        //   Скидка
-        // </p>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
   },

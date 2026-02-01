@@ -36,11 +36,11 @@ interface DataTableProps<TData, TValue> {
   isRowClickble?: boolean | undefined;
   fetchNextPage?: () => void;
   onSelectionChange?: (selectedRows: TData[]) => void;
-  onRowClick?:(row: TData) => void;
+  onRowClick?: (row: TData) => void;
   hasHeader?: boolean;
-  isNumberble?:boolean
+  isNumberble?: boolean
   ischeckble?: boolean;
-  classNameBody?:string;
+  classNameBody?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -56,7 +56,7 @@ export function DataTable<TData, TValue>({
   fetchNextPage,
   onSelectionChange,
   onRowClick,
-  ischeckble=true,
+  ischeckble = true,
   isNumberble,
   hasHeader = true,
   classNameBody,
@@ -100,7 +100,7 @@ export function DataTable<TData, TValue>({
     enableHiding: false,
   };
 
-  const allColumns =  ischeckble ?[ checkboxColumn, ...columns] :isNumberble? [numberboxColumn, ...columns]:columns;
+  const allColumns = ischeckble ? [checkboxColumn, ...columns] : isNumberble ? [numberboxColumn, ...columns] : columns;
 
   useEffect(() => {
     if (!fetchNextPage) return;
@@ -156,12 +156,12 @@ export function DataTable<TData, TValue>({
   const navigate = useNavigate();
 
   return (
-    <div className={`bg-card w-full  max-w-[calc(100vw-104px)] ${className}`  }>
+    <div className={`bg-card w-full  max-w-[calc(100vw-104px)] ${className}`}>
       {isLoading && data.length === 0 ? (
         <TableLoading limit={15} table={table} />
       ) : (
         <>
-          <Table className="rounded-md" >
+          <Table  >
             {hasHeader ? (
               <TableHeader className={`border-border  border  ${borderClass}`}>
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -175,17 +175,17 @@ export function DataTable<TData, TValue>({
                           {header.isPlaceholder
                             ? null
                             : typeof flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
-                                ) == "string"
+                              header.column.columnDef.header,
+                              header.getContext()
+                            ) == "string"
                               ? t(
-                                  String(
-                                    flexRender(
-                                      header.column.columnDef.header,
-                                      header.getContext()
-                                    )
+                                String(
+                                  flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
                                   )
                                 )
+                              )
                               : null}
                         </TableHead>
                       );
@@ -204,14 +204,14 @@ export function DataTable<TData, TValue>({
                     className="px-5 cursor-pointer relative "
                     onClick={() => {
                       const id = (row.original as { id: string })?.id
-                      if(onRowClick ) {
+                      if (onRowClick) {
                         onRowClick(row.original as TData);
                       }
                       if (isRowClickble && id) {
                         navigate(
                           link
                             ? link +
-                                `?id=${id}`
+                            `?id=${id}`
                             : id + "/info"
                         );
                       } else if (isRowClickble !== false && id) {

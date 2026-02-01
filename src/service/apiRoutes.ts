@@ -17,6 +17,7 @@ export const apiRoutes = {
   collectionMultiple: "/collection-prices/multiple",
   productscheck: "/product/check-product",
   productReport: "/product/report-product",
+  discount: '/discount',
   productCharacteristics: "/collection/internet-shop",
   clients: "/client",
   login: "/auth/login",

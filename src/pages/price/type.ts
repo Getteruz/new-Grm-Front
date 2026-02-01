@@ -96,3 +96,17 @@ export interface ProductsQuery {
   page: number;
   filialId?: string;
 }
+
+export interface DiscountData {
+  id: string;
+  title: string;
+  discountPercentage: number;
+  isAdd: boolean;
+}
+
+export interface DiscountQuery {
+  search?: string;
+  limit: number;
+  page: number;
+  filialId?: string;
+}

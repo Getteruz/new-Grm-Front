@@ -62,13 +62,13 @@ export const DataMenu = {
     // },
     {
       id: 6,
-      icons: () => PriceIcons({ width: 28, height: 28 }),
+      icons: () => PriceIcons({ width: 22, height: 22 }),
       link: "/price",
       text: "Цени и скидки",
     },
     {
       id: 7,
-      icons: () => DataLibrary({ width: 28, height: 28 }),
+      icons: () => DataLibrary({ width: 22, height: 22 }),
       link: "/data-library",
       text: "Библиотека",
     },
@@ -365,6 +365,40 @@ export const DataMenu = {
   ],
   8: [
     {
+      id: 2,
+      icons: () => ReportBottom({}),
+      link: "/f-manager/report",
+      text: "Отчеты",
+      items: [
+        {
+          id: 22,
+          link: "/f-manager/reports",
+          text: "Касса магазина",
+        },
+        {
+          id: 23,
+          link: "/f-manager/report-finance",
+          text: "Ежемесячный отчет",
+        },
+        {
+          id: 24,
+          link: "/f-manager/report-remaider",
+          text: "Отчет об остатке",
+        },
+        {
+          id: 25,
+          link: "/f-manager/report-seller",
+          text: "Отчёт по сотрудикам",
+        },
+        {
+          id: 26,
+          link: "/f-manager/report-orginal",
+          text: "Хисобот",
+        },
+
+      ],
+    },
+    {
       id: 1,
       icons: () => ProductsOnSaleIcon(),
       link: "/i-products",
@@ -382,29 +416,7 @@ export const DataMenu = {
       link: "/not-published-products",
       text: "Не опубликованные",
     },
-    {
-      id: 4,
-      icons: () => ReportBottom({}),
-      link: "/report",
-      text: "Отчеты",
-      items: [
-        {
-          id: 22,
-          link: "/report",
-          text: "Кассовый учёт",
-        },
-        {
-          id: 23,
-          link: "/report-item-2",
-          text: "Финансовый учёт",
-        },
-        {
-          id: 24,
-          link: "/report-item-3",
-          text: "Снабжение и документооборот",
-        },
-      ],
-    },
+
     {
       id: 5,
       icons: () => ClientsIcon(),

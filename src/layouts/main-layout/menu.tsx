@@ -10,7 +10,7 @@ import { parseAsBoolean, useQueryState } from "nuqs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { minio_img_url } from "@/constants";
 // import NotePage from "./note/list";
-import Weather from "./weather";
+// import Weather from "./weather";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ThemeSwitcherDock } from "@/components/ThemeSwitcherDock";
 
@@ -43,7 +43,7 @@ export default function Menu() {
         </Avatar>
       </div>
       <ScrollArea
-        className={`max-h-[calc(100vh-300px)]  bg-white mb-auto mx-auto rounded-xl p-0.5 `}
+        className={`max-h-[calc(100vh-100px)] flex flex-col justify-between items-between h-full  bg-white mb-auto mx-auto rounded-xl p-0.5 `}
       >
         {pathName.pathname.split("/").length > 3 || isBack ? (
           <div
@@ -111,7 +111,7 @@ export default function Menu() {
           }}
           className={`group w-[80%] mx-auto w-[80%] mx-autow-[80%]  cursor-pointer  text-center flex items-center justify-center p-5`}
         >
-          <LogOut width={20} />
+          <LogOut className="min-w-[20px]" width={20} />
           <span className="absolute opacity-0 group-hover:opacity-100 flex justify-center align-middle items-center left-full -ml-6   whitespace-nowrap text-[#5D5D53] bg-card border-border border-1 text-[15px] rounded px-[13px] py-[5px] transition-opacity duration-200 z-20">
             Выйти
           </span>
@@ -119,7 +119,7 @@ export default function Menu() {
       </ScrollArea>
 
       <ThemeSwitcherDock />
-      <Weather />
+      {/* <Weather /> */}
     </div>
   );
 }

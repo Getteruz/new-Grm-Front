@@ -21,7 +21,7 @@ const EditablePriceInput = ({ item, year }: { item: TData; year: string | number
 
   const { mutate, isPending } = useMutation({
     mutationFn: (newPrice: string) =>
-      UpdateData(apiRoutes.filialPlan, item.filialId, {
+      UpdateData(apiRoutes.filialPlan, encodeURIComponent(item.filialId), {
         price: newPrice,
         year: Number(year),
       }),

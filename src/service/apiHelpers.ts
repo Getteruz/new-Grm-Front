@@ -38,7 +38,7 @@ export const getByIdData = async <T, Q>(
       ? `?${qs.stringify(query, { arrayFormat: "repeat" })}`
       : "";
 
-    const res = await api.get(`${url}/${encodeURIComponent(id)}${params}`);
+    const res = await api.get(`${url}/${id}${params}`);
     return res.data;
   } catch (error) {
     handleError(error as iError);
@@ -71,7 +71,7 @@ export const UpdateData = async <D extends object>(
   data: D
 ) => {
   try {
-    const res = await api.put(`${url}/${encodeURIComponent(id)}`, data);
+    const res = await api.put(`${url}/${id}`, data);
     return res.data;
   } catch (error) {
     handleError(error as iError);
@@ -84,7 +84,7 @@ export const UpdatePatchData = async <D extends object>(
   data: D
 ) => {
   try {
-    const res = await api.patch(`${url}/${encodeURIComponent(id)}`, data);
+    const res = await api.patch(`${url}/${id}`, data);
     return res.data;
   } catch (error) {
     handleError(error as iError);
@@ -94,7 +94,7 @@ export const UpdatePatchData = async <D extends object>(
 
 export const DeleteData = async (url: string, id: string) => {
   try {
-    const res = await api.delete(`${url}/${encodeURIComponent(id)}`);
+    const res = await api.delete(`${url}/${id}`);
     return res.data;
   } catch (error) {
     handleError(error as iError);

@@ -24,7 +24,7 @@ const componetObject = {
   "Расход": ExpenseTable,
   "Продажа": SaleTable,
   "Продажа в долг": SalesDebtTable,
-  "План филиалов": PlanYears
+  "План филиалов": PlanYears,
 }
 export function SheetDashboar({
   openType,

@@ -12,8 +12,8 @@ export default function DilerTable() {
   const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [dellerFilial, setDellerFilial] = useState<string | null>(null);
-  const [dellerowed] = useQueryState("dellerowed",parseAsFloat);
-  const [dellergiven] = useQueryState("dellergiven",parseAsFloat);
+  const [dellerowed] = useQueryState("dellerowed", parseAsFloat);
+  const [dellergiven] = useQueryState("dellergiven", parseAsFloat);
   // const [search ] = useQueryState("search");
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useDataFetch({
@@ -30,19 +30,18 @@ export default function DilerTable() {
     <>
       {!dellerFilial ? (
         <>
-          {" "}
           <div className="bg-[#EEEEEE] flex">
             <p className=" p-[25px] border-border border-r  text-[17px] w-full">
               Итого
             </p>
             <p className=" p-[25px] border-border border-r  text-[17px] w-full">
-             - {dellerowed} $
+              - {dellerowed} $
             </p>
             <p className=" p-[25px] border-border border-r  text-[17px] w-full">
-            + {dellergiven} $
+              + {dellergiven} $
             </p>
             <p className=" p-[25px] border-border border-r  text-[17px] w-full">
-             {(dellerowed ||0) -(dellergiven||0)} $
+              {(dellerowed || 0) - (dellergiven || 0)} $
             </p>
           </div>
           <div className="px-5 bg-card ">

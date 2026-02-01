@@ -27,7 +27,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
             ? "Бизнес приходы и расходы"
             : row?.original?.isDealer
               ? "Dealer-manager"
-              : row?.original?.payrollsDealerId ? "Ведомость": row?.original?.filial?.title}
+              : row?.original?.payrollsDealerId ? "Ведомость" : row?.original?.filial?.title}
         </p>
       );
     },
@@ -39,7 +39,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const item = row.original;
       const isMy = row?.original?.status == "my";
       return (
-        <p className={ `${((item?.in_hand || 0) >= 0) ? "text-[#89A143]":"text-red-500"} `}>
+        <p className={`text-nowrap  ${((item?.in_hand || 0) >= 0) ? "text-[#89A143]" : "text-red-500"} `}>
           {isMy
             ? ""
             : (item?.in_hand || 0).toFixed(2)}
@@ -165,23 +165,23 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         <div className="flex gap-2 items-center">
           {row?.original?.status != "my" && data?.items?.length
             ? data?.items?.map((item) => (
-                <TebleAvatar
-                  key={item?.id}
-                  status={
-                    row?.original?.status ==
-                      (item?.position.role == 9
-                        ? "m_manager_confirmed"
-                        : "accountant_confirmed") ||
-                    row?.original?.status == "accepted" || (item?.position.role == 9 &&  row?.original?.isMManagerConfirmed) ||(item?.position.role == 10 &&  row?.original?.isAccountantConfirmed)
-                      ? "success" 
-                      : row?.original?.status == "rejected"
-                        ? "fail"
-                        : "panding"
-                  }
-                  url={item?.avatar?.path}
-                  name={item?.firstName}
-                />
-              ))
+              <TebleAvatar
+                key={item?.id}
+                status={
+                  row?.original?.status ==
+                    (item?.position.role == 9
+                      ? "m_manager_confirmed"
+                      : "accountant_confirmed") ||
+                    row?.original?.status == "accepted" || (item?.position.role == 9 && row?.original?.isMManagerConfirmed) || (item?.position.role == 10 && row?.original?.isAccountantConfirmed)
+                    ? "success"
+                    : row?.original?.status == "rejected"
+                      ? "fail"
+                      : "panding"
+                }
+                url={item?.avatar?.path}
+                name={item?.firstName}
+              />
+            ))
             : ""}
         </div>
       );
@@ -199,8 +199,8 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
           PatchData(
             (item?.dealerReportId)
               ? `${apiRoutes.reports}/${item?.dealerReportId}/close-dealer`
-              : item?.payrollsDealerId  ? apiRoutes.payrolls + `/${item?.payrollsDealerId}/close-payroll` :
-               apiRoutes.kassaReports + "/" + row?.original?.id,
+              : item?.payrollsDealerId ? apiRoutes.payrolls + `/${item?.payrollsDealerId}/close-payroll` :
+                apiRoutes.kassaReports + "/" + row?.original?.id,
             {}
           ),
         onSuccess: () => {
@@ -216,34 +216,34 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
 
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          
+
           {item?.status == "my" ? (
             ""
           )
-           : item?.status == "accepted" || (item?.status == "Accepted" && item?.payrollsDealerId)  ? <ActionBadge status={"accepted"} /> : 
-            item?.status == "closed" || (item?.status == "InProgress" && item?.payrollsDealerId) ||
-            (item?.status == "closed_by_d") || //  && !item?.isDealer
-            (meUser?.position?.role == 10 &&
-              (item?.status == "m_manager_confirmed" || item?.isMManagerConfirmed )) ||
-            (meUser?.position?.role == 9 &&
-             ( item?.status == "accountant_confirmed" || item?.isAccountantConfirmed ))  ? (
-            <ActionButton
-              onClick={() => mutate()}
-              isLoading={isPending}
-              status="accept"
-            ></ActionButton>
-          ) : (
-            <ActionBadge
-              status={
-                item?.status == "open" || item?.kassaReportStatus == 2 || (item?.status == "Sent" && item?.payrollsDealerId)
-                  ? "inProgress"
-                  : item?.status == "accountant_confirmed" ||
-                      item?.status == "m_manager_confirmed"  || item?.isAccountantConfirmed || item?.isMManagerConfirmed 
-                    ? "pending"
-                    : item?.status
-              }
-            />
-          )}
+            : item?.status == "accepted" || (item?.status == "Accepted" && item?.payrollsDealerId) ? <ActionBadge status={"accepted"} /> :
+              item?.status == "closed" || (item?.status == "InProgress" && item?.payrollsDealerId) ||
+                (item?.status == "closed_by_d") || //  && !item?.isDealer
+                (meUser?.position?.role == 10 &&
+                  (item?.status == "m_manager_confirmed" || item?.isMManagerConfirmed)) ||
+                (meUser?.position?.role == 9 &&
+                  (item?.status == "accountant_confirmed" || item?.isAccountantConfirmed)) ? (
+                <ActionButton
+                  onClick={() => mutate()}
+                  isLoading={isPending}
+                  status="accept"
+                ></ActionButton>
+              ) : (
+                <ActionBadge
+                  status={
+                    item?.status == "open" || item?.kassaReportStatus == 2 || (item?.status == "Sent" && item?.payrollsDealerId)
+                      ? "inProgress"
+                      : item?.status == "accountant_confirmed" ||
+                        item?.status == "m_manager_confirmed" || item?.isAccountantConfirmed || item?.isMManagerConfirmed
+                        ? "pending"
+                        : item?.status
+                  }
+                />
+              )}
         </div>
       );
     },
@@ -257,9 +257,9 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const { mutate, isPending } = useMutation({
         mutationFn: async () => {
           return await UpdatePatchData(
-            row?.original?.payrollsDealerId  ? apiRoutes.payrolls + `/${row?.original?.payrollsDealerId}/reject` :
-            apiRoutes.kassaReports + "/reject",
-            row?.original?.id ? row?.original?.id :'',
+            row?.original?.payrollsDealerId ? apiRoutes.payrolls + `/${row?.original?.payrollsDealerId}/reject` :
+              apiRoutes.kassaReports + "/reject",
+            row?.original?.id ? row?.original?.id : '',
             {}
           );
         },

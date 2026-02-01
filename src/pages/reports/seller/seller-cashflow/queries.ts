@@ -1,37 +1,31 @@
-import { DefinedInitialDataOptions, useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { DefinedInitialDataOptions, useInfiniteQuery } from "@tanstack/react-query";
 
 import { getAllData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { TResponse } from "@/types";
 
-import {  TData, TQuery, TTopData } from "./type";
+import { TData, TQuery, TTopData } from "./type";
 
 interface ISellerCashflowData {
-  options?: DefinedInitialDataOptions<TResponse<TData>>;
+  options?: DefinedInitialDataOptions<TResponse<TData> & { totals: TTopData }>;
   queries?: TQuery;
   enabled?: boolean
 }
 
-interface IsellerReportsMothly {
-  options?: DefinedInitialDataOptions<TTopData>;
-  queries?: TQuery;
-  id?:string
-  enabled?: boolean;
-}
 
 
-export const useDataSellerCashflow = ({ queries ,enabled}: ISellerCashflowData) =>
+export const useDataSellerCashflow = ({ queries, enabled }: ISellerCashflowData) =>
   useInfiniteQuery({
-    queryKey: [apiRoutes.sellerReportsItem, queries],
-    queryFn: ({ pageParam = 10 }) =>
-      getAllData<TResponse<TData>, TQuery>(apiRoutes.sellerReportsItem, {
+    queryKey: [apiRoutes.cashflow, queries],
+    queryFn: ({ pageParam = 1 }) =>
+      getAllData<TResponse<TData> & { totals: TTopData }, TQuery>(apiRoutes.cashflow, {
         ...queries,
         page: pageParam as number,
         limit: 10,
       }),
     getNextPageParam: (lastPage) => {
       if (lastPage.meta?.currentPage <= lastPage.meta?.totalPages) {
-        return lastPage?.meta?.currentPage + 1;
+        return lastPage?.meta?.currentPage;
       } else {
         return null;
       }
@@ -39,15 +33,3 @@ export const useDataSellerCashflow = ({ queries ,enabled}: ISellerCashflowData) 
     enabled: enabled,
     initialPageParam: 1,
   });
-
-
-  export const useSellerReportsMothly= ({ options,id, queries }: IsellerReportsMothly) =>
-    useQuery({
-      ...options,
-      queryKey: [apiRoutes.sellerReportsMothly,id ,queries],
-      queryFn: () =>
-        getAllData<TTopData, TQuery>(
-          apiRoutes.sellerReportsMothly +"/" + id + "/items",
-          queries
-        ),
-    });

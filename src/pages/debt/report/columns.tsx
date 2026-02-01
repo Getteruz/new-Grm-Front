@@ -44,7 +44,7 @@ export const Columns: ColumnDef<TData>[] = [
       const item = row.original;
       return (
         <span
-          className={`font-bold text-[16px] ${item.type === "Приход" ? "text-[#89A143]" : "text-[#E38157]"}`}
+          className={`font-bold text-nowrap  text-[16px] ${item.type === "Приход" ? "text-[#89A143]" : "text-[#E38157]"}`}
         >
           {item?.type === "Приход" ? "+" : "-"}
           {formatPrice(item?.price || 0)}$
@@ -86,10 +86,10 @@ export const Columns: ColumnDef<TData>[] = [
     header: "Подробнее информации",
     cell: ({ row }) => {
       const item = row.original;
-        <p className="text-[13px] text-muted-foreground flex gap-1">
-          {item?.comment && <MessageSquareText width={14} />}
-          {item?.product || item?.comment}
-        </p>
+      <p className="text-[13px] text-muted-foreground flex gap-1">
+        {item?.comment && <MessageSquareText width={14} />}
+        {item?.product || item?.comment}
+      </p>
     },
   },
 

@@ -46,14 +46,14 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <p className={ `${(item?.in_hand >= 0) ? "text-[#89A143]":"text-red-500"} `}>
+        <p className={`${(item?.in_hand >= 0) ? "text-[#89A143]" : "text-red-500"} text-nowrap  `}>
           {item?.in_hand}
           $
         </p>
       );
     },
   },
-  
+
   {
     header: "Терминал",
     id: "totalSum",
@@ -155,7 +155,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const queryClient = useQueryClient();
       const { mutate, isPending } = useMutation({
         mutationFn: () =>
-          PatchData(apiRoutes.kassaReports +"/" +row?.original?.id , { }),
+          PatchData(apiRoutes.kassaReports + "/" + row?.original?.id, {}),
         onSuccess: () => {
           toast.success("Closed");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
@@ -163,12 +163,12 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       });
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {(item?.kassaReportStatus == 2  ) ? (
+          {(item?.kassaReportStatus == 2) ? (
             <ActionBadge status={"willSell"} />
           ) : item?.status == "open" ? (
-            <ActionButton onClick={()=>mutate()} isLoading={isPending} btnText={"Закрыт"} status="accept"></ActionButton>
+            <ActionButton onClick={() => mutate()} isLoading={isPending} btnText={"Закрыт"} status="accept"></ActionButton>
           ) : (
-            <ActionBadge status={(item?.status == "m_manager_confirmed" || item?.status=="accountant_confirmed") ? "pending":  item?.status} />
+            <ActionBadge status={(item?.status == "m_manager_confirmed" || item?.status == "accountant_confirmed") ? "pending" : item?.status} />
           )}
         </div>
       );

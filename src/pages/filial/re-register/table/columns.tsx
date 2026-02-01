@@ -58,13 +58,13 @@ export const Columns: ColumnDef<TData>[] = [
           {row.original?.bar_code?.isMetric ? (
             tip === "излишки" ? (
               row.original?.check_count - row.original?.y * 100
-            ).toFixed(2) : tip === "дефицит" ? (
+            ).toFixed(0) : tip === "дефицит" ? (
               row.original?.y * 100 - row.original?.check_count
-            ).toFixed(2) : tip === "new" ? (
+            ).toFixed(0) : tip === "new" ? (
               row.original?.y * 100
-            ).toFixed(2) : (
+            ).toFixed(0) : (
               row.original?.check_count
-            ).toFixed(2)
+            ).toFixed(0)
           ) : (
             <>
               {tip === "переучет" && row.original?.check_count}

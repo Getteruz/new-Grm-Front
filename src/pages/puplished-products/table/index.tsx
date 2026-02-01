@@ -128,8 +128,26 @@ export default function Page() {
               </div>
             </div>
           ))}
+          <div
+            ref={(ref) => {
+              if (ref) {
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    if (entries[0].isIntersecting && hasNextProductsPage) {
+                      fetchNextProductsPage();
+                    }
+                  },
+                  { threshold: 1 }
+                );
+                observer.observe(ref);
+                return () => observer.disconnect();
+              }
+            }}
+            className="col-span-full h-10 w-full"
+          />
         </div>
       )}
+
 
       {showCollectionTable && (
         <DataTable

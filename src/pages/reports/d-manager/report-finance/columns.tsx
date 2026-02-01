@@ -15,7 +15,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "startDate",
     header: "Дата",
     cell: ({ row }) => {
-      const month =[
+      const month = [
         "Январь",
         "Февраль",
         "Март",
@@ -30,11 +30,11 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         "Декабрь",
       ]
       const item = row.original;
-      const isTrue =item?.kassaReportStatus == 2
+      const isTrue = item?.kassaReportStatus == 2
       return (
-        <p className={`${isTrue?  "text-[#89A143]":""}`}>
-          { isTrue
-            ? month[item?.month - 1] +  "-Продалажется"
+        <p className={`${isTrue ? "text-[#89A143]" : ""}`}>
+          {isTrue
+            ? month[item?.month - 1] + "-Продалажется"
             : month[item?.month - 1] || ""}
         </p>
       );
@@ -45,7 +45,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#89A143]"> {item?.in_hand} $</p>;
+      return <p className="text-[#89A143] text-nowrap "> {item?.in_hand} $</p>;
     },
   },
 
@@ -62,16 +62,16 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "debt_sum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className={ '' }> {item?.debt_sum} $</p>;
+      return <p className={''}> {item?.debt_sum} $</p>;
     },
   },
-  
+
   {
     header: "Итого задолжность",
     id: "expense",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className={ 'text-[#E38157]' }>  {item?.reportStatus == 2? item?.owed:  item?.dealer_frozen_owed} $</p>;
+      return <p className={'text-[#E38157]'}>  {item?.reportStatus == 2 ? item?.owed : item?.dealer_frozen_owed} $</p>;
     },
   },
 
@@ -91,23 +91,23 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         <div className="flex gap-2 items-center">
           {row?.original?.status != "my" && data?.items?.length
             ? data?.items?.map((item) => (
-                <TebleAvatar
-                  key={item?.id}
-                  status={
-                    row?.original?.status ==
-                      (item?.position.role == 10
-                        ? "m_manager_confirmed"
-                        : "accountant_confirmed") ||
+              <TebleAvatar
+                key={item?.id}
+                status={
+                  row?.original?.status ==
+                    (item?.position.role == 10
+                      ? "m_manager_confirmed"
+                      : "accountant_confirmed") ||
                     row?.original?.status == "accepted"
-                      ? "success"
-                      : row?.original?.status == "rejected"
-                        ? "fail"
-                        : "panding"
-                  }
-                  url={item?.avatar?.path}
-                  name={item?.firstName}
-                />
-              ))
+                    ? "success"
+                    : row?.original?.status == "rejected"
+                      ? "fail"
+                      : "panding"
+                }
+                url={item?.avatar?.path}
+                name={item?.firstName}
+              />
+            ))
             : ""}
         </div>
       );
@@ -123,22 +123,22 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
       const queryClient = useQueryClient();
       const { mutate, isPending } = useMutation({
         mutationFn: () =>
-          PatchData(apiRoutes.reports +"/" +row?.original?.id+"/close-dealer" , { }),
+          PatchData(apiRoutes.reports + "/" + row?.original?.id + "/close-dealer", {}),
         onSuccess: () => {
           toast.success("Closed");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
           queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
         },
       });
-      
+
       return (
         <div onClick={(e) => e.stopPropagation()}>
           {item?.reportStatus == 2 ? (
             <ActionBadge status={"willSell"} />
           ) : item?.status == "open" || item?.status == "cancelled" ? (
-            <ActionButton onClick={()=>mutate()} isLoading={isPending} btnText="Закрыть"  status="accept"></ActionButton>
+            <ActionButton onClick={() => mutate()} isLoading={isPending} btnText="Закрыть" status="accept"></ActionButton>
           ) : (
-            <ActionBadge status={item?.status=="closed_by_d" ? "pending"  :item?.status} />
+            <ActionBadge status={item?.status == "closed_by_d" ? "pending" : item?.status} />
           )}
         </div>
       );

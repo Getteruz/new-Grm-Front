@@ -26,7 +26,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <p className="text-[#89A143]">
+        <p className="text-[#89A143] text-nowrap ">
           {item?.in_hand?.toFixed(2)}
           $
         </p>
@@ -59,7 +59,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "owed",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#FF6600]"> {item?.kassaReportStatus == 2? item?.filial?.owed : item?.dealer_frozen_owed} $</p>;
+      return <p className="text-[#FF6600]"> {item?.kassaReportStatus == 2 ? item?.filial?.owed : item?.dealer_frozen_owed} $</p>;
     },
   },
 
@@ -95,9 +95,9 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         mutationFn: () =>
           PatchData(
             apiRoutes.kassaReports +
-              "/" +
-              row?.original?.id +
-              "/close-dmanager",
+            "/" +
+            row?.original?.id +
+            "/close-dmanager",
             {}
           ),
         onSuccess: () => {

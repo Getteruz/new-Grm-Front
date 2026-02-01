@@ -58,11 +58,11 @@ export default function PageFinanceFilial() {
         <DataTable
           columns={KassaColumns || []}
           data={[
-            {
+            cashflowFilial?.income || cashflowFilial?.expense ? {
               status: "Филиал приходы и расходы",
               income: cashflowFilial?.income,
               expense: cashflowFilial?.expense,
-            },
+            } : {},
             ...flatKasssaData,
           ]}
           isLoading={KassaLoading}

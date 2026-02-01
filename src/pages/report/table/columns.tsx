@@ -34,7 +34,7 @@ export const Columns: ColumnDef<TData>[] = [
     accessorKey: "price",
 
     cell: ({ row }) => {
-      return <p className="text-[#89A143]">{row.original.price} $</p>;
+      return <p className="text-[#89A143] text-nowrap ">{row.original.price} $</p>;
     },
   },
   {
@@ -443,7 +443,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
       return (
         <p className={`${item?.endDate ? "" : "text-[#89A143]"}`}>
           {" "}
-          {item?.status== "Мои приходы и расходы" ? item?.status: item?.endDate
+          {item?.status == "Мои приходы и расходы" ? item?.status : item?.endDate
             ? format(new Date(item?.endDate), "dd MMMM yyyy")
             : "Продалажется"}
         </p>
@@ -455,7 +455,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "totalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#89A143]"> { item?.totalSum   && (item?.totalSum  - (item?.plasticSum || 0)).toFixed(2) + ' $'} </p>;
+      return <p className="text-[#89A143] text-nowrap "> {item?.totalSum && (item?.totalSum - (item?.plasticSum || 0)).toFixed(2) + ' $'} </p>;
     },
   },
 
@@ -482,7 +482,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "additionalProfitTotalSum",
     cell: ({ row }) => {
       const item = row.original;
-      return <p>  {item?.additionalProfitTotalSum && item?.additionalProfitTotalSum +" $"} </p>;
+      return <p>  {item?.additionalProfitTotalSum && item?.additionalProfitTotalSum + " $"} </p>;
     },
   },
 
@@ -491,7 +491,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "totalSize",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> {item?.totalSize &&  item?.totalSize + " м²"} </p>;
+      return <p> {item?.totalSize && item?.totalSize + " м²"} </p>;
     },
   },
   {
@@ -499,7 +499,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "income",
     cell: ({ row }) => {
       const item = row.original;
-      return <p> { item?.income} $</p>;
+      return <p> {item?.income} $</p>;
     },
   },
   {
@@ -523,10 +523,10 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "closer",
     cell: ({ row }) => {
       const item = row.original;
-      return item?.status != "open" && item?.status != "Мои приходы и расходы" ?  <div className="flex items-center">
-       {<img  className="w-[40px] rounded-full object-cover border-background border h-[40px]" src={minio_img_url + item?.closer?.avatar?.path}/>}
-        {item?.status != "closed_by_c" ?  <img className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={minio_img_url + item?.closer_m?.avatar?.path}/>:""}
-      </div>:"";
+      return item?.status != "open" && item?.status != "Мои приходы и расходы" ? <div className="flex items-center">
+        {<img className="w-[40px] rounded-full object-cover border-background border h-[40px]" src={minio_img_url + item?.closer?.avatar?.path} />}
+        {item?.status != "closed_by_c" ? <img className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={minio_img_url + item?.closer_m?.avatar?.path} /> : ""}
+      </div> : "";
     },
   },
   {
@@ -537,23 +537,23 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
       const item = row.original;
       const { mutate, isPending } = useMutation({
         mutationFn: () => PatchData(apiRoutes.kassaClose, {
-          ids:[row.original?.id]
+          ids: [row.original?.id]
         }),
         onSuccess: () => {
           toast.success("close");
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassa] });
         },
-      
+
       });
       return (
         <div onClick={(e) => e.stopPropagation()}>
           {item?.status == "closed_by_c" ? (
-            <Button disabled={isPending}  onClick={()=>mutate()} className="rounded-[63px] bg-[#E38157]">{isPending? <Loader2/> :""}  Принят </Button>
+            <Button disabled={isPending} onClick={() => mutate()} className="rounded-[63px] bg-[#E38157]">{isPending ? <Loader2 /> : ""}  Принят </Button>
           ) : item?.status == "accepted" ? (
             <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
-          ) : item?.status == "rejected"? (
+          ) : item?.status == "rejected" ? (
             <Button disabled variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]"> Отменено </Button>
-          ):   item?.status != "Мои приходы и расходы"  ?<Button variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button>:""}
+          ) : item?.status != "Мои приходы и расходы" ? <Button variant={"outline"} className="rounded-[63px] text-[#89A143] border-[#89A143]"> В процессе </Button> : ""}
         </div>
       );
     },
@@ -562,7 +562,7 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     id: "actions",
     header: "actions",
     cell: () => (
-      <Button onClick={(e)=>e.stopPropagation()} variant="ghost" size="icon">
+      <Button onClick={(e) => e.stopPropagation()} variant="ghost" size="icon">
         <MoreHorizontal className="h-4 w-4" />
       </Button>
     ),

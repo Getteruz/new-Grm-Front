@@ -35,7 +35,7 @@ export const Columns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <span className={`font-bold text-nowrap  text-[16px] `}>
+        <span className={`font-bold text-nowrap text-nowrap  text-[16px] `}>
           {item?.type === "Приход" ? "+" : "-"}
           {formatPrice(item?.price || 0)}$
         </span>
@@ -90,8 +90,8 @@ export const Columns: ColumnDef<TData>[] = [
     id: "closer",
     cell: ({ row }) => {
       const item = row.original;
-      return  <TebleAvatar status={"none"} name={ item?.casher?.firstName} url={item?.casher?.avatar?.path} />
-       
+      return <TebleAvatar status={"none"} name={item?.casher?.firstName} url={item?.casher?.avatar?.path} />
+
     },
   },
 ];

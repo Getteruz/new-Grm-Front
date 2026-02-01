@@ -16,35 +16,28 @@ export default function Page() {
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [filial] = useQueryState("filial");
   const [search] = useQueryState("search");
-  const [card] = useQueryState("card",parseAsString.withDefault("card"));
-  const [collection] = useQueryState("collection",parseAsString.withDefault("product"));
+  const [card] = useQueryState("card", parseAsString.withDefault("card"));
+  const [collection] = useQueryState("collection", parseAsString.withDefault("product"));
   const { meUser } = useMeStore();
 
   // Product data fetch
-  const { 
-    data: productsData, 
-    isLoading: isProductsLoading, 
+  const {
+    data: productsData,
+    isLoading: isProductsLoading,
     fetchNextPage: fetchNextProductsPage,
     hasNextPage: hasNextProductsPage,
-    isFetchingNextPage: isFetchingNextProductsPage 
+    isFetchingNextPage: isFetchingNextProductsPage
   } = useDataFetch({
     queries: {
       limit,
       page,
-      search: collection == "product"?  search  || undefined: undefined,
-      filialId:  
-        meUser?.position?.role === 2 ||
-        meUser?.position?.role === 3 ||
-        meUser?.position?.role === 4 ||
-        meUser?.position?.role === 5 ||
-        meUser?.position?.role === 7
-          ? meUser?.filial?.id
-          : filial|| undefined,
+      search: collection == "product" ? search || undefined : undefined,
+      filialId: filial || meUser?.filial?.id || undefined,
     },
     role: meUser?.position.role,
   });
-  
-  const { 
+
+  const {
     data: collectionsData,
     isLoading: isCollectionsLoading,
     fetchNextPage: fetchNextCollectionsPage,
@@ -52,7 +45,7 @@ export default function Page() {
     isFetchingNextPage: isFetchingNextCollectionsPage
   } = useCollectionDataFetch({
     filialId: filial || meUser?.filial?.id,
-    search: collection == "product"?  undefined: search || undefined,
+    search: collection == "product" ? undefined : search || undefined,
   });
 
   const productsFlat = productsData?.pages?.flatMap((page) => page?.items || []) || [];
@@ -67,15 +60,15 @@ export default function Page() {
   return (
     <>
       <Filters />
-      
-     <div className="scrollCastom ml-5">
+
+      <div className="scrollCastom ml-5">
         <TabsFilter />
       </div>
       {showCardGrid && (
         <div className="px-6 mt-4 h-[calc(100vh-163px)] scrollCastom grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-6">
           {productsFlat.map((item) => (
             <CarpetCard
-            producdId={""}
+              producdId={""}
               key={item.id}
               id={item.id.toString()}
               isBron={false}
@@ -87,13 +80,30 @@ export default function Page() {
                 path: item.bar_code?.imgUrl?.path || ""
               }}
               model={item.bar_code?.model?.title || ""}
-              size={`${(item.bar_code?.size?.x || 0) * 100}x${(item.bar_code?.size?.y || 0) *100 }`}
+              size={`${((item.bar_code?.size?.x || 0) * 100).toFixed(0)}x${((item.bar_code?.size?.y || 0) * 100).toFixed(0)}`}
               count={(item.count || "0").toString()}
               price={(item.price || "0").toString()}
               colaction={item.bar_code?.collection?.title || ""}
               color={item.bar_code?.color?.title || ""}
             />
           ))}
+          <div
+            ref={(ref) => {
+              if (ref) {
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    if (entries[0].isIntersecting && hasNextProductsPage) {
+                      fetchNextProductsPage();
+                    }
+                  },
+                  { threshold: 1 }
+                );
+                observer.observe(ref);
+                return () => observer.disconnect();
+              }
+            }}
+            className="col-span-full h-10 w-full"
+          />
         </div>
       )}
 
@@ -112,9 +122,27 @@ export default function Page() {
               </div>
             </div>
           ))}
+
+          <div
+            ref={(ref) => {
+              if (ref) {
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    if (entries[0].isIntersecting && hasNextProductsPage) {
+                      fetchNextProductsPage();
+                    }
+                  },
+                  { threshold: 1 }
+                );
+                observer.observe(ref);
+                return () => observer.disconnect();
+              }
+            }}
+            className="col-span-full h-10 w-full"
+          />
         </div>
       )}
-      
+
       {showCollectionTable && (
         <DataTable
           isLoading={isCollectionsLoading}
@@ -126,7 +154,7 @@ export default function Page() {
           isFetchingNextPage={isFetchingNextCollectionsPage}
         />
       )}
-      
+
       {showProductTable && (
         <DataTable
           isLoading={isProductsLoading}

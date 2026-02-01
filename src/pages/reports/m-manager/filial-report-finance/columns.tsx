@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import {  MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 
 import { apiRoutes } from "@/service/apiRoutes";
 
@@ -37,8 +37,8 @@ export const KassaColumns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <p className={ `${((item?.in_hand || 0) >= 0) ? "text-[#89A143]":"text-red-500"} `}>
-          { (item?.in_hand || 0).toFixed(2)}
+        <p className={`text-nowrap  ${((item?.in_hand || 0) >= 0) ? "text-[#89A143]" : "text-red-500"} `}>
+          {(item?.in_hand || 0).toFixed(2)}
         </p>
       );
     },
@@ -122,21 +122,21 @@ export const KassaColumns: ColumnDef<TData>[] = [
     header: "Кассир",
     id: "closer",
     cell: ({ row }) => {
-         
+
       const statusObj: Record<string, "success" | "panding" | "fail"> = {
-        accepted:"success",
-        closed_by_c:"panding",
-        rejected:"fail"
+        accepted: "success",
+        closed_by_c: "panding",
+        rejected: "fail"
       }
       const item = row.original;
       return item?.status != "open" &&
         item?.status != "Мои приходы и расходы" ? (
-          <div className="flex items-center">
+        <div className="flex items-center">
           {item?.closer?.avatar && (
-            <TebleAvatar status={"success"}  url={item?.closer?.avatar?.path} name={item?.closer?.avatar?.name}/>
+            <TebleAvatar status={"success"} url={item?.closer?.avatar?.path} name={item?.closer?.avatar?.name} />
           )}
           {item?.status != "closed_by_c" && item?.closer_m?.avatar ? (
-            <TebleAvatar className="-translate-x-2" status={ statusObj?.[item?.status || "panding"] }  url={item?.closer_m?.avatar?.path} name={item?.closer_m?.avatar?.name}/>
+            <TebleAvatar className="-translate-x-2" status={statusObj?.[item?.status || "panding"]} url={item?.closer_m?.avatar?.path} name={item?.closer_m?.avatar?.name} />
           ) : (
             ""
           )}

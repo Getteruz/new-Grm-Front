@@ -45,10 +45,10 @@ export const Columns: ColumnDef<TData>[] = [
       const item = row.original;
       return (
         <span
-          className={`font-bold text-[16px] ${item.type === "Приход" ? "text-[#89A143]" : "text-[#E38157]"}`}
+          className={`font-bold text-nowrap  text-[16px] ${item.type === "Приход" ? "text-[#89A143]" : "text-[#E38157]"}`}
         >
           {item?.type === "Приход" ? "+" : "-"}
-          {item?.is_online ?  0  : formatPrice(item?.price || 0)}$
+          {item?.is_online ? 0 : formatPrice(item?.price || 0)}$
         </span>
       );
     },
@@ -58,7 +58,7 @@ export const Columns: ColumnDef<TData>[] = [
     header: "Терминал",
     cell: ({ row }) => {
       const item = row.original;
-    return (
+      return (
         <span className={`font-bold text-[16px]  text-[#58A0C6]`}>
           {item?.is_online ? formatPrice(item?.price || 0) : 0}$
         </span>
@@ -151,9 +151,9 @@ export const Columns: ColumnDef<TData>[] = [
   {
     id: "actions",
     header: "",
-    cell: ({row}) => {
-   
-      return(
+    cell: ({ row }) => {
+
+      return (
         <TableAction
           ShowUpdate={false}
           url={apiRoutes.cashflow}

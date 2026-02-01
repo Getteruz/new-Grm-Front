@@ -25,7 +25,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <p className="text-[#89A143]">
+        <p className="text-[#89A143] text-nowrap ">
           {
             (item?.in_hand).toFixed(2) + " $"}
         </p>
@@ -52,13 +52,13 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
 
   {
     header: "D-менеджер",
-    cell: ({row}) => {
+    cell: ({ row }) => {
       const item = row.original;
       return (
         <div className="flex gap-2 items-center">
-          <TebleAvatar status={item?.status  == "open"? "panding":item?.status  == "rejected" ? "fail":"success"}   name={ "D"}/>
+          <TebleAvatar status={item?.status == "open" ? "panding" : item?.status == "rejected" ? "fail" : "success"} name={"D"} />
         </div>
-      ) 
+      )
     },
   },
   {
@@ -66,8 +66,8 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     id: "status",
     cell: ({ row }) => {
       const item = row.original;
-  
-      
+
+
       return (
         <div onClick={(e) => e.stopPropagation()}>
           {item?.kassaReportStatus == 2 ? (

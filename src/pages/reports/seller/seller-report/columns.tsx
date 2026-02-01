@@ -8,49 +8,81 @@ export const SellerReportsColumns: ColumnDef<TData>[] = [
     header: "Фото",
     cell: ({ row }) => {
       const item = row.original;
-      return <TebleAvatar url={item?.user?.avatar?.path} status="none" name={item?.user?.firstName} />;
+      return (
+        <TebleAvatar
+          url={item?.avatar?.path}
+          status="none"
+          name={item?.firstName}
+        />
+      );
     },
   },
   {
     header: "Фамилия имя",
     cell: ({ row }) => {
       const item = row.original;
-      return <p>{item?.user?.firstName + " " + item?.user?.lastName}</p>;
+      return <p>{item?.firstName + " " + item?.lastName}</p>;
     },
   },
 
   {
-    header: "Время работы ",
+    header: "Время работы",
     cell: () => {
-      return <p>0 час</p>;
+      return <p>{0}</p>;
     },
   },
   {
-    header: "Количество",
+    header: "Количество ",
     cell: ({ row }) => {
       const item = row.original;
-      return <p>{item?.totalSellCount} шт</p>;
+      return <p>{item?.count}</p>;
     },
   },
   {
-    header: " Объём продаж",
+    header: "Объём ",
     cell: ({ row }) => {
       const item = row.original;
-      return <p>{item?.totalSellKv.toFixed(2)} м²</p>;
+      return <p>{item?.kv} m²</p>;
     },
   },
   {
-    header: "Сумма",
+    header: "продаж",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#89A143]">{item?.totalSellPrice.toFixed(2)} $</p>;
+      return <p className="text-[#89A143]">
+        {new Intl.NumberFormat("ru-RU")
+          .format(Number(item?.earn || 0))
+          .replace(/,/g, " ")}{" "}
+        $
+      </p>
     },
   },
+
   {
     header: "Скидка",
     cell: ({ row }) => {
       const item = row.original;
-      return <p className="text-[#E38157]">{item?.totalDiscount.toFixed(2)} $</p>;
+      return <p className="text-[#89A143]">
+        {new Intl.NumberFormat("ru-RU")
+          .format(Number(item?.discount || 0))
+          .replace(/,/g, " ")}{" "}
+        $
+      </p>
+    },
+  },
+
+  {
+    header: "Планка",
+    cell: ({ row }) => {
+      const item = row.original;
+      return (
+        <p>
+          {new Intl.NumberFormat("ru-RU")
+            .format(Number(item?.plan_price || 0))
+            .replace(/,/g, " ")}{" "}
+          $
+        </p>
+      );
     },
   },
 

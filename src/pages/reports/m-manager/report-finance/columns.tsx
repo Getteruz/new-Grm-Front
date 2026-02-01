@@ -22,7 +22,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         <p className={`${isTrue ? "text-[#89A143]" : ""}`}>
           {isTrue
             ? MonthsArray[item?.month - 1].label + "-Продалажется"
-            : MonthsArray[item?.month - 1].label|| ""}
+            : MonthsArray[item?.month - 1].label || ""}
         </p>
       );
     },
@@ -33,7 +33,7 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <p className="text-[#89A143]">
+        <p className="text-[#89A143] text-nowrap ">
           {item?.managerSum?.toFixed(2)} $
         </p>
       );
@@ -121,23 +121,23 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         <div className="flex gap-2 items-center">
           {row?.original?.status != "my" && data?.items?.length
             ? data?.items?.map((item) => (
-                <TebleAvatar
-                  key={item?.id}
-                  status={
-                    row?.original?.status ==
-                      (item?.position.role == 10
-                        ? "m_manager_confirmed"
-                        : "accountant_confirmed") ||
+              <TebleAvatar
+                key={item?.id}
+                status={
+                  row?.original?.status ==
+                    (item?.position.role == 10
+                      ? "m_manager_confirmed"
+                      : "accountant_confirmed") ||
                     row?.original?.status == "accepted"
-                      ? "success"
-                      : row?.original?.status == "rejected"
-                        ? "fail"
-                        : "panding"
-                  }
-                  url={item?.avatar?.path}
-                  name={item?.firstName}
-                />
-              ))
+                    ? "success"
+                    : row?.original?.status == "rejected"
+                      ? "fail"
+                      : "panding"
+                }
+                url={item?.avatar?.path}
+                name={item?.firstName}
+              />
+            ))
             : ""}
         </div>
       );
@@ -164,15 +164,15 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         <div onClick={(e) => e.stopPropagation()}>
           {item?.reportStatus == 2 ? (
             <ActionBadge status={"willSell"} />
-          ) : item?.status == "open" && ((meUser?.position?.role == 10 && !item?.isAccountantConfirmed ) || (meUser?.position?.role == 9 && !item?.isMManagerConfirmed ) )  ? (
+          ) : item?.status == "open" && ((meUser?.position?.role == 10 && !item?.isAccountantConfirmed) || (meUser?.position?.role == 9 && !item?.isMManagerConfirmed)) ? (
             <ActionButton
-            btnText="Закрыть"
+              btnText="Закрыть"
               onClick={() => mutate()}
               isLoading={isPending}
               status="accept"
             ></ActionButton>
           ) : (
-            <ActionBadge status={ item?.status =="accepted" ?"closed": "inProgress"} />
+            <ActionBadge status={item?.status == "accepted" ? "closed" : "inProgress"} />
           )}
         </div>
       );

@@ -56,10 +56,10 @@ export const Columns: ColumnDef<TData>[] = [
       const item = row.original;
       return (
         <span
-          className={`font-bold text-[16px] ${item.type === "Приход" ? "text-[#89A143]" : "text-[#E38157]"}`}
+          className={`font-bold text-nowrap  text-[16px] ${item.type === "Приход" ? "text-[#89A143]" : "text-[#E38157]"}`}
         >
           {item?.type === "Приход" ? "+" : "-"}
-          {item?.tip == "order"&& item?.type != "Расход"
+          {item?.tip == "order" && item?.type != "Расход"
             ? formatPrice(item?.order?.price || 0)
             : formatPrice(item?.price || 0)}
           $
@@ -245,7 +245,7 @@ export const Columns: ColumnDef<TData>[] = [
           {row?.original?.tip == "order" && (
             <DropdownMenuItem className="text-center flex items-center justify-center pt-[14px] pb-[8px]">
               <div
-                onClick={loading ? () => {} : () => RejectFunt()}
+                onClick={loading ? () => { } : () => RejectFunt()}
                 className="w-full text-center"
               >
                 {loading ? (

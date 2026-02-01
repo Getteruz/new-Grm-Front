@@ -3,18 +3,18 @@ import { DataTable } from "@/components/ui/data-table";
 
 import Filter from "./filter";
 import { SellerReportsColumns } from "./columns";
-import {  parseAsString, useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 import { useDataSellerReports } from "./queries";
 import { getMonth } from "date-fns";
 import { useMeStore } from "@/store/me-store";
 import { useYear } from "@/store/year-store";
 
 export default function PageSellerReport() {
-  const {meUser} = useMeStore();
-  const {year} = useYear()
+  const { meUser } = useMeStore();
+  const { year } = useYear()
 
-  const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1 + "" ));
-  const [,setUserName] = useQueryState("userName", parseAsString.withDefault(""));
+  const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1 + ""));
+  const [, setUserName] = useQueryState("userName", parseAsString.withDefault(""));
   const [filial] = useQueryState("filial");
   const {
     data: SellerReportsData,
@@ -24,11 +24,12 @@ export default function PageSellerReport() {
     isFetchingNextPage: SellerReportsisFetchingNextPage,
   } = useDataSellerReports({
     queries: {
-      filialId: meUser?.position?.role == 4 ? meUser?.filial?.id :filial || undefined,
+      filialId:
+        meUser?.position?.role == 4 ? meUser?.filial?.id : filial || "all",
       page: 1,
       limit: 10,
-      month,
-      year
+      month: month || undefined,
+      year,
     },
   });
 
@@ -45,7 +46,7 @@ export default function PageSellerReport() {
           isLoading={SellerReportsLoading}
           isRowClickble={true}
           onRowClick={(row) => {
-            setUserName(row.user?.firstName + " " + row.user?.lastName);
+            setUserName(row?.firstName + " " + row?.lastName);
           }}
           fetchNextPage={SellerReportsfetchNextPage}
           hasNextPage={SellerReportsfhasNextPage ?? false}

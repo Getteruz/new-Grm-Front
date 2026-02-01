@@ -1,17 +1,15 @@
 export interface TData {
   id: string;
-  year: number;
-  month: number;
-  totalSellCount: number;
-  totalSellKv: number;
-  totalSellPrice: number;
-  additionalProfitTotalSum: number;
-  totalPlasticSum: number;
-  totalDiscount: number;
-  totalSaleReturnCount: number;
-  totalSaleReturnPrice: number;
-  totalSaleReturnKv: number;
-  user: User;
+  firstName: string;
+  lastName: string;
+  plan_price: string;
+  earn: string;
+  avatar?: {
+    path: string;
+  };
+  count: number;
+  discount: number;
+  kv: number;
 }
 
 export interface TQuery {
@@ -41,7 +39,7 @@ export interface User {
     mimetype: string;
     size: number;
     name: string;
-    created_at:string;
+    created_at: string;
   };
   username: string | null;
   salary: number;

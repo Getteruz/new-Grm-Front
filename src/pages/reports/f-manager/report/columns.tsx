@@ -37,15 +37,15 @@ export const KassaColumns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <p className={ `${((item?.in_hand||0) >= 0) ? "text-[#89A143]":"text-red-500"} `}>
-          
+        <p className={`${((item?.in_hand || 0) >= 0) ? "text-[#89A143]" : "text-red-500"} text-nowrap `}>
+
           {(item?.in_hand || 0).toFixed(2) + " $"}
         </p>
       );
     },
   },
 
-  
+
   {
     header: "Терминал",
     id: "plasticSum",
@@ -122,21 +122,21 @@ export const KassaColumns: ColumnDef<TData>[] = [
     header: "Кассир",
     id: "closer",
     cell: ({ row }) => {
-   
+
       const statusObj: Record<string, "success" | "panding" | "fail"> = {
-        accepted:"success",
-        closed_by_c:"panding",
-        rejected:"fail"
+        accepted: "success",
+        closed_by_c: "panding",
+        rejected: "fail"
       }
       const item = row.original;
       return item?.status != "open" &&
         item?.status != "Мои приходы и расходы" ? (
         <div className="flex items-center">
           {item?.closer?.avatar && (
-            <TebleAvatar status={"success"}  url={item?.closer?.avatar?.path} name={item?.closer?.avatar?.name}/>
+            <TebleAvatar status={"success"} url={item?.closer?.avatar?.path} name={item?.closer?.avatar?.name} />
           )}
           {item?.status != "closed_by_c" && item?.closer_m?.avatar ? (
-            <TebleAvatar className="-translate-x-2" status={ statusObj?.[item?.status] }  url={item?.closer_m?.avatar?.path} name={item?.closer_m?.avatar?.name}/>
+            <TebleAvatar className="-translate-x-2" status={statusObj?.[item?.status]} url={item?.closer_m?.avatar?.path} name={item?.closer_m?.avatar?.name} />
           ) : (
             ""
           )}
@@ -205,10 +205,10 @@ export const KassaColumns: ColumnDef<TData>[] = [
           queryClient.invalidateQueries({ queryKey: [apiRoutes.kassa] });
         },
       });
-      
+
       return (
         <TableAction ShowDelete={false} ShowPreview={false} ShowUpdate={false}>
-          {row.original?.status == "closed_by_c" || row.original?.status  == "accepted"  ? (
+          {row.original?.status == "closed_by_c" || row.original?.status == "accepted" ? (
             <DropdownMenuItem
               onClick={() => mutate()}
               disabled={isPending}

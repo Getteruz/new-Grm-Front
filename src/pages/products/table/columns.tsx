@@ -64,7 +64,7 @@ export const CollectionColumns: ColumnDef<CollectionData>[] = [
     },
   },
   {
-    id: "actions",  
+    id: "actions",
     enableHiding: true,
     header: () => <div className="text-right">{"actions"}</div>,
     size: 50,
@@ -110,7 +110,7 @@ export const ProductColumns: ColumnDef<ProductsData>[] = [
     header: "size",
     cell: ({ row }) => {
       return (
-        <p>{`${(row.original?.bar_code?.size?.x || 0) * 100}X${((row.original?.bar_code?.size?.y || 0) * 100).toFixed(2)}`}</p>
+        <p>{`${(row.original?.bar_code?.size?.x || 0) * 100}X${((row.original?.bar_code?.size?.y || 0) * 100).toFixed(0)}`}</p>
       );
     },
   },
@@ -120,10 +120,10 @@ export const ProductColumns: ColumnDef<ProductsData>[] = [
       const volume = (row.original?.bar_code?.size?.x || 0) * (row.original?.bar_code?.size?.y || 0);
       const count = row.original?.count || 0;
       const totalVolume = volume * count;
-      
+
       return (
         <p className="text-[14px] font-[500]">
-          {`${totalVolume.toFixed(2)}`} м²
+          {`${totalVolume.toFixed(1)}`} м²
         </p>
       );
     },

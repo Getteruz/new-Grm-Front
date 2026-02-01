@@ -14,7 +14,7 @@ export const SellerCashflowColumns: ColumnDef<TData>[] = [
         <div
           className={`w-12 h-12 flex items-center justify-center bg-[#89A143] text-white"`}
         >
-            <ShoppingCart   className={`text-white h-6 w-6`} />
+          <ShoppingCart className={`text-white h-6 w-6`} />
         </div>
       );
     },
@@ -31,57 +31,57 @@ export const SellerCashflowColumns: ColumnDef<TData>[] = [
   {
     header: "Тип",
     cell: () => {
-      return <ActionBadge childen="Продажа" status="accepted"/>;
+      return <ActionBadge childen="Продажа" status="accepted" />;
     },
   },
   {
     header: "Коллекция",
-    cell: ({row}) => {
+    cell: ({ row }) => {
       const item = row.original
-      return <p>{item?.product?.bar_code?.collection?.title}</p>;
+      return <p>{item?.order?.bar_code?.collection?.title}</p>;
     },
   },
   {
     header: "Модель",
-    cell: ({row}) => {
+    cell: ({ row }) => {
       const item = row.original
-      return <p>{item?.product?.bar_code?.model?.title}</p>;
+      return <p>{item?.order?.bar_code?.model?.title}</p>;
     },
   },
   {
     header: "Размер",
-    cell: ({row}) => {
+    cell: ({ row }) => {
       const item = row.original
-      return <p>{item?.product?.bar_code?.size?.title}</p>;
+      return <p>{item?.order?.bar_code?.size?.title}</p>;
     },
   },
   {
     header: "Цена",
-    cell: ({row}) => {
+    cell: ({ row }) => {
       const item = row.original
-      return <p>{item?.product?.bar_code?.collection?.priceMeter}$</p>;
+      return <p>{item?.order?.bar_code?.collection?.priceMeter}$</p>;
     },
   },
   {
     header: "Количество",
-    cell: ({row}) => {
+    cell: ({ row }) => {
       const item = row.original
-      return <p>{item?.x} {item?.product?.bar_code?.isMetric? "":"x"}</p>;
+      return <p>{item?.order?.x} {item?.order?.bar_code?.isMetric ? "" : "x"}</p>;
     },
   },
   {
     header: "Скидка",
-    cell: ({row}) => {
+    cell: ({ row }) => {
       const item = row.original
-      return <p>{item?.discountSum}$</p>;
+      return <p>{item?.order?.discountSum}$</p>;
     },
   },
 
   {
     header: "Навар",
-    cell: ({row}) => {
+    cell: ({ row }) => {
       const item = row.original
-      return <p>{item?.additionalProfitSum}$</p>;
+      return <p>{item?.order?.additionalProfitSum}$</p>;
     },
   },
   {

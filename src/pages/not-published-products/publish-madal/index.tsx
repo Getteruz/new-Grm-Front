@@ -117,7 +117,7 @@ const PulishMadal = () => {
           label: data?.factory?.title,
         },
         i_price: data?.i_price,
-        internetInfo: data?.internetInfo,
+        internetInfo: data?.internetInfo || data?.collection?.description,
         imgUrl: {
           id: data?.imgUrl?.id,
           url: data?.imgUrl?.path,

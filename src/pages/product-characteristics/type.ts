@@ -4,6 +4,7 @@ export interface ProductCharacteristic {
   characteristics1: string;
   characteristics2: string;
   installmentParams: string;
+  description: string;
 }
 
 export interface CharacteristicsQuery {

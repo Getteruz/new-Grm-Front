@@ -29,6 +29,7 @@ export interface BaseEntity {
   id: string;
   title: string;
   dateOne: string;
+  description?: string;
   dateTwo: string;
   deletedDate: string | null;
 }

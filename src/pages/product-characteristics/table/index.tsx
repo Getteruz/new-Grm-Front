@@ -3,7 +3,6 @@ import { parseAsInteger, useQueryState } from "nuqs";
 import { DataTable } from "@/components/ui/data-table";
 
 import { ProductCharacteristicColumns } from "./columns";
-import Filters from "./filters";
 import useCharacteristicsFetch from "./queries";
 
 export default function ProductCharacteristics() {
@@ -22,15 +21,18 @@ export default function ProductCharacteristics() {
 
   return (
     <>
-      <Filters />
+
+
       <DataTable
         isLoading={isLoading}
         columns={ProductCharacteristicColumns}
         data={flatData ?? []}
+        className="mt-12"
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage ?? false}
         isFetchingNextPage={isFetchingNextPage}
       />
+
     </>
   );
 }

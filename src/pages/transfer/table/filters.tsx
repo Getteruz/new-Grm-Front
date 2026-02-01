@@ -35,18 +35,20 @@ export default function Filters() {
         </Button>
       )}
       <SearchInput className="w-full max-w-[300px]" />
-      <FilterSelect
-        name="progress"
-        className="w-full max-w-[160px]   m-2 border-border border"
-        defaultValue="all"
-        options={[
-          { label: "Все", value: "all" },
-          { label: type == "In" ? "Новый" : "В ожидании", value: type == "In" ? "New" : "InProgres" },
-          { label: "Принятые", value: "Accepted" },
-          { label: "Отменённые", value: "Rejected" },
-        ]}
+      <div className="border-x border-border flex items-center w-full max-w-[160px]">
+        <FilterSelect
+          name="progress"
+          className="w-full max-w-[160px] "
+          defaultValue="all"
+          options={[
+            { label: "Все", value: "all" },
+            { label: type == "In" ? "Новый" : "В ожидании", value: type == "In" ? "New" : "InProgres" },
+            { label: "Принятые", value: "Accepted" },
+            { label: "Отменённые", value: "Rejected" },
+          ]}
 
-      />
+        />
+      </div>
       <DateRangePicker
         fromPlaceholder="от: 12.02.2025"
         toPlaceholder="до: 12.02.2025"

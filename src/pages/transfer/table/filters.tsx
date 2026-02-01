@@ -25,32 +25,33 @@ export default function Filters() {
 
   return (
     <div className="h-[64px] flex justify-between border-b border-border w-full bg-sidebar pr-10">
-        {meUser?.position.role !== 6 && (
-          <Button
-            className="h-full border-r-1  justify-center font-[16px] gap-1  border-y-0  border-l-0"
-            variant={"outline"}
-          >
-            <BrCodeIcons />
-            Баркод
-          </Button>
-        )}
-        <SearchInput />
-        <FilterSelect
+      {meUser?.position.role !== 6 && (
+        <Button
+          className="h-full border-r-1  rounded-none justify-center font-[16px] gap-1  border-y-0  border-l-0"
+          variant={"outline"}
+        >
+          <BrCodeIcons />
+          Баркод
+        </Button>
+      )}
+      <SearchInput className="w-full max-w-[300px]" />
+      <FilterSelect
         name="progress"
+        className="w-full max-w-[160px]   m-2 border-border border"
         defaultValue="all"
         options={[
           { label: "Все", value: "all" },
-          { label: type == "In"? "Новый": "В ожидании", value: type== "In"? "New" : "InProgres"},
+          { label: type == "In" ? "Новый" : "В ожидании", value: type == "In" ? "New" : "InProgres" },
           { label: "Принятые", value: "Accepted" },
           { label: "Отменённые", value: "Rejected" },
         ]}
 
-        />
-        <DateRangePicker
-          fromPlaceholder="от: 12.02.2025"
-          toPlaceholder="до: 12.02.2025"
-        />
-       
+      />
+      <DateRangePicker
+        fromPlaceholder="от: 12.02.2025"
+        toPlaceholder="до: 12.02.2025"
+      />
+
       {/* {meUser?.position.role !== 9 &&
         (type !== "Out" && (meUser?.position.role !== 6 || type != "New") ? (
           <Button

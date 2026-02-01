@@ -41,6 +41,7 @@ interface DataTableProps<TData, TValue> {
   isNumberble?: boolean
   ischeckble?: boolean;
   classNameBody?: string;
+  classNameTable?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -60,6 +61,7 @@ export function DataTable<TData, TValue>({
   isNumberble,
   hasHeader = true,
   classNameBody,
+  classNameTable,
 }: DataTableProps<TData, TValue>) {
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -156,14 +158,14 @@ export function DataTable<TData, TValue>({
   const navigate = useNavigate();
 
   return (
-    <div className={`bg-card w-full  max-w-[calc(100vw-104px)] ${className}`}>
+    <div className={`bg-card w-full   max-w-[calc(100vw-104px)] ${className}`}>
       {isLoading && data.length === 0 ? (
         <TableLoading limit={15} table={table} />
       ) : (
         <>
-          <Table  >
+          <Table className={classNameTable + "h-full"}>
             {hasHeader ? (
-              <TableHeader className={`border-border  border  ${borderClass}`}>
+              <TableHeader className={`border-border  border sticky top-0 ${borderClass}`}>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {

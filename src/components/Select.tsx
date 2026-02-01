@@ -43,7 +43,7 @@ function ShadcnSelect(props: ShadcnSelectProps) {
       value={value}
       onValueChange={onChange}
       onOpenChange={onOpenChange}
-    
+
       disabled={disabled || isLoading}
     >
       <SelectTrigger className={`outline-none  active:border-none ${className}`}>

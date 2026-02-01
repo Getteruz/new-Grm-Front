@@ -13,7 +13,7 @@ interface iFilterSelect {
   classNameContainer?: string;
   classNameItem?: string;
   icons?: React.ReactNode;
-  disabled?:boolean
+  disabled?: boolean
   options?: {
     label: string;
     value: string | undefined;
@@ -41,12 +41,12 @@ export default function FilterSelect({
   // },[defaultValue])
 
   const { t } = useTranslation();
-  
+
   return (
     <div className={`flex items-center bg-card rounded-xl  ${className && className}`}>
-      { icons && icons}
+      {icons && icons}
       <ShadcnSelect
-        className={` border-none bg-card rounded-xl px-4  ${className && className}`}
+        className={` border-none bg-card rounded-sm px-4  ${className && className}`}
         disabled={disabled}
         value={value?.length ? value : undefined}
         defaultValue={defaultValue && defaultValue}
@@ -61,9 +61,9 @@ export default function FilterSelect({
         }
         placeholder={placeholder ? t(placeholder) : "Выберите"}
         onChange={(e) => {
-          if(e== "clear"){
+          if (e == "clear") {
             setValue(null)
-          }else{
+          } else {
             setValue(e || "")
           }
         }}

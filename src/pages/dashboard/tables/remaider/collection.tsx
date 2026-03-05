@@ -68,7 +68,7 @@ export default function CollectionTable({
         </p>
       </div>
 
-      <div className="px-5 bg-card ">
+      <div className="px-5 bg-card overflow-auto">
         <DataTable
           columns={CollectionColumns}
           data={collections || []}
@@ -83,7 +83,6 @@ export default function CollectionTable({
               collectionId: row?.collection?.id || "",
             });
           }}
-          className="max-h-[calc(100vh-135px)]  scrollCastom"
           classNameBody="border-none"
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage ?? false}

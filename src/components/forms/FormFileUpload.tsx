@@ -94,7 +94,7 @@ export default function FormFileUpload({
           {field?.value?.url ? (
             <div className="aspect-[2/3] w-full group relative overflow-hidden">
               <img
-                src={"https://s3.gilam-market.uz" + field?.value?.url}
+                src={field?.value?.url ? minio_img_url + field.value.url : undefined}
                 alt="image"
                 className="w-full h-full object-cover"
               />

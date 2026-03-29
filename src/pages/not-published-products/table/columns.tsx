@@ -23,7 +23,7 @@ export const ProductColumns: ColumnDef<qrBaseIMarkerData>[] = [
     accessorKey: "imgUrl",
     cell: ({ row }) => {
       return (
-        <img src={minio_img_url + row.original?.imgUrl?.path} alt="" />
+        <img src={row.original?.imgUrl?.path ? minio_img_url + row.original.imgUrl.path : "/images/default.svg"} alt="" />
       );
     },
   },

@@ -524,8 +524,8 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return item?.status != "open" && item?.status != "Мои приходы и расходы" ? <div className="flex items-center">
-        {<img className="w-[40px] rounded-full object-cover border-background border h-[40px]" src={minio_img_url + item?.closer?.avatar?.path} />}
-        {item?.status != "closed_by_c" ? <img className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={minio_img_url + item?.closer_m?.avatar?.path} /> : ""}
+        {<img className="w-[40px] rounded-full object-cover border-background border h-[40px]" src={item?.closer?.avatar?.path ? minio_img_url + item.closer.avatar.path : undefined} />}
+        {item?.status != "closed_by_c" ? <img className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={item?.closer_m?.avatar?.path ? minio_img_url + item.closer_m.avatar.path : undefined} /> : ""}
       </div> : "";
     },
   },

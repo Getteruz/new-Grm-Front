@@ -14,7 +14,7 @@ export const FilialColumns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       return (
         <Avatar className="w-[40px] h-[40px]">
-          <AvatarImage src={minio_img_url + row.original?.user?.avatar?.path} />
+          <AvatarImage src={row.original?.user?.avatar?.path ? minio_img_url + row.original.user.avatar.path : undefined} />
           <AvatarFallback className="bg-primary text-white w-[40px] flex items-center justify-center h-[40px]">
             {row.original?.user?.firstName?.[0]}
             {row.original?.user?.lastName?.[0]}

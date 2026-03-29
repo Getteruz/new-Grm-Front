@@ -35,7 +35,7 @@ export default function Menu() {
               : () => { }
           }
         >
-          <AvatarImage src={minio_img_url + meUser?.avatar?.path} />
+          <AvatarImage src={meUser?.avatar?.path ? minio_img_url + meUser.avatar.path : undefined} />
           <AvatarFallback className="bg-primary text-white w-[58px] flex items-center justify-center h-[50px]">
             {meUser?.firstName?.[0]}
             {meUser?.lastName?.[0]}

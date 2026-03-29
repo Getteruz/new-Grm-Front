@@ -7,6 +7,7 @@ import {
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+import { minio_img_url } from "@/constants";
 import { cn } from "@/lib/utils";
 
 import { FormField, FormItem, FormMessage } from "../ui/form";

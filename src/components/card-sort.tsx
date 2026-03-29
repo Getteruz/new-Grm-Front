@@ -321,7 +321,7 @@ export default function CardSort({
     setPrice(0);
     setDebtId(undefined);
   }, [dialogOpen]);
-  const column = meUser?.position.role === 11 ? hrColumns : columns;
+  const column = meUser?.position?.role === 11 ? hrColumns : columns;
   return (
     <>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>

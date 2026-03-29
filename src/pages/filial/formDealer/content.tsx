@@ -31,7 +31,7 @@ export default function FormContent() {
     <>
       <DialogHeader className=" ">
         <DialogTitle className="text-[18px]">
-          {meUser?.position.role === 6 ? "Дилер" : "Филиал"}
+          {meUser?.position?.role === 6 ? "Дилер" : "Филиал"}
         </DialogTitle>
       </DialogHeader>
       <div className="grid row-start px-14 py-8   gap-4 grid-cols-3">
@@ -40,14 +40,14 @@ export default function FormContent() {
         </p>
         <FormTextInput
           label={
-            meUser?.position.role === 6
+            meUser?.position?.role === 6
               ? "Название дилера"
               : "Официальное название"
           }
-          className={` ${meUser?.position.role !== 6 ? "w-full" : "col-span-2"}`}
+          className={` ${meUser?.position?.role !== 6 ? "w-full" : "col-span-2"}`}
           name="title"
           placeholder={
-            meUser?.position.role === 6
+            meUser?.position?.role === 6
               ? "Название дилера"
               : "Официальное название"
           }
@@ -79,7 +79,7 @@ export default function FormContent() {
 
         <FormTextInput
           label="Адресс"
-          className={` ${meUser?.position.role !== 6 ? "w-full" : "col-span-2"}`}
+          className={` ${meUser?.position?.role !== 6 ? "w-full" : "col-span-2"}`}
           name="address"
           placeholder="Адресс"
         />

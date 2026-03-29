@@ -30,7 +30,7 @@ export default function FormContent() {
     <>
       <DialogHeader className="mb-8 ">
         <DialogTitle className="text-[18px]">
-          {meUser?.position.role === 6 ? "Дилер" : "Филиал"}
+          {meUser?.position?.role === 6 ? "Дилер" : "Филиал"}
         </DialogTitle>
       </DialogHeader>
       <div className="grid row-start px-14 py-8  my-2 gap-4 grid-cols-3">
@@ -39,19 +39,19 @@ export default function FormContent() {
         </p>
         <FormTextInput
           label={
-            meUser?.position.role === 6
+            meUser?.position?.role === 6
               ? "Название дилера"
               : "Официальное название"
           }
           className={` ${"col-span-2"}`}
           name="title"
           placeholder={
-            meUser?.position.role === 6
+            meUser?.position?.role === 6
               ? "Название дилера"
               : "Официальное название"
           }
         />
-        {meUser?.position.role !== 6 && (
+        {meUser?.position?.role !== 6 && (
           <FormTextInput
             label="Второе название"
             className="w-full"
@@ -60,7 +60,7 @@ export default function FormContent() {
           />
         )}
 
-        {meUser?.position.role === 6 && (
+        {meUser?.position?.role === 6 && (
           <>
             <FormTextInput
               label="Имя"
@@ -83,7 +83,7 @@ export default function FormContent() {
           </>
         )}
 
-        {meUser?.position.role !== 6 && (
+        {meUser?.position?.role !== 6 && (
           <FormTextInput
             label="Геолокацию"
             className="w-full"
@@ -93,11 +93,11 @@ export default function FormContent() {
         )}
         <FormTextInput
           label="Адресс"
-          className={` ${meUser?.position.role !== 6 ? "w-full" : "col-span-2"}`}
+          className={` ${meUser?.position?.role !== 6 ? "w-full" : "col-span-2"}`}
           name="address"
           placeholder="Адресс"
         />
-        {meUser?.position.role !== 6 && (
+        {meUser?.position?.role !== 6 && (
           <FormTextInput
             label="Ориентир"
             className="w-full"
@@ -111,7 +111,7 @@ export default function FormContent() {
           name="phone1"
           placeholder="Номер телефона"
         />
-        {meUser?.position.role !== 6 && (
+        {meUser?.position?.role !== 6 && (
           <FormTextInput
             label="Телеграм"
             className="w-full"
@@ -119,7 +119,7 @@ export default function FormContent() {
             placeholder="Телеграм"
           />
         )}
-        {meUser?.position.role !== 6 && (
+        {meUser?.position?.role !== 6 && (
           <div className="grid grid-cols-2">
             <FormTimePicker
               label=" От"
@@ -135,7 +135,7 @@ export default function FormContent() {
             />
           </div>
         )}
-        {meUser?.position.role !== 9 && (
+        {meUser?.position?.role !== 9 && (
           <>
             <p className="col-span-3 mt-8 text-[#5D5D53] font-medium text-[14px] text-left">
               Доступ в систему

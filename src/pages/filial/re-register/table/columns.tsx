@@ -48,7 +48,7 @@ export const Columns: ColumnDef<TData>[] = [
       const [tip] = useQueryState(
         "tip",
         parseAsString.withDefault(
-          meUser?.position?.role == 7 || meUser?.position.role == 4
+          meUser?.position?.role == 7 || meUser?.position?.role == 4
             ? "переучет"
             : "new"
         )
@@ -88,7 +88,7 @@ export const Columns: ColumnDef<TData>[] = [
       const [tip] = useQueryState(
         "tip",
         parseAsString.withDefault(
-          meUser?.position?.role == 7 || meUser?.position.role == 4
+          meUser?.position?.role == 7 || meUser?.position?.role == 4
             ? "переучет"
             : "new"
         )
@@ -155,7 +155,7 @@ export const Columns: ColumnDef<TData>[] = [
       const [tip] = useQueryState(
         "tip",
         parseAsString.withDefault(
-          meUser?.position?.role == 7 || meUser?.position.role == 4
+          meUser?.position?.role == 7 || meUser?.position?.role == 4
             ? "переучет"
             : "new"
         )
@@ -311,7 +311,7 @@ export const ColumnsColaction: ColumnDef<TData>[] = [
       const [tip] = useQueryState(
         "tip",
         parseAsString.withDefault(
-          meUser?.position?.role == 7 || meUser?.position.role == 4
+          meUser?.position?.role == 7 || meUser?.position?.role == 4
             ? "переучет"
             : "new"
         )

@@ -86,8 +86,8 @@ export default function Page() {
     queries: {
       limit: 10,
       page: 1,
-      from: meUser?.position.role === 9 ? filial : type == "In" ? filial : meUser?.filial?.id,
-      to: meUser?.position.role === 9 ? filialTo : type == "In" ? meUser?.filial?.id : filial,
+      from: meUser?.position?.role === 9 ? filial : type == "In" ? filial : meUser?.filial?.id,
+      to: meUser?.position?.role === 9 ? filialTo : type == "In" ? meUser?.filial?.id : filial,
       startDate: fromDate || undefined,
       endDate: toDate || undefined,
       search: search || undefined,
@@ -108,12 +108,12 @@ export default function Page() {
         <div className={`w-full h-full border-r border-border `}>
           <div className="w-full flex h-[64px] items-center justify-between border-border border-solid border-b p-[21.22px] bg-sidebar">
             <h4 className="text-[14px] font-semibold text-foreground">
-              {meUser?.position.role === 9 ? "Из филиал" : "Филиалы"}
+              {meUser?.position?.role === 9 ? "Из филиал" : "Филиалы"}
             </h4>
           </div>
           <div className="h-[calc(100vh-140px)] scrollCastom">
 
-            {meUser?.position.role !== 6 && (
+            {meUser?.position?.role !== 6 && (
               <div className="p-1 px-0 mx-3 border-b border-border  pb-5">
                 {flatDataFilial
                   ?.filter((i) => i.type === "filial")
@@ -121,7 +121,7 @@ export default function Page() {
                   .map((e) => (
                     <button
                       key={e?.id}
-                      disabled={meUser?.position.role === 9 ? filialTo === e.id : false}
+                      disabled={meUser?.position?.role === 9 ? filialTo === e.id : false}
                       onClick={() => onSelectFilial(e)}
                       className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-1`}
                     >
@@ -130,14 +130,14 @@ export default function Page() {
                   ))}
               </div>
             )}
-            {meUser?.position.role !== 6 && (
+            {meUser?.position?.role !== 6 && (
               <div className="p-1 px-0 mx-3 border-b border-border">
                 {flatDataFilial
                   ?.filter((i) => i.type === "market")
                   .map((e) => (
                     <button
                       key={e?.id}
-                      disabled={meUser?.position.role === 9 ? filialTo === e.id : false}
+                      disabled={meUser?.position?.role === 9 ? filialTo === e.id : false}
                       onClick={() => onSelectFilial(e)}
                       className={`${filial === e.id ? "bg-sidebar" : ""} group text-foreground flex items-center justify-between  mb-1 text-[14px]  w-full hover:bg-sidebar rounded-[8px] rounded-[8px]] px-3  py-1`}
                     >
@@ -146,8 +146,8 @@ export default function Page() {
                   ))}
               </div>
             )}
-            {meUser?.position.role != 8 ? <div
-              className={`p-3 px-0 mx-3 ${meUser?.position.role !== 6 && "border-b border-border"} `}
+            {meUser?.position?.role != 8 ? <div
+              className={`p-3 px-0 mx-3 ${meUser?.position?.role !== 6 && "border-b border-border"} `}
             >
               {flatDataFilial
                 ?.filter((i) => i.type === "dealer")
@@ -162,7 +162,7 @@ export default function Page() {
                   </button>
                 ))}
             </div> : ""}
-            {meUser?.position.role !== 6 && (
+            {meUser?.position?.role !== 6 && (
               <div className="p-3 px-0 mx-3 ">
                 {flatDataFilial
                   ?.filter((i) => i.type === "warehouse")
@@ -180,7 +180,7 @@ export default function Page() {
             )}
           </div>
         </div>
-        {meUser?.position.role === 9 ? (
+        {meUser?.position?.role === 9 ? (
           <div className={`w-full h-full border-r border-border `}>
             <div className="w-full flex h-[64px] items-center justify-between border-border border-solid border-b p-[21.22px] bg-sidebar">
               <h4 className="text-[14px] font-semibold text-foreground">
@@ -281,8 +281,8 @@ export default function Page() {
         <DataTable
           isLoading={isLoading}
           className="max-h-[calc(100vh-140px)] scrollCastom"
-          columns={meUser?.position.role == 6 ? collactionColumns : paymentColumns(flatDataFilial)}
-          data={meUser?.position.role == 6 ? [{ id: 1 }, { id: 1 }] as unknown as TransferData[] : buildFlatList(flatData) as unknown as TransferData[]}
+          columns={meUser?.position?.role == 6 ? collactionColumns : paymentColumns(flatDataFilial)}
+          data={meUser?.position?.role == 6 ? [{ id: 1 }, { id: 1 }] as unknown as TransferData[] : buildFlatList(flatData) as unknown as TransferData[]}
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage ?? false}
           ischeckble={false}

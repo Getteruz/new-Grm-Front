@@ -22,7 +22,7 @@ export default function Filters() {
   return (
     <div className="  px-[20px] h-[64px]   flex  gap-2 mb-2  ">
       <SearchInput className="w-full  max-w-[300px] mr-auto" />
-      {meUser?.position.role == 11 ? (
+      {meUser?.position?.role == 11 ? (
         <FilterSelect
           icons={<Store />}
           className="w-full max-w-[170px] pl-4"
@@ -42,7 +42,7 @@ export default function Filters() {
       <Button className="h-full   w-[140px] " variant={"secondary"}>
         <FileOutput /> Экспорт
       </Button>
-      {(meUser?.position.role == 11 || meUser?.position.role == 4) ? (
+      {(meUser?.position?.role == 11 || meUser?.position?.role == 4) ? (
         <Button
           onClick={() => setId("new")}
           className="h-full   "

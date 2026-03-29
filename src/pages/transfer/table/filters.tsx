@@ -19,13 +19,13 @@ export default function Filters() {
   // const [filialTo] = useQueryState("filialTo");
 
   // const linkFrom =
-  //   meUser?.position.role === 9 ? filial || "" : meUser?.filial?.id || "";
-  // const linkTo = meUser?.position.role === 9 ? filialTo : filial;
+  //   meUser?.position?.role === 9 ? filial || "" : meUser?.filial?.id || "";
+  // const linkTo = meUser?.position?.role === 9 ? filialTo : filial;
   // const link = "/transfers/" + linkFrom + "/to/" + linkTo;
 
   return (
     <div className="h-[64px] flex justify-between border-b border-border w-full bg-sidebar pr-10">
-      {meUser?.position.role !== 6 && (
+      {meUser?.position?.role !== 6 && (
         <Button
           className="h-full border-r-1  rounded-none justify-center font-[16px] gap-1  border-y-0  border-l-0"
           variant={"outline"}
@@ -54,8 +54,8 @@ export default function Filters() {
         toPlaceholder="до: 12.02.2025"
       />
 
-      {/* {meUser?.position.role !== 9 &&
-        (type !== "Out" && (meUser?.position.role !== 6 || type != "New") ? (
+      {/* {meUser?.position?.role !== 9 &&
+        (type !== "Out" && (meUser?.position?.role !== 6 || type != "New") ? (
           <Button
             className="h-full border-x-1 border-y-0 w-[100px] "
             variant={"outline"}
@@ -65,7 +65,7 @@ export default function Filters() {
           </Button>
         ) : (
           ""
-          // meUser?.position.role !== 6 && (
+          // meUser?.position?.role !== 6 && (
           //   <Button
           //     onClick={() => navigate(link)}
           //     className="h-full border-x-1 border-y-0  "

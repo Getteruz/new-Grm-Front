@@ -34,7 +34,7 @@ export default function Page() {
       search: collection == "product" ? search || undefined : undefined,
       filialId: filial || meUser?.filial?.id || undefined,
     },
-    role: meUser?.position.role,
+    role: meUser?.position?.role,
   });
 
   const {

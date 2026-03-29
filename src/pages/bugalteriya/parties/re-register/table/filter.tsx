@@ -22,7 +22,7 @@ export default function Filters({
   const { id } = useParams();
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
-  const [tip] = useQueryState("tip", parseAsString.withDefault((meUser?.position?.role ==7 || meUser?.position.role == 4) ? "переучет": "new"));
+  const [tip] = useQueryState("tip", parseAsString.withDefault((meUser?.position?.role ==7 || meUser?.position?.role == 4) ? "переучет": "new"));
 
   const changeStatus = useMemo(() => {
     if (partiyaStatus == "new") {
@@ -64,7 +64,7 @@ export default function Filters({
           { label: "Оприходован", value: "переучет" },
           { label: "Розница", value: "излишки" }, //дефицит
         ]}
-        defaultValue={(meUser?.position?.role ==7 || meUser?.position.role == 4) ? "переучет":"new"}
+        defaultValue={(meUser?.position?.role ==7 || meUser?.position?.role == 4) ? "переучет":"new"}
         placeholder="Накладной"
         name="tip"
       />
@@ -80,7 +80,7 @@ export default function Filters({
       />
      { meUser?.position?.role == 9 && tip=="new" ? <FileExelUpload partiyaId={id || ""} />:""}
 
-      {(meUser?.position?.role == 7 || meUser?.position.role == 4) ? (
+      {(meUser?.position?.role == 7 || meUser?.position?.role == 4) ? (
         <Button
           onClick={() => mutate()}
           disabled={check || isPending}

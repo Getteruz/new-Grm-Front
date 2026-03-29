@@ -51,7 +51,7 @@ export default function Filters() {
           { label: "Розница", value: "излишки" },
         ]}
         defaultValue={
-          meUser?.position?.role == 7 || meUser?.position.role == 4
+          meUser?.position?.role == 7 || meUser?.position?.role == 4
             ? "переучет"
             : "new"
         }

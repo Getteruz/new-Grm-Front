@@ -37,7 +37,7 @@ export default function ItemsPage() {
   const [tip] = useQueryState(
     "tip",
     parseAsString.withDefault(
-      meUser?.position?.role == 7 || meUser?.position.role == 4
+      meUser?.position?.role == 7 || meUser?.position?.role == 4
         ? "переучет"
         : "new"
     )
@@ -98,7 +98,7 @@ export default function ItemsPage() {
     BottomData?.pages?.flatMap((page) => page?.items || []) || [];
   const LocalColums = useMemo(() => {
     if (type == "collection") {
-      if (meUser?.position.role == 7 || meUser?.position.role == 4) {
+      if (meUser?.position?.role == 7 || meUser?.position?.role == 4) {
         return ColumnsColaction.filter(
           (col) =>
             col.header !== "Сумма" &&

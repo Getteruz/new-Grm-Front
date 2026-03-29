@@ -84,7 +84,7 @@ export const Columns: ColumnDef<TData>[] = [
         <TableAction
           url={apiRoutes.parties}
           ShowPreview
-          ShowDelete={meUser?.position.role !== 7}
+          ShowDelete={meUser?.position?.role !== 7}
           id={row.original?.id}
         />
       );

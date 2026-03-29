@@ -118,7 +118,7 @@ export const FilialColumns: ColumnDef<TData>[] = [
     cell: ({ row }) => {
       const { meUser } = useMeStore();
       return (
-        meUser?.position.role == 11 && (
+        meUser?.position?.role == 11 && (
           <TableAction url={apiRoutes.user} id={row.original?.id} />
         )
       );

@@ -46,8 +46,8 @@ export const paymentColumns = (flatDataFilial: TData[]): ColumnDef<TransferData>
         const { mutate, isPending } = useMutation({
           mutationFn: () =>
             UpdateData(apiRoutes.transferAccept, "", {
-              from: meUser?.position.role === 9 ? filial : type == "In" ? filial : meUser?.filial?.id,
-              to: meUser?.position.role === 9 ? filialTo : type == "In" ? meUser?.filial?.id : filial,
+              from: meUser?.position?.role === 9 ? filial : type == "In" ? filial : meUser?.filial?.id,
+              to: meUser?.position?.role === 9 ? filialTo : type == "In" ? meUser?.filial?.id : filial,
               include: [`${group}=group`], exclude: [],
             }),
           onSuccess: () => {
@@ -164,8 +164,8 @@ export const paymentColumns = (flatDataFilial: TData[]): ColumnDef<TransferData>
         const { mutate, isPending } = useMutation({
           mutationFn: () =>
             UpdateData(apiRoutes.transferAccept, "", {
-              from: meUser?.position.role === 9 ? filial : type == "In" ? filial : meUser?.filial?.id,
-              to: meUser?.position.role === 9 ? filialTo : type == "In" ? meUser?.filial?.id : filial,
+              from: meUser?.position?.role === 9 ? filial : type == "In" ? filial : meUser?.filial?.id,
+              to: meUser?.position?.role === 9 ? filialTo : type == "In" ? meUser?.filial?.id : filial,
               include: [row?.original?.id], exclude: [],
             }),
           onSuccess: () => {

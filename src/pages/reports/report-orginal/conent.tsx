@@ -262,13 +262,13 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
                 <>
                   <RowUI
                     title={"Yetkazib beruvchi(Pastavshik)"}
-                    price={data?.dealer_cash?.price || 0}
-                    kv={data?.dealer_cash?.kv || 0}
+                    price={data?.factory?.price || 0}
+                    kv={data?.factory?.kv || 0}
                   />
                   <RowUI
                     title={"Bojxona(tamojniy)"}
                     price={data?.tamojniy?.price || 0}
-                    kv={data?.tamojniy?.kv}
+                    kv={data?.tamojniy?.kv || 0}
                   />
                 </>
               )}

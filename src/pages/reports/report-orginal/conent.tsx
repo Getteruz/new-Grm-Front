@@ -267,8 +267,8 @@ export const Conent = forwardRef<HTMLDivElement>((_, ref) => {
                   />
                   <RowUI
                     title={"Bojxona(tamojniy)"}
-                    price={data?.debt_trading?.price || 0}
-                    kv={data?.debt_trading?.kv || 0}
+                    price={data?.tamojniy?.price || 0}
+                    kv={data?.tamojniy?.kv}
                   />
                 </>
               )}

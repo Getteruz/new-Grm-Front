@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 .env
 .github/workflows/main=deploy.yml
+
+# local access notes (never commit)
+ACCESS_NOTES.md
+../ACCESS_NOTES.md

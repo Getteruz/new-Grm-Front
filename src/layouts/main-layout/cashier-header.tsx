@@ -45,7 +45,7 @@ export default function CashierHeader({
               <div>
                 <p className="text-[12px] ext-primary ">Касса:</p>
                 <p className="text-[25px] font-bold text-primary">
-                  {data?.in_hand}
+                  {Number.isFinite(Number(data?.in_hand)) ? Number(data?.in_hand) : 0}
                 </p>
               </div>
         </div>

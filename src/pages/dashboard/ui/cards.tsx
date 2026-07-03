@@ -51,7 +51,7 @@ export default function Cards({leftData,setOpen}:{leftData:ReportsHomePageCurren
 
       <DashboardCard
         title="План филиалов"
-        // onClick={()=>setOpen("План филиалов")}
+        onClick={() => setOpen("План филиалов")}
         icons={() => <DollarSign className="bg-gray-300 text-white w-[20px] h-[20px] p-1 rounded-full"/>}
         price={`${leftData?.filial_plan_totals?.details?.currentTotalSell} $`}
         price2={`${Number(leftData?.filial_plan_totals?.percent)} %`} 

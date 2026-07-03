@@ -23,7 +23,7 @@ export default function Dashboard() {
   const [,setManagerId] = useQueryState("managerId");
   const [month] = useQueryState("month", parseAsString.withDefault(getMonth(new Date()) + 1+""));
   const {year}= useYear()
-  const role = meUser?.position.role;
+  const role = meUser?.position?.role;
 
   const { data } = useReportsHomePageCurrentMonth({
     queries: {
@@ -36,7 +36,10 @@ export default function Dashboard() {
     enabled:role === 12
   });
   const { data:leftData } = useReportsHomePageCurrentLeft({
-    enabled:role === 12
+    enabled:role === 12,
+    queries: {
+      year: year,
+    }
   });
 
   useEffect(()=>{

@@ -4,11 +4,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { TKassareportData } from "./type";
 import ActionBadge from "@/components/actionBadge";
-import ActionButton from "@/components/actionButton";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiRoutes } from "@/service/apiRoutes";
-import { PatchData } from "@/service/apiHelpers";
-import { toast } from "sonner";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
@@ -30,11 +25,15 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         "Декабрь",
       ];
       const item = row.original;
-      const isTrue = item?.kassaReportStatus == 2;
+      // месяц "текущий" определяется календарём, а не статусом в базе
+      const now = new Date();
+      const isCurrent =
+        item?.month == now.getMonth() + 1 &&
+        (!item?.year || item?.year == now.getFullYear());
       return (
-        <p className={`${isTrue ? "text-[#89A143]" : ""}`}>
-          {isTrue
-            ? month[item?.month - 1] + "-Продалажется"
+        <p className={`${isCurrent ? "text-[#89A143]" : ""}`}>
+          {isCurrent
+            ? month[item?.month - 1] + " — Продолжается"
             : month[item?.month - 1] || ""}
         </p>
       );
@@ -151,24 +150,24 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     header: "Статус",
     id: "status",
     cell: ({ row }) => {
+      // касса годовая: кнопка «Закрыт» и подтверждение месяца удалены,
+      // статус месяца определяется календарём
       const item = row.original;
-      const queryClient = useQueryClient();
-      const { mutate, isPending } = useMutation({
-        mutationFn: () =>
-          PatchData(apiRoutes.kassaReports +"/" +row?.original?.id , { }),
-        onSuccess: () => {
-          toast.success("Closed");
-          queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
-        },
-      });
+      const now = new Date();
+      const isCurrent =
+        item?.month == now.getMonth() + 1 &&
+        (!item?.year || item?.year == now.getFullYear());
+      const isFuture =
+        (item?.year && item?.year > now.getFullYear()) ||
+        (item?.year == now.getFullYear() && item?.month > now.getMonth() + 1);
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {(item?.kassaReportStatus == 2  ) ? (
+          {isCurrent ? (
             <ActionBadge status={"willSell"} />
-          ) : item?.status == "open" ? (
-            <ActionButton onClick={()=>mutate()} isLoading={isPending} btnText={"Закрыт"} status="accept"></ActionButton>
+          ) : isFuture ? (
+            ""
           ) : (
-            <ActionBadge status={(item?.status == "m_manager_confirmed" || item?.status=="accountant_confirmed") ? "pending":  item?.status} />
+            <ActionBadge status={"completed"} />
           )}
         </div>
       );

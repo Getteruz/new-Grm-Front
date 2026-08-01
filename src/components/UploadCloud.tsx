@@ -50,7 +50,7 @@ export const UploadAvatarButton = () => {
       />
       {avatar?.path && (
         <img
-          src={minio_img_url + avatar?.path}
+          src={avatar?.path ? minio_img_url + avatar.path : undefined}
           alt=""
           className="w-[95px] h-[117px] object-contain"
         />

@@ -446,7 +446,7 @@ export default function CardSort({
                     className={`${cashflow_type === item.id ? "bg-[#5D5D53] text-[white]" : "bg-input text-primary"} flex items-center justify-center flex-col pt-4 rounded-[7px] text-center cursor-pointer`}
                   >
                     <img
-                      src={minio_img_url + item.icon?.path}
+                      src={item.icon?.path ? minio_img_url + item.icon.path : undefined}
                       style={{
                         filter:
                           cashflow_type === item.id

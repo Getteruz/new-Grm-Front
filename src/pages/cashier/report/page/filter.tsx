@@ -6,22 +6,16 @@ import qs from "qs";
 import { parseAsString, useQueryState } from "nuqs";
 import { apiRoutes } from "@/service/apiRoutes";
 import { useMutation } from "@tanstack/react-query";
+// касса годовая: статусы closed_by_c/rejected больше не создаются,
+// accepted остаётся для закрытых прошлых лет и архива
 const Sort = [
   {
     label: "Открытый",
     value: "open",
   },
   {
-    label: "В ожидание подтверждения",
-    value: "closed_by_c",
-  },
-  {
-    label: "Подтверждённые",
+    label: "Закрытые (архив)",
     value: "accepted",
-  },
-  {
-    label: "Отменённые",
-    value: "rejected",
   },
 ];
 

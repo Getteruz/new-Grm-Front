@@ -12,6 +12,7 @@ import ExpenseTable from "./expense";
 import ProfitTable from "./profit";
 import SaleTable from "./saleTable";
 import SalesDebtTable from "./saleDebtTable";
+import PlanYears from "./plan-filials";
 
 const componetObject = {
   "Остатка": RemainderTable,
@@ -22,7 +23,8 @@ const componetObject = {
   "Прибыль":ProfitTable,
   "Расход":ExpenseTable,
   "Продажа":SaleTable,
-  "Продажа в долг":SalesDebtTable
+  "Продажа в долг":SalesDebtTable,
+  "План филиалов": PlanYears,
 }
 export function SheetDashboar({
   openType,

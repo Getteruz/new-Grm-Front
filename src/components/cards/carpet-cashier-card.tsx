@@ -1,6 +1,5 @@
 import {
   FileOutput,
-  Loader,
   MessageSquareText,
   MoreVertical,
   OctagonX,
@@ -10,10 +9,10 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { IData } from "@/pages/cashier/home/type";
 import { useMeStore } from "@/store/me-store";
-import { AddData, getAllData, UpdatePatchData } from "@/service/apiHelpers";
+import { AddData, UpdatePatchData } from "@/service/apiHelpers";
 import { apiRoutes } from "@/service/apiRoutes";
 import { toast } from "sonner";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,41 +20,10 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import TebleAvatar from "../teble-avatar";
-import { useEffect, useState } from "react";
-import { TResponse } from "@/types";
-import { format } from "date-fns";
+import { useState } from "react";
 
 
 
-interface IDataCostom {
-  dateOne: string;
-  dateTwo: string;
-  deletedDate: null;
-  id: string;
-  startDate: Date;
-  endDate: Date;
-  isActive: boolean;
-  totalSellCount: number;
-  totalSum: number;
-  additionalProfitTotalSum: number;
-  netProfitTotalSum: number;
-  totalSize: number;
-  plasticSum: number;
-  internetShopSum: number;
-  sale: number;
-  return_sale: number;
-  cash_collection: number;
-  discount: number;
-  income: number;
-  expense: number;
-  in_hand: number;
-  debt_count: number;
-  debt_kv: number;
-  debt_sum: number;
-  status: string;
-  is_cancelled: boolean;
-
-}
 interface ICarpetCard {
   id: string;
   className?: string;
@@ -102,9 +70,7 @@ export default function CarpetCashierCard({
 }: ICarpetCard) {
   const { meUser } = useMeStore();
   const queryClient = useQueryClient();
-  const filialId = meUser?.filial.id;
   const [isloading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const AccepedFunt = (kassaId?:string) => {
     setLoading(true);
 
@@ -137,22 +103,8 @@ export default function CarpetCashierCard({
       .finally(() => setLoading(false));
   };
 
-  const { data, isLoading } = useQuery({
-    queryKey: [apiRoutes.filial, filialId],
-    queryFn: () =>
-      getAllData<TResponse<IDataCostom>, object>("/kassa/warning-kassas", {
-        filialId: filialId,
-      }),
-    enabled: open,
-  });
-
-  useEffect(()=>{
-    if(data?.meta && !data?.items?.length && !isLoading && open){
-      AccepedFunt()
-      setOpen(false)
-    }
-  },[data,open])
-
+  // касса годовая: выбор кассы для подтверждения не нужен —
+  // продажа всегда принимается в текущую открытую кассу филиала
   return (
       <label
         className={`w-full flex   gap-4 relative p-1 rounded-[12px]  ${isDebt ?"bg-sidebar":"bg-sidebar" } ${className && className}`}
@@ -232,32 +184,13 @@ export default function CarpetCashierCard({
                 />
               )}
               {status == "progress" ? (
-                <DropdownMenu open={open} onOpenChange={setOpen}>
-                  <DropdownMenuTrigger className="text-end" asChild>
-                    <Button
-                      disabled={isloading}
-                      className="rounded-[70px] p-[14px] h-10 text-white bg-[#89A143]"
-                    >
-                      Подтвердить
-                    </Button>
-                  </DropdownMenuTrigger>
-
-                  <DropdownMenuContent className="w-[206px]" align="end">
-                    {isLoading ? (
-                      <Loader className="animate-spin" />
-                    ) : (
-                      data?.items?.map((e) => (
-                        <DropdownMenuItem
-                        onClick={() => AccepedFunt(e?.id)}
-                          key={e?.id}
-                          className="text-center cursor-pointer flex items-center justify-center pt-[14px] pb-[8px]"
-                        >
-                          {e?.status =="open" ?"текущая касса":   format(e?.endDate , "dd.MM.yyyy")}
-                        </DropdownMenuItem>
-                      ))
-                    )}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <Button
+                  disabled={isloading}
+                  onClick={() => AccepedFunt()}
+                  className="rounded-[70px] p-[14px] h-10 text-white bg-[#89A143]"
+                >
+                  Подтвердить
+                </Button>
               ) : (
                 <Button
                   className={`${status == "rejected" ? "text-[#E38157] border-[#E38157] hover:text-[#E38157]" : status == "accepted" ? "text-[#89A143] border-[#89A143] hover:text-[#89A143]" : "text-primary border-primary hover:text-primary"} rounded-[70px] p-[14px] h-10 `}

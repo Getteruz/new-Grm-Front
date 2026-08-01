@@ -1,7 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import {
-  Loader2,
   MessageSquareText,
   MoreHorizontal,
   Plus,
@@ -15,9 +14,6 @@ import { apiRoutes } from "@/service/apiRoutes";
 import { TData } from "../type";
 import { Button } from "@/components/ui/button";
 import { KassaItem } from "@/pages/cashier/report/type";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { PatchData } from "@/service/apiHelpers";
-import { toast } from "sonner";
 import { minio_img_url } from "@/constants";
 
 export const Columns: ColumnDef<TData>[] = [
@@ -524,8 +520,8 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     cell: ({ row }) => {
       const item = row.original;
       return item?.status != "open" && item?.status != "Мои приходы и расходы" ?  <div className="flex items-center">
-       {<img  className="w-[40px] rounded-full object-cover border-background border h-[40px]" src={minio_img_url + item?.closer?.avatar?.path}/>}
-        {item?.status != "closed_by_c" ?  <img className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={minio_img_url + item?.closer_m?.avatar?.path}/>:""}
+       {<img  className="w-[40px] rounded-full object-cover border-background border h-[40px]" src={item?.closer?.avatar?.path ? minio_img_url + item.closer.avatar.path : undefined}/>}
+        {item?.status != "closed_by_c" ?  <img className="w-[40px]  object-cover border-background border-[2px]  -translate-x-2 rounded-full h-[40px]" src={item?.closer_m?.avatar?.path ? minio_img_url + item.closer_m.avatar.path : undefined}/>:""}
       </div>:"";
     },
   },
@@ -533,23 +529,11 @@ export const KassaColumns: ColumnDef<KassaItem>[] = [
     header: "Статус",
     id: "status",
     cell: ({ row }) => {
-      const queryClient = useQueryClient();
+      // касса годовая: кнопка подтверждения месячной кассы удалена, статус только отображается
       const item = row.original;
-      const { mutate, isPending } = useMutation({
-        mutationFn: () => PatchData(apiRoutes.kassaClose, {
-          ids:[row.original?.id]
-        }),
-        onSuccess: () => {
-          toast.success("close");
-          queryClient.invalidateQueries({ queryKey: [apiRoutes.kassa] });
-        },
-      
-      });
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {item?.status == "closed_by_c" ? (
-            <Button disabled={isPending}  onClick={()=>mutate()} className="rounded-[63px] bg-[#E38157]">{isPending? <Loader2/> :""}  Принят </Button>
-          ) : item?.status == "accepted" ? (
+          {item?.status == "accepted" ? (
             <Button disabled variant={"outline"} className="rounded-[63px] "> Принято </Button>
           ) : item?.status == "rejected"? (
             <Button disabled variant={"outline"} className="rounded-[63px] text-[#E38157] border-[#E38157]"> Отменено </Button>

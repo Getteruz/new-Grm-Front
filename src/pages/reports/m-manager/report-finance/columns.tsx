@@ -1,14 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { TKassareportData } from "./type";
 import ActionBadge from "@/components/actionBadge";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { apiRoutes } from "@/service/apiRoutes";
-import { getAllData, PatchData } from "@/service/apiHelpers";
+import { getAllData } from "@/service/apiHelpers";
 import { IUserData, TResponse } from "@/types";
 import TebleAvatar from "@/components/teble-avatar";
-import { useMeStore } from "@/store/me-store";
-import { toast } from "sonner";
-import ActionButton from "@/components/actionButton";
 import { MonthsArray } from "@/consts";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
@@ -17,12 +14,16 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     header: "Дата",
     cell: ({ row }) => {
       const item = row.original;
-      const isTrue = item?.kassaReportStatus == 2;
+      // текущий месяц определяется календарём
+      const now = new Date();
+      const isCurrent =
+        item?.month == now.getMonth() + 1 &&
+        (!item?.year || item?.year == now.getFullYear());
       return (
-        <p className={`${isTrue ? "text-[#89A143]" : ""}`}>
-          {isTrue
-            ? MonthsArray[item?.month - 1].label + "-Продалажется"
-            : MonthsArray[item?.month - 1].label|| ""}
+        <p className={`${isCurrent ? "text-[#89A143]" : ""}`}>
+          {isCurrent
+            ? MonthsArray[item?.month - 1].label + " — Продолжается"
+            : MonthsArray[item?.month - 1].label || ""}
         </p>
       );
     },
@@ -148,31 +149,24 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     header: "Статус",
     id: "status",
     cell: ({ row }) => {
-      const { meUser } = useMeStore();
+      // касса годовая: подтверждение/закрытие месяца удалено,
+      // статус месяца определяется календарём
       const item = row.original;
-      const queryClient = useQueryClient();
-      const { mutate, isPending } = useMutation({
-        mutationFn: () =>
-          PatchData(apiRoutes.reports + "/" + row?.original?.id + '/close', {}),
-        onSuccess: () => {
-          toast.success("Closed");
-          queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
-        },
-      });
-
+      const now = new Date();
+      const isCurrent =
+        item?.month == now.getMonth() + 1 &&
+        (!item?.year || item?.year == now.getFullYear());
+      const isFuture =
+        (item?.year && item?.year > now.getFullYear()) ||
+        (item?.year == now.getFullYear() && item?.month > now.getMonth() + 1);
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {item?.reportStatus == 2 ? (
+          {isCurrent ? (
             <ActionBadge status={"willSell"} />
-          ) : item?.status == "open" && ((meUser?.position?.role == 10 && !item?.isAccountantConfirmed ) || (meUser?.position?.role == 9 && !item?.isMManagerConfirmed ) )  ? (
-            <ActionButton
-            btnText="Закрыть"
-              onClick={() => mutate()}
-              isLoading={isPending}
-              status="accept"
-            ></ActionButton>
+          ) : isFuture ? (
+            ""
           ) : (
-            <ActionBadge status={ item?.status =="accepted" ?"closed": "inProgress"} />
+            <ActionBadge status={"completed"} />
           )}
         </div>
       );

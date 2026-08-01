@@ -2,13 +2,11 @@ import { ColumnDef } from "@tanstack/react-table";
 // import { MoreHorizontal } from "lucide-react";
 import { TKassareportData } from "./type";
 import ActionBadge from "@/components/actionBadge";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { apiRoutes } from "@/service/apiRoutes";
-import { getAllData, PatchData } from "@/service/apiHelpers";
-import ActionButton from "@/components/actionButton";
+import { getAllData } from "@/service/apiHelpers";
 import { IUserData, TResponse } from "@/types";
 import TebleAvatar from "@/components/teble-avatar";
-import { toast } from "sonner";
 
 export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
   {
@@ -30,11 +28,15 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
         "Декабрь",
       ]
       const item = row.original;
-      const isTrue =item?.kassaReportStatus == 2
+      // текущий месяц определяется календарём
+      const now = new Date();
+      const isCurrent =
+        item?.month == now.getMonth() + 1 &&
+        (!item?.year || item?.year == now.getFullYear());
       return (
-        <p className={`${isTrue?  "text-[#89A143]":""}`}>
-          { isTrue
-            ? month[item?.month - 1] +  "-Продалажется"
+        <p className={`${isCurrent ? "text-[#89A143]" : ""}`}>
+          {isCurrent
+            ? month[item?.month - 1] + " — Продолжается"
             : month[item?.month - 1] || ""}
         </p>
       );
@@ -119,26 +121,24 @@ export const KassaColumnsLoc: ColumnDef<TKassareportData>[] = [
     header: "Статус",
     id: "status",
     cell: ({ row }) => {
+      // касса годовая: подтверждение/закрытие месяца удалено,
+      // статус месяца определяется календарём
       const item = row.original;
-      const queryClient = useQueryClient();
-      const { mutate, isPending } = useMutation({
-        mutationFn: () =>
-          PatchData(apiRoutes.reports +"/" +row?.original?.id+"/close-dealer" , { }),
-        onSuccess: () => {
-          toast.success("Closed");
-          queryClient.invalidateQueries({ queryKey: [apiRoutes.kassaReports] });
-          queryClient.invalidateQueries({ queryKey: [apiRoutes.reports] });
-        },
-      });
-      
+      const now = new Date();
+      const isCurrent =
+        item?.month == now.getMonth() + 1 &&
+        (!item?.year || item?.year == now.getFullYear());
+      const isFuture =
+        (item?.year && item?.year > now.getFullYear()) ||
+        (item?.year == now.getFullYear() && item?.month > now.getMonth() + 1);
       return (
         <div onClick={(e) => e.stopPropagation()}>
-          {item?.reportStatus == 2 ? (
+          {isCurrent ? (
             <ActionBadge status={"willSell"} />
-          ) : item?.status == "open" || item?.status == "cancelled" ? (
-            <ActionButton onClick={()=>mutate()} isLoading={isPending} btnText="Закрыть"  status="accept"></ActionButton>
+          ) : isFuture ? (
+            ""
           ) : (
-            <ActionBadge status={item?.status=="closed_by_d" ? "pending"  :item?.status} />
+            <ActionBadge status={"completed"} />
           )}
         </div>
       );

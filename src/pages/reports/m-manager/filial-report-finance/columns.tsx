@@ -2,14 +2,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import {  MoreHorizontal } from "lucide-react";
 
-import { apiRoutes } from "@/service/apiRoutes";
 
 import { Button } from "@/components/ui/button";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { PatchData } from "@/service/apiHelpers";
-import { toast } from "sonner";
 import { TData } from "./type";
-import ActionButton from "@/components/actionButton";
 import ActionBadge from "@/components/actionBadge";
 import TebleAvatar from "@/components/teble-avatar";
 
@@ -150,39 +145,21 @@ export const KassaColumns: ColumnDef<TData>[] = [
     header: "Статус",
     id: "status",
     cell: ({ row }) => {
-      const queryClient = useQueryClient();
+      // касса годовая: подтверждение месячных касс отменено, статус только отображается
       const item = row.original;
-      const { mutate, isPending } = useMutation({
-        mutationFn: () =>
-          PatchData(apiRoutes.kassaClose, {
-            ids: [row.original?.id],
-          }),
-        onSuccess: () => {
-          toast.success("close");
-          queryClient.invalidateQueries({ queryKey: [apiRoutes.kassa] });
-        },
-      });
       const statusOject = {
         open: "inProgress",
       };
       return (
         <div onClick={(e) => e.stopPropagation()}>
           {item?.status != "Филиал приходы и расходы" ? (
-            item?.status == "closed_by_c" ? (
-              <ActionButton
-                onClick={() => mutate()}
-                isLoading={isPending}
-                status="accept"
-              />
-            ) : (
-              <ActionBadge
-                status={
-                  statusOject?.[item?.status as keyof typeof statusOject] ||
-                  item?.status ||
-                  "inProgress"
-                }
-              />
-            )
+            <ActionBadge
+              status={
+                statusOject?.[item?.status as keyof typeof statusOject] ||
+                item?.status ||
+                "inProgress"
+              }
+            />
           ) : (
             ""
           )}

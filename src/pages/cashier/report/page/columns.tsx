@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import formatPrice from "@/utils/formatPrice";
 
 import { KassaItem, TransactionItem } from "../type";
+import ChangeDateAction from "./change-date-action";
 import { format } from "date-fns";
 import { useMeStore } from "@/store/me-store";
 import TebleAvatar from "@/components/teble-avatar";
@@ -234,6 +235,11 @@ export const ReportColumns: ColumnDef<TransactionItem>[] = [
                 <p className="text-[#EC6C49] text-[13px]">Возрат</p>
               </div>
           </DropdownMenuItem>}
+          <ChangeDateAction
+            id={row?.original?.id + ""}
+            tip={row?.original?.tip}
+            currentDate={row?.original?.date}
+          />
         </TableAction>
       )
     },

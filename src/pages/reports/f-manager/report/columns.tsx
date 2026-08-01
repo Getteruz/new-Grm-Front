@@ -1,17 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { Loader } from "lucide-react";
 
-import { apiRoutes } from "@/service/apiRoutes";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { PatchData } from "@/service/apiHelpers";
-import { toast } from "sonner";
 import { TData } from "./type";
-import ActionButton from "@/components/actionButton";
 import ActionBadge from "@/components/actionBadge";
-import TableAction from "@/components/table-action";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import TebleAvatar from "@/components/teble-avatar";
 
 export const KassaColumns: ColumnDef<TData>[] = [
@@ -150,76 +142,25 @@ export const KassaColumns: ColumnDef<TData>[] = [
     header: "Статус",
     id: "status",
     cell: ({ row }) => {
-      const queryClient = useQueryClient();
+      // касса годовая: подтверждение/отмена месячных касс отменены, статус только отображается
       const item = row.original;
-      const { mutate, isPending } = useMutation({
-        mutationFn: () =>
-          PatchData(apiRoutes.kassaClose, {
-            ids: [row.original?.id],
-          }),
-        onSuccess: () => {
-          toast.success("close");
-          queryClient.invalidateQueries({ queryKey: [apiRoutes.kassa] });
-        },
-      });
       const statusOject = {
         open: "inProgress",
       };
       return (
         <div onClick={(e) => e.stopPropagation()}>
           {item?.status != "Мои приходы и расходы" ? (
-            item?.status == "closed_by_c" || item?.status == "warning" ? (
-              <ActionButton
-                onClick={() => mutate()}
-                isLoading={isPending}
-                status="accept"
-              />
-            ) : (
-              <ActionBadge
-                status={
-                  statusOject?.[item?.status as keyof typeof statusOject] ||
-                  item?.status ||
-                  "inProgress"
-                }
-              />
-            )
+            <ActionBadge
+              status={
+                statusOject?.[item?.status as keyof typeof statusOject] ||
+                item?.status ||
+                "inProgress"
+              }
+            />
           ) : (
             ""
           )}
         </div>
-      );
-    },
-  },
-  {
-    id: "actions",
-    header: "actions",
-    cell: ({ row }) => {
-      const queryClient = useQueryClient();
-      const { mutate, isPending } = useMutation({
-        mutationFn: () =>
-          PatchData(apiRoutes.kassaCancel, {
-            ids: [row.original?.id],
-          }),
-        onSuccess: () => {
-          toast.success("canceled");
-          queryClient.invalidateQueries({ queryKey: [apiRoutes.kassa] });
-        },
-      });
-      
-      return (
-        <TableAction ShowDelete={false} ShowPreview={false} ShowUpdate={false}>
-          {row.original?.status == "closed_by_c" || row.original?.status  == "accepted"  ? (
-            <DropdownMenuItem
-              onClick={() => mutate()}
-              disabled={isPending}
-              className="cursor-pointer hover:bg-accent px-2 py-1"
-            >
-              {isPending ? <Loader className="animate-spin" /> : ""} Отменить
-            </DropdownMenuItem>
-          ) : (
-            ""
-          )}
-        </TableAction>
       );
     },
   },

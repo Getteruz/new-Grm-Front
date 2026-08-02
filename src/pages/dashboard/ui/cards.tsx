@@ -10,10 +10,14 @@ export default function Cards({leftData,setOpen}:{leftData:ReportsHomePageCurren
   const [,dellergiven] = useQueryState("dellergiven",parseAsFloat);
   return (
     <div className="w-full ">
+    <p className="text-[13px] ml-[13px] text-muted-foreground">Продажа за {leftData?.year} год</p>
     <h3 className="text-[72px] ml-[13px]">{leftData?.totals?.total_sum} $</h3>
-    <p className="text-[17px] flex items-center gap-2 mb-10 -mt-2 ml-[20px]">
-    {leftData?.totals?.total_profit_sum} сум прибль из итогого
+    <p className="text-[17px] flex items-center gap-2 -mt-2 ml-[20px]">
+    <span className="text-[#89A143]">+{leftData?.totals?.total_profit_sum} $</span> чистая прибыль
       <Italic className="bg-white p-0.5 rounded-sm" />
+    </p>
+    <p className="text-[17px] flex items-center gap-2 mb-10 ml-[20px]">
+    <span className="text-[#E38157]">-{leftData?.totals?.total_expense} $</span> расход за год
     </p>
 
     <div className="grid grid-cols-3 gap-2.5">

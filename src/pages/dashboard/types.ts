@@ -36,7 +36,6 @@ export type ReportsHomePageCurrentMonthData = {
 };
 
 export type ReportsHomePageCurrentLeftData = {
-  year: number;
   totals: {
     total_sum: number;
     total_profit_sum: number;

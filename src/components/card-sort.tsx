@@ -378,20 +378,6 @@ export default function CardSort({
                 </p>
               </div>
             )}
-            {
-              (kassaId?.kassaReport?.filialType == "filial" || KassaReport?.filialType =="filial") ?<div className="1/2 inline-block">
-                 <p className="text-[12px] mt-[25px] mb-1 text-[#7E7E72]">
-                  Сальдо баланс: 
-                </p>
-                {
-                  KassaReport ?  <p className={`text-[14px]   ${(KassaReport?.opening_balance || 0) >0 ? "text-[#89A143]" : (KassaReport?.opening_balance || 0) <0? "text-[#E38157]":"" } inline-block font-semibold`}>
-                  { KassaReport?.opening_balance}  {KassaReport?.opening_balance? "$":""} 
-                </p>:<p className={`text-[14px]   ${ (kassaId?.kassaReport?.opening_balance ||0) >0 ? "text-[#89A143]" : (kassaId?.kassaReport?.opening_balance || 0) <0? "text-[#E38157]":"" } inline-block font-semibold`}>
-                  { kassaId?.kassaReport?.opening_balance}  {kassaId?.kassaReport?.opening_balance? "$":""} 
-                </p>
-                }
-                </div>:""
-            }
           </div>
           <div className="grid row-start w-full  border-border  border-b grid-cols-4  ">
             {(column as unknown as TColumns[])?.map((e, index) => (

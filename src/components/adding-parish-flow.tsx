@@ -65,6 +65,14 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
     queryFn: () => getAllData("/cashflow-types/for/cashier"),
   });
 
+  // Текущий остаток кассы — чтобы нельзя было ввести расход больше, чем есть в кассе
+  const { data: kassaData } = useQuery({
+    queryKey: [apiRoutes.kassa, kassaId],
+    queryFn: () => getAllData(`${apiRoutes.kassa}/${kassaId}`),
+    enabled: !!kassaId,
+  });
+  const kassaInHand = Number((kassaData as unknown as { in_hand?: number })?.in_hand || 0);
+
   // Create mutation for adding cashflow
   const { mutate: addCashflow, isPending } = useMutation({
     mutationFn: (data: any) => AddData(apiRoutes.cashflow, data),
@@ -130,6 +138,11 @@ export default function AddingParishOrFlow({ kassaId }: { kassaId: string }) {
 
     if (!amount || parseFloat(amount) <= 0) {
       toast.error("Введите корректную сумму");
+      return;
+    }
+
+    if (type === "flow" && parseFloat(amount) > kassaInHand) {
+      toast.error(`Недостаточно средств в кассе (доступно ${kassaInHand} $)`);
       return;
     }
 

@@ -8,17 +8,33 @@ export default function Cards({leftData,setOpen}:{leftData:ReportsHomePageCurren
   
   const [,dellerowed] = useQueryState("dellerowed",parseAsFloat);
   const [,dellergiven] = useQueryState("dellergiven",parseAsFloat);
+  const totalProfit = Number(leftData?.totals?.total_profit_sum || 0)
+  const totalExpense = Number(leftData?.totals?.total_expense || 0)
+  const netProfit = totalProfit - totalExpense
+
   return (
     <div className="w-full ">
-    <p className="text-[13px] ml-[13px] text-muted-foreground">Продажа за всё время</p>
-    <h3 className="text-[72px] ml-[13px]">{leftData?.totals?.total_sum} $</h3>
-    <p className="text-[17px] flex items-center gap-2 -mt-2 ml-[20px]">
-    <span className="text-[#89A143]">+{leftData?.totals?.total_profit_sum} $</span> чистая прибыль
-      <Italic className="bg-white p-0.5 rounded-sm" />
-    </p>
-    <p className="text-[17px] flex items-center gap-2 mb-10 ml-[20px]">
-    <span className="text-[#E38157]">-{leftData?.totals?.total_expense} $</span> расход за всё время
-    </p>
+    <div className="flex items-end gap-10 ml-[13px] mb-10 flex-wrap">
+      <div>
+        <p className="text-[13px] text-muted-foreground">Продажа за всё время</p>
+        <h3 className="text-[56px] leading-none">{leftData?.totals?.total_sum} $</h3>
+      </div>
+      <div className="flex items-center gap-2 mb-1">
+        <div>
+          <p className="text-[13px] text-muted-foreground">Прибыль за всё время</p>
+          <h3 className="text-[32px] leading-none text-[#89A143]">+{totalProfit} $</h3>
+        </div>
+        <Italic className="bg-white p-0.5 rounded-sm" />
+      </div>
+      <div className="mb-1">
+        <p className="text-[13px] text-muted-foreground">Расход за всё время</p>
+        <h3 className="text-[32px] leading-none text-[#E38157]">-{totalExpense} $</h3>
+      </div>
+      <div className="mb-1">
+        <p className="text-[13px] text-muted-foreground">Чистая прибыль (Прибыль − Расход)</p>
+        <h3 className={`text-[32px] leading-none ${netProfit >= 0 ? 'text-[#89A143]' : 'text-[#E38157]'}`}>{netProfit >= 0 ? '+' : ''}{netProfit.toFixed(2)} $</h3>
+      </div>
+    </div>
 
     <div className="grid grid-cols-3 gap-2.5">
       <DashboardCard
